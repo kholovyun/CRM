@@ -1,0 +1,19 @@
+.AdminPanel {
+    margin-top: 100px;
+}
+
+.AdminPanel_container {
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.AdminPanel_btn {
+    padding: 10px 20px;
+    margin-right: 20px;
+}
