@@ -1,10 +1,11 @@
 import React from "react";
-import AdminPanel from "./containers/AdminPanel/AdminPanel";
+// import AdminPanel from "./containers/AdminPanel/AdminPanel";
+import ResetPassword from "./containers/ResetPassword/ResetPassword";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return(
         <div>
-            <AdminPanel />
+            <ResetPassword />
         </div>
     );
 };
