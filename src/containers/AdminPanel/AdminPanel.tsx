@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./AdminPanel.module.css";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const AdminPanel: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -8,11 +8,8 @@ const AdminPanel: React.FunctionComponent = (): React.ReactElement => {
             <div className={styles.AdminPanel_container}>
                 <h2>Добро пожаловать!</h2>
                 <div>
-                    <button className={styles.AdminPanel_btn}>Регистрация врача</button>
-                    <button className={styles.AdminPanel_btn}>Регистрация пациента</button>
+                    <Link to={"/register-user"}>Зарегистрировать пользователя</Link>
                 </div>
-                {/* <Link to={"/register-doctor"}>Регистрация врача</Link>
-                <Link to={"/register-patient"}>Регистрация пациента</Link> */}
             </div>
         </div>
     );
