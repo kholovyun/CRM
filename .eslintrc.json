@@ -41,6 +41,7 @@
                 "before": false,
                 "after": true
             }
-        ]
+        ],
+        "react/react-in-jsx-scope": "off"
     }
 }
