@@ -4,21 +4,16 @@ import styles from "./Login.module.css";
 const Login: React.FunctionComponent = (): React.ReactElement => {
     return (
         <div className={styles.Login}>
+            <h1 className={styles.LoginTitle}>Вход</h1>
             <form className={styles.LoginForm}>
-                <div className={styles.LoginField}>
-                    <label className={styles.LoginLabel} htmlFor="">Логин</label>
-                    <input 
-                        className={styles.LoginInput}
-                        type="text"
-                        placeholder="Логин" />
-                </div>
-                <div className={styles.LoginField}>
-                    <label className={styles.LoginLabel} htmlFor="">Пароль</label>
-                    <input 
-                        className={styles.LoginInput}
-                        type="password"
-                        placeholder="Пароль" />
-                </div>
+                <input 
+                    className={styles.LoginInput}
+                    type="text"
+                    placeholder="Email" />
+                <input 
+                    className={styles.LoginInput}
+                    type="password"
+                    placeholder="Пароль" />
                 <button className={styles.LoginButton}>Войти</button>
             </form>
         </div>
