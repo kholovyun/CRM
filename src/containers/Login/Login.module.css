@@ -1,57 +1,45 @@
 .Login {
-    max-width: 20rem;
-    width: 100%;
-    height: 100vh;
-    margin-top: 200px;
+    width: 620px;
+    height: 525px;
     margin: auto;
+    margin-top: 200px;
+    background: #898989;
+    border-radius: 50px;
 }
 
-.LoginForm {
-    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-    padding-top: 1.5rem;
-    padding-bottom: 2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    border-radius: 0.25rem;
-    margin-bottom: 1rem;
-}
-
-.LoginField {
-    margin-bottom: 1rem;
-}
-
-.LoginLabel {
-    color: rgb(55 65 81 / var(--tw-text-opacity));
-    font-weight: 700;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    display: block;
-    margin-bottom: 0.5rem;
+.LoginTitle {
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 58px;
+    color: #ffffff;
+    text-align: center;
+    padding: 57px 254px 78px;
+    margin: 0;
 }
 
 .LoginInput {
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-    line-height: 1.25;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    border-width: 1px;
-    border-radius: 0.25rem;
-    width: 100%;
+    width: 480px;
+    height: 77px;
+    background: #d9d9d9;
+    border-radius: 25px;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    opacity: 0.5;
+    padding-left: 50px;
+    margin: 0 70px 45px;
+    box-sizing: border-box;
 }
 
 .LoginButton {
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity));
-    font-weight: 700;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    --tw-bg-opacity: 1;
-    background-color: rgb(59 130 246 / var(--tw-bg-opacity));
-    border-radius: 0.25rem;
-    cursor: pointer;
+    width: 200px;
+    height: 53px;
+    background: #d9d9d9;
+    border-radius: 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    color: #000000;
+    margin: 0 209px;
 }

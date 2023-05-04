@@ -31,71 +31,44 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
  
     return (
         <div className={styles.Register}>
+            <p className={styles.RegisterTitle}>Введите данные для регистрации</p>
             <form onSubmit={sumbitHandler} className={styles.RegisterForm}>
-                <div className={styles.RegisterField}>
-                    <label className={styles.RegisterLabel} htmlFor="">Имя</label>
-                    <input 
-                        onChange={inputChangeHandler}
-                        value={form.name}
-                        name="name"
-                        className={styles.RegisterInput}
-                        type="text"
-                        placeholder="Имя" />
-                </div>
-                <div className={styles.RegisterField}>
-                    <label className={styles.RegisterLabel} htmlFor="">Фамилия</label>
-                    <input 
-                        onChange={inputChangeHandler}
-                        value={form.surname}
-                        name="surname"
-                        className={styles.RegisterInput}
-                        type="text"
-                        placeholder="Фамилия" />
-                </div>
-                <div className={styles.RegisterField}>
-                    <label className={styles.RegisterLabel} htmlFor="">Отчество</label>
-                    <input 
-                        onChange={inputChangeHandler}
-                        value={form.patronim}
-                        name="patronim"
-                        className={styles.RegisterInput}
-                        type="text"
-                        placeholder="Отчество" />
-                </div>
-                <div className={styles.RegisterField}>
-                    <label className={styles.RegisterLabel} htmlFor="">Почта</label>
-                    <input 
-                        onChange={inputChangeHandler}
-                        value={form.email}
-                        name="email"
-                        className={styles.RegisterInput}
-                        type="text"
-                        placeholder="Почта" />
-                </div>
-                <div className={styles.RegisterField}>
-                    <label className={styles.RegisterLabel} htmlFor="">Телефон</label>
-                    <input 
-                        onChange={inputChangeHandler}
-                        value={form.phone}
-                        name="phone"
-                        className={styles.RegisterInput}
-                        type="text"
-                        placeholder="Телефон" />
-                </div>
-                <div className={styles.RegisterField}>
-                    <label className={styles.RegisterLabel} htmlFor="">Роль пользователя</label>
-                    <select 
-                        value={form.role} 
-                        name="role"
-                        onChange={inputChangeHandler}
-                        className={styles.RegisterSelect}>
-                        <option value={0}>Выберите роль пользователя</option>
-                        <option value={ERoles.ADMIN}>Администратор</option>
-                        <option value={ERoles.DOCTOR}>Доктор</option>
-                        <option value={ERoles.PARENT}>Родитель</option>
-                    </select>
-                </div>
-                <button className={styles.RegisterButton}>Создать</button>
+                <input 
+                    onChange={inputChangeHandler}
+                    value={form.name}
+                    name="name"
+                    className={styles.RegisterInput}
+                    type="text"
+                    placeholder="Имя" />
+                <input 
+                    onChange={inputChangeHandler}
+                    value={form.surname}
+                    name="surname"
+                    className={styles.RegisterInput}
+                    type="text"
+                    placeholder="Фамилия" />
+                <input 
+                    onChange={inputChangeHandler}
+                    value={form.patronim}
+                    name="patronim"
+                    className={`${styles.RegisterInputBig} ${styles.RegisterInput}`}
+                    type="text"
+                    placeholder="Отчество" />
+                <input 
+                    onChange={inputChangeHandler}
+                    value={form.email}
+                    name="email"
+                    className={styles.RegisterInput}
+                    type="text"
+                    placeholder="Email" />
+                <input 
+                    onChange={inputChangeHandler}
+                    value={form.phone}
+                    name="phone"
+                    className={styles.RegisterInput}
+                    type="text"
+                    placeholder="+7(---) --- -- --" />
+                <button className={styles.RegisterButton}>Продолжить</button>
             </form>
         </div>
     );
