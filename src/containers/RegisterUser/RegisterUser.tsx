@@ -11,7 +11,7 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
         phone: "",
         patronim: "",
         email: "",
-        role: ERoles
+        role: ERoles.DOCTOR
     });
     
     const [createUser] = useCreateUserMutation();
