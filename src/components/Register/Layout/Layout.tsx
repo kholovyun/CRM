@@ -8,13 +8,16 @@ import Footer from "../../Footer/Footer";
 const Layout: FunctionComponent = (): ReactElement => {
     
     return (
-        <div className={styles.Layout}>
-            <Header/>
-            <main className={styles.main}>
-                <Outlet />
-            </main>
-            <Footer />
-        </div>
+        <>
+            <div className={styles.Layout}>
+                <Header/>
+                <main className={styles.main}>
+                    <Outlet />
+                </main>
+                <Footer />
+            </div>
+        </>
+        
     );
 };
 

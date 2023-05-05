@@ -11,7 +11,7 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
         phone: "",
         patronim: "",
         email: "",
-        role: ERoles
+        role: ERoles.DOCTOR
     });
     
     const [createUser] = useCreateUserMutation();
@@ -37,14 +37,14 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
                     onChange={inputChangeHandler}
                     value={form.name}
                     name="name"
-                    className={styles.RegisterInput}
+                    className={`${styles.RegisterInput}`}
                     type="text"
                     placeholder="Имя" />
                 <input 
                     onChange={inputChangeHandler}
                     value={form.surname}
                     name="surname"
-                    className={styles.RegisterInput}
+                    className={`${styles.RegisterInput}`}
                     type="text"
                     placeholder="Фамилия" />
                 <input 
@@ -58,14 +58,14 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
                     onChange={inputChangeHandler}
                     value={form.email}
                     name="email"
-                    className={styles.RegisterInput}
+                    className={`${styles.RegisterInput}`}
                     type="text"
                     placeholder="Email" />
                 <input 
                     onChange={inputChangeHandler}
                     value={form.phone}
                     name="phone"
-                    className={styles.RegisterInput}
+                    className={`${styles.RegisterInput}`}
                     type="text"
                     placeholder="+7(---) --- -- --" />
                 <button className={styles.RegisterButton}>Продолжить</button>

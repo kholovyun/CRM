@@ -1,38 +1,37 @@
 .Login {
-    width: 620px;
-    height: 525px;
+    width: 550px;
+    height: 375px;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 50px;
     background: #898989;
     border-radius: 50px;
 }
 
 .LoginTitle {
     font-weight: 500;
-    font-size: 48px;
+    font-size: 42px;
     line-height: 58px;
     color: #ffffff;
     text-align: center;
-    padding: 57px 254px 78px;
+    padding: 25px 0;
     margin: 0;
 }
 
 .LoginInput {
-    width: 480px;
-    height: 77px;
+    width: 420px;
+    height: 60px;
     background: #d9d9d9;
     border-radius: 25px;
     font-size: 20px;
-    line-height: 24px;
     color: #000000;
     padding-left: 50px;
-    margin: 0 70px 45px;
+    margin: 0 65px 30px;
     box-sizing: border-box;
 }
 
 .LoginButton {
-    width: 200px;
-    height: 53px;
+    width: 155px;
+    height: 40px;
     background: #d9d9d9;
     border-radius: 20px;
     font-style: normal;
@@ -40,5 +39,5 @@
     font-size: 20px;
     line-height: 29px;
     color: #000000;
-    margin: 0 209px;
+    margin: 0 197px;
 }
