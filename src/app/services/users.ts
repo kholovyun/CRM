@@ -1,6 +1,8 @@
 import { api } from "./api";
 import IUserGetDto from "../../interfaces/IUser/IUserGetDto";
 import IUserCreateDto from "../../interfaces/IUser/IUserCreateDto";
+import IUserGetDtoWithToken from "../../interfaces/IUser/IUserGetDtoWithToken";
+import IUserLoginDto from "../../interfaces/IUser/IUserLoginDto";
 
 const usersApi = api.injectEndpoints({
     endpoints: build => ({
@@ -24,8 +26,15 @@ const usersApi = api.injectEndpoints({
                 body: userDto
             }),
             invalidatesTags: ["User"]
+        }),
+        login: build.mutation<IUserGetDtoWithToken, IUserLoginDto>({
+            query: (userLoginDto: IUserLoginDto) => ({
+                url: "/users/login",
+                method: "post",
+                body: userLoginDto
+            })
         })
     })
 });
 
-export const {useGetUsersQuery, useGetUserByIdQuery, useCreateUserMutation} = usersApi;
+export const {useGetUsersQuery, useGetUserByIdQuery, useCreateUserMutation, useLoginMutation} = usersApi;
