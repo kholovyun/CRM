@@ -1,0 +1,9 @@
+.Layout {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    flex: 1 0 auto;
+}

@@ -1,10 +1,10 @@
 .Register {
-    width: 980px;
-    height: 613px;
+    width: 860px;
+    height: 440px;
     background: #898989;
     border-radius: 50px;
     margin: 0 auto;
-    margin-top: 200px;
+    margin-top: 30px;
 }
 
 .RegisterTitle {
@@ -16,7 +16,7 @@
     text-align: center;
     letter-spacing: -0.045em;
     color: #000000;
-    padding: 34px 338px 80px;
+    padding: 30px 0 ;
     margin: 0;
 }
 
@@ -29,24 +29,21 @@
     font-size: 20px;
     line-height: 24px;
     color: #000000;
-    opacity: 0.5;
-    padding-left: 30px;
-    width: 380px;
-    height: 77px;
-    margin: 0 -80px 24px 100px;
+    width: 350px;
+    height: 60px;
+    margin: 0 -80px 24px 80px;
+    padding-left: 20px;
     box-sizing: border-box;
 }
 
 .RegisterInputBig {
-    width: 780px;
-    height: 77px;
-    left: calc(50% - 780px / 2);
-    top: 528px;
+    width: 702px;
+    height: 60px;
 }
 
 .RegisterButton {
-    width: 280px;
-    height: 77px;
+    width: 224px;
+    height: 50px;
     background: #eeeeee;
     border-radius: 25px;
     font-family: "Syne";
@@ -55,6 +52,6 @@
     font-size: 24px;
     line-height: 29px;
     color: #000000;
-    margin: 56px 350px 39px ;
+    margin: 20px 318px;
     box-sizing: border-box;
 }
