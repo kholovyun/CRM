@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import Logo from "../Logo/Logo";
 import Navbar from "../Navbar/Navbar";
 import styles from "./Header.module.css";

@@ -1,4 +1,4 @@
-import React, {useState, FormEvent, ChangeEvent} from "react";
+import React, { useState, FormEvent, ChangeEvent } from "react";
 import styles from "./RegisterUser.module.css";
 import IUserCreateDto from "../../interfaces/IUser/IUserCreateDto";
 import { ERoles } from "../../enums/ERoles";
@@ -11,9 +11,9 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
         phone: "",
         patronim: "",
         email: "",
-        role: ERoles.DOCTOR
+        role: ERoles.ADMIN
     });
-    
+
     const [createUser] = useCreateUserMutation();
 
     const sumbitHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -22,46 +22,46 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
     };
 
     const inputChangeHandler = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setForm(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
- 
+
     return (
         <div className={styles.Register}>
             <p className={styles.RegisterTitle}>Введите данные для регистрации</p>
             <form onSubmit={sumbitHandler} className={styles.RegisterForm}>
-                <input 
+                <input
                     onChange={inputChangeHandler}
                     value={form.name}
                     name="name"
                     className={`${styles.RegisterInput}`}
                     type="text"
                     placeholder="Имя" />
-                <input 
+                <input
                     onChange={inputChangeHandler}
                     value={form.surname}
                     name="surname"
                     className={`${styles.RegisterInput}`}
                     type="text"
                     placeholder="Фамилия" />
-                <input 
+                <input
                     onChange={inputChangeHandler}
                     value={form.patronim}
                     name="patronim"
                     className={`${styles.RegisterInputBig} ${styles.RegisterInput}`}
                     type="text"
                     placeholder="Отчество" />
-                <input 
+                <input
                     onChange={inputChangeHandler}
                     value={form.email}
                     name="email"
                     className={`${styles.RegisterInput}`}
                     type="text"
                     placeholder="Email" />
-                <input 
+                <input
                     onChange={inputChangeHandler}
                     value={form.phone}
                     name="phone"
