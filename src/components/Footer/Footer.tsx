@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import styles from "./Footer.module.css";
 import { NavLink } from "react-router-dom";
 

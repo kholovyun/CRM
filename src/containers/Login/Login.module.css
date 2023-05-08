@@ -7,6 +7,23 @@
     border-radius: 50px;
 }
 
+.LoginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.forgotlink {
+    margin: 0 0 8px;
+    text-decoration: none;
+    color: white;
+}
+
+.forgotlink:hover {
+    color: #616161;
+}
+
 .LoginTitle {
     font-weight: 500;
     font-size: 42px;
@@ -25,7 +42,7 @@
     font-size: 20px;
     color: #000000;
     padding-left: 50px;
-    margin: 0 65px 30px;
+    margin: 0 0 24px;
     box-sizing: border-box;
 }
 
@@ -40,4 +57,9 @@
     line-height: 29px;
     color: #000000;
     margin: 0 197px;
+}
+
+.LoginButton:disabled {
+    background: #eeebeb;
+    color: #898989;
 }

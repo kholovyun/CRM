@@ -23,6 +23,7 @@
             "error",
             4
         ],
+        "@typescript-eslint/no-explicit-any": "error",
         "linebreak-style": [
             "error",
             "windows"
@@ -31,9 +32,9 @@
             "error",
             "double"
         ],
-        "semi": [
-            "error",
-            "always"
+        "semi": "off",
+        "@typescript-eslint/semi": [
+            "error"
         ],
         "semi-spacing": [
             "error",

@@ -28,13 +28,14 @@ const usersApi = api.injectEndpoints({
             invalidatesTags: ["User"]
         }),
         login: build.mutation<IUserGetDtoWithToken, IUserLoginDto>({
-            query: (userLoginDto: IUserLoginDto) => ({
+            query: (body: IUserLoginDto) => ({
                 url: "/users/login",
                 method: "post",
-                body: userLoginDto
+                body
             })
         })
     })
 });
 
-export const {useGetUsersQuery, useGetUserByIdQuery, useCreateUserMutation, useLoginMutation} = usersApi;
+export const { useGetUsersQuery, useGetUserByIdQuery, useCreateUserMutation, useLoginMutation } = usersApi;
+export default usersApi;
