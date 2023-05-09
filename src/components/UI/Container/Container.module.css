@@ -1,0 +1,11 @@
+.container {
+	display: flex;
+	justify-content: center;
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 1440px;
+	height: 100%;
+	margin: 0 auto;
+	background: red;
+	padding: 0 130px;
+}

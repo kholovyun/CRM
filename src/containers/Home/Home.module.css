@@ -3,5 +3,12 @@
     height: 100%;
     background: yellowgreen;
     display: flex;
+    align-items: flex-start;
     box-sizing: border-box;
+}
+
+.image {
+    width: 500px;
+    height: 700px;
+    background: green;
 }

@@ -1,37 +1,35 @@
 .Footer {
     background: #000000;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
-
-.container {
-    max-width: 1180px;
-    margin: 0 auto;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .Footer_container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 0 130px;
     box-sizing: border-box;
 }
 
+.Footer_navbar {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
 .Footer_navlink {
-    font-family: "Syne";
-    font-style: normal;
-    font-weight: 400;
+    margin: 0;
     font-size: 20px;
-    line-height: 29px;
-    text-decoration-line: underline;
     color: #ffffff;
 }
 
 .Footer_contacts_title {
-    font-family: "Syne";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 29px;
     color: #ffffff;
+    margin: 0;
 }

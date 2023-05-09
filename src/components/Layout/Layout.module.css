@@ -1,8 +1,11 @@
 .Layout {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
     background: rgb(168, 168, 170);
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .layoutContainer {
@@ -11,8 +14,8 @@
     box-sizing: border-box;
     width: 100%;
     max-width: 1440px;
+    height: 100%;
     margin: 0 auto;
     background: red;
-    height: 100vh;
     padding: 0 130px;
 }

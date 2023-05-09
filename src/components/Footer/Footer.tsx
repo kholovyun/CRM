@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 const Footer: FunctionComponent = (): ReactElement => {
     return (
         <footer className={styles.Footer}>
-            <div className={`${styles.Footer_container} ${styles.container}`}>
+            <div className={styles.Footer_container}>
                 <ul className={styles.Footer_navbar}>
                     <li className={styles.Footer_navlist}>
                         <NavLink to={"/"} className={styles.Footer_navlink}>Договор оферты</NavLink>

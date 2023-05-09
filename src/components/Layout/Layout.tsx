@@ -6,18 +6,12 @@ import Footer from "../Footer/Footer";
 
 
 const Layout: FunctionComponent = (): ReactElement => {
-
     return (
-        <>
-            <div className={styles.Layout}>
-                <Header />
-                <main className={styles.layoutContainer}>
-                    <Outlet />
-                </main>
-                <Footer />
-            </div>
-        </>
-
+        <div className={styles.Layout}>
+            <Header />
+            <Outlet />
+            <Footer />
+        </div>
     );
 };
 
