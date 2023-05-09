@@ -1,15 +1,17 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import styles from "./Login.module.css";
 import { useLoginMutation } from "../../app/services/users";
-import IUserLoginDto from "../../interfaces/IUser/IUserLoginDto";
 import { useAppSelector } from "../../app/hooks";
+import { toast } from "react-toastify";
+
+const initialState = {
+    email: "",
+    password: ""
+};
 
 const Login: React.FunctionComponent = (): React.ReactElement => {
     const myState = useAppSelector(state => state.auth);
-    const [loginInput, setLoginInput] = useState<IUserLoginDto>({
-        email: "",
-        password: ""
-    });
+    const [loginInput, setLoginInput] = useState(initialState);
 
     const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -25,7 +27,10 @@ const Login: React.FunctionComponent = (): React.ReactElement => {
         e.preventDefault();
         console.log(`${loginInput.email} + ${loginInput.password}`);
         if (loginInput.email.trim().length && loginInput.password.trim().length) {
-            await loginUser(loginInput);
+            // await loginUser(loginInput);
+            toast.success("Ты крут ");
+        } else {
+            toast.error("Заполните все поля");
         }
     };
 

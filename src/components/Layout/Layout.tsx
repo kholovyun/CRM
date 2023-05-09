@@ -11,7 +11,7 @@ const Layout: FunctionComponent = (): ReactElement => {
         <>
             <div className={styles.Layout}>
                 <Header />
-                <main className={styles.main}>
+                <main className={styles.layoutContainer}>
                     <Outlet />
                 </main>
                 <Footer />
