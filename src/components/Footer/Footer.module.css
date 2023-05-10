@@ -9,6 +9,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 60px 0;
 }
 
 .Footer_navbar {
@@ -18,13 +19,48 @@ footer {
     padding: 0;
 }
 
-.Footer_navlink {
+.FooterNavlist {
+    margin-bottom: 20px;
+}
+
+.FooterNavlink {
     margin: 0;
     font-size: 20px;
     color: #ffffff;
+    cursor: pointer;
 }
 
-.Footer_contacts_title {
+.Footer_contacts {
+    display: flex;
+    flex-direction: column;
+}
+
+.FooterContactsTitle {
     color: #ffffff;
     margin: 0;
+    margin-bottom: 20px;
+}
+
+.icoContactBox {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.icoContact {
+    min-width: 30px;
+    min-height: 30px;
+    cursor: pointer;
+}
+
+.icoContactItemInsta {
+    background: url("../../../public/instagram.png") center/cover no-repeat;
+}
+
+.icoContactItemTelegram {
+    background: url("../../../public/itelegram.png") center/cover no-repeat;
+}
+
+.icoContactItemWhatsapp {
+    background: url("../../../public/whatsapp.png") center/cover no-repeat;
 }

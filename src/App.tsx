@@ -15,7 +15,7 @@ import { Home } from "./containers/Home/Home";
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
         <BrowserRouter>
-            <ToastContainer theme="colored" autoClose={2500} />
+            <ToastContainer theme="colored" autoClose={2000} />
             <Routes>
                 <Route element={<Layout />}>
                     <Route index element={<Home />} />

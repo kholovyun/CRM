@@ -10,15 +10,20 @@ const Footer: FunctionComponent = (): ReactElement => {
             <Container>
                 <div className={styles.Footer_container}>
                     <ul className={styles.Footer_navbar}>
-                        <li className={styles.Footer_navlist}>
-                            <NavLink to={"/"} className={styles.Footer_navlink}>Договор оферты</NavLink>
+                        <li className={styles.FooterNavlist}>
+                            <NavLink to={"/"} className={styles.FooterNavlink}>Договор оферты</NavLink>
                         </li>
-                        <li className={styles.NavList}>
-                            <NavLink to={"/"} className={`${styles.Footer_navlink}`}>Политика конфеденциальности</NavLink>
+                        <li className={styles.FooterNavlist}>
+                            <NavLink to={"/"} className={`${styles.FooterNavlink}`}>Политика конфеденциальности</NavLink>
                         </li>
                     </ul>
                     <div className={styles.Footer_contacts}>
-                        <p className={styles.Footer_contacts_title}>Контакты для связи</p>
+                        <p className={styles.FooterContactsTitle}>Контакты для связи</p>
+                        <div className={styles.icoContactBox}>
+                            <div className={`${styles.icoContact} ${styles.icoContactItemInsta}`}></div>
+                            <div className={`${styles.icoContact} ${styles.icoContactItemTelegram}`}></div>
+                            <div className={`${styles.icoContact} ${styles.icoContactItemWhatsapp}`}></div>
+                        </div>
                     </div>
                 </div>
             </Container>
