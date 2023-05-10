@@ -1,10 +1,22 @@
-.bigBtn {
-    background: #EEEEEE;
+.btn {
+    background: #D9D9D9;
     border-radius: 25px;
+    border: none;
+}
+
+.smallBtn {
+    padding: 16px 36px;
+}
+
+.bigBtn {
     padding: 24px 80px;
 }
 
-.bigBtn:disabled {
+.btn:hover {
+    box-shadow: 5px 5px 5px grey;
+}
+
+.btn:disabled {
     background: #948f8f;
     color: #e2dbdb;
 }
