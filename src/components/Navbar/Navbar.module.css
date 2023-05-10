@@ -1,28 +1,16 @@
 .NavItems {
     display: flex;
-    justify-content: space-between;
+    align-items: center
 }
 
-.NavList {
+.cabinetLink {
+    margin-right: 59px;
     list-style: none;
-}
-
-.NavList:first-child {
-    margin-right: 100px;
 }
 
 .NavLink_btn {
     background: #d9d9d9;
     border-radius: 20px;
     padding: 12px 32px;
-}
-
-.NavLink {
-    text-decoration: none;
-    font-family: "Syne";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 29px;
-    color: #000000;
+    list-style: none;
 }

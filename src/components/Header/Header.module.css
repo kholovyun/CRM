@@ -1,12 +1,5 @@
-.Header {
-    background: blue;
-}
-
 .Header_container {
     width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 130px;
     box-sizing: border-box;
     display: flex;
     align-items: center;

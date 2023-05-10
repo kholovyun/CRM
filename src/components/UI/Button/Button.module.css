@@ -3,3 +3,8 @@
     border-radius: 25px;
     padding: 24px 80px;
 }
+
+.bigBtn:disabled {
+    background: #948f8f;
+    color: #e2dbdb;
+}

@@ -1,8 +1,10 @@
 .Login {
-    width: 550px;
-    height: 375px;
+    width: 100%;
+    max-width: 550px;
+    padding: 30px 0;
     margin: auto;
     margin-top: 50px;
+    margin-bottom: 50px;
     background: #898989;
     border-radius: 50px;
 }
@@ -62,4 +64,12 @@
 .LoginButton:disabled {
     background: #eeebeb;
     color: #898989;
+}
+
+.typeError {
+    width: 80%;
+    text-align: center;
+    color: red;
+    margin: 0 0 5px 0;
+    padding: 0;
 }

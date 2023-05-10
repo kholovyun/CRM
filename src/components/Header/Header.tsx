@@ -1,20 +1,18 @@
 import { FunctionComponent, ReactElement } from "react";
-import Logo from "../Logo/Logo";
-import Navbar from "../Navbar/Navbar";
+import { Container } from "../UI/Container/Container";
 import styles from "./Header.module.css";
-
+import Navbar from "../Navbar/Navbar";
+import Logo from "../Logo/Logo";
 
 const Header: FunctionComponent = (): ReactElement => {
     return (
-        <header className={styles.Header}>
-            <div className={styles.Header_container}>
-                <div className={styles.Logo_block}>
+        <header>
+            <Container>
+                <div className={styles.Header_container}>
                     <Logo />
-                </div>
-                <div className={styles.Nav_block}>
                     <Navbar />
                 </div>
-            </div>
+            </Container>
         </header>
     );
 };

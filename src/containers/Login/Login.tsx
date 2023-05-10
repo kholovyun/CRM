@@ -1,71 +1,67 @@
-import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./Login.module.css";
+import { validationSchema } from "../../schemas/validationSchema";
 import { useLoginMutation } from "../../app/services/users";
 import { useAppSelector } from "../../app/hooks";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-const initialState = {
-    email: "",
-    password: ""
-};
+import { Formik } from "formik";
 
 const Login: React.FunctionComponent = (): React.ReactElement => {
+    const [loginUser, { data, isError, isSuccess }] = useLoginMutation();
     const myState = useAppSelector(state => state.auth);
-    const [loginInput, setLoginInput] = useState(initialState);
+    const navigator = useNavigate();
 
-    const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setLoginInput(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const [loginUser, { data: loginData, isError: loginIsError, isSuccess: loginIsSuccess }] = useLoginMutation();
-
-    const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log(`${loginInput.email} + ${loginInput.password}`);
-        if (loginInput.email.trim().length && loginInput.password.trim().length) {
-            // await loginUser(loginInput);
-            toast.success("Ты крут ");
-        } else {
-            toast.error("Заполните все поля");
-        }
-    };
+    isError && toast.error("Неверно указан Email или пароль");
+    isSuccess && toast.success(`Добро пожаловать ${data?.name} вход выполнен`);
 
     useEffect(() => {
-        if (loginIsError) {
-            console.log(loginIsError);
-            console.log(loginData);
+        if (myState.user) {
+            navigator("/cabinet");
         }
-        if (loginIsSuccess) {
-            console.log(loginIsSuccess);
-            console.log(loginData);
-        }
-    }, [loginUser]);
+    }, [myState.user]);
 
     return (
         <div className={styles.Login}>
             <h1 className={styles.LoginTitle}>Вход</h1>
-            <form onSubmit={loginHandler} className={styles.LoginForm}>
-                <input
-                    onChange={inputChangeHandler}
-                    value={loginInput.email}
-                    name="email"
-                    className={styles.LoginInput}
-                    type="text"
-                    placeholder="Email" />
-                <input
-                    onChange={inputChangeHandler}
-                    value={loginInput.password}
-                    name="password"
-                    className={styles.LoginInput}
-                    type="password"
-                    placeholder="Пароль" />
-                <a className={styles.forgotlink} href="/forgot-password">If forgot-password? Forward link</a>
-                <button className={styles.LoginButton}>Войти</button>
-            </form>
+            <Formik
+                initialValues={{
+                    email: "",
+                    password: "",
+                }}
+                validateOnBlur
+                onSubmit={async (values, actions) => {
+                    console.log(values);
+                    await loginUser(values);
+                    actions.resetForm();
+                }}
+                validationSchema={validationSchema}
+            >
+                {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
+                    <div className={styles.LoginForm}>
+                        <input
+                            onChange={handleChange}
+                            value={values.email}
+                            name="email"
+                            onBlur={handleBlur}
+                            className={styles.LoginInput}
+                            type="text"
+                            placeholder="Email" />
+                        {touched.email && errors.email && <p className={styles.typeError}>{errors.email}</p>}
+                        <input
+                            onChange={handleChange}
+                            value={values.password}
+                            name="password"
+                            onBlur={handleBlur}
+                            className={styles.LoginInput}
+                            type="password"
+                            placeholder="Пароль" />
+                        {touched.password && errors.password && <p className={styles.typeError}>{errors.password}</p>}
+                        <a className={styles.forgotlink} href="/forgot-password">Забыли пароль?</a>
+                        <button disabled={!isValid && dirty} type="submit" onClick={() => handleSubmit()} className={styles.LoginButton}>Войти</button>
+                    </div>
+                )}
+            </Formik>
             <button className={styles.LoginButton} onClick={() => console.log(myState)}>Show</button>
         </div>
     );

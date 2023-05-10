@@ -1,16 +1,20 @@
 import { FunctionComponent, ReactElement } from "react";
+import { useAppSelector } from "../../app/hooks";
 import { NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
 
+
 const Navbar: FunctionComponent = (): ReactElement => {
+    const { user } = useAppSelector(state => state.auth);
     return (
         <ul className={styles.NavItems}>
-            <li className={styles.NavList}>
-                <NavLink to={"/admin"} className={styles.NavLink}>Личный кабинет</NavLink>
+            {user && <li className={styles.cabinetLink}>
+                <NavLink to={"/cabinet"} >Личный кабинет: {user.name}</NavLink>
             </li>
-            <li className={styles.NavList}>
-                <NavLink to={"/"} className={`${styles.NavLink} ${styles.NavLink_btn}`}>Поддержка</NavLink>
+            }
+            <li className={styles.NavLink_btn}>
+                <NavLink to={"/"}>Поддержка</NavLink>
             </li>
         </ul>
     );

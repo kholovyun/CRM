@@ -1,4 +1,5 @@
 .doctorCabinet {
     width: 100%;
     background: yellowgreen;
+    min-height: 55vh;
 }

@@ -4,8 +4,23 @@
 	box-sizing: border-box;
 	width: 100%;
 	max-width: 1440px;
-	height: 100%;
 	margin: 0 auto;
-	background: red;
-	padding: 0 130px;
+}
+
+@media (min-width: 320px) {
+	.container {
+		padding: 0 10px;
+	}
+}
+
+@media (min-width: 500px) {
+	.container {
+		padding: 0 30px;
+	}
+}
+
+@media (min-width: 800px) {
+	.container {
+		padding: 0 130px;
+	}
 }
