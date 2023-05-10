@@ -1,9 +1,6 @@
-.container {
-    max-width: 1180px;
-    margin: 0 auto;
-}
-
 .Header_container {
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;

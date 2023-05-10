@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import IUserGetDtoWithToken from "../interfaces/IUser/IUserGetDtoWithToken";
 import usersApi from "../app/services/users";
+import { toast } from "react-toastify";
 
 interface stateUser {
     user: IUserGetDtoWithToken | null
@@ -15,7 +16,9 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
+            localStorage.removeItem("persist:root");
             state.user = null;
+            toast.success("Выход выполнен");
         },
     },
     extraReducers: (builder) => {

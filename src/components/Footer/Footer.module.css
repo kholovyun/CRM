@@ -1,37 +1,66 @@
-.Footer {
+footer {
     background: #000000;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
 
-.container {
-    max-width: 1180px;
-    margin: 0 auto;
 }
 
 .Footer_container {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 0;
+}
+
+.Footer_navbar {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.FooterNavlist {
+    margin-bottom: 20px;
+}
+
+.FooterNavlink {
+    margin: 0;
+    font-size: 20px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.Footer_contacts {
+    display: flex;
+    flex-direction: column;
+}
+
+.FooterContactsTitle {
+    color: #ffffff;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.icoContactBox {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
-    box-sizing: border-box;
 }
 
-.Footer_navlink {
-    font-family: "Syne";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 29px;
-    text-decoration-line: underline;
-    color: #ffffff;
+
+.icoContact {
+    min-width: 30px;
+    min-height: 30px;
+    cursor: pointer;
 }
 
-.Footer_contacts_title {
-    font-family: "Syne";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 29px;
-    color: #ffffff;
+.icoContactItemInsta {
+    background: url("../../../public/instagram.png") center/cover no-repeat;
+}
+
+.icoContactItemTelegram {
+    background: url("../../../public/itelegram.png") center/cover no-repeat;
+}
+
+.icoContactItemWhatsapp {
+    background: url("../../../public/whatsapp.png") center/cover no-repeat;
 }

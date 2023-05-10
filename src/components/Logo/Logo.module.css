@@ -1,9 +1,6 @@
 .Logo {
+    width: 116px;
+    height: 60px;
+    background: url("../../../public/logo.png") center/contain no-repeat;
     text-decoration: none;
-    font-family: "Syne";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 48px;
-    line-height: 58px;
-    color: #000000;
 }

@@ -68,6 +68,13 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
                     className={`${styles.RegisterInput}`}
                     type="text"
                     placeholder="+7(---) --- -- --" />
+                <label className={styles.RegisterLabel} htmlFor="">Роль пользователя</label>
+                <select className={styles.RegisterSelect}>
+                    <option>Выберите роль пользователя</option>
+                    <option value={ERoles.ADMIN}>Администратор</option>
+                    <option value={ERoles.DOCTOR}>Доктор</option>
+                    <option value={ERoles.PARENT}>Родитель</option>
+                </select>
                 <button className={styles.RegisterButton}>Продолжить</button>
             </form>
         </div>
