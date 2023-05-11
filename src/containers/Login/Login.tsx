@@ -19,9 +19,7 @@ const Login: React.FunctionComponent = (): React.ReactElement => {
     isSuccess && toast.success(`Добро пожаловать ${data?.name} вход выполнен`);
 
     useEffect(() => {
-        if (user) {
-            navigator("/cabinet");
-        }
+        user && navigator("/cabinet");
     }, [user]);
 
     return (

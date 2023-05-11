@@ -29,6 +29,7 @@ export const DoctorCabinet = () => {
             <div className={styles.doctorCabinet}>
                 <div className={styles.doctorTitleBox}>
                     <h1 className={styles.doctorTitle}>Cabinet</h1>
+                    <Button name={"Регистрация"} size={EButton.big} onclick={() => navigator("/register-user")} />
                     <Button name={"Выйти"} size={EButton.big} onclick={() => dispatcher(logout())} />
                 </div>
                 <div className={styles.doctorUpdate}>

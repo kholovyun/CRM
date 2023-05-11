@@ -3,8 +3,11 @@ import styles from "./RegisterUser.module.css";
 import IUserCreateDto from "../../interfaces/IUser/IUserCreateDto";
 import { ERoles } from "../../enums/ERoles";
 import { useCreateUserMutation } from "../../app/services/users";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
+    const navigator = useNavigate();
     const [form, setForm] = useState<IUserCreateDto>({
         name: "",
         surname: "",
@@ -14,7 +17,7 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
         role: ERoles.ADMIN
     });
 
-    const [createUser] = useCreateUserMutation();
+    const [createUser, { isError, isSuccess }] = useCreateUserMutation();
 
     const sumbitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -28,6 +31,14 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
             [name]: value
         }));
     };
+
+    const acceptHandler = () => {
+        toast.success("Письмо активации отправлено на почту");
+        navigator("/login");
+    };
+
+    isError && toast.error("Ошибка создания пользователя");
+    isSuccess && acceptHandler();
 
     return (
         <div className={styles.Register}>
@@ -68,7 +79,6 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
                     className={`${styles.RegisterInput}`}
                     type="text"
                     placeholder="+7(---) --- -- --" />
-                <label className={styles.RegisterLabel} htmlFor="">Роль пользователя</label>
                 <select className={styles.RegisterSelect}>
                     <option>Выберите роль пользователя</option>
                     <option value={ERoles.ADMIN}>Администратор</option>
