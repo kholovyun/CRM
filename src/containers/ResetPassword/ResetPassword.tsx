@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import styles from "../Login/Login.module.css";
+import { validationSchemaPasswords } from "../../schemas/validationSchemaPasswords";
 import { useSetPasswordMutation } from "../../app/services/password";
+import { Button } from "../../components/UI/Button/Button";
+import { EButtonTypes } from "../../enums/EButtonTypes";
+import styles from "../Login/Login.module.css";
+import { EButton } from "../../enums/EButton";
+import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Formik } from "formik";
-import { Button } from "../../components/UI/Button/Button";
-import { EButton } from "../../enums/EButton";
-import { EButtonTypes } from "../../enums/EButtonTypes";
-import { validationSchemaPasswords } from "../../schemas/validationSchemaPasswords";
 
 const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -18,16 +18,7 @@ const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
     isError && toast.error("Неудачно ошибка сервера");
 
     useEffect(() => {
-        // if (data) {
-        //     console.log("data===============================");
-        //     console.log("====================================");
-        //     setErrorMessage("Password changed");
-        // }
-        // if (isError) {
-        //     console.log("isError==============================");
-        //     setErrorMessage("Password incorrect");
-        //     console.log("====================================");
-        // }
+        //console.log("data===============================");
     }, []);
 
     return (
@@ -72,29 +63,6 @@ const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
                 )}
             </Formik>
         </div>
-        // <div className={styles.ResetPassword}>
-        //     <h1 className={styles.ResetTitle}>Сбросить пароль</h1>
-        //     <p>Message: {errorMessage && errorMessage}</p>
-        //     <form onSubmit={submitHandler} className={styles.PasswordForm}>
-        //         <input
-        //             className={styles.PasswordInput}
-        //             onChange={inputHandler}
-        //             value={userValues.password}
-        //             name="password"
-        //             type="password"
-        //             placeholder="Новый пароль" />
-        //         <input
-        //             className={styles.PasswordInput}
-        //             onChange={inputHandler}
-        //             value={userValues.password_repeat}
-        //             name="password_repeat"
-        //             type="password"
-        //             placeholder="Повторите пароль" />
-        //         <button className={styles.PasswordButton}>Установить</button>
-        //         <p className={styles.errorText}>{errorMessage}</p>
-        //     </form>
-        //     <button className={styles.PasswordButton} onClick={() => setErrorMessage("")}>clear</button>
-        // </div>
     );
 };
 
