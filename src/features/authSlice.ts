@@ -18,7 +18,7 @@ const authSlice = createSlice({
         logout: (state) => {
             localStorage.removeItem("persist:root");
             state.user = null;
-            toast.success("Выход выполнен");
+            toast.info("Выход выполнен");
         },
     },
     extraReducers: (builder) => {

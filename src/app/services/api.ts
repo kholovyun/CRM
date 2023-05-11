@@ -6,7 +6,7 @@ export const api = createApi({
         baseUrl: import.meta.env.VITE_BASE_URL,
         prepareHeaders: (headers, { getState }) => {
             const state = getState() as RootState;
-            const token = state.auth;
+            const token = state.auth.user?.token;
             if (token) {
                 headers.set("authorization", `Bearer ${token}`);
             }
