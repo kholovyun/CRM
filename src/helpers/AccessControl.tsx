@@ -8,6 +8,7 @@ interface AccessControlProps {
 const AccessControl: React.FC<AccessControlProps> = ({
     allowedRoles,
     component: Component,
+    
 }) => {
     const role = "Some role"; // Получить роль позьзователя через РТК Квери
 
