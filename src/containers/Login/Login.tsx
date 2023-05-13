@@ -5,7 +5,7 @@ import { useAppSelector } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { toast } from "react-toastify";
-import { Formik } from "formik";
+import { Formik, Form, Field } from "formik";
 import Btn from "../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnTypes } from "../../enums/EBtnTypes";
@@ -39,29 +39,15 @@ const Login: React.FunctionComponent = (): React.ReactElement => {
                     }}
                     validationSchema={validationSchema}
                 >
-                    {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit }) => (
-                        <div className={styles.LoginForm}>
-                            <input
-                                onChange={handleChange}
-                                value={values.email}
-                                name="email"
-                                onBlur={handleBlur}
-                                className={styles.LoginInput}
-                                type="text"
-                                placeholder="Email" />
+                    {({ errors, touched, isValid, handleSubmit }) => (
+                        <Form className={styles.LoginForm}>
+                            <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
                             {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
-                            <input
-                                onChange={handleChange}
-                                value={values.password}
-                                name="password"
-                                onBlur={handleBlur}
-                                className={styles.LoginInput}
-                                type="password"
-                                placeholder="Пароль" />
+                            <Field className={styles.LoginInput} name="password" type="password" placeholder="Пароль" />
                             {touched.password && errors.password ? <p className={styles.typeError}>{errors.password}</p> : <p className={styles.typeText}></p>}
                             <a className={styles.forgotlink} href="/forgot-password">Забыли пароль?</a>
                             <Btn disabled={!isValid} title="Войти" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
-                        </div>
+                        </Form>
                     )}
                 </Formik>
             </div>

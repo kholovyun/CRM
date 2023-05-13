@@ -1,26 +1,27 @@
 import { validationSchemaPasswords } from "../../schemas/validationSchemaPasswords";
 import { useSetPasswordMutation } from "../../app/services/password";
 import styles from "../Login/Login.module.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { toast } from "react-toastify";
-import { Formik } from "formik";
+import { Formik, Form, Field } from "formik";
 import Btn from "../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { Container } from "../../components/UI/Container/Container";
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
     const urlParams = new URLSearchParams(window.location.search);
     const getQuery = urlParams.get("token");
+    const navigator = useNavigate();
 
     const [setPassword, { isError, isSuccess }] = useSetPasswordMutation();
 
-    isSuccess && toast.success("Пароль изменен");
+    isSuccess && (
+        navigator("/login"),
+        toast.success("Пароль изменен")
+    );
     isError && toast.error("Неудачно ошибка сервера");
-
-    useEffect(() => {
-        //console.log("data===============================");
-    }, []);
 
     return (
         <Container>
@@ -40,28 +41,14 @@ const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
                     }}
                     validationSchema={validationSchemaPasswords}
                 >
-                    {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit }) => (
-                        <div className={styles.LoginForm}>
-                            <input
-                                onChange={handleChange}
-                                value={values.password}
-                                name="password"
-                                onBlur={handleBlur}
-                                className={styles.LoginInput}
-                                type="password"
-                                placeholder="Пароль" />
+                    {({ errors, touched, isValid, handleSubmit }) => (
+                        <Form className={styles.LoginForm}>
+                            <Field className={styles.LoginInput} name="password" type="password" placeholder="Пароль" />
                             {touched.password && errors.password ? <p className={styles.typeError}>{errors.password}</p> : <p className={styles.typeText}></p>}
-                            <input
-                                onChange={handleChange}
-                                value={values.passwordRepeat}
-                                name="passwordRepeat"
-                                onBlur={handleBlur}
-                                className={styles.LoginInput}
-                                type="password"
-                                placeholder="Пароль" />
+                            <Field className={styles.LoginInput} name="passwordRepeat" type="password" placeholder="Повторите пароль" />
                             {touched.passwordRepeat && errors.passwordRepeat ? <p className={styles.typeError}>{errors.passwordRepeat}</p> : <p className={styles.typeText}></p>}
                             <Btn disabled={!isValid} title="Подтвердить" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
-                        </div>
+                        </Form>
                     )}
                 </Formik>
             </div>

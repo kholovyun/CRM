@@ -9,7 +9,7 @@ import styles from "./DoctorCabinet.module.css";
 import { useNavigate } from "react-router-dom";
 import { EBtnSize } from "../../enums/EBtnSize";
 import { toast } from "react-toastify";
-import { Formik } from "formik";
+import { Formik, Form, Field } from "formik";
 import Btn from "../../components/UI/Btn/Btn";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 
@@ -18,6 +18,7 @@ export const DoctorCabinet = () => {
     const dispatcher = useAppDispatch();
     const navigator = useNavigate();
     const [imageLoadError, setImageLoadError] = useState(false);
+    const [updateData, setUpdateData] = useState(true);
 
     useEffect(() => {
         !user && navigator("/");
@@ -50,34 +51,20 @@ export const DoctorCabinet = () => {
                             }}
                             validateOnBlur
                             onSubmit={() => {
-                                toast.info("Функционал пока недоступен");
+                                toast.info("Отправлено на модерацию");
+                                setUpdateData(true);
                             }}
                             validationSchema={validationSchemaUser}
                         >
-                            {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit }) => (
-                                <div className={styles.doctorLoginForm}>
-                                    <input
-                                        readOnly={true}
-                                        onChange={handleChange}
-                                        value={values.email}
-                                        name="email"
-                                        onBlur={handleBlur}
-                                        className={stylesInput.LoginInput}
-                                        type="text"
-                                        placeholder="Email" />
+                            {({ errors, touched, isValid, handleSubmit }) => (
+                                <Form className={styles.doctorLoginForm}>
+                                    <Field readOnly={updateData} className={stylesInput.LoginInput} name="email" type="text" placeholder="Email" />
                                     {touched.email && errors.email ? <p className={stylesInput.typeError}>{errors.email}</p> : <p className={stylesInput.typeText}></p>}
-                                    <input
-                                        readOnly={true}
-                                        onChange={handleChange}
-                                        value={values.name}
-                                        name="name"
-                                        onBlur={handleBlur}
-                                        className={stylesInput.LoginInput}
-                                        type="name"
-                                        placeholder="Пароль" />
-                                    {touched.name && errors.name ? <p className={stylesInput.typeError}>{stylesInput.name}</p> : <p className={stylesInput.typeText}></p>}
-                                    <Btn disabled={!isValid} title="Редактировать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit}/>
-                                </div>
+                                    <Field readOnly={updateData} className={stylesInput.LoginInput} name="name" type="text" placeholder="Email" />
+                                    {touched.name && errors.name ? <p className={stylesInput.typeError}>{errors.name}</p> : <p className={stylesInput.typeText}></p>}
+                                    {updateData && <Btn disabled={!isValid} title="Редактировать" onclick={() => setUpdateData(false)} size={EBtnSize.big} types={EBtnTypes.submit} />}
+                                    {!updateData && <Btn disabled={!isValid} title="Сохранить" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />}
+                                </Form>
                             )}
                         </Formik>
                     </div>
