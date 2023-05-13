@@ -13,5 +13,9 @@ export const validationSchema = yup.object().shape({
             return true;
         })
         .required("Обязательно для заполнения"),
-    email: yup.string().email("Введите корректный Email").required("Поле не должно быть пустым"),
+    email: yup.string()
+        .email("Введите корректный Email")
+        .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            "Введите корректный Email")
+        .required("Поле не должно быть пустым"),
 });
