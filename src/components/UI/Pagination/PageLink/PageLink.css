@@ -1,13 +1,15 @@
 .page_link {
     position: relative;
     display: inline-flex;
-    background-color: #1bbc9d54;
+    min-width: 50px;
+    background-color: var(--light_blue);
     padding: 10px 15px;
-    color: black;
+    color: var(--black_blue);
     font-size: 16px;
+    line-height: 100%;
     font-weight: 500;
     text-decoration: none;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out border-color 0.15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
     cursor: pointer;
 }
 
@@ -23,8 +25,8 @@
 
 .page_link:hover,
 .page_link:focus {
-    color: #1BBC9D;
-    background-color: #1bbc9d54;
+    color: white;
+    background-color: var(--violet);
 }
 
 .page_link:focus {
@@ -33,11 +35,11 @@
 
 .page_link.active {
     z-index: 2;
-    color: #ffffff;
-    background-color: #1BBC9D;
+    color: white;
+    background-color: var(--violet);
 }
 
 .page_link.disabled {
-    color: #1BBC9D;
+    color: var(--black_blue);
     pointer-events: none;
 }

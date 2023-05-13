@@ -1,20 +1,28 @@
 import styles from "./Home.module.css";
 import { Container } from "../../components/UI/Container/Container";
-import { Button } from "../../components/UI/Button/Button";
-import { useNavigate } from "react-router-dom";
-import { EButton } from "../../enums/EButton";
-import { toast } from "react-toastify";
+import { NavLink, useNavigate } from "react-router-dom";
+import { EBtnSize } from "../../enums/EBtnSize";
+import Btn from "../../components/UI/Btn/Btn";
+import homePhoto from "../../assets/img/Home.png";
+import { EBtnClass } from "../../enums/EBtnClass";
 
 export const Home = () => {
-    const navigator = useNavigate();
+    const navigate = useNavigate();
+
     return (
         <Container>
-            <div className={styles.home}>
-                <div>
+            <div className={styles.home_img_box}>
+                <img src={homePhoto} className={styles.img} alt="home image" />
+                <div className={styles.home_content_row}>
                     <h1 className={styles.homeTitle}>Надежный партнер в заботе о Вашем ребенке</h1>
-                    <div>
-                        <Button name={"Вход"} onclick={() => navigator("/login")} />
-                        <Button name={"Подписка ==>"} onclick={() => toast.info("Функционал пока недоступен")} size={EButton.small} />
+                    <div className={styles.btn_group}>
+                        <Btn title={"Вход"} 
+                            onclick={() => navigate("/login")}
+                            size={EBtnSize.big}
+                            btnClass={EBtnClass.dark_active}/>
+                        <NavLink to={"/"} className={styles.transparent_link}>
+                            {"Подписка"}
+                        </NavLink>
                     </div>
                 </div>
             </div>

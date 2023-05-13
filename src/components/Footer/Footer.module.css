@@ -1,22 +1,21 @@
-footer {
-    background: #000000;
-
+.Footer_bg {
+    background: var(--black_blue);
 }
 
-.Footer_container {
-    width: 100%;
-    box-sizing: border-box;
+.Footer_content_container {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
-    padding: 60px 0;
+    padding: 63px 0px;
+    align-items: center;
+    gap: 50px;
+    margin: 0 auto;
 }
 
-.Footer_navbar {
+.Footer_flex_column {
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
+    gap: 20px;
 }
 
 .FooterNavlist {
@@ -25,20 +24,17 @@ footer {
 
 .FooterNavlink {
     margin: 0;
-    font-size: 20px;
+    font-size: 24px;
+    line-height: 100%;
     color: #ffffff;
     cursor: pointer;
 }
 
-.Footer_contacts {
-    display: flex;
-    flex-direction: column;
-}
-
 .FooterContactsTitle {
-    color: #ffffff;
     margin: 0;
-    margin-bottom: 20px;
+    font-size: 24px;
+    color: #ffffff;
+    line-height: 100%;
 }
 
 .icoContactBox {
@@ -53,14 +49,31 @@ footer {
     cursor: pointer;
 }
 
-.icoContactItemInsta {
-    background: url("../../../public/instagram.png") center/cover no-repeat;
-}
-
 .icoContactItemTelegram {
-    background: url("../../../public/itelegram.png") center/cover no-repeat;
+    background: url("../../assets/img/icon-telegram.svg") center/cover no-repeat;
 }
 
 .icoContactItemWhatsapp {
-    background: url("../../../public/whatsapp.png") center/cover no-repeat;
+    background: url("../../assets/img/icon-mail.svg") center/cover no-repeat;
+}
+
+@media screen and (min-width: 320px) {
+    .Footer_content_container {
+        padding: 63px 20px;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 320px) {
+    .Footer_content_container {
+        padding: 63px 40px;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .Footer_content_container {
+        padding: 63px 0;
+        width: 1180px;
+    }
 }

@@ -1,6 +1,6 @@
 .Logo {
-    width: 116px;
-    height: 60px;
-    background: url("../../../public/logo.png") center/contain no-repeat;
-    text-decoration: none;
+    display: inline-block;
+    width: 88px;
+    height: 64px;
+    background: url("../../assets/img/logo.svg") center/contain no-repeat;
 }
