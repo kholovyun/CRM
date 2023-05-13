@@ -1,0 +1,22 @@
+.tab_title_item {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    max-width: 100%;
+    font-size: 24px;
+    line-height: 100%;
+    background-color: var(--light_blue);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 15px 38px;
+    z-index: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.active,
+.tab_title_item:hover {
+    background-color: white;
+}
