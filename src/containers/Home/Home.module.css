@@ -1,22 +1,130 @@
-.home {
+.home_img_box {
+    position: relative;
     width: 100%;
-    height: 100%;
-    background: url("../../../public/pediatr-doktor.jpg") center/cover no-repeat;
+    margin-bottom: 50px;
+}
+
+.img {
+    width: 100%;
+    object-fit: cover;
+    background-color: rgba(135, 113, 167, 0.4);
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.home_content_row {
     display: flex;
-    box-sizing: border-box;
-    padding: 200px 0;
+    flex-direction: column;
     text-align: center;
     justify-content: center;
     align-items: center;
 }
 
-.image {
-    width: 500px;
-    height: 700px;
-    background: green;
-}
-
 .homeTitle {
     font-size: 64px;
+    font-weight: 700;
+    line-height: 120%;
     max-width: 800px;
+    margin: 0;
+    text-align: center;
+}
+
+.btn_group {
+    display: flex;
+    gap: 72px;
+    flex-wrap: wrap;
+    justify-content: center
+}
+
+.transparent_link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--black_blue);
+    font-size: 24px;
+    line-height: 100%;
+    text-decoration: none;
+    min-width: 280px;
+    border-radius: 25px;
+    padding: 24px 60px;
+    font-size: 24px;
+    line-height: 100%;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.transparent_link::after {
+    content: "";
+    background: url("../../assets/img/arrow.svg") center/contain no-repeat;
+    width: 47px;
+    height: 30px;
+    padding-left: 15px;
+}
+
+.transparent_link:hover,
+.transparent_link:active {
+    font-weight: 500;
+    color: var(--violet);
+    background-color: rgba(229, 232, 241, 0.7);
+}
+
+.transparent_link:hover::after {
+    background: url("../../assets/img/arrow-violet.svg") center/contain no-repeat;
+}
+
+@media screen and (min-width: 320px) {
+    .homeTitle {
+        font-size: 40px;
+    }
+
+    .home_content_row {
+        padding: 30px 20px;
+        max-width: 100%;
+        gap: 20px;
+    }
+
+    .transparent_link {
+        font-size: 22px;
+        min-width: 200px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .homeTitle {
+        font-size: 54px;
+    }
+}
+
+@media screen and (min-width: 764px) {
+    .home_content_row {
+        padding-top: 0;
+        position: absolute;
+        top: 50%;
+        bottom: 50%;
+        left: 0;
+        right: 0;
+        gap: 30px;
+    }
+}
+
+@media screen and (min-width: 900px) {
+
+    .home_content_row {
+        gap: 50px;
+        top: 50%;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .homeTitle {
+        font-size: 64px;
+    }
+
+    .home_content_row {
+        max-width: 1180px;
+    }
+
+    .transparent_link {
+        min-width: 280px;
+        font-size: 24px;
+    }
 }
