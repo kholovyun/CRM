@@ -1,6 +1,8 @@
 .page_link {
     position: relative;
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-width: 50px;
     background-color: var(--light_blue);
     padding: 10px 15px;

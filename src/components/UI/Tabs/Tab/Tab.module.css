@@ -1,0 +1,7 @@
+.content_item {
+    background-color: white;
+    border-radius: 50px;
+    padding: 20px 60px;
+    box-sizing: border-box;
+    width: 100%;
+}
