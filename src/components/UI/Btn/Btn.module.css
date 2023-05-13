@@ -1,0 +1,71 @@
+.btn {
+    outline: none;
+    border: none;
+    color: white;
+    line-height: 100%;
+    font-weight: 500;
+    background-color: var(--violet);
+    cursor: pointer;
+}
+
+.dark_active:active,
+.dark_active:hover {
+    color: var(--violet);
+    background-color: var(--black_blue);
+}
+
+.white_active:active,
+.white_active:hover {
+    color: var(--violet);
+    background-color: white;
+}
+
+.big {
+    min-width: 280px;
+    border-radius: 25px;
+    padding: 24px 60px;
+}
+
+.small {
+    min-width: 110px;
+    border-radius: 20px;
+    padding: 12px 32px;
+}
+
+.tiny {
+    border-radius: 20px;
+    padding: 10px 40px;
+}
+
+@media screen and (min-width: 320px) {
+    .big {
+        font-size: 22px;
+        min-width: 200px;
+    }
+
+    .small {
+        font-size: 20px;
+        min-width: 100px;
+    }
+
+    .tiny {
+        font-size: 18px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .big {
+        min-width: 280px;
+        font-size: 24px;
+    }
+
+    .small {
+        font-size: 24px;
+        min-width: 110px;
+    }
+
+    .tiny {
+        border-radius: 20px;
+        font-size: 20px;
+    }
+}
