@@ -33,9 +33,8 @@ const Login: React.FunctionComponent = (): React.ReactElement => {
                         password: "",
                     }}
                     validateOnBlur
-                    onSubmit={async (values, actions) => {
+                    onSubmit={async (values) => {
                         await loginUser(values);
-                        actions.resetForm();
                     }}
                     validationSchema={validationSchema}
                 >
