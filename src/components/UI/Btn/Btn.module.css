@@ -37,6 +37,10 @@
     padding: 10px 40px;
 }
 
+.btn:disabled {
+    background-color: rgb(182, 175, 175);
+}
+
 @media screen and (min-width: 320px) {
     .big {
         font-size: 22px;

@@ -1,14 +1,3 @@
-.Login {
-    width: 100%;
-    max-width: 550px;
-    padding: 30px 0;
-    margin: auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    background-image: linear-gradient(315deg, #dec7ff 0%, #8771a7 74%);
-    border-radius: 50px;
-}
-
 .LoginForm {
     display: flex;
     flex-direction: column;
@@ -24,16 +13,6 @@
 
 .forgotlink:hover {
     color: #616161;
-}
-
-.LoginTitle {
-    font-weight: 500;
-    font-size: 42px;
-    line-height: 58px;
-    color: #ffffff;
-    text-align: center;
-    padding: 25px 0;
-    margin: 0;
 }
 
 .LoginInput {

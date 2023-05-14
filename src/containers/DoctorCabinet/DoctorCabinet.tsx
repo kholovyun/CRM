@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import Btn from "../../components/UI/Btn/Btn";
 import { EBtnTypes } from "../../enums/EBtnTypes";
+import { clearDoctor, setDoctor } from "../../features/doctorSlice";
 
 export const DoctorCabinet = () => {
     const { user } = useAppSelector(state => state.auth);
@@ -19,6 +20,16 @@ export const DoctorCabinet = () => {
     const navigator = useNavigate();
     const [imageLoadError, setImageLoadError] = useState(false);
     const [updateData, setUpdateData] = useState(true);
+
+    const createParrentHandler = () => {
+        dispatcher(setDoctor(user?.id));
+        navigator("/register-parrent");
+    };
+
+    const logOutHandler = () => {
+        dispatcher(clearDoctor());
+        dispatcher(logout());
+    };
 
     useEffect(() => {
         !user && navigator("/");
@@ -28,9 +39,9 @@ export const DoctorCabinet = () => {
         <Container>
             <div className={styles.doctorCabinet}>
                 <div className={styles.doctorTitleBox}>
-                    <h1 className={styles.doctorTitle}>Cabinet</h1>
-                    <Btn title={"Регистрация"} size={EBtnSize.big} onclick={() => navigator("/register-user")} />
-                    <Btn title={"Выйти"} size={EBtnSize.big} onclick={() => dispatcher(logout())} />
+                    <h2>Личный кабинет</h2>
+                    <Btn title={"Регистрация"} size={EBtnSize.big} onclick={createParrentHandler} />
+                    <Btn title={"Выйти"} size={EBtnSize.big} onclick={logOutHandler} />
                 </div>
                 <div className={styles.doctorUpdate}>
                     {imageLoadError ? (

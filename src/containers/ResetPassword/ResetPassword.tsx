@@ -1,7 +1,7 @@
 import { validationSchemaPasswords } from "../../schemas/validationSchemaPasswords";
 import { useSetPasswordMutation } from "../../app/services/password";
 import styles from "../Login/Login.module.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import Btn from "../../components/UI/Btn/Btn";
@@ -9,24 +9,40 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { Container } from "../../components/UI/Container/Container";
 import { useNavigate } from "react-router-dom";
+import { Contetnt } from "../../components/UI/Contetnt/Contetnt";
+import { Title } from "../../components/UI/Title/Title";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
+import { IMessage } from "../../interfaces/IUser/IMessage";
 
 const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
     const urlParams = new URLSearchParams(window.location.search);
     const getQuery = urlParams.get("token");
     const navigator = useNavigate();
 
-    const [setPassword, { isError, isSuccess }] = useSetPasswordMutation();
+    const [setPassword, { data, isError, isSuccess, error }] = useSetPasswordMutation();
 
-    isSuccess && (
-        navigator("/login"),
-        toast.success("Пароль изменен")
-    );
-    isError && toast.error("Неудачно ошибка сервера");
+    const transferHandler = () => {
+        navigator("/login");
+        toast.success(data?.message);
+    };
+
+    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        const err = data as IErrorResponse<IMessage>;
+        toast.error(`Ошибка: ${err.error ? err.error : err.data.message}`);
+    };
+
+    isError && errorHandler(error);
+
+    useEffect(() => {
+        isSuccess && transferHandler();
+    }, [data]);
 
     return (
         <Container>
-            <div className={styles.Login}>
-                <h1 className={styles.LoginTitle}>Сменить пароль</h1>
+            <Contetnt>
+                <Title text="Сменить пароль" />
                 <Formik
                     initialValues={{
                         password: "",
@@ -51,7 +67,7 @@ const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
                         </Form>
                     )}
                 </Formik>
-            </div>
+            </Contetnt>
         </Container>
     );
 };

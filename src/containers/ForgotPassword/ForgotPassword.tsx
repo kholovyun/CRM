@@ -8,6 +8,8 @@ import React from "react";
 import Btn from "../../components/UI/Btn/Btn";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { Container } from "../../components/UI/Container/Container";
+import { Contetnt } from "../../components/UI/Contetnt/Contetnt";
+import { Title } from "../../components/UI/Title/Title";
 
 const ForgotPassword: React.FunctionComponent = (): React.ReactElement => {
     const [resetPassword, { isError, isSuccess, error }] = useResetPasswordMutation();
@@ -16,8 +18,8 @@ const ForgotPassword: React.FunctionComponent = (): React.ReactElement => {
 
     return (
         <Container>
-            <div className={styles.Login}>
-                <h1 className={styles.LoginTitle}>Сбросить пароль</h1>
+            <Contetnt>
+                <Title text="Сбросить пароль" />
                 <Formik
                     initialValues={{ email: "" }}
                     validateOnBlur
@@ -34,7 +36,7 @@ const ForgotPassword: React.FunctionComponent = (): React.ReactElement => {
                         </Form>
                     )}
                 </Formik>
-            </div>
+            </Contetnt>
         </Container>
     );
 };

@@ -1,7 +1,7 @@
 import { ERoles } from "../../enums/ERoles";
 
 export default interface IUserCreateDto {
-    role: ERoles | "",
+    role: ERoles | string,
     email: string,
     phone: string,
     name: string,

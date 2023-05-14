@@ -1,93 +1,108 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
-import styles from "./RegisterUser.module.css";
-import IUserCreateDto from "../../interfaces/IUser/IUserCreateDto";
+import React from "react";
+import styles from "../Login/Login.module.css";
+import { Formik, Field, Form } from "formik";
+import { validationSchemaRegUser } from "../../schemas/validationSchemaRegUser";
 import { ERoles } from "../../enums/ERoles";
-import { useCreateUserMutation } from "../../app/services/users";
+import Btn from "../../components/UI/Btn/Btn";
+import { EBtnSize } from "../../enums/EBtnSize";
+import { EBtnTypes } from "../../enums/EBtnTypes";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useCreateUserMutation } from "../../app/services/users";
+import MaskedInput from "react-text-mask";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
+import { IMessage } from "../../interfaces/IUser/IMessage";
+import { Contetnt } from "../../components/UI/Contetnt/Contetnt";
+import { Title } from "../../components/UI/Title/Title";
+
 
 const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
-    const navigator = useNavigate();
-    const [form, setForm] = useState<IUserCreateDto>({
-        name: "",
-        surname: "",
-        phone: "",
-        patronim: "",
-        email: "",
-        role: ERoles.ADMIN
-    });
+    const [createUser, { isError, isSuccess, error: createUserError }] = useCreateUserMutation();
+    const phoneNumberMask = [
+        "+",
+        "7",
+        "(",
+        /\d/,
+        /\d/,
+        /\d/,
+        ")",
+        /\d/,
+        /\d/,
+        /\d/,
+        "-",
+        /\d/,
+        /\d/,
+        "-",
+        /\d/,
+        /\d/
+    ];
 
-    const [createUser, { isError, isSuccess }] = useCreateUserMutation();
-
-    const sumbitHandler = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        createUser(form);
+    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        const err = data as IErrorResponse<IMessage>;
+        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
     };
 
-    const inputChangeHandler = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setForm(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const acceptHandler = () => {
-        toast.success("Письмо активации отправлено на почту");
-        navigator("/login");
-    };
-
-    isError && toast.error("Ошибка создания пользователя");
-    isSuccess && acceptHandler();
+    isError && errorHandler(createUserError);
+    isSuccess && toast.success("Письмо активации отправлено на почту");
 
     return (
-        <div className={styles.Register}>
-            <p className={styles.RegisterTitle}>Введите данные для регистрации</p>
-            <form onSubmit={sumbitHandler} className={styles.RegisterForm}>
-                <input
-                    onChange={inputChangeHandler}
-                    value={form.name}
-                    name="name"
-                    className={`${styles.RegisterInput}`}
-                    type="text"
-                    placeholder="Имя" />
-                <input
-                    onChange={inputChangeHandler}
-                    value={form.surname}
-                    name="surname"
-                    className={`${styles.RegisterInput}`}
-                    type="text"
-                    placeholder="Фамилия" />
-                <input
-                    onChange={inputChangeHandler}
-                    value={form.patronim}
-                    name="patronim"
-                    className={`${styles.RegisterInputBig} ${styles.RegisterInput}`}
-                    type="text"
-                    placeholder="Отчество" />
-                <input
-                    onChange={inputChangeHandler}
-                    value={form.email}
-                    name="email"
-                    className={`${styles.RegisterInput}`}
-                    type="text"
-                    placeholder="Email" />
-                <input
-                    onChange={inputChangeHandler}
-                    value={form.phone}
-                    name="phone"
-                    className={`${styles.RegisterInput}`}
-                    type="text"
-                    placeholder="+7(---) --- -- --" />
-                <select className={styles.RegisterSelect}>
-                    <option>Выберите роль пользователя</option>
-                    <option value={ERoles.ADMIN}>Администратор</option>
-                    <option value={ERoles.DOCTOR}>Доктор</option>
-                    <option value={ERoles.PARENT}>Родитель</option>
-                </select>
-                <button className={styles.RegisterButton}>Продолжить</button>
-            </form>
-        </div>
+        <Contetnt>
+            <Title text="Регистрация" />
+            <Formik
+                initialValues={{
+                    name: "",
+                    surname: "",
+                    patronim: "",
+                    phone: "",
+                    email: "",
+                    role: ""
+                }}
+                validateOnBlur
+                onSubmit={(values) => {
+                    createUser(values);
+                }}
+                validationSchema={validationSchemaRegUser}
+            >
+                {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
+                    <Form className={styles.LoginForm}>
+                        <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
+                        {touched.name && errors.name ? <p className={styles.typeError}>{errors.name}</p> : <p className={styles.typeText}></p>}
+                        <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
+                        {touched.surname && errors.surname ? <p className={styles.typeError}>{errors.surname}</p> : <p className={styles.typeText}></p>}
+                        <Field className={styles.LoginInput} name="patronim" type="text" placeholder="Отчество" />
+                        {touched.patronim && errors.patronim ? <p className={styles.typeError}>{errors.patronim}</p> : <p className={styles.typeText}></p>}
+                        <Field
+                            name="phone"
+                            type="text"
+                            render={({ ...field }) => (
+                                <MaskedInput
+                                    {...field}
+                                    mask={phoneNumberMask}
+                                    id="phone"
+                                    placeholder="+7(___)___-__-__"
+                                    type="text"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className={styles.LoginInput}
+                                />
+                            )}
+                        >
+                        </Field>
+                        {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
+                        <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
+                        {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
+                        <Field as="select" name="role" className={styles.LoginInput}>
+                            <option value="">Выберите роль</option>
+                            <option value={ERoles.DOCTOR}>Врач</option>
+                            <option value={ERoles.ADMIN}>Админ</option>
+                        </Field>
+                        {touched.role && errors.role ? <p className={styles.typeError}>{errors.role}</p> : <p className={styles.typeText}></p>}
+                        <Btn disabled={!isValid} title="Создать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
+                    </Form>
+                )}
+            </Formik>
+        </Contetnt>
     );
 };
 

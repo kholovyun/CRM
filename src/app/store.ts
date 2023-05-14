@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { api } from "./services/api";
 import authReducer from "../features/authSlice";
+import doctorReducer from "../features/doctorSlice";
 import { PERSIST, persistReducer, persistStore, PURGE, REGISTER } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
@@ -15,6 +16,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    doctor: doctorReducer,
     [api.reducerPath]: api.reducer,
 });
 
