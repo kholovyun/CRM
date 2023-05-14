@@ -7,17 +7,17 @@ import Btn from "../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../../app/services/users";
 import MaskedInput from "react-text-mask";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
+import { Contetnt } from "../../components/UI/Contetnt/Contetnt";
+import { Title } from "../../components/UI/Title/Title";
 
 
 const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
-    const navigator = useNavigate();
     const [createUser, { isError, isSuccess, error: createUserError }] = useCreateUserMutation();
     const phoneNumberMask = [
         "+",
@@ -38,22 +38,17 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
         /\d/
     ];
 
-    const acceptHandler = () => {
-        toast.success("Письмо активации отправлено на почту");
-        navigator("/login");
-    };
-
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
         const err = data as IErrorResponse<IMessage>;
         toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
     };
 
     isError && errorHandler(createUserError);
-    isSuccess && acceptHandler();
+    isSuccess && toast.success("Письмо активации отправлено на почту");
 
     return (
-        <div className={styles.Login}>
-            <h1 className={styles.LoginTitle}>Регистрация</h1>
+        <Contetnt>
+            <Title text="Регистрация" />
             <Formik
                 initialValues={{
                     name: "",
@@ -107,7 +102,7 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
                     </Form>
                 )}
             </Formik>
-        </div>
+        </Contetnt>
     );
 };
 

@@ -1,4 +1,5 @@
 export interface IErrorResponse<T> {
     data: T
-    status: number
+    status: number | string
+    error?: string
 } 

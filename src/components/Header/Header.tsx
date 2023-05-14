@@ -17,21 +17,21 @@ const Header: FunctionComponent = (): ReactElement => {
 
                 <div className={styles.header_logo_box}>
                     <Logo />
-                </div>                    
+                </div>
                 <nav className={styles.header_links_row}>
                     <div className={styles.flex_row}>
-                        {user && 
+                        {user &&
                             <NavLink to={"cabinet/"} className={styles.header_link}>
-                            Личный кабинет: <strong>{user.name}</strong>
+                                Личный кабинет: <strong>{user.name}</strong>
                             </NavLink>
                         }
                         <div className={styles.header_avatar_box}>
                             <div className={styles.header_avatar_img}></div>
                         </div>
-                        <Btn 
-                            title="Поддержка" 
+                        <Btn
+                            title="Поддержка"
                             onclick={() => toast.info("Функционал пока недоступен")}
-                            size={EBtnSize.small} 
+                            size={EBtnSize.small}
                             btnClass={EBtnClass.dark_active}
                         />
                     </div>

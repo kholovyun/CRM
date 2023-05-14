@@ -25,7 +25,7 @@ const usersApi = api.injectEndpoints({
                 method: "post",
                 body: userDto
             }),
-            // invalidatesTags: ["User"]
+            invalidatesTags: ["User"]
         }),
         login: build.mutation<IUserGetDtoWithToken, IUserLoginDto>({
             query: (body: IUserLoginDto) => ({
