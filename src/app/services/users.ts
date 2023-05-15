@@ -33,9 +33,20 @@ const usersApi = api.injectEndpoints({
                 method: "post",
                 body
             })
+        }),
+        blockUser: build.mutation<IUserGetDto, string>({
+            query: (id: string) => ({
+                url: `/users/block/${id}`,
+                method: "patch"
+            })
         })
     })
 });
 
-export const { useGetUsersQuery, useGetUserByIdQuery, useCreateUserMutation, useLoginMutation } = usersApi;
+export const { 
+    useGetUsersQuery, 
+    useGetUserByIdQuery, 
+    useCreateUserMutation, 
+    useLoginMutation, 
+    useBlockUserMutation } = usersApi;
 export default usersApi;
