@@ -44,7 +44,7 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
     };
 
     isError && errorHandler(createUserError);
-    isSuccess && toast.success("Письмо активации отправлено на почту");
+    isSuccess && toast.info("Письмо активации отправлено на почту");
 
     return (
         <Contetnt>

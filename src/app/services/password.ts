@@ -5,7 +5,7 @@ import { api } from "./api";
 
 const passwordApi = api.injectEndpoints({
     endpoints: build => ({
-        resetPassword: build.mutation<IMessage, IEmail>({
+        resetPassword: build.mutation<IEmail, IEmail>({
             query: (body: IEmail) => ({
                 url: "/send-set-password-link",
                 method: "post",

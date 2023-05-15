@@ -10,11 +10,20 @@ import { EBtnTypes } from "../../enums/EBtnTypes";
 import { Container } from "../../components/UI/Container/Container";
 import { Contetnt } from "../../components/UI/Contetnt/Contetnt";
 import { Title } from "../../components/UI/Title/Title";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
+import { IMessage } from "../../interfaces/IUser/IMessage";
 
 const ForgotPassword: React.FunctionComponent = (): React.ReactElement => {
-    const [resetPassword, { isError, isSuccess, error }] = useResetPasswordMutation();
-    isError && isError && toast.error(`Ошибка сервера ${error}`);
-    isSuccess && toast.info("Ссылка отправлена на Ваш Email");
+    const [resetPassword, { data, isError, isSuccess, error: forgotError }] = useResetPasswordMutation();
+    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        const err = data as IErrorResponse<IMessage>;
+        toast.error(`Ошибка: ${err.error ? err.error : err.data.message}`);
+    };
+
+    isError && errorHandler(forgotError);
+    isSuccess && toast.info(`Ссылка отправлена на Ваш Email ${data?.email}`);
 
     return (
         <Container>
