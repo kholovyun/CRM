@@ -36,10 +36,6 @@
     color: var(--gray_blue);
 }
 
-.header_link:hover {
-    font-weight: 500;
-}
-
 .header_avatar_box {
     border-radius: 50%;
     width: 42px;
