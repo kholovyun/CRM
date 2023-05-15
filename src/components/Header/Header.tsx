@@ -15,7 +15,7 @@ const Header: FunctionComponent = (): ReactElement => {
         <header className={styles.header_bg_container}>
             <div className={styles.header_content_container}>
 
-                <div className={styles.header_logo_box}>
+                <div className={styles.header_logo_box} >
                     <Logo />
                 </div>
                 <nav className={styles.header_links_row}>
