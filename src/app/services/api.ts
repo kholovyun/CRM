@@ -8,10 +8,10 @@ export const api = createApi({
             const state = getState() as RootState;
             const token = state.auth.user?.token;
             if (token) {
-                headers.set("authorization", `Bearer ${token}`);
+                headers.set("Authorization", `${token}`);
             }
         },
     }),
     endpoints: () => ({}),
-    tagTypes: ["User"],
+    tagTypes: ["User", "Doctor"],
 });
