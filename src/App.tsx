@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { DoctorCabinet } from "./containers/DoctorCabinet/DoctorCabinet";
 import { Home } from "./containers/Home/Home";
 import RegisterParrent from "./containers/RegisterParrent/RegisterParrent";
+import DoctorCabinetPage from "./containers/DoctorCabinetPage/DoctorCabinetPage";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -27,6 +28,7 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/cabinet" element={<DoctorCabinet />} />
+                    <Route path="/dr-cabinet" element={<DoctorCabinetPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

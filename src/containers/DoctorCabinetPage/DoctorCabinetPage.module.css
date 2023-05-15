@@ -1,0 +1,66 @@
+.DoctorCabinetPage {
+    
+}
+
+.doctorInformationBlock {
+    padding: 34px 80px;
+    border-radius: 50px;
+    display: flex;
+    gap: 20px;
+    background-color: var(--light_blue_half_opacity);
+}
+
+.doctorAvatar {
+    width: 300px;
+    height: 320px;
+    border-radius: 25px;
+    background-color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.doctorAvatarAddIcon {
+    background: url("../../assets/img/plus.svg") center/cover no-repeat;
+    width: 75px;
+    height: 75px;
+}
+
+.personalInformation {
+    flex-grow: 1;
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.personalInformationInput {
+    padding: 11px 26px;
+    width: 100%;
+    font-size: 20px;
+    background-color: var(--bg_light_blue);
+    border: none;
+    border-radius: 25px;
+}
+
+.personalInformationMiddle {
+    display: flex;
+    gap: 40px;
+}
+
+.editBtn {
+    align-self: flex-end;
+}
+
+
+/* SECOND BLOCK */
+
+.slider {
+    background-color: var(--light_blue_half_opacity);
+    padding: 40px 0 65px;
+    border-radius: 50px;
+    margin-top: 50px;
+}
+
+.sliderTitle {
+    font-size: 48px;
+    text-align: center;
+}
