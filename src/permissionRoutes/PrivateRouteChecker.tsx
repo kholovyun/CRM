@@ -1,5 +1,6 @@
 import { Navigate, Route } from "react-router-dom";
 import  PropTypes  from "prop-types";
+import { useAppSelector } from "../app/hooks";
 
 interface PrivateRouteProps {
   pathTo: string;
@@ -7,9 +8,9 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
-    const isAuth = "Проверка на аутентификацию, как то нужно достать из ртк квери";
-
-    return isAuth ? (
+    const { user } = useAppSelector(state => state.auth);
+    
+    return user ? (
         <Route path={props.pathTo} element={props.element} />
     ) : (
         <Navigate to="/login" />

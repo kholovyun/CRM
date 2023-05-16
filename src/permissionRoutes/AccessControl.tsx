@@ -1,4 +1,5 @@
 import React from "react";
+import { useAppSelector } from "../app/hooks";
 
 interface AccessControlProps {
   allowedRoles: string[];
@@ -10,9 +11,9 @@ const AccessControl: React.FC<AccessControlProps> = ({
     component: Component,
     
 }) => {
-    const role = "Some role"; // Получить роль позьзователя через РТК Квери
+    const { user } = useAppSelector(state => state.auth);
 
-    if (!allowedRoles.includes(role)) {
+    if (!user || user && !allowedRoles.includes(user.role)) {
         return null;
     }
 
