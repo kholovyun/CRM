@@ -13,7 +13,7 @@ import { Container } from "../../components/UI/Container/Container";
 import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { Title } from "../../components/UI/Title/Title";
-import { Contetnt } from "../../components/UI/Contetnt/Contetnt";
+import { FormBox } from "../../components/UI/FormBox/FormBox";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 
@@ -38,7 +38,7 @@ const Login: React.FC = (): React.ReactElement => {
 
     return (
         <Container>
-            <Contetnt>
+            <FormBox>
                 <Title text="Вход" />
                 <Formik
                     initialValues={{
@@ -62,7 +62,7 @@ const Login: React.FC = (): React.ReactElement => {
                         </Form>
                     )}
                 </Formik>
-            </Contetnt>
+            </FormBox>
         </Container>
     );
 };

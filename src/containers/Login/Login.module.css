@@ -8,7 +8,7 @@
 .forgotlink {
     margin: 0 0 8px;
     text-decoration: none;
-    color: white;
+    color: var(--black_blue);
 }
 
 .forgotlink:hover {
@@ -54,7 +54,7 @@
 .typeError {
     width: 80%;
     text-align: center;
-    color: #ffffff;
+    color: var(--black_blue);
     margin: 10px 0;
     padding: 0;
 }

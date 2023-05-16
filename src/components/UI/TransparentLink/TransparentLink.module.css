@@ -1,0 +1,104 @@
+.transparent_link {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    color: var(--black_blue);
+    line-height: 100%;
+    text-decoration: none;
+    line-height: 100%;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.big::after,
+.small::after,
+.tiny::after {
+    content: "";
+    background: url("../../../assets/img/arrow.svg") center/contain no-repeat;
+    padding-left: 15px;
+    width: 62px;
+}
+
+.big::after {
+    height: 30px;
+}
+
+.small::after {
+    height: 26px;
+}
+
+.tiny::after {
+    height: 23px;
+}
+
+.big:hover,
+.big:active,
+.small:hover,
+.small:active,
+.tiny:hover,
+.tiny:active {
+    font-weight: 500;
+    color: var(--violet);
+    background-color: rgba(229, 232, 241, 0.7);
+}
+
+.big:hover::after,
+.small:hover::after,
+.tiny:hover::after {
+    background: url("../../../assets/img/arrow-violet.svg") center/contain no-repeat;
+}
+
+.big {
+    min-width: 280px;
+    border-radius: 25px;
+    padding: 24px 60px;
+}
+
+.small {
+    min-width: 110px;
+    border-radius: 20px;
+    padding: 12px 32px;
+}
+
+.tiny {
+    border-radius: 20px;
+    padding: 10px 40px;
+}
+
+@media screen and (min-width: 320px) {
+    .transparent_link {
+        font-size: 22px;
+        min-width: 200px;
+    }
+
+    .big {
+        font-size: 22px;
+        min-width: 200px;
+    }
+
+    .small {
+        font-size: 20px;
+        min-width: 100px;
+    }
+
+    .tiny {
+        font-size: 18px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .big {
+        min-width: 280px;
+        font-size: 24px;
+    }
+
+    .small {
+        font-size: 24px;
+        min-width: 110px;
+    }
+
+    .tiny {
+        border-radius: 20px;
+        font-size: 20px;
+    }
+}

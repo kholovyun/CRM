@@ -9,7 +9,7 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { Container } from "../../components/UI/Container/Container";
 import { useNavigate } from "react-router-dom";
-import { Contetnt } from "../../components/UI/Contetnt/Contetnt";
+import { FormBox } from "../../components/UI/FormBox/FormBox";
 import { Title } from "../../components/UI/Title/Title";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
@@ -41,7 +41,7 @@ const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
 
     return (
         <Container>
-            <Contetnt>
+            <FormBox>
                 <Title text="Сменить пароль" />
                 <Formik
                     initialValues={{
@@ -67,7 +67,7 @@ const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
                         </Form>
                     )}
                 </Formik>
-            </Contetnt>
+            </FormBox>
         </Container>
     );
 };
