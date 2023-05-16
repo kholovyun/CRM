@@ -11,7 +11,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DoctorCabinet } from "./containers/DoctorCabinet/DoctorCabinet";
 import { Home } from "./containers/Home/Home";
-import RegisterParrent from "./containers/RegisterParrent/RegisterParrent";
+import AdminPage from "./containers/AdminPage/AdminPage";
+import { ERoles } from "./enums/ERoles";
+import RegisterParent from "./containers/RegisterParrent/RegisterParent";
+import PrivateRoute from "./permissionRoutes/PrivateRoute/PrivateRoute";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -21,9 +24,14 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                 <Route element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
+                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN]}/> }>
+                        <Route path="/admin-page" element={<AdminPage />} />
+                        <Route path="/register-user" element={<RegisterUser />} />                        
+                    </Route>
+                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR]}/> }>
+                        <Route path="/register-parent" element={<RegisterParent />} />
+                    </Route>                    
                     <Route path="/admin" element={<AdminPanel />} />
-                    <Route path="/register-user" element={<RegisterUser />} />
-                    <Route path="/register-parrent" element={<RegisterParrent />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/cabinet" element={<DoctorCabinet />} />

@@ -7,9 +7,9 @@ interface PrivateRouteProps {
   element: React.ReactNode;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
+const PrivateRouteChecker: React.FC<PrivateRouteProps> = (props) => {
     const { user } = useAppSelector(state => state.auth);
-    
+
     return user ? (
         <Route path={props.pathTo} element={props.element} />
     ) : (
@@ -17,10 +17,10 @@ const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
     );
 };
 
-PrivateRoute.propTypes = {
+PrivateRouteChecker.propTypes = {
     pathTo: PropTypes.string.isRequired,
     element: PropTypes.node.isRequired,
 };
 
 
-export default PrivateRoute;
+export default PrivateRouteChecker;
