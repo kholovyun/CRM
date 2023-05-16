@@ -1,10 +1,11 @@
 import styles from "./Home.module.css";
 import { Container } from "../../components/UI/Container/Container";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { EBtnSize } from "../../enums/EBtnSize";
 import Btn from "../../components/UI/Btn/Btn";
 import homePhoto from "../../assets/img/Home.png";
 import { EBtnClass } from "../../enums/EBtnClass";
+import TransparentLink from "../../components/UI/TransparentLink/TransparentLink";
 
 export const Home = () => {
     const navigate = useNavigate();
@@ -20,9 +21,7 @@ export const Home = () => {
                             onclick={() => navigate("/login")}
                             size={EBtnSize.big}
                             btnClass={EBtnClass.dark_active}/>
-                        <NavLink to={"/"} className={styles.transparent_link}>
-                            {"Подписка"}
-                        </NavLink>
+                        <TransparentLink title={"Подписка"} pathTo={"/"} size={EBtnSize.big} />
                     </div>
                 </div>
             </div>
