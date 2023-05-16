@@ -3,7 +3,7 @@ import ITabsProps from "./ITabsProps";
 import TabTitle from "./TabTitle/TabTitle";
 import styles from "./Tabs.module.css";
 
-const Tabs: React.FunctionComponent<ITabsProps> = ({children}: ITabsProps): React.ReactElement => {
+const Tabs: React.FunctionComponent<ITabsProps> = ({children, callbacks}: ITabsProps): React.ReactElement => {
     const [selectedTab, setSelectedTab] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -11,6 +11,12 @@ const Tabs: React.FunctionComponent<ITabsProps> = ({children}: ITabsProps): Reac
         e.stopPropagation();
         setSelectedTab(index);
         setActiveIndex(index);
+        if (callbacks) {
+            console.log("refetched ", {index});
+            if(callbacks[index]) {
+                callbacks[index]();
+            }            
+        }
     };
 
     return(
