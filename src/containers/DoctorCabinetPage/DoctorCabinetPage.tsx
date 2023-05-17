@@ -105,6 +105,29 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                     </Form>
                 </Formik> 
             </div>
+
+            {/* ВОПРОСЫ */}
+            <div className={styles.questionsBlock}>
+                <div className={styles.questionsBlockLeft}>
+                    <p className={styles.questionsBlockLeftTop}>Новые вопросы</p>
+                </div>
+                <div className={styles.questionsBlockRight}>
+
+                </div>
+            </div>
+
+            {/* НАВИГАЦИОННЫЙ БЛОК */}
+
+            <div className={styles.navigationBlock}>
+                <div className={styles.navLinkBox} onClick={() => {toast.info("Функционал пока недоступен");}}>
+                    <p className={styles.navLink}>Вопросы</p>
+                    <div className={styles.arrowDown}></div>
+                </div>
+                <div className={styles.navLinkBox}>
+                    <p className={styles.navLink}>Перейти в админ панель</p>
+                    <div className={styles.arrowRight}></div>
+                </div>
+            </div>
         </Container>
         
     );
