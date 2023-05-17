@@ -2,7 +2,6 @@ import React from "react";
 import styles from "../Login/Login.module.css";
 import { Formik, Field, Form } from "formik";
 import { validationSchemaRegUser } from "../../schemas/validationSchemaRegUser";
-import { ERoles } from "../../enums/ERoles";
 import Btn from "../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnTypes } from "../../enums/EBtnTypes";
@@ -15,10 +14,8 @@ import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { FormBox } from "../../components/UI/FormBox/FormBox";
 import { Title } from "../../components/UI/Title/Title";
-import { Container } from "../../components/UI/Container/Container";
 
-
-const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
+const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): React.ReactElement => {
     const [createUser, { isError, isSuccess, error: createUserError }] = useCreateUserMutation();
     const phoneNumberMask = [
         "+",
@@ -48,64 +45,59 @@ const RegisterUser: React.FunctionComponent = (): React.ReactElement => {
     isSuccess && toast.info("Письмо активации отправлено на почту");
 
     return (
-        <Container>
-            <FormBox>
-                <Title text="Регистрация" />
-                <Formik
-                    initialValues={{
-                        name: "",
-                        surname: "",
-                        patronim: "",
-                        phone: "",
-                        email: "",
-                        role: ""
-                    }}
-                    validateOnBlur
-                    onSubmit={(values) => {
-                        createUser(values);
-                    }}
-                    validationSchema={validationSchemaRegUser}
-                >
-                    {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
-                        <Form className={styles.LoginForm}>
-                            <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
-                            {touched.name && errors.name ? <p className={styles.typeError}>{errors.name}</p> : <p className={styles.typeText}></p>}
-                            <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
-                            {touched.surname && errors.surname ? <p className={styles.typeError}>{errors.surname}</p> : <p className={styles.typeText}></p>}
-                            <Field className={styles.LoginInput} name="patronim" type="text" placeholder="Отчество" />
-                            {touched.patronim && errors.patronim ? <p className={styles.typeError}>{errors.patronim}</p> : <p className={styles.typeText}></p>}
-                            <Field
-                                name="phone"
-                                type="text"
-                                render={({ ...field }) => (
-                                    <MaskedInput
-                                        {...field}
-                                        mask={phoneNumberMask}
-                                        id="phone"
-                                        placeholder="+7(___)___-__-__"
-                                        type="text"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        className={styles.LoginInput}
-                                    />
-                                )}
-                            >
-                            </Field>
-                            {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
-                            <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
-                            {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
-                            <Field as="select" name="role" className={styles.LoginInput}>
-                                <option value="">Выберите роль</option>
-                                <option value={ERoles.DOCTOR}>Врач</option>
-                                <option value={ERoles.ADMIN}>Админ</option>
-                            </Field>
-                            {touched.role && errors.role ? <p className={styles.typeError}>{errors.role}</p> : <p className={styles.typeText}></p>}
-                            <Btn disabled={!isValid} title="Создать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
-                        </Form>
-                    )}
-                </Formik>
-            </FormBox>
-        </Container>
+
+        <FormBox>
+            <Title text={props.title} />
+            <Formik
+                initialValues={{
+                    name: "",
+                    surname: "",
+                    patronim: "",
+                    phone: "",
+                    email: "",
+                    role: props.role
+                }}
+                validateOnBlur
+                onSubmit={(values) => {
+                    createUser(values);
+                }}
+                validationSchema={validationSchemaRegUser}
+            >
+                {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
+                    <Form className={styles.LoginForm}>
+                        <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
+                        {touched.name && errors.name ? <p className={styles.typeError}>{errors.name}</p> : <p className={styles.typeText}></p>}
+                        <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
+                        {touched.surname && errors.surname ? <p className={styles.typeError}>{errors.surname}</p> : <p className={styles.typeText}></p>}
+                        <Field className={styles.LoginInput} name="patronim" type="text" placeholder="Отчество" />
+                        {touched.patronim && errors.patronim ? <p className={styles.typeError}>{errors.patronim}</p> : <p className={styles.typeText}></p>}
+                        <Field
+                            name="phone"
+                            type="text"
+                            render={({ ...field }) => (
+                                <MaskedInput
+                                    {...field}
+                                    mask={phoneNumberMask}
+                                    id="phone"
+                                    placeholder="+7(___)___-__-__"
+                                    type="text"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className={styles.LoginInput}
+                                />
+                            )}
+                        >
+                        </Field>
+                        {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
+                        <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
+                        {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
+                        <Field hidden type="text" name="role" className={styles.LoginInput} value={props.role} />
+                        {touched.role && errors.role ? <p className={styles.typeError}>{errors.role}</p> : <p className={styles.typeText}></p>}
+                        <Btn disabled={!isValid} title="Создать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
+                    </Form>
+                )}
+            </Formik>
+        </FormBox>
     );
 };
 
