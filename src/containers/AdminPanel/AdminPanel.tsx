@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import Btn from "../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../enums/EBtnSize";
-import { logout } from "../../features/authSlice";
 import stylesInput from "../Login/Login.module.css";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 
@@ -18,7 +17,6 @@ import { EBtnTypes } from "../../enums/EBtnTypes";
 const AdminPanel: React.FunctionComponent = (): React.ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     const navigator = useNavigate();
-    const dispatcher = useAppDispatch();
     const [imageLoadError, setImageLoadError] = useState(false);
     const [updateData, setUpdateData] = useState(true);
 
@@ -34,7 +32,6 @@ const AdminPanel: React.FunctionComponent = (): React.ReactElement => {
                 <div className={styles.doctorTitleBox}>
                     <h2>Добро пожаловать! Админ панель</h2>
                     <Btn title={"Регистрация"} size={EBtnSize.big} onclick={() => navigator("/register-user")} />
-                    <Btn title={"Выйти"} size={EBtnSize.big} onclick={() => dispatcher(logout())} />
                 </div>
                 <div className={styles.doctorUpdate}>
                     {imageLoadError ? (

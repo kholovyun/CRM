@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 import Logo from "../Logo/Logo";
@@ -7,9 +7,11 @@ import { toast } from "react-toastify";
 import Btn from "../UI/Btn/Btn";
 import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnClass } from "../../enums/EBtnClass";
+import { logout } from "../../features/authSlice";
 
 const Header: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
+    const dispatcher = useAppDispatch();
 
     return (
         <header className={styles.header_bg_container}>
@@ -34,6 +36,10 @@ const Header: FunctionComponent = (): ReactElement => {
                             size={EBtnSize.small}
                             btnClass={EBtnClass.dark_active}
                         />
+                        <Btn 
+                            title={"Выйти"} 
+                            size={EBtnSize.small} 
+                            onclick={() => dispatcher(logout())} />
                     </div>
                 </nav>
             </div>

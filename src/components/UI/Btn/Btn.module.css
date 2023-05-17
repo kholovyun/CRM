@@ -43,17 +43,17 @@
 
 @media screen and (min-width: 320px) {
     .big {
-        font-size: 22px;
+        font-size: 18px;
         min-width: 200px;
     }
 
     .small {
-        font-size: 20px;
+        font-size: 15px;
         min-width: 100px;
     }
 
     .tiny {
-        font-size: 18px;
+        font-size: 12px;
     }
 }
 
@@ -64,12 +64,12 @@
     }
 
     .small {
-        font-size: 24px;
+        font-size: 14px;
         min-width: 110px;
     }
 
     .tiny {
-        border-radius: 20px;
+        border-radius: 12px;
         font-size: 20px;
     }
 }
