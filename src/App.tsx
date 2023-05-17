@@ -2,7 +2,6 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./containers/Login/Login";
 import AdminPanel from "./containers/AdminPanel/AdminPanel";
-import RegisterUser from "./containers/RegisterUser/RegisterUser";
 import ResetPassword from "./containers/ResetPassword/ResetPassword";
 import Layout from "./components/Layout/Layout";
 import ForgotPassword from "./containers/ForgotPassword/ForgotPassword";
@@ -15,6 +14,9 @@ import AdminPage from "./containers/AdminPage/AdminPage";
 import { ERoles } from "./enums/ERoles";
 import RegisterParent from "./containers/RegisterParrent/RegisterParent";
 import PrivateRoute from "./permissionRoutes/PrivateRoute/PrivateRoute";
+import AllDoctors from "./containers/AdminPage/AdminTables/AllDoctors/AllDoctors";
+import RegisterDoctor from "./containers/RegisterUser/RegisterDoctor";
+import RegisterAdmin from "./containers/RegisterUser/RegisterAdmin";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -25,8 +27,11 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN]}/> }>
-                        <Route path="/admin-page" element={<AdminPage />} />
-                        <Route path="/register-user" element={<RegisterUser />} />                        
+                        <Route path="/admin-page" element={<AdminPage />}>
+                            <Route path="/admin-page/doctors" element={<AllDoctors />}/>
+                            <Route path="/admin-page/register-doctor" element={<RegisterDoctor />} />
+                            <Route path="/admin-page/register-admin" element={<RegisterAdmin />} />
+                        </Route>                                         
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR]}/> }>
                         <Route path="/register-parent" element={<RegisterParent />} />
