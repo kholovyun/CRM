@@ -16,6 +16,7 @@ import { Title } from "../../components/UI/Title/Title";
 import { FormBox } from "../../components/UI/FormBox/FormBox";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
+import { ERoles } from "../../enums/ERoles";
 
 const Login: React.FC = (): React.ReactElement => {
     const [loginUser, { data, isError, isSuccess, error: loginErrors }] = useLoginMutation();
@@ -32,7 +33,11 @@ const Login: React.FC = (): React.ReactElement => {
 
     useEffect(() => {
         if (user) {
-            navigator("/cabinet");
+            if (user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN) {
+                navigator("/admin-page/doctors");
+            } else {
+                navigator("/cabinet");
+            }            
         }
     }, [user]);
 
