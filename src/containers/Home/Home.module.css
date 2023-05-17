@@ -2,11 +2,12 @@
     position: relative;
     width: 100%;
     margin-bottom: 50px;
+    margin-top: 5%;
 }
 
 .img {
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     background-color: rgba(135, 113, 167, 0.4);
     border-radius: 50px;
     overflow: hidden;
