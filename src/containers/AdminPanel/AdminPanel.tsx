@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../DoctorCabinet/DoctorCabinet.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 import { Container } from "../../components/UI/Container/Container";
 import { validationSchemaUser } from "../../schemas/validationSchemaUser";
 import defaultImage from "../../../public/admin.jpg";
@@ -30,8 +30,8 @@ const AdminPanel: React.FunctionComponent = (): React.ReactElement => {
         <Container>
             <div className={styles.doctorCabinet}>
                 <div className={styles.doctorTitleBox}>
-                    <h2>Добро пожаловать! Админ панель</h2>
-                    <Btn title={"Регистрация"} size={EBtnSize.big} onclick={() => navigator("/register-user")} />
+                    <h2>Добро пожаловать!</h2>
+                    <Btn title={"Админ панель"} size={EBtnSize.big} onclick={() => navigator("/admin-page")} />
                 </div>
                 <div className={styles.doctorUpdate}>
                     {imageLoadError ? (

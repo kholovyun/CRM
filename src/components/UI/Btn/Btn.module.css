@@ -3,7 +3,7 @@
     border: none;
     color: white;
     line-height: 100%;
-    font-weight: 500;
+    font-weight: 400;
     background-color: var(--violet);
     cursor: pointer;
 }
@@ -43,17 +43,17 @@
 
 @media screen and (min-width: 320px) {
     .big {
-        font-size: 18px;
+        font-size: 22px;
         min-width: 200px;
     }
 
     .small {
-        font-size: 15px;
+        font-size: 20px;
         min-width: 100px;
     }
 
     .tiny {
-        font-size: 12px;
+        font-size: 18px;
     }
 }
 
@@ -64,12 +64,12 @@
     }
 
     .small {
-        font-size: 14px;
+        font-size: 24px;
         min-width: 110px;
     }
 
     .tiny {
-        border-radius: 12px;
+        border-radius: 20px;
         font-size: 20px;
     }
 }
