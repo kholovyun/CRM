@@ -74,8 +74,37 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                     }/>
                 </div>
             </div>
-            
-            
+            {/* РЕКОМЕНДАЦИИ */}
+            <div className={styles.reccomendationBlock}>
+                <p className={styles.reccomendationBlockTop}>Написать рекомендацию</p>
+                <Formik
+                    initialValues={{
+                        doctorId: doctor?.id,
+                        text: "" 
+                    }}
+                    onSubmit={() => {
+                        toast.info("Функционал пока недоступен");
+                    }}
+                >
+                    <Form>
+                        <Field as={"textarea"} type="text" name="speciality" className={styles.textarea}/>
+                        <div className={styles.reccomendationBlockBottom}>
+                            <label className={styles.inputFileLabel}>
+                                <input
+                                    className={styles.fileInput}
+                                    type="file"
+                                    name={"image"}
+                                />
+                                <p className={styles.halo}>Прикрепить файл</p>
+                                <div className={styles.fileIcon} />
+                            </label>
+                            <div className={styles.publicationBtn}>
+                                <Btn size={EBtnSize.small} types={EBtnTypes.submit} title="Опубликовать" />
+                            </div>
+                        </div>
+                    </Form>
+                </Formik> 
+            </div>
         </Container>
         
     );
