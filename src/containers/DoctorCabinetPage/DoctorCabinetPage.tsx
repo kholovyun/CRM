@@ -1,31 +1,35 @@
 import { FunctionComponent, ReactElement, useState } from "react";
 import { Container } from "../../components/UI/Container/Container";
-import styles from "./DoctorCabinetPage.module.css";
 import { Field, Formik, Form } from "formik";
 import { useAppSelector } from "../../app/hooks";
 import { toast } from "react-toastify";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { EBtnSize } from "../../enums/EBtnSize";
 import Btn from "../../components/UI/Btn/Btn";
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
+import styles from "./DoctorCabinetPage.module.css";
+import "./Carousel.css";
+import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
-    const [updateData, setUpdateData] = useState(true);
-
+    const {data: doctor} = useGetDoctorByUserIdQuery();
+    const [updateData] = useState(true);
+    
     return (
         <Container>
             <Formik
                 initialValues={{
                     nameSurnamePatronim: `${user?.surname} ${user?.name} ${user?.patronim || ""} `,
-                    speciality: "Терапевт",
-                    placeOfWork: "Больница №5",
-                    experience: "Стаж 20 лет",
-                    achievments: "Доктор года"
+                    speciality: doctor?.speciality,
+                    placeOfWork: doctor?.placeOfWork,
+                    experience: `Стаж ${doctor?.experience} лет`,
+                    achievments: doctor?.achievements
                 }}
                 validateOnBlur
                 onSubmit={() => {
-                    toast.info("Отправлено на модерацию");
-                    setUpdateData(true);
+                    toast.info("Функционал пока недоступен");
                 }}
             >
                 <div className={styles.DoctorCabinetPage}>
@@ -52,6 +56,23 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
             </Formik>
             <div className={styles.slider}>
                 <p className={styles.sliderTitle}>Сертификаты о дополнительном образовании</p>
+                <div className={styles.carousel}>
+                    <AliceCarousel disableDotsControls responsive={{0: {
+                        items: 1, 
+                    }, 500: {
+                        items: 3,
+                        itemsFit: "contain",
+                    }, 1000: {
+                        items: 5,
+                        itemsFit: "contain",
+                    }}} items={
+                        [
+                            <div onClick={() => toast.info("Функционал пока недоступен")} className={styles.carouselAddItem} key={"3"}  role="presentation">
+                                <div className={styles.carouselAddItemIcon} />
+                            </div>                            
+                        ]
+                    }/>
+                </div>
             </div>
             
             

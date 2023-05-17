@@ -18,6 +18,12 @@ const doctorsApi = api.injectEndpoints({
                 method: "GET"
             }),
         }),
+        getDoctorByUserId: build.query<IDoctorWhithUser, void>({
+            query: () => ({
+                url: "/doctors/personal",
+                method: "get"
+            }),
+        }),
         editDoctor: build.mutation<IDoctor, {id: string, doctor: FormData}>({
             query: ({id, doctor}) => ({
                 url: `/doctors/${id}`,
@@ -37,6 +43,7 @@ const doctorsApi = api.injectEndpoints({
 export const {
     useGetDoctorsQuery,
     useGetDoctorByIdQuery,
+    useGetDoctorByUserIdQuery,
     useEditDoctorMutation,
     useActivateDoctorMutation,
 } = doctorsApi;
