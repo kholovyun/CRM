@@ -10,6 +10,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DoctorCabinet } from "./containers/DoctorCabinet/DoctorCabinet";
 import { Home } from "./containers/Home/Home";
+<<<<<<< src/App.tsx
+import RegisterParrent from "./containers/RegisterParrent/RegisterParrent";
+import DoctorCabinetPage from "./containers/DoctorCabinetPage/DoctorCabinetPage";
+=======
 import AdminPage from "./containers/AdminPage/AdminPage";
 import { ERoles } from "./enums/ERoles";
 import RegisterParent from "./containers/RegisterParrent/RegisterParent";
@@ -17,6 +21,7 @@ import PrivateRoute from "./permissionRoutes/PrivateRoute/PrivateRoute";
 import AllDoctors from "./containers/AdminPage/AdminTables/AllDoctors/AllDoctors";
 import RegisterDoctor from "./containers/RegisterUser/RegisterDoctor";
 import RegisterAdmin from "./containers/RegisterUser/RegisterAdmin";
+>>>>>>> src/App.tsx
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -40,6 +45,7 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/cabinet" element={<DoctorCabinet />} />
+                    <Route path="/dr-cabinet" element={<DoctorCabinetPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
