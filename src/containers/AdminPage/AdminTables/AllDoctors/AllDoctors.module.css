@@ -30,6 +30,7 @@
     padding: 8px;
     border: none;
     border-bottom: 1px solid var(--gray_blue);
+    transition: all 0.2s ease-in-out;
 }
 
 .switch_td {
@@ -38,10 +39,15 @@
     align-items: center;
 }
 
-tbody .Table_tr:hover {
-    background-color: var(--light_blue);
+tbody > .Table_tr:hover{
+    background-color: rgba(147, 86, 166, 0.356);
     cursor: pointer;
 }
+
+/* .Table_tr:hover {
+    background-color: var(--light_blue);
+    cursor: pointer;
+} */
 
 .Table_td_right {
     padding: 5px;

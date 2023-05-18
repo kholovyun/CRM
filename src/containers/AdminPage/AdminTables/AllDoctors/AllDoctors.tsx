@@ -48,13 +48,13 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
         setModalTitle(text);
     };
 
-    const cklickActivateHandler = (e: React.MouseEvent<HTMLElement>, id: string, name: string, text: string) => {
-        e.stopPropagation();
-        setId(id);
-        setShowModal(true);
-        setUserName(name);
-        setModalTitle(text);
-    };
+    // const cklickActivateHandler = (e: React.MouseEvent<HTMLElement>, id: string, name: string, text: string) => {
+    //     e.stopPropagation();
+    //     setId(id);
+    //     setShowModal(true);
+    //     setUserName(name);
+    //     setModalTitle(text);
+    // };
 
     const blockUser = (id: string) => {
         console.log(`Пользователь ${id} заблокирован/разблокирован`);
@@ -129,7 +129,7 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
                                         <th className={styles.Table_td_right}>Tел.</th>
                                         <th className={styles.Table_td_right}>Блок</th>
                                         <th className={styles.Table_td_right}>Специализация</th>                                        
-                                        <th className={styles.Table_td}>Активация</th>
+                                        {/* <th className={styles.Table_td}>Активация</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -156,7 +156,7 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
                                                 }
                                             </td>
                                             <td className={styles.Table_td_right}>{doctor.speciality}</td>
-                                            <td className={styles.Table_td}>
+                                            {/* <td className={styles.Table_td}>
                                                 {doctor.isActive ?
                                                     <div className={styles.switch_td} onClick={(e) => cklickActivateHandler(
                                                         e, doctor.id, ` ${doctor.users.surname} ${doctor.users.name}`,
@@ -172,7 +172,7 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
                                                         <SwitchDiv isOn={doctor.isActive}/>
                                                     </div>
                                                 }
-                                            </td>
+                                            </td> */}
                                         </tr>);
                                     })}
                                 </tbody>
