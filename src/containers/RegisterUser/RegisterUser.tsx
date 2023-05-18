@@ -65,32 +65,37 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
             >
                 {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
                     <Form className={styles.LoginForm}>
-                        <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
-                        {touched.name && errors.name ? <p className={styles.typeError}>{errors.name}</p> : <p className={styles.typeText}></p>}
-                        <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
-                        {touched.surname && errors.surname ? <p className={styles.typeError}>{errors.surname}</p> : <p className={styles.typeText}></p>}
+                        <div className={styles.full_name_inputs}>
+                            <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
+                            {touched.name && errors.name ? <p className={styles.typeError}>{errors.name}</p> : <p className={styles.typeText}></p>}
+                            <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
+                            {touched.surname && errors.surname ? <p className={styles.typeError}>{errors.surname}</p> : <p className={styles.typeText}></p>}
+                        </div>
                         <Field className={styles.LoginInput} name="patronim" type="text" placeholder="Отчество" />
                         {touched.patronim && errors.patronim ? <p className={styles.typeError}>{errors.patronim}</p> : <p className={styles.typeText}></p>}
-                        <Field
-                            name="phone"
-                            type="text"
-                            render={({ ...field }) => (
-                                <MaskedInput
-                                    {...field}
-                                    mask={phoneNumberMask}
-                                    id="phone"
-                                    placeholder="+7(___)___-__-__"
-                                    type="text"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    className={styles.LoginInput}
-                                />
-                            )}
-                        >
-                        </Field>
-                        {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
-                        <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
-                        {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
+                        <div className={styles.register_phone_mail_box}>
+                            <Field
+                                name="phone"
+                                type="text"
+                                render={({ ...field }) => (
+                                    <MaskedInput
+                                        {...field}
+                                        mask={phoneNumberMask}
+                                        id="phone"
+                                        placeholder="+7(___)___-__-__"
+                                        type="text"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        className={styles.LoginInput}
+                                    />
+                                )}
+                            >
+                            </Field>
+                            {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
+                            <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
+                            {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
+                        </div>
+
                         <Field hidden type="text" name="role" className={styles.LoginInput} value={props.role} />
                         {touched.role && errors.role ? <p className={styles.typeError}>{errors.role}</p> : <p className={styles.typeText}></p>}
                         <Btn disabled={!isValid} title="Создать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
