@@ -1,0 +1,8 @@
+.contentBox {
+    width: 100%;
+    max-width: 650px;
+    padding: 30px 0;
+    margin: auto;
+    background: var(--light_blue);
+    border-radius: 50px;
+}

@@ -1,0 +1,37 @@
+.AdminPage_row {
+    display: flex;
+    margin: 0 auto;
+    position: relative;
+    gap: 20px;
+    min-height: calc(100vh - (var(--header_height) + var(--footer_height)));
+}
+
+.Admin_page_content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    padding: 0 0 20px 0;
+    overflow: hidden;
+}
+
+@media screen and (min-width: 320px) {
+    .AdminPage_row {
+        padding: 20px 20px 0 0;
+        width: calc(100% - 40px);
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .AdminPage_row {
+        padding: 20px 40px 0 0;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .AdminPage_row {
+        padding: 0;
+        width: 1180px;
+    }
+}

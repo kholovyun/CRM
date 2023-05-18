@@ -13,9 +13,10 @@ import { Container } from "../../components/UI/Container/Container";
 import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { Title } from "../../components/UI/Title/Title";
-import { Contetnt } from "../../components/UI/Contetnt/Contetnt";
+import { FormBox } from "../../components/UI/FormBox/FormBox";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
+import { ERoles } from "../../enums/ERoles";
 
 const Login: React.FC = (): React.ReactElement => {
     const [loginUser, { data, isError, isSuccess, error: loginErrors }] = useLoginMutation();
@@ -32,13 +33,17 @@ const Login: React.FC = (): React.ReactElement => {
 
     useEffect(() => {
         if (user) {
-            navigator("/cabinet");
+            if (user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN) {
+                navigator("/admin-page/doctors");
+            } else {
+                navigator("/cabinet");
+            }            
         }
     }, [user]);
 
     return (
         <Container>
-            <Contetnt>
+            <FormBox>
                 <Title text="Вход" />
                 <Formik
                     initialValues={{
@@ -62,7 +67,7 @@ const Login: React.FC = (): React.ReactElement => {
                         </Form>
                     )}
                 </Formik>
-            </Contetnt>
+            </FormBox>
         </Container>
     );
 };

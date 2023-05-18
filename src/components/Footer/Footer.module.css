@@ -6,7 +6,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 63px 0px;
+    padding: 40px 0px;
     align-items: center;
     gap: 50px;
     margin: 0 auto;
@@ -24,7 +24,7 @@
 
 .FooterNavlink {
     margin: 0;
-    font-size: 24px;
+    font-size: 1.2rem;
     line-height: 100%;
     color: #ffffff;
     cursor: pointer;
@@ -32,7 +32,7 @@
 
 .FooterContactsTitle {
     margin: 0;
-    font-size: 24px;
+    font-size: 1.2rem;
     color: #ffffff;
     line-height: 100%;
 }
@@ -59,21 +59,21 @@
 
 @media screen and (min-width: 320px) {
     .Footer_content_container {
-        padding: 63px 20px;
+        padding: 40px 20px;
         width: 100%;
     }
 }
 
 @media screen and (min-width: 320px) {
     .Footer_content_container {
-        padding: 63px 40px;
+        padding: 40px 40px;
         width: 100%;
     }
 }
 
 @media screen and (min-width: 1440px) {
     .Footer_content_container {
-        padding: 63px 0;
+        padding: 40px 0;
         width: 1180px;
     }
 }

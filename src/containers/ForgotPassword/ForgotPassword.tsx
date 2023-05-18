@@ -8,7 +8,7 @@ import React from "react";
 import Btn from "../../components/UI/Btn/Btn";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { Container } from "../../components/UI/Container/Container";
-import { Contetnt } from "../../components/UI/Contetnt/Contetnt";
+import { FormBox } from "../../components/UI/FormBox/FormBox";
 import { Title } from "../../components/UI/Title/Title";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
@@ -27,7 +27,7 @@ const ForgotPassword: React.FunctionComponent = (): React.ReactElement => {
 
     return (
         <Container>
-            <Contetnt>
+            <FormBox>
                 <Title text="Сбросить пароль" />
                 <Formik
                     initialValues={{ email: "" }}
@@ -45,7 +45,7 @@ const ForgotPassword: React.FunctionComponent = (): React.ReactElement => {
                         </Form>
                     )}
                 </Formik>
-            </Contetnt>
+            </FormBox>
         </Container>
     );
 };

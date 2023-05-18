@@ -2,11 +2,12 @@
     position: relative;
     width: 100%;
     margin-bottom: 50px;
+    margin-top: 5%;
 }
 
 .img {
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     background-color: rgba(135, 113, 167, 0.4);
     border-radius: 50px;
     overflow: hidden;
@@ -36,40 +37,7 @@
     justify-content: center
 }
 
-.transparent_link {
-    display: inline-flex;
-    align-items: center;
-    color: var(--black_blue);
-    font-size: 24px;
-    line-height: 100%;
-    text-decoration: none;
-    min-width: 280px;
-    border-radius: 25px;
-    padding: 24px 60px;
-    font-size: 24px;
-    line-height: 100%;
-    font-weight: 500;
-    cursor: pointer;
-}
 
-.transparent_link::after {
-    content: "";
-    background: url("../../assets/img/arrow.svg") center/contain no-repeat;
-    width: 47px;
-    height: 30px;
-    padding-left: 15px;
-}
-
-.transparent_link:hover,
-.transparent_link:active {
-    font-weight: 500;
-    color: var(--violet);
-    background-color: rgba(229, 232, 241, 0.7);
-}
-
-.transparent_link:hover::after {
-    background: url("../../assets/img/arrow-violet.svg") center/contain no-repeat;
-}
 
 @media screen and (min-width: 320px) {
     .homeTitle {
@@ -80,11 +48,6 @@
         padding: 30px 20px;
         max-width: 100%;
         gap: 20px;
-    }
-
-    .transparent_link {
-        font-size: 22px;
-        min-width: 200px;
     }
 }
 
@@ -121,10 +84,5 @@
 
     .home_content_row {
         max-width: 1180px;
-    }
-
-    .transparent_link {
-        min-width: 280px;
-        font-size: 24px;
     }
 }
