@@ -1,6 +1,6 @@
 .Logo {
     display: inline-block;
-    width: 88px;
+    width: 12em;
     height: 64px;
     background: url("../../assets/img/logo.svg") center/contain no-repeat;
 }

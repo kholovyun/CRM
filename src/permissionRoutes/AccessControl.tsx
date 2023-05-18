@@ -3,21 +3,20 @@ import { useAppSelector } from "../app/hooks";
 
 interface AccessControlProps {
   allowedRoles: string[];
-  component: React.ComponentType;
+  children: React.ReactNode;
 }
 
 const AccessControl: React.FC<AccessControlProps> = ({
     allowedRoles,
-    component: Component,
-    
+    children
 }) => {
     const { user } = useAppSelector(state => state.auth);
 
-    if (!user || user && !allowedRoles.includes(user.role)) {
+    if (!user || (user && !allowedRoles.includes(user.role))) {
         return null;
     }
 
-    return <Component />;
+    return <>{children}</>;
 };
 
 export default AccessControl;
