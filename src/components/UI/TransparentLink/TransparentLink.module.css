@@ -1,6 +1,7 @@
 .transparent_link {
     display: inline-flex;
     flex-wrap: wrap;
+    gap: 0.5rem;
     align-items: center;
     color: var(--black_blue);
     line-height: 100%;
@@ -8,6 +9,8 @@
     line-height: 100%;
     font-weight: 500;
     cursor: pointer;
+    border-radius: 1.25rem;
+    justify-content: space-between;
 }
 
 .big::after,
@@ -15,20 +18,16 @@
 .tiny::after {
     content: "";
     background: url("../../../assets/img/arrow.svg") center/contain no-repeat;
-    padding-left: 15px;
-    width: 62px;
+    width: 1.6rem;
 }
 
+.small::after,
 .big::after {
-    height: 30px;
-}
-
-.small::after {
-    height: 26px;
+    height: 1.3rem;
 }
 
 .tiny::after {
-    height: 23px;
+    height: 1rem;
 }
 
 .big:hover,
@@ -49,56 +48,50 @@
 }
 
 .big {
-    min-width: 280px;
-    border-radius: 25px;
-    padding: 24px 60px;
+    font-size: 1.3rem;
+    min-width: 11rem;
+    padding: 0.9rem 2rem;
 }
 
 .small {
-    min-width: 110px;
-    border-radius: 20px;
-    padding: 12px 32px;
+    font-size: 1.3rem;
+    min-width: 6.25rem;
+    padding: 0.75rem 2rem;
+    flex-shrink: 0;
 }
 
 .tiny {
-    border-radius: 20px;
-    padding: 10px 40px;
+    padding: 0.625rem 1.25rem;
 }
 
 @media screen and (min-width: 320px) {
-    .transparent_link {
-        font-size: 22px;
-        min-width: 200px;
-    }
-
     .big {
-        font-size: 22px;
-        min-width: 200px;
+        font-size: 1.1rem;
+        min-width: 9rem;
     }
 
     .small {
-        font-size: 20px;
-        min-width: 100px;
+        font-size: 1.1rem;
+        min-width: 6rem;
     }
 
     .tiny {
-        font-size: 18px;
+        font-size: 0.8rem;
     }
 }
 
 @media screen and (min-width: 600px) {
     .big {
-        min-width: 280px;
-        font-size: 24px;
+        font-size: 1.3rem;
+        min-width: 11rem;
     }
 
     .small {
-        font-size: 24px;
-        min-width: 110px;
+        font-size: 1.3rem;
+        min-width: 6.25rem;
     }
 
     .tiny {
-        border-radius: 20px;
-        font-size: 20px;
+        font-size: 1rem;
     }
 }

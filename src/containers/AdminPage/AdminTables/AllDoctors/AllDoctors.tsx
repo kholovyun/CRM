@@ -11,7 +11,7 @@ import { EBtnClass } from "../../../../enums/EBtnClass";
 import SwitchDiv from "../../../../components/UI/SwitchDiv/SwitchDiv";
 
 const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
-
+    
     const [currentPage, setCurrentPage] = useState(1);
     const { data: doctors, error: getDoctorsError, isError, isLoading } = useGetDoctorsQuery({offset: 0, limit: 10});
 
@@ -48,13 +48,13 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
         setModalTitle(text);
     };
 
-    // const cklickActivateHandler = (e: React.MouseEvent<HTMLElement>, id: string, name: string, text: string) => {
-    //     e.stopPropagation();
-    //     setId(id);
-    //     setShowModal(true);
-    //     setUserName(name);
-    //     setModalTitle(text);
-    // };
+    const cklickActivateHandler = (e: React.MouseEvent<HTMLElement>, id: string, name: string, text: string) => {
+        e.stopPropagation();
+        setId(id);
+        setShowModal(true);
+        setUserName(name);
+        setModalTitle(text);
+    };
 
     const blockUser = (id: string) => {
         console.log(`Пользователь ${id} заблокирован/разблокирован`);
@@ -127,9 +127,9 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
                                         <th className={styles.Table_td_right}>ФИО</th>
                                         <th className={styles.Table_td_right}>Email</th>
                                         <th className={styles.Table_td_right}>Tел.</th>
+                                        <th className={styles.Table_td_right}>Специализация</th>
                                         <th className={styles.Table_td_right}>Блок</th>
-                                        <th className={styles.Table_td_right}>Специализация</th>                                        
-                                        {/* <th className={styles.Table_td}>Активация</th> */}
+                                        <th className={styles.Table_td}>Активация</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -138,6 +138,7 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
                                             <td className={styles.Table_td_right}>{doctor.users.surname} {doctor.users.name} {doctor.users.patronim ? doctor.users.patronim : ""}</td>
                                             <td className={styles.Table_td_right}>{doctor.users.email}</td>
                                             <td className={styles.Table_td_right}>{doctor.users.phone}</td>
+                                            <td className={styles.Table_td_right}>{doctor.speciality}</td>
                                             <td className={styles.Table_td_right}>
                                                 {doctor.users.isBlocked ?
                                                     <div className={styles.switch_td} onClick={(e) => cklickBlockHandler(
@@ -155,8 +156,7 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
                                                     </div>
                                                 }
                                             </td>
-                                            <td className={styles.Table_td_right}>{doctor.speciality}</td>
-                                            {/* <td className={styles.Table_td}>
+                                            <td className={styles.Table_td}>
                                                 {doctor.isActive ?
                                                     <div className={styles.switch_td} onClick={(e) => cklickActivateHandler(
                                                         e, doctor.id, ` ${doctor.users.surname} ${doctor.users.name}`,
@@ -172,7 +172,7 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
                                                         <SwitchDiv isOn={doctor.isActive}/>
                                                     </div>
                                                 }
-                                            </td> */}
+                                            </td>
                                         </tr>);
                                     })}
                                 </tbody>

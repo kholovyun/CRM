@@ -2,10 +2,10 @@
     outline: none;
     border: none;
     color: white;
-    line-height: 100%;
     font-weight: 400;
     background-color: var(--violet);
     cursor: pointer;
+    border-radius: 1.25rem;
 }
 
 .dark_active:active,
@@ -21,55 +21,54 @@
 }
 
 .big {
-    min-width: 280px;
-    border-radius: 25px;
-    padding: 24px 60px;
+    font-size: 1.3rem;
+    min-width: 11rem;
+    padding: 0.9rem 2rem;
 }
 
 .small {
-    min-width: 110px;
-    border-radius: 20px;
-    padding: 12px 32px;
+    font-size: 1.2rem;
+    min-width: 6.25rem;
+    padding: 0.75rem 2rem;
+    flex-shrink: 0;
 }
 
 .tiny {
-    border-radius: 20px;
-    padding: 10px 40px;
+    padding: 0.625rem 1.25rem;
 }
 
 .btn:disabled {
-    background-color: rgb(182, 175, 175);
+    opacity: 0.5;
 }
 
 @media screen and (min-width: 320px) {
     .big {
-        font-size: 22px;
-        min-width: 200px;
+        font-size: 1.1rem;
+        min-width: 9rem;
     }
 
     .small {
-        font-size: 20px;
-        min-width: 100px;
+        font-size: 1rem;
+        min-width: 6rem;
     }
 
     .tiny {
-        font-size: 18px;
+        font-size: 0.8rem;
     }
 }
 
 @media screen and (min-width: 600px) {
     .big {
-        min-width: 280px;
-        font-size: 24px;
+        font-size: 1.3rem;
+        min-width: 11rem;
     }
 
     .small {
-        font-size: 24px;
-        min-width: 110px;
+        font-size: 1.2rem;
+        min-width: 6.25rem;
     }
 
     .tiny {
-        border-radius: 20px;
-        font-size: 20px;
+        font-size: 1rem;
     }
 }

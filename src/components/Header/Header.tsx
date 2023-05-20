@@ -23,7 +23,7 @@ const Header: FunctionComponent = (): ReactElement => {
                     <Logo />
                 </div>
                 <nav className={styles.header_links_row}>
-                    <div className={styles.flex_row}>
+                    <div className={styles.right_flex_row}>
                         {user &&
                             <NavLink to={user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ? "/admin" : "cabinet/"} className={styles.header_link}>
                                 Личный кабинет: <strong>{user.name}</strong>
@@ -31,7 +31,9 @@ const Header: FunctionComponent = (): ReactElement => {
                         }
                         <div className={styles.header_avatar_box}>
                             <div className={styles.header_avatar_img}></div>
-                        </div>
+                        </div>                        
+                    </div>
+                    <div className={styles.flex_row}>
                         <Btn
                             title="Поддержка"
                             onclick={() => toast.info("Функционал пока недоступен")}
@@ -43,10 +45,10 @@ const Header: FunctionComponent = (): ReactElement => {
                         >
                             <Btn 
                                 title={"Выйти"} 
-                                size={EBtnSize.small} 
+                                size={EBtnSize.small}
+                                btnClass={EBtnClass.dark_active}
                                 onclick={() => dispatcher(logout())} />
                         </AccessControl>
-
                     </div>
                 </nav>
             </div>

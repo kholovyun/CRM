@@ -44,8 +44,8 @@
 	--white: #FFFFFF;
 	--light_blue_half_opacity: rgb(229, 232, 241, 0.5);
 
-	--header_height: 150px;
-	--footer_height: 200px;
+	--header_height: calc(50px + 2rem);
+	--footer_height: calc(69px + 4rem);
 }
 
 * {
@@ -54,4 +54,3 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-
