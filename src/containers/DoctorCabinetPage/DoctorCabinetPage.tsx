@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import { ChangeEvent, FunctionComponent, ReactElement, useRef, useState } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { Field, Formik, Form } from "formik";
 import { useAppSelector } from "../../app/hooks";
@@ -11,12 +11,21 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import styles from "./DoctorCabinetPage.module.css";
 import "./Carousel.css";
 import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
+import Modal from "../../components/UI/Modal/Modal";
+import UploadAvatar from "../../components/UploadAvatar/UploadAvatar";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     const {data: doctor} = useGetDoctorByUserIdQuery();
     const [updateData] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+
+    const modalCancelHandler = () => {
+        setShowModal(false);
+        console.log(doctor);
+    };
     
+
     return (
         <Container>
             <Formik
@@ -34,8 +43,19 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
             >
                 <div className={styles.DoctorCabinetPage}>
                     <div className={styles.doctorInformationBlock}>
+                        <Modal show={showModal} close={modalCancelHandler}>
+                            <UploadAvatar click={() => setShowModal(false)}/>
+                        </Modal>
                         <div className={styles.doctorAvatar}>
-                            <div className={styles.doctorAvatarAddIcon}></div>
+                            <div className={styles.backdrop}
+                                onClick={() => {setShowModal(true);}}
+                            >   
+                            </div>
+                            <img 
+                                className={styles.doctorImage}
+                                onError={(e) => { e.currentTarget.src = "/avatar.jpg";}}
+                                src={doctor?.photo !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsImgs/${doctor?.photo}` : "/avatar.jpg"} alt={"doctor"}
+                            />
                         </div>
                         <Form className={styles.personalInformation}>
                             <Field readOnly={updateData} type="text" name="nameSurnamePatronim" className={styles.personalInformationInput}/>
