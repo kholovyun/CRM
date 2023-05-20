@@ -12,7 +12,10 @@ const Modal: React.FC<IModalProps> = (props: IModalProps) => {
                     opacity: props.show ? "1" : "0"
                 }}
             >
-                {props.children}
+                <div className={styles.modal_content}>
+                    {props.children}
+                </div>
+                
             </div>
         </>
     );
