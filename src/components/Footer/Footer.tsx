@@ -13,7 +13,7 @@ const Footer: FunctionComponent = (): ReactElement => {
                 <div className={styles.Footer_flex_column}>
                     <p className={styles.FooterContactsTitle}>Контакты для связи</p>
                     <div className={styles.icoContactBox}>
-                        <div className={`${styles.icoContact} ${styles.icoContactItemInsta}`}></div>
+                        <div className={`${styles.icoContact}`}></div>
                         <div className={`${styles.icoContact} ${styles.icoContactItemTelegram}`}></div>
                         <div className={`${styles.icoContact} ${styles.icoContactItemWhatsapp}`}></div>
                     </div>

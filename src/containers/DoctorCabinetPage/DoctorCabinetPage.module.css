@@ -1,6 +1,6 @@
 .doctorInformationBlock {
     padding: 34px 80px;
-    border-radius: 50px;
+    border-radius: 3.125rem;
     display: flex;
     gap: 20px;
     background-color: var(--light_blue_half_opacity);
@@ -9,7 +9,7 @@
 .doctorAvatar {
     width: 300px;
     height: 320px;
-    border-radius: 25px;
+    border-radius: 1.56rem;
     background-color: var(--white);
     display: flex;
     justify-content: center;
@@ -28,13 +28,14 @@
     display: flex;
     flex-direction: column;
 }
+
 .personalInformationInput {
     padding: 11px 26px;
     width: 100%;
     font-size: 20px;
     background-color: var(--bg_light_blue);
     border: none;
-    border-radius: 25px;
+    border-radius: 1.56rem;
 }
 
 .personalInformationMiddle {
@@ -52,13 +53,13 @@
 .slider {
     background-color: var(--light_blue_half_opacity);
     padding: 40px 80px;
-    border-radius: 50px;
+    border-radius: 3.125rem;
     margin-top: 50px;
-    
+
 }
 
 .sliderTitle {
-    font-size: 45px;
+    font-size: 2.25rem;
     margin-bottom: 40px;
     text-align: center;
 }
@@ -70,14 +71,14 @@
 .carouselItem {
     width: 180px;
     height: 266px;
-    border-radius: 25px;
+    border-radius: 1.56rem;
 }
 
 .carouselAddItem {
     background-color: var(--white);
     width: 180px;
     height: 266px;
-    border-radius: 25px;
+    border-radius: 1.56rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,7 +96,7 @@
     height: 75px;
 }
 
-.carouselAddItem:hover > .carouselAddItemIcon {
+.carouselAddItem:hover>.carouselAddItemIcon {
     width: 85px;
     height: 85px;
     transition: 0.3s;
@@ -107,7 +108,7 @@
     margin-top: 60px;
     background-color: var(--light_blue);
     padding: 30px 80px;
-    border-radius: 50px;
+    border-radius: 3.125rem;
 }
 
 .reccomendationBlockTop {
@@ -125,7 +126,7 @@
     font-size: 18px;
 }
 
-.textarea:focus { 
+.textarea:focus {
     outline: none;
 }
 
@@ -170,18 +171,17 @@
 
 .questionsBlockleft {
     width: 35%;
-
 }
 
 .questionsBlockRight {
     width: 55%;
     background-color: var(--light_blue_half_opacity);
-    border-radius: 25px;
+    border-radius: 1.56rem;
     padding: 20px;
 }
 
 .questionsBlockLeftTop {
-    font-size: 48px;
+    font-size: 2.25rem;
 }
 
 /* НАВИГАЦИОННЫЙ БЛОК */
@@ -197,7 +197,7 @@
     width: 49%;
     padding: 30px 80px;
     background-color: var(--light_blue);
-    border-radius: 50px;
+    border-radius: 3.125rem;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -208,7 +208,7 @@
     width: 49%;
     padding: 30px 80px;
     background-color: var(--light_blue);
-    border-radius: 50px;
+    border-radius: 3.125rem;
     cursor: pointer;
     display: flex;
     justify-content: space-between;

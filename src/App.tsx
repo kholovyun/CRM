@@ -1,25 +1,21 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "./containers/Login/Login";
-import AdminPanel from "./containers/AdminPanel/AdminPanel";
-import ResetPassword from "./containers/ResetPassword/ResetPassword";
+import Login from "./containers/UserForms/Login/Login";
 import Layout from "./components/Layout/Layout";
-import ForgotPassword from "./containers/ForgotPassword/ForgotPassword";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { DoctorCabinet } from "./containers/DoctorCabinet/DoctorCabinet";
 import { Home } from "./containers/Home/Home";
-
 import AdminPage from "./containers/AdminPage/AdminPage";
 import { ERoles } from "./enums/ERoles";
-import RegisterParent from "./containers/RegisterParrent/RegisterParent";
 import PrivateRoute from "./permissionRoutes/PrivateRoute/PrivateRoute";
 import AllDoctors from "./containers/AdminPage/AdminTables/AllDoctors/AllDoctors";
-import RegisterDoctor from "./containers/RegisterUser/RegisterDoctor";
-import RegisterAdmin from "./containers/RegisterUser/RegisterAdmin";
 import DoctorCabinetPage from "./containers/DoctorCabinetPage/DoctorCabinetPage";
-
+import RegisterDoctor from "./containers/UserForms/RegisterUser/RegisterDoctor";
+import RegisterAdmin from "./containers/UserForms/RegisterUser/RegisterAdmin";
+import RegisterParent from "./containers/UserForms/RegisterParrent/RegisterParent";
+import ResetPassword from "./containers/UserForms/ResetPassword/ResetPassword";
+import ForgotPassword from "./containers/UserForms/ForgotPassword/ForgotPassword";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -39,10 +35,8 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                     <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR]}/> }>
                         <Route path="/register-parent" element={<RegisterParent />} />
                     </Route>                    
-                    <Route path="/admin" element={<AdminPanel />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
-                    {/* <Route path="/cabinet" element={<DoctorCabinet />} /> */}
                     <Route path="/cabinet" element={<DoctorCabinetPage />} />
                 </Route>
             </Routes>

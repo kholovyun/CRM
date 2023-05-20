@@ -1,19 +1,20 @@
-import { validationSchemaEmail } from "../../schemas/validationSchemaEmail";
-import { useResetPasswordMutation } from "../../app/services/password";
-import styles from "../Login/Login.module.css";
-import { EBtnSize } from "../../enums/EBtnSize";
+import { validationSchemaEmail } from "../../../schemas/validationSchemaEmail";
+import { useResetPasswordMutation } from "../../../app/services/password";
+import styles from "../UserForms.module.css";
+import { EBtnSize } from "../../../enums/EBtnSize";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import React from "react";
-import Btn from "../../components/UI/Btn/Btn";
-import { EBtnTypes } from "../../enums/EBtnTypes";
-import { Container } from "../../components/UI/Container/Container";
-import { FormBox } from "../../components/UI/FormBox/FormBox";
-import { Title } from "../../components/UI/Title/Title";
+import Btn from "../../../components/UI/Btn/Btn";
+import { EBtnTypes } from "../../../enums/EBtnTypes";
+import { Container } from "../../../components/UI/Container/Container";
+import { FormBox } from "../FormBox/FormBox";
+import { Title } from "../Title/Title";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../interfaces/IUser/IMessage";
+import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
+import { IMessage } from "../../../interfaces/IUser/IMessage";
+import { EBtnClass } from "../../../enums/EBtnClass";
 
 const ForgotPassword: React.FunctionComponent = (): React.ReactElement => {
     const [resetPassword, { data, isError, isSuccess, error: forgotError }] = useResetPasswordMutation();
@@ -39,9 +40,9 @@ const ForgotPassword: React.FunctionComponent = (): React.ReactElement => {
                 >
                     {({ errors, touched, isValid, handleSubmit }) => (
                         <Form className={styles.LoginForm}>
-                            <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
                             {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
-                            <Btn disabled={!isValid} title="Сбросить" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
+                            <Field className={`${styles.LoginInput} ${styles.margin_bottom}`} name="email" type="text" placeholder="Email" />                            
+                            <Btn disabled={!isValid} title="Сбросить" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} btnClass={EBtnClass.dark_active}/>
                         </Form>
                     )}
                 </Formik>
