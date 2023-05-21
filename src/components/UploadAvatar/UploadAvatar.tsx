@@ -52,7 +52,7 @@ const UploadAvatar: React.FunctionComponent<IUploadAvatarProps> = (props): React
     };
 
     const cancelFileHandler = () => {
-        editorRef.current?.setState(null);
+        // editorRef.current?.setState();
         setFileName("");
         setImageProps(prevState => {
             return {...prevState, image: ""};

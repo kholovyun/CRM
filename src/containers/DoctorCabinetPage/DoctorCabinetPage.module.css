@@ -54,30 +54,66 @@
 
 /* ========= */
 
-.personalInformation {
+.doctorInformation {
+    height: 320px;
     flex-grow: 1;
-    gap: 40px;
+    gap: 5px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
-.personalInformationInput {
-    padding: 11px 26px;
-    width: 100%;
-    font-size: 20px;
-    background-color: var(--bg_light_blue);
-    border: none;
+
+.personalInformation {
+    background: var(--light_blue);
+    padding: 15px;
     border-radius: 25px;
-}
-
-.personalInformationMiddle {
     display: flex;
-    gap: 40px;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.editBtn {
-    align-self: flex-end;
+.specialInformation {
+    background: var(--light_blue);
+    padding: 15px;
+    border-radius: 25px;
+    flex-grow: 1;
+    gap: 10px;
+    flex-direction: column;
 }
 
+.informationTitle {
+    padding: 0 26px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 10px;
+}
+
+.personalInformationField {
+    padding: 10px 24px;
+    background-color: var(--bg_light_blue);
+    border-radius: 25px;
+    flex-grow: 1;
+}
+
+.personalInformationBottom {
+    display: flex;
+    gap: 10px;
+}
+
+
+
+.specialInformationField, .personalInformationField {
+    padding: 10px 26px;
+    background-color: var(--bg_light_blue);
+    border-radius: 25px;
+    flex-grow: 1; 
+    border: none;
+    width: 100%;
+}
+
+.violetBorder {
+    border-color: var(--violet);
+}
 
 /* СЕРТИФИКАТЫ */
 
