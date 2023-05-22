@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./SideBar.module.css";
 import "./SideBarNavLink.css";
+import AccessControl from "../../../permissionRoutes/AccessControl";
+import { ERoles } from "../../../enums/ERoles";
 
 const SideBar: React.FunctionComponent = (): React.ReactElement => {
     const [isShowingMenu, setIsShowingMenu] = useState(false);
@@ -28,15 +30,13 @@ const SideBar: React.FunctionComponent = (): React.ReactElement => {
                         </div>
                     </div>
                     <NavLink className={"sidebar_link"}
-                        to={"/admin-page/register-doctor"}>Зарегистрировать Врача</NavLink>
-                    <NavLink className={"sidebar_link"} 
-                        to={"/admin-page/register-admin"}>Зарегистрировать Администратора</NavLink>
-                    <NavLink className={"sidebar_link"}
                         to={"/admin-page/doctors"}>Врачи</NavLink>
                     <NavLink className={"sidebar_link_"}
                         to={"/admin-page/"}>Родители пациентов</NavLink>
-                    <NavLink className={"sidebar_link_"}
-                        to={"/admin-page/"}>Администраторы</NavLink>
+                    <AccessControl allowedRoles={[ERoles.SUPERADMIN]}>
+                        <NavLink className={"sidebar_link_"}
+                            to={"/admin-page/admins"}>Администраторы</NavLink>
+                    </AccessControl>                    
                     <NavLink className={"sidebar_link_"}
                         to={"/admin-page/"}>Отзывы</NavLink>
                 </div>
