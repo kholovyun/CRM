@@ -5,11 +5,12 @@ import IUserGetDtoWithToken from "../../interfaces/IUser/IUserGetDtoWithToken";
 import IUserLoginDto from "../../interfaces/IUser/IUserLoginDto";
 
 const usersApi = api.injectEndpoints({
-    endpoints: build => ({
-        getUsers: build.query<IUserGetDto[], void>({
-            query: () => ({
+    endpoints: (build) => ({
+        getUsers: build.query<IUserGetDto[], {offset: number, limit: number, filter: string}>({
+            query: ({offset, limit, filter}) => ({
                 url: "/users",
-                method: "get"
+                method: "GET",
+                params: {offset, limit, filter}
             }),
             providesTags: ["User"]
         }),
@@ -25,7 +26,7 @@ const usersApi = api.injectEndpoints({
                 method: "post",
                 body: userDto
             }),
-            invalidatesTags: ["User"]
+            invalidatesTags: ["User", "Doctor"]
         }),
         login: build.mutation<IUserGetDtoWithToken, IUserLoginDto>({
             query: (body: IUserLoginDto) => ({
@@ -34,11 +35,13 @@ const usersApi = api.injectEndpoints({
                 body
             })
         }),
-        blockUser: build.mutation<IUserGetDto, string>({
-            query: (id: string) => ({
-                url: `/users/block/${id}`,
-                method: "patch"
-            })
+        blockUser: build.mutation<IUserGetDto, IUserGetDto>({
+            query: (user) => ({
+                url: `/users/block/${user.id}`,
+                method: "PATCH",
+                body: user
+            }),
+            invalidatesTags: ["User"]
         })
     })
 });
@@ -48,5 +51,6 @@ export const {
     useGetUserByIdQuery, 
     useCreateUserMutation, 
     useLoginMutation, 
-    useBlockUserMutation } = usersApi;
+    useBlockUserMutation 
+} = usersApi;
 export default usersApi;
