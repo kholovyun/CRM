@@ -8,9 +8,9 @@ const doctorsApi = api.injectEndpoints({
             query: ({offset, limit}) => ({
                 url: "/doctors",
                 method: "GET",
-                params: {offset, limit},
-                providesTags: ["Doctor"]
-            })
+                params: {offset, limit}
+            }),
+            providesTags: ["Doctor"]
         }),
         getDoctorById: build.query<IDoctorWhithUser, {id: string}>({
             query: ({id}) => ({
@@ -18,10 +18,10 @@ const doctorsApi = api.injectEndpoints({
                 method: "GET"
             }),
         }),
-        getDoctorByUserId: build.query<IDoctorWhithUser, void>({
-            query: () => ({
-                url: "/doctors/personal",
-                method: "get"
+        getDoctorByUserId: build.query<IDoctorWhithUser, {id: string}>({
+            query: ({id}) => ({
+                url: `/doctors/personal/${id}`,
+                method: "GET"
             }),
         }),
         editDoctor: build.mutation<IDoctor, {id: string, doctor: FormData}>({
@@ -30,13 +30,24 @@ const doctorsApi = api.injectEndpoints({
                 method: "PUT",
                 body: doctor
             }),
+            invalidatesTags: ["Doctor"]
         }),
-        activateDoctor: build.mutation<IDoctor, {id: string}>({
-            query: ({id}) => ({
-                url: `/doctors/${id}`,
+        activateDoctor: build.mutation<IDoctorWhithUser, IDoctorWhithUser>({
+            query: (doctor) => ({
+                url: `/doctors/${doctor.id}`,
                 method: "PATCH",
-            })
+                body: doctor
+            }),
+            invalidatesTags: ["Doctor"]
         }),
+        blockDoctor: build.mutation<IDoctorWhithUser, IDoctorWhithUser>({
+            query: (doctor) => ({
+                url: `/users/block/${doctor.userId}`,
+                method: "PATCH",
+                body: doctor
+            }),
+            invalidatesTags: ["Doctor"]
+        })
     }),
 });
 
@@ -46,4 +57,5 @@ export const {
     useGetDoctorByUserIdQuery,
     useEditDoctorMutation,
     useActivateDoctorMutation,
+    useBlockDoctorMutation
 } = doctorsApi;

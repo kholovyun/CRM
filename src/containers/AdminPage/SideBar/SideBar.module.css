@@ -34,10 +34,11 @@
 .open_btn,
 .close_btn {
     display: inline-block;
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     background: url("../../../assets/img/arrow-in-circle.svg") center/contain no-repeat;
     cursor: pointer;
+    opacity: 0.55;
 }
 
 .menu_text {

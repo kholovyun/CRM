@@ -1,35 +1,5 @@
-@font-face {
-	font-family: "Syne";
-	src: url(./fonts/Syne-Regular.ttf) format("ttf");
-	font-weight: 400;
-}
-
-@font-face {
-	font-family: "Syne";
-	src: url(./fonts/Syne-Medium.ttf) format("ttf");
-	font-weight: 500;
-}
-
-@font-face {
-	font-family: "Syne";
-	src: url(./fonts/Syne-SemiBold.ttf) format("ttf");
-	font-weight: 600;
-}
-
-@font-face {
-	font-family: "Syne";
-	src: url(./fonts/Syne-Bold.ttf) format("ttf");
-	font-weight: 700;
-}
-
-@font-face {
-	font-family: "Syne";
-	src: url(./fonts/Syne-ExtraBold.ttf) format("ttf");
-	font-weight: 800;
-}
-
 :root {
-	--font-family: 'Syne', sans-serif;
+	--font-family: 'Roboto', sans-serif;
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;

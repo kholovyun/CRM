@@ -25,7 +25,10 @@ const Header: FunctionComponent = (): ReactElement => {
                 <nav className={styles.header_links_row}>
                     <div className={styles.right_flex_row}>
                         {user &&
-                            <NavLink to={user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ? "/admin" : "cabinet/"} className={styles.header_link}>
+                            <NavLink to={user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ? 
+                                "/admin-page" 
+                                : user.role === ERoles.DOCTOR ? `/doctor-cabinet/:${user.id}` : "/"
+                            } className={styles.header_link}>
                                 Личный кабинет: <strong>{user.name}</strong>
                             </NavLink>
                         }
