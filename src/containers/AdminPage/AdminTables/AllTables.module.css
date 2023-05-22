@@ -1,8 +1,8 @@
-.doctors_container {
+.list_container {
     position: relative;
 }
 
-.doctors_table_box {
+.list_table_box {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -12,6 +12,14 @@
     box-sizing: border-box;
     width: 100%;
     overflow: hidden;
+}
+
+.group_row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding-bottom: 20px;
+    justify-content: space-between;
 }
 
 .Table_box {
@@ -101,7 +109,6 @@ tbody .Table_tr:hover {
 
 .h1_title {
     color: var(--black_blue);
-    padding-bottom: 20px;
     font-weight: 400;
     margin: 0;
 }
