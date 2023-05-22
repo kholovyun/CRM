@@ -1,5 +1,5 @@
-import IDoctorWhithUser from "../../../../interfaces/IDoctor/IDoctorWhithUser";
+import IDoctorWithUser from "../../../../interfaces/IDoctor/IDoctorWithUser";
 
 export default interface IAllDoctorsProps {
-    doctors: IDoctorWhithUser[]
+    doctors: IDoctorWithUser[]
 }

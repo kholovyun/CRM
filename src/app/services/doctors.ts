@@ -1,10 +1,10 @@
 import IDoctor from "../../interfaces/IDoctor/IDoctor";
-import IDoctorWhithUser from "../../interfaces/IDoctor/IDoctorWhithUser";
+import IDoctorWithUser from "../../interfaces/IDoctor/IDoctorWithUser";
 import {api} from "./api";
 
 const doctorsApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getDoctors: build.query<IDoctorWhithUser[], {offset: number, limit: number}>({
+        getDoctors: build.query<IDoctorWithUser[], {offset: number, limit: number}>({
             query: ({offset, limit}) => ({
                 url: "/doctors",
                 method: "GET",
@@ -12,13 +12,13 @@ const doctorsApi = api.injectEndpoints({
             }),
             providesTags: ["Doctor"]
         }),
-        getDoctorById: build.query<IDoctorWhithUser, {id: string}>({
+        getDoctorById: build.query<IDoctorWithUser, {id: string}>({
             query: ({id}) => ({
                 url: `/doctors/${id}`,
                 method: "GET"
             }),
         }),
-        getDoctorByUserId: build.query<IDoctorWhithUser, {id: string}>({
+        getDoctorByUserId: build.query<IDoctorWithUser, {id: string}>({
             query: ({id}) => ({
                 url: `/doctors/personal/${id}`,
                 method: "GET"
@@ -32,7 +32,7 @@ const doctorsApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Doctor"]
         }),
-        activateDoctor: build.mutation<IDoctorWhithUser, IDoctorWhithUser>({
+        activateDoctor: build.mutation<IDoctorWithUser, IDoctorWithUser>({
             query: (doctor) => ({
                 url: `/doctors/${doctor.id}`,
                 method: "PATCH",
@@ -40,7 +40,7 @@ const doctorsApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Doctor"]
         }),
-        blockDoctor: build.mutation<IDoctorWhithUser, IDoctorWhithUser>({
+        blockDoctor: build.mutation<IDoctorWithUser, IDoctorWithUser>({
             query: (doctor) => ({
                 url: `/users/block/${doctor.userId}`,
                 method: "PATCH",

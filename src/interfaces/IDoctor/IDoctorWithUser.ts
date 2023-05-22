@@ -1,4 +1,4 @@
-export default interface IDoctorWhithUser {
+export default interface IDoctorWithUser {
     id: string
     userId: string
     photo: string
