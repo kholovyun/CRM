@@ -9,68 +9,47 @@ import { EBtnSize } from "../../../../enums/EBtnSize";
 import Btn from "../../../../components/UI/Btn/Btn";
 import { EBtnClass } from "../../../../enums/EBtnClass";
 import SwitchDiv from "../../../../components/UI/SwitchDiv/SwitchDiv";
-import IDoctorWhithUser from "../../../../interfaces/IDoctor/IDoctorWhithUser";
+import IDoctorWithUser from "../../../../interfaces/IDoctor/IDoctorWithUser";
 import TransparentLink from "../../../../components/UI/TransparentLink/TransparentLink";
 import { useNavigate } from "react-router-dom";
+import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
+import { IMessage } from "../../../../interfaces/IUser/IMessage";
+import { toast } from "react-toastify";
+import Loader from "../../../../components/UI/Loader/Loader";
 
 const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
     const navigate = useNavigate();
     // const [currentPage, setCurrentPage] = useState(1);
-    const {data: doctors, error: getDoctorsError, isError, isLoading} = useGetDoctorsQuery({offset: 0, limit: 10});
+    const {data: doctors, error: getDoctorsError, isError: isDoctorsGetError, isLoading} = useGetDoctorsQuery({offset: 0, limit: 10});
     const [blockThisUser, { error: blockUserError, isError: isBlockError }] = useBlockDoctorMutation();
-    const [activateThisDoctor, { error: activateUserError, isError: isActivateError }] = useActivateDoctorMutation();
-    const initDoctor: IDoctorWhithUser = {
-        id: "",
-        userId: "",
-        photo: "",
-        speciality: "",
-        placeOfWork: "",
-        experience: 0,
-        isActive: true,
-        price: 0,
-        achievements: "",
-        degree: "",
-        users: {
-            name: "",
-            surname: "",
-            patronim: "",
-            email: "",
-            phone: "",
-            isBlocked: false
-        }
-    };
+    const [activateThisDoctor, { error: activateError, isError: isActivateError }] = useActivateDoctorMutation();
 
-    const [stateDoctor, setDoctor] = useState({...initDoctor});    
+    const [stateDoctor, setDoctor] = useState<IDoctorWithUser | null>(null);
     const [modalTitle, setModalTitle] = useState("");
     const [showModal, setShowModal] = useState(false);
     
-    const setErrorMsg = (err: FetchBaseQueryError | SerializedError | undefined) => {
-        if (err) {
-            if ("status" in err) {
-                const errMsg = "error" in err ? err.error : JSON.stringify(err.data);
-                return errMsg;
-            } else if ("message" in err) {
-                return err.message;
-            } else {
-                return String(err);
-            }        
-        }
-        return "";
+    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        const err = data as IErrorResponse<IMessage>;
+        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
     };
 
+    isDoctorsGetError && errorHandler(getDoctorsError);
+    isBlockError && errorHandler(blockUserError);
+    isActivateError && errorHandler(activateError);
+
     const clearModalStates = () => {
-        setDoctor({...initDoctor});
+        setDoctor(null);
         setModalTitle("");
     };
 
-    const cklickBlockHandler = (e: React.MouseEvent<HTMLElement>, thisDoctor: IDoctorWhithUser, text: string) => {
+    const cklickBlockHandler = (e: React.MouseEvent<HTMLElement>, thisDoctor: IDoctorWithUser, text: string) => {
         e.stopPropagation();
         setDoctor({...thisDoctor});
         setShowModal(true);
         setModalTitle(text);
     };
 
-    const cklickActivateHandler = (e: React.MouseEvent<HTMLElement>, thisDoctor: IDoctorWhithUser, text: string) => {
+    const cklickActivateHandler = (e: React.MouseEvent<HTMLElement>, thisDoctor: IDoctorWithUser, text: string) => {
         e.stopPropagation();
         setDoctor({...thisDoctor});
         setShowModal(true);
@@ -78,15 +57,15 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
     };
 
     const blockUser = async () => {
-        await blockThisUser(stateDoctor);
-        console.log(`Пользователь ${stateDoctor.userId} заблокирован/разблокирован`);
+        stateDoctor && await blockThisUser(stateDoctor);
+        stateDoctor && console.log(`Пользователь ${stateDoctor.userId} заблокирован/разблокирован`);
         setShowModal(false);
         clearModalStates();
     };
 
     const activateDoctor = async () => {
-        await activateThisDoctor(stateDoctor);
-        console.log(`Врач ${stateDoctor.id} активирован/дезактивирован`);
+        stateDoctor && await activateThisDoctor(stateDoctor);
+        stateDoctor && console.log(`Врач ${stateDoctor.id} активирован/дезактивирован`);
         setShowModal(false);
         clearModalStates();
     };
@@ -116,7 +95,7 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
                     <div className={styles.title_box}>
                         <p className={styles.modal_title}>
                             Вы уверены, что хотите <span className={styles.violet}>{modalTitle}</span> пользователя по имени 
-                            <span className={styles.violet}>{` ${stateDoctor.users.surname} ${stateDoctor.users.name}`}</span>?
+                            <span className={styles.violet}>{stateDoctor && ` ${stateDoctor.users.surname} ${stateDoctor.users.name}`}</span>?
                         </p>
                     </div>                    
                     <div className={styles.modal_btn_group}>
@@ -145,10 +124,7 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
                     </div>
                 </div>
             </Modal>
-            {isLoading && <p>{"Идёт загрузка"}</p>}
-            {isError && getDoctorsError && <p className={styles.Error_message}>{setErrorMsg(getDoctorsError)}</p>}
-            {isBlockError && blockUserError && <p className={styles.Error_message}>{setErrorMsg(blockUserError)}</p>}
-            {isActivateError && activateUserError && <p className={styles.Error_message}>{setErrorMsg(activateUserError)}</p>} 
+            {isLoading && <Loader/>}
             {
                 doctors === undefined || !doctors.length ?
                     <p>No data</p>

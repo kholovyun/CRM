@@ -12,43 +12,31 @@ import TransparentLink from "../../../../components/UI/TransparentLink/Transpare
 import { useBlockUserMutation, useGetUsersQuery } from "../../../../app/services/users";
 import IUserGetDto from "../../../../interfaces/IUser/IUserGetDto";
 import { ERoles } from "../../../../enums/ERoles";
+import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
+import { IMessage } from "../../../../interfaces/IUser/IMessage";
+import { toast } from "react-toastify";
+import Loader from "../../../../components/UI/Loader/Loader";
 
 const AllAdmins: React.FunctionComponent = (): React.ReactElement => {
     
     // const [currentPage, setCurrentPage] = useState(1);
     const {data: admins, error: getAdminsError, isError: isGetAdminsError, isLoading} = useGetUsersQuery({offset: 0, limit: 10, filter: "admins"});
     const [blockThisUser, { error: blockUserError, isError: isBlockError }] = useBlockUserMutation();
-    const initUser: IUserGetDto = {
-        id: "",
-        role: ERoles.ADMIN,
-        email: "",
-        phone: "",
-        name: "",
-        surname: "",
-        patronim: "",
-        isBlocked: false        
-    };
 
-    const [stateUser, setUser] = useState({...initUser});
+    const [stateUser, setUser] = useState<IUserGetDto | null>(null);
     const [modalTitle, setModalTitle] = useState("");
     const [showModal, setShowModal] = useState(false);    
     
-    const setErrorMsg = (err: FetchBaseQueryError | SerializedError | undefined) => {
-        if (err) {
-            if ("status" in err) {
-                const errMsg = "error" in err ? err.error : JSON.stringify(err.data);
-                return errMsg;
-            } else if ("message" in err) {
-                return err.message;
-            } else {
-                return String(err);
-            }        
-        }
-        return "";
+    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        const err = data as IErrorResponse<IMessage>;
+        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
     };
 
+    isGetAdminsError && errorHandler(getAdminsError);
+    isBlockError && errorHandler(blockUserError);
+
     const clearModalStates = () => {
-        setUser({...initUser});
+        setUser(null);
         setModalTitle("");
     };
 
@@ -60,7 +48,7 @@ const AllAdmins: React.FunctionComponent = (): React.ReactElement => {
     };
 
     const blockUser = async () => {
-        if(stateUser.role !== ERoles.SUPERADMIN) {
+        if(stateUser && stateUser.role !== ERoles.SUPERADMIN) {
             await blockThisUser(stateUser);
             console.log(`Пользователь ${stateUser.id} заблокирован/разблокирован`);
         }        
@@ -88,7 +76,7 @@ const AllAdmins: React.FunctionComponent = (): React.ReactElement => {
                     <div className={styles.title_box}>
                         <p className={styles.modal_title}>
                             Вы уверены, что хотите <span className={styles.violet}>{modalTitle}</span> пользователя по имени 
-                            <span className={styles.violet}>{` ${stateUser.surname} ${stateUser.name}`}</span>?
+                            <span className={styles.violet}>{stateUser && ` ${stateUser.surname} ${stateUser.name}`}</span>?
                         </p>
                     </div>                    
                     <div className={styles.modal_btn_group}>
@@ -107,9 +95,7 @@ const AllAdmins: React.FunctionComponent = (): React.ReactElement => {
                     </div>
                 </div>
             </Modal>
-            {isLoading && <p>{"Идёт загрузка"}</p>}
-            {isGetAdminsError && getAdminsError && <p className={styles.Error_message}>{setErrorMsg(getAdminsError)}</p>}
-            {isBlockError && blockUserError && <p className={styles.Error_message}>{setErrorMsg(blockUserError)}</p>}
+            {isLoading && <Loader/>}
             {
                 admins === undefined || !admins.length ?
                     <p>No data</p>
