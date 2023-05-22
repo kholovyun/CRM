@@ -16,12 +16,12 @@ import UploadAvatar from "../../components/UploadAvatar/UploadAvatar";
 import EditUserByDoctor from "./EditUserByDoctor/EditUserByDoctor";
 import defaultDoctorImg from "../../assets/img/default-doctor.svg";
 import IDoctorUpdateDto from "../../interfaces/IDoctor/IDoctorUpdateDto";
-
-
+import { useParams } from "react-router-dom";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
+    const params = useParams();
     const { user } = useAppSelector(state => state.auth);
-    const {data: doctor} = useGetDoctorByUserIdQuery();
+    const {data: doctor} = useGetDoctorByUserIdQuery({id: String(params.id)});
     const [updateData, setUpdateData] = useState(true);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showUserUpadteModal, setShowUserUpadteModal] = useState(false);
@@ -65,6 +65,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                         /> : <img className="DetailedPage__image" src={defaultDoctorImg} alt={"doctor"}/>
                     }
                 </div>
+                {doctor && 
                 <div className={styles.doctorInformation}>
                     <div className={styles.personalInformation}>
                         <p className={styles.informationTitle}>Личные данные</p>
@@ -118,9 +119,8 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                         </Formik>
                     </div>
                 </div>
+                }
             </div>
-            
-  
 
             <div className={styles.slider}>
                 <p className={styles.sliderTitle}>Сертификаты о дополнительном образовании</p>
