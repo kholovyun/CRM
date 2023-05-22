@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import { FunctionComponent, ReactElement, useRef, useState } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { Field, Formik, Form } from "formik";
 import { useAppSelector } from "../../app/hooks";
@@ -10,11 +10,14 @@ import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import styles from "./DoctorCabinetPage.module.css";
 import "./Carousel.css";
-import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
+import { useEditDoctorMutation, useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import Modal from "../../components/UI/Modal/Modal";
 import UploadAvatar from "../../components/UploadAvatar/UploadAvatar";
 import EditUserByDoctor from "./EditUserByDoctor/EditUserByDoctor";
 import defaultDoctorImg from "../../assets/img/default-doctor.svg";
+import IDoctorUpdateDto from "../../interfaces/IDoctor/IDoctorUpdateDto";
+
+
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
@@ -22,10 +25,25 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const [updateData, setUpdateData] = useState(true);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showUserUpadteModal, setShowUserUpadteModal] = useState(false);
+    const ref = useRef<HTMLInputElement>(null);
+    const [editDoctor]= useEditDoctorMutation();
 
     const modalCancelHandler = () => {
         setShowUserUpadteModal(false);
         setShowAvatarModal(false);
+    };
+
+    const setInputFocus = () => {
+        ref.current?.focus();
+    };
+
+    const updateDoctorData = async (values: IDoctorUpdateDto) => {
+        const formData = new FormData();
+        Object.entries(values).forEach(entry => {
+            const [key, value] = entry;
+            formData.append(key, value);
+        });
+        editDoctor({id: doctor?.id || "", doctor:formData});
     };
 
     return (
@@ -61,7 +79,43 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                         </div>
                     </div>
                     <div className={styles.specialInformation}>
-                        
+                        <Formik
+                            initialValues={{
+                                speciality: doctor!.speciality,
+                                placeOfWork: doctor!.placeOfWork,
+                                experience: doctor!.experience,
+                                achievments: doctor!.achievements,
+                                degree: doctor!.degree
+                            }}
+                            validateOnBlur
+                            onSubmit={async(values) => {
+                                updateDoctorData(values);
+                                // toast.info("Функционал пока недоступен");
+                                setUpdateData(true);
+                            }}
+                        >
+                            {({ handleSubmit }) => (
+                                <Form className={styles.specialInformationForm}>
+                                    <p className={styles.informationTitle}>Специальные данные</p>
+                                    <div className={styles.specialInformationLine}>
+                                        <Field readOnly={updateData} type="text" innerRef={ref} name="speciality" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
+                                        <Field readOnly={updateData} type="text" name="degree" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
+                                    </div>
+                                    <div className={styles.specialInformationLine}>
+                                        <Field readOnly={updateData} type="text" name="achievments" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
+                                        <Field readOnly={updateData} type="text" name="experience" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
+                                    </div>
+                                    <div className={styles.specialInformationLine}>
+                                        <Field readOnly={updateData} type="text" name="placeOfWork" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
+                                        {updateData && <Btn title="Редактировать" onclick={() => {
+                                            setUpdateData(false);
+                                            setInputFocus();
+                                        }} size={EBtnSize.tiny} types={EBtnTypes.submit} />}
+                                        {!updateData && <Btn title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />}
+                                    </div>
+                                </Form>
+                            )}
+                        </Formik>
                     </div>
                 </div>
             </div>

@@ -100,7 +100,17 @@
     gap: 10px;
 }
 
+.specialInformationForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
+.specialInformationLine {
+    display: flex;
+    justify-content: space-between; 
+    gap: 10px;
+}
 
 .specialInformationField, .personalInformationField {
     padding: 10px 26px;
@@ -109,6 +119,11 @@
     flex-grow: 1; 
     border: none;
     width: 100%;
+}
+
+.specialInformationField {
+    padding: 8px 26px;
+    border: 2px solid transparent;
 }
 
 .violetBorder {
