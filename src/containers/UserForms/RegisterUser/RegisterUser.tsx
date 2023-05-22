@@ -14,8 +14,11 @@ import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { FormBox } from "../FormBox/FormBox";
 import { Title } from "../Title/Title";
+import { useNavigate } from "react-router-dom";
+import { ERoles } from "../../../enums/ERoles";
 
 const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): React.ReactElement => {
+    const navigate = useNavigate();
     const [createUser, { isError, isSuccess, error: createUserError }] = useCreateUserMutation();
     const phoneNumberMask = [
         "+",
@@ -59,6 +62,7 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
                 validateOnBlur
                 onSubmit={(values) => {
                     createUser(values);
+                    navigate(props.role === ERoles.ADMIN ? "/admin-page/admins" : "/admin-page/doctors");
                 }}
                 validationSchema={validationSchemaRegUser}
             >
