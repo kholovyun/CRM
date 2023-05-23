@@ -38,7 +38,7 @@ const Login: React.FC = (): React.ReactElement => {
                 navigator("/admin-page/doctors");
             } else {
                 navigator(`/doctor-cabinet/${user.id}`);
-            }            
+            }
         }
     }, [user]);
 
@@ -62,11 +62,11 @@ const Login: React.FC = (): React.ReactElement => {
                             {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
                             <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
                             {touched.password && errors.password ? <p className={styles.typeError}>{errors.password}</p> : <p className={styles.typeText}></p>}
-                            <Field className={styles.LoginInput} name="password" type="password" placeholder="Пароль" />                            
+                            <Field className={styles.LoginInput} name="password" type="password" placeholder="Пароль" />
                             <NavLink to={"/forgot-password"} className={styles.forgotlink}>Забыли пароль?</NavLink>
-                            <Btn disabled={!isValid} title="Войти" 
-                                onclick={handleSubmit} 
-                                size={EBtnSize.big} 
+                            <Btn disabled={!isValid} title="Войти"
+                                onclick={handleSubmit}
+                                size={EBtnSize.big}
                                 btnClass={EBtnClass.dark_active}
                                 types={EBtnTypes.submit} />
                         </Form>

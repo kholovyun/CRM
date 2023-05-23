@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactElement } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import Logo from "../Logo/Logo";
 import { toast } from "react-toastify";
@@ -13,7 +13,11 @@ import AccessControl from "../../permissionRoutes/AccessControl";
 
 const Header: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
+    const navigator = useNavigate();
     const dispatcher = useAppDispatch();
+    const navigateHandler = () => {
+        user ? navigator("/login") : navigator("/");
+    };
 
     return (
         <header className={styles.header_bg_container}>
@@ -25,16 +29,16 @@ const Header: FunctionComponent = (): ReactElement => {
                 <nav className={styles.header_links_row}>
                     <div className={styles.right_flex_row}>
                         {user &&
-                            <NavLink to={user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ? 
-                                "/admin-page" 
+                            <NavLink to={user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ?
+                                "/admin-page"
                                 : user.role === ERoles.DOCTOR ? `/doctor-cabinet/:${user.id}` : "/"
                             } className={styles.header_link}>
                                 Личный кабинет: <strong>{user.name}</strong>
                             </NavLink>
                         }
                         <div className={styles.header_avatar_box}>
-                            <div className={styles.header_avatar_img}></div>
-                        </div>                        
+                            <div className={styles.header_avatar_img} onClick={navigateHandler}></div>
+                        </div>
                     </div>
                     <div className={styles.flex_row}>
                         <Btn
@@ -46,8 +50,8 @@ const Header: FunctionComponent = (): ReactElement => {
                         <AccessControl
                             allowedRoles={[ERoles.ADMIN, ERoles.DOCTOR, ERoles.PARENT, ERoles.SUPERADMIN]}
                         >
-                            <Btn 
-                                title={"Выйти"} 
+                            <Btn
+                                title={"Выйти"}
                                 size={EBtnSize.small}
                                 btnClass={EBtnClass.dark_active}
                                 onclick={() => dispatcher(logout())} />
