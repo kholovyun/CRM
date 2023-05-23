@@ -15,9 +15,6 @@ const Header: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     const navigator = useNavigate();
     const dispatcher = useAppDispatch();
-    const navigateHandler = () => {
-        user ? navigator("/login") : navigator("/");
-    };
 
     return (
         <header className={styles.header_bg_container}>
@@ -37,7 +34,7 @@ const Header: FunctionComponent = (): ReactElement => {
                             </NavLink>
                         }
                         <div className={styles.header_avatar_box}>
-                            <div className={styles.header_avatar_img} onClick={navigateHandler}></div>
+                            <div className={styles.header_avatar_img} onClick={() => navigator("/login")}></div>
                         </div>
                     </div>
                     <div className={styles.flex_row}>
