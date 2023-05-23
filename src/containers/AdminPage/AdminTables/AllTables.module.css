@@ -1,0 +1,114 @@
+.list_container {
+    position: relative;
+}
+
+.list_table_box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    border-radius: 25px;
+    padding: 20px 25px;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+}
+
+.group_row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding-bottom: 20px;
+    justify-content: space-between;
+}
+
+.Table_box {
+    overflow-x: auto;
+    padding: 20px 0;
+}
+
+.Table {
+    border-collapse: collapse;
+    width: 100%;
+    border-spacing: 0;
+    border: none;
+}
+
+.Table_tr {
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid var(--gray_blue);
+}
+
+.switch_td {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+tbody .Table_tr:hover {
+    background-color: var(--light_blue);
+    cursor: pointer;
+}
+
+.Table_td_right {
+    padding: 5px;
+    border-right: 1px solid var(--gray_blue);
+    text-align: center;
+    padding: 15px 5px;
+}
+
+.Table_td {
+    padding: 5px;
+    text-align: center;
+    padding: 15px 5px;
+}
+
+.Error_message {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 100%;
+    color: var(--violet);
+}
+
+.modal_btn_group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.modal_flex_column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    align-items: center;
+}
+
+.modal_title {
+    text-align: center;
+    font-size: 22px;
+    line-height: 150%;
+    color: var(--black_blue);
+    font-weight: 700;
+    max-width: 70%;
+    margin: 0;
+}
+
+.violet {
+    color: var(--violet);
+}
+
+.title_box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 40px;
+    align-items: center;
+}
+
+.h1_title {
+    color: var(--black_blue);
+    font-weight: 400;
+    margin: 0;
+}

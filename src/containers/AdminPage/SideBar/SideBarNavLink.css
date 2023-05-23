@@ -1,0 +1,19 @@
+.sidebar_link_,
+.sidebar_link {
+    display: inline-block;
+    font-size: 18px;
+    line-height: 130%;
+    color: var(--gray_blue);
+    cursor: pointer;
+    padding: 10px;
+    text-decoration: none;
+    padding: 20px;
+}
+
+.sidebar_link_:hover,
+.sidebar_link:hover,
+.sidebar_link.active {
+    color: white;
+    background-color: var(--violet);
+    width: 100%;
+}
