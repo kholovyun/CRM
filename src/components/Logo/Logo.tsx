@@ -5,7 +5,7 @@ import styles from "./Logo.module.css";
 
 const Logo: FunctionComponent = (): ReactElement => {
     return (
-        <Link className={styles.Logo} to={"/admin"} />
+        <Link className={styles.Logo} to={"/"} />
     );
 };
 
