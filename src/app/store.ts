@@ -1,10 +1,28 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { Middleware, MiddlewareAPI, combineReducers, configureStore, isRejectedWithValue } from "@reduxjs/toolkit";
 import { api } from "./services/api";
-import authReducer from "../features/authSlice";
+import authReducer, { logout } from "../features/authSlice";
 import doctorReducer from "../features/doctorSlice";
 import { PERSIST, persistReducer, persistStore, PURGE, REGISTER } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
+import { toast } from "react-toastify";
+
+
+export const rtkQueryErrorLogger: Middleware =
+  (api: MiddlewareAPI) => (next) => (action) => {
+    if (isRejectedWithValue(action)) { 
+        if(action.payload.status === 401){
+            api.dispatch(logout())
+            window.location.href = "/login";
+        } else if (action.payload.status === 403){
+            window.location.href = "/cabinet";
+        } else if (action.payload.status === "FETCH_ERROR") {
+            toast.error('Ошибка соединения');   
+        } 
+    }
+
+    return next(action)
+  }
 
 const persistConfig = {
     key: "root",
@@ -31,7 +49,7 @@ const store = configureStore({
             {
                 ignoredActions: [REGISTER, PERSIST, PURGE],
             },
-        }).concat(api.middleware),
+        }).concat(api.middleware).concat(rtkQueryErrorLogger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
