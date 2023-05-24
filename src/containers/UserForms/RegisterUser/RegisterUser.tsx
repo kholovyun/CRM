@@ -44,8 +44,18 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
         toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
     };
 
+    const successHandler = () => {
+        if (props.role === ERoles.ADMIN) {
+            toast.info(`${props.role} Администратор создан`);
+        }
+        if (props.role === ERoles.DOCTOR) {
+            toast.info(`${props.role} Врач создан`);
+        }
+        navigate(-1);
+    };
+
     isError && errorHandler(createUserError);
-    isSuccess && toast.info("Письмо активации отправлено на почту");
+    isSuccess && successHandler();
 
     return (
         <FormBox>
@@ -62,8 +72,8 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
                 validateOnBlur
                 onSubmit={(values) => {
                     createUser(values);
-                    navigate(props.role === ERoles.ADMIN ? "/admin-page/admins" : "/admin-page/doctors");
                 }}
+                
                 validationSchema={validationSchemaRegUser}
             >
                 {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
