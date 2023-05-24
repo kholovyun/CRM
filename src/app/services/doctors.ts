@@ -17,6 +17,7 @@ const doctorsApi = api.injectEndpoints({
                 url: `/doctors/${id}`,
                 method: "GET"
             }),
+            providesTags: ["Doctor"]
         }),
         editDoctor: build.mutation<IDoctor, {id: string, doctor: FormData}>({
             query: ({id, doctor}) => ({
