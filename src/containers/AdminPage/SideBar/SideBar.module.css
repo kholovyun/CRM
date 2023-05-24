@@ -4,6 +4,8 @@
     gap: 10px;
     background-color: var(--light_blue);
     border-top-right-radius: 25px;
+    margin-bottom: 4rem;
+    border-bottom-right-radius: 25px;
 }
 
 .sidebar_colappsed {

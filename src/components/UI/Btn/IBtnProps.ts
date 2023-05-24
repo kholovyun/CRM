@@ -7,5 +7,6 @@ export default interface IBtnProps {
     disabled?: boolean
     size?: EBtnSize
     types?: EBtnTypes
-    btnClass?: string    
+    btnClass?: string
+    style?: {[key: string]: string}
 }

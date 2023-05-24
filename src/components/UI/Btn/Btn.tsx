@@ -5,6 +5,7 @@ import styles from "./Btn.module.css";
 const Btn: React.FunctionComponent<IBtnProps> = (props: IBtnProps) => {
     return (
         <button
+            style={props.style}
             onClick={props.onclick === undefined ? undefined : props.onclick}
             className={props.btnClass !== undefined ?
                 `${styles.btn} ${styles[props.size || ""]} ${styles[props.btnClass]}` :
