@@ -1,9 +1,9 @@
 import React, {useState, ChangeEvent, createRef} from "react";
 import AvatarEditor from "react-avatar-editor";
 import IImageProps from "./IImageProps";
-import styles from "./UploadAvatar.module.css";
+import styles from "./AvatarUploader.module.css";
 import { useEditDoctorMutation, useGetDoctorByUserIdQuery } from "../../app/services/doctors";
-import IUploadAvatarProps from "./IUploadAvatarProps";
+import IAvatarUploaderProps from "./IAvatarUploaderProps";
 import { useAppSelector } from "../../app/hooks";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
@@ -11,7 +11,7 @@ import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
 
-const UploadAvatar: React.FunctionComponent<IUploadAvatarProps> = (props): React.ReactElement => { 
+const AvatarUploader: React.FunctionComponent<IAvatarUploaderProps> = (props): React.ReactElement => { 
     const [editAvatar, {isSuccess, isError, error}]= useEditDoctorMutation();
     //const [descriptionErrorMessage, setImageDescriptionErrorMessage] = useState<string>("");
     const { user } = useAppSelector(state => state.auth);
@@ -24,7 +24,7 @@ const UploadAvatar: React.FunctionComponent<IUploadAvatarProps> = (props): React
     };
 
     isError && errorHandler(error);
-    isSuccess && props.click();
+    isSuccess && props.modalCloser();
 
     const editorRef: React.RefObject<AvatarEditor> = createRef();
     const [imageProps, setImageProps] = useState<IImageProps>({
@@ -74,7 +74,7 @@ const UploadAvatar: React.FunctionComponent<IUploadAvatarProps> = (props): React
         // setImageProps(prevState => {
         //     return {...prevState, image: ""};
         // });
-        props.click();
+        props.modalCloser();
     };
 
     const setNewAvatar = async () => {
@@ -93,7 +93,7 @@ const UploadAvatar: React.FunctionComponent<IUploadAvatarProps> = (props): React
         }
     };
     return (
-        <div className={styles.uploadAvatarBox}>
+        <div className={styles.AvatarUploaderBox}>
             {imageProps.image !== "" ?
                 <AvatarEditor 
                     ref={editorRef}
@@ -136,4 +136,4 @@ const UploadAvatar: React.FunctionComponent<IUploadAvatarProps> = (props): React
     );
 };
 
-export default UploadAvatar;
+export default AvatarUploader;

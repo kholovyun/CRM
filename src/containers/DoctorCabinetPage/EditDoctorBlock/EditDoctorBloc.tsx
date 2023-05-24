@@ -1,35 +1,53 @@
-import { Field, Form, Formik } from "formik";
-import { FunctionComponent, ReactElement } from "react";
-import { toast } from "react-toastify";
-import { useAppSelector } from "../../../app/hooks";
+import { Formik, Field, Form } from "formik";
 import { FormBox } from "../../UserForms/FormBox/FormBox";
-import { Title } from "../../UserForms/Title/Title";
-import { validationSchemaRegUser } from "../../../schemas/validationSchemaRegUser";
-import styles from "./EditUserByDoctor.module.css";
-import MaskedInput from "react-text-mask";
 import Btn from "../../../components/UI/Btn/Btn";
+import { toast } from "react-toastify";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { IMessage } from "../../../interfaces/IUser/IMessage";
+import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
+import { useEditUserMutation } from "../../../app/services/users";
+import { useAppSelector } from "../../../app/hooks";
+import { validationSchemaEditUser } from "../../../schemas/validationSchemaEditUser";
+import styles from "./EditDoctor.module.css";
+import MaskedInput from "react-text-mask";
+import { FunctionComponent, ReactElement, useRef, useState } from "react";
+import IEditDoctorBlockProps from "./IEditDoctorBlockProps";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 
-const EditUserByDoctor: FunctionComponent = (): ReactElement => {
+const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = (props) => {
+    const phoneNumberMask = ["+","7","(",/\d/,/\d/,/\d/,")",/\d/,/\d/,/\d/,"-",/\d/,/\d/,"-",/\d/,/\d/];
+    const [editUser, { isError, isSuccess, error: editUserError }] = useEditUserMutation();
+
     const { user } = useAppSelector(state => state.auth);
-    const phoneNumberMask = ["+","7",/\d/,/\d/,/\d/,")",/\d/,/\d/,/\d/,"-",/\d/,/\d/,"-",/\d/,/\d/];
-    
+    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        const err = data as IErrorResponse<IMessage>;
+        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
+    };
+
+    const successHandler = () => { 
+        // props.modalCloser();
+        toast.info("Личные данные изменены");
+    };
+
+    isError && errorHandler(editUserError);
+    isSuccess && successHandler();
     return (
         <FormBox>
-            <Title text={"Изменить данные пользователя"} />
+            <p>Изменить данные пользователя</p>
             <Formik
                 initialValues={{
-                    name: user?.name,
-                    surname: user?.surname,
-                    patronim: user?.patronim,
-                    phone: user?.phone,
+                    name: user!.name,
+                    surname: user!.surname,
+                    patronim: user!.patronim,
+                    phone: user!.phone,
                 }}
                 validateOnBlur
-                onSubmit={() => {
-                    toast.info("Пока еще не доступно");
+                onSubmit={(values) => {
+                    editUser({id: user!.id, userDto: values});
                 }}
-                validationSchema={validationSchemaRegUser}
+                validationSchema={validationSchemaEditUser}
             >
                 {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
                     <Form className={styles.LoginForm}>
@@ -61,13 +79,13 @@ const EditUserByDoctor: FunctionComponent = (): ReactElement => {
                                             onChange={handleChange}
                                             onBlur={handleBlur}
                                             className={styles.LoginInput}
-                                            value={user?.phone}
                                         />
                                     )}
                                 >
                                 </Field>
                             </div>   
                         </div>
+                        <Btn title="Отмена" onclick={() => props.modalCloser()} size={EBtnSize.big} types={EBtnTypes.submit} />
                         <Btn disabled={!isValid} title="Редактировать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
                     </Form>
                 )}
@@ -76,4 +94,4 @@ const EditUserByDoctor: FunctionComponent = (): ReactElement => {
     );
 };
 
-export default EditUserByDoctor;
+export default EditDoctorBlock;

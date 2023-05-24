@@ -12,25 +12,27 @@ import styles from "./DoctorCabinetPage.module.css";
 import "./Carousel.css";
 import { useEditDoctorMutation, useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import Modal from "../../components/UI/Modal/Modal";
-import UploadAvatar from "../../components/UploadAvatar/UploadAvatar";
-import EditUserByDoctor from "./EditUserByDoctor/EditUserByDoctor";
+import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import defaultDoctorImg from "../../assets/img/default-doctor.svg";
 import IDoctorUpdateDto from "../../interfaces/IDoctor/IDoctorUpdateDto";
 import { useParams } from "react-router-dom";
 
+import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBloc";
+
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
-    const params = useParams();
     const { user } = useAppSelector(state => state.auth);
+    
+    const params = useParams();
     const {data: doctor} = useGetDoctorByUserIdQuery({id: params.id ? String(params.id) : String(user!.id)});
 
     const [updateData, setUpdateData] = useState(true);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
-    const [showUserUpadteModal, setShowUserUpadteModal] = useState(false);
+    const [showEditUserModal, setShowEditUserModal] = useState(false);
     const ref = useRef<HTMLInputElement>(null);
     const [editDoctor]= useEditDoctorMutation();
 
     const modalCancelHandler = () => {
-        setShowUserUpadteModal(false);
+        setShowEditUserModal(false);
         setShowAvatarModal(false);
     };
 
@@ -47,13 +49,15 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
         editDoctor({id: doctor?.id || "", doctor:formData});
     };
 
+    
+
     return (
         <Container>
             <Modal show={showAvatarModal} close={modalCancelHandler}>
-                <UploadAvatar click={() => setShowAvatarModal(false)}/>
+                <AvatarUploader modalCloser={() => setShowAvatarModal(false)}/>
             </Modal>
-            <Modal show={showUserUpadteModal} close={modalCancelHandler}>
-                <EditUserByDoctor />
+            <Modal show={showEditUserModal} close={modalCancelHandler}>
+                <EditDoctorBlock modalCloser={() => setShowEditUserModal(false)}/>
             </Modal>
             <div className={styles.doctorInformationBlock}>
                 <div className={styles.doctorAvatar}>
@@ -77,7 +81,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                             <div className={styles.personalInformationField}>
                                 <p>{user?.phone}</p>
                             </div>
-                            <Btn onclick={() => setShowUserUpadteModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
+                            <Btn onclick={() => setShowEditUserModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
                         </div>
                     </div>
                     <div className={styles.specialInformation}>
