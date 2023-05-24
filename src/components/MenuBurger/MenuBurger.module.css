@@ -1,0 +1,50 @@
+.menuBurger {
+    display: none;
+    position: relative;
+    height: 35px;
+    font-size: xx-large;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.menuBurgerBox {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    min-width: 211px;
+    padding: 25px;
+    background: #D9D9D9;
+    border-radius: 0 0 15px 15px;
+    box-sizing: border-box;
+    z-index: 9;
+    top: -2rem;
+    right: -2rem;
+    text-align: right;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.closeBox {
+    display: flex;
+    width: 100%;
+    padding: 30px 0 40px;
+    justify-content: flex-end;
+}
+
+.close {
+    font-size: 20px;
+}
+
+@media screen and (max-width: 900px) {
+    .menuBurger {
+        display: flex;
+        display: flex;
+        font-size: 20px;
+        height: 35px;
+        align-items: flex-start;
+    }
+    .menuBurgerBox {
+        display: flex;
+    }
+}

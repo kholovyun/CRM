@@ -1,31 +1,16 @@
 .header_bg_container {
     width: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--bg_light_blue);
 }
 
 .header_content_container {
+    width: 980px;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
-}
-
-.header_logo_box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.header_links_row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2.5rem;
-    align-items: center;
+    padding: 2rem 0;
 }
 
 .header_link {
@@ -35,76 +20,22 @@
     color: var(--gray_blue);
 }
 
-.header_avatar_box {
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    overflow: hidden;
-    background-color: transparent;
+.linkBox {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    justify-content: space-between;
 }
 
-.header_avatar_img {
-    display: inline-block;
-    width: 38px;
-    height: 38px;
-    background: url("../../assets/img/icon-avatar-default.svg") center/contain no-repeat;
-}
-
-.right_flex_row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.flex_row {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-}
-
-@media screen and (min-width: 320px) {
+@media screen and (max-width: 600px) {
     .header_content_container {
-        gap: 1rem;
-        padding: 1rem;
+        padding: 2rem 1rem;
         width: 100%;
-        flex-direction: column;
-    }
-
-    .flex_row {
-        flex-direction: column;
-    }
-
-    .header_links_row {
-        gap: 2rem;
-        justify-content: center;
-        align-items: center;
     }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (max-width: 1052px) {
     .header_content_container {
-        padding: 1rem 2rem;
-        flex-direction: row;
-    }
-
-    .flex_row {
-        flex-direction: row;
-    }
-
-    .header_links_row {
-        gap: 2.5rem;
-        justify-content: center;
-    }
-}
-
-@media screen and (min-width: 1052px) {
-    .header_content_container {
-        gap: 50px;
-        width: 980px;
-        padding: 1rem 0;
+        padding: 2rem;
+        width: 100%;
     }
 }
