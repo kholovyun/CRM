@@ -4,12 +4,15 @@ import IImageProps from "./IImageProps";
 import styles from "./UploadAvatar.module.css";
 import { useEditDoctorMutation, useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import IUploadAvatarProps from "./IUploadAvatarProps";
+import { useAppSelector } from "../../app/hooks";
 
 const UploadAvatar: React.FunctionComponent<IUploadAvatarProps> = (props): React.ReactElement => { 
     const [editAvatar]= useEditDoctorMutation();
     //const [descriptionErrorMessage, setImageDescriptionErrorMessage] = useState<string>("");
+    const { user } = useAppSelector(state => state.auth);
     const [fileName, setFileName] = useState<string>("");
-    const {data: doctor} = useGetDoctorByUserIdQuery();
+    const {data: doctor} = useGetDoctorByUserIdQuery({id: user!.id});
+    
     const editorRef: React.RefObject<AvatarEditor> = createRef();
     const [imageProps, setImageProps] = useState<IImageProps>({
         image: "",
