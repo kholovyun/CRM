@@ -1,3 +1,3 @@
 export default interface IEditDoctorBlockProps {
-    modalCloser: () => void
+    close: () => void
 }

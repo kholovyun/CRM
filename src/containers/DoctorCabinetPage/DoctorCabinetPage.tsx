@@ -17,11 +17,28 @@ import defaultDoctorImg from "../../assets/img/default-doctor.svg";
 import IDoctorUpdateDto from "../../interfaces/IDoctor/IDoctorUpdateDto";
 import { useParams } from "react-router-dom";
 
-import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBloc";
+import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBlock";
+import { useEditUserMutation, useGetUserByIdQuery } from "../../app/services/users";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { IMessage } from "../../interfaces/IUser/IMessage";
+import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
-    
+    const [editUser, { isError, isSuccess, error: editUserError }] = useEditUserMutation();
+    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        const err = data as IErrorResponse<IMessage>;
+        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
+    };
+
+    const successHandler = () => { 
+        setShowEditUserModal(false);
+        toast.info("Личные данные изменены");
+    };
+
+    isError && errorHandler(editUserError);
+    isSuccess && successHandler();
     const params = useParams();
     const {data: doctor} = useGetDoctorByUserIdQuery({id: params.id ? String(params.id) : String(user!.id)});
 
@@ -49,15 +66,15 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
         editDoctor({id: doctor?.id || "", doctor:formData});
     };
 
-    
+    const {data: userDoctor} = useGetUserByIdQuery(user!.id);
 
     return (
         <Container>
             <Modal show={showAvatarModal} close={modalCancelHandler}>
-                <AvatarUploader modalCloser={() => setShowAvatarModal(false)}/>
+                <AvatarUploader modalCloser={modalCancelHandler}/>
             </Modal>
             <Modal show={showEditUserModal} close={modalCancelHandler}>
-                <EditDoctorBlock modalCloser={() => setShowEditUserModal(false)}/>
+                <EditDoctorBlock close={() => setShowEditUserModal(false)} />
             </Modal>
             <div className={styles.doctorInformationBlock}>
                 <div className={styles.doctorAvatar}>
@@ -75,11 +92,11 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                     <div className={styles.personalInformation}>
                         <p className={styles.informationTitle}>Личные данные</p>
                         <div className={styles.personalInformationField}>
-                            <p>{user?.name} {user?.surname} {user?.patronim}</p>
+                            <p>{userDoctor?.name} {userDoctor?.surname} {userDoctor?.patronim}</p>
                         </div>
                         <div className={styles.personalInformationBottom}>
                             <div className={styles.personalInformationField}>
-                                <p>{user?.phone}</p>
+                                <p>{userDoctor?.phone}</p>
                             </div>
                             <Btn onclick={() => setShowEditUserModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
                         </div>
@@ -90,7 +107,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                                 speciality: doctor!.speciality,
                                 placeOfWork: doctor!.placeOfWork,
                                 experience: doctor!.experience,
-                                achievments: doctor!.achievements,
+                                achievements: doctor!.achievements,
                                 degree: doctor!.degree
                             }}
                             validateOnBlur
@@ -108,7 +125,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                                         <Field readOnly={updateData} type="text" name="degree" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
                                     </div>
                                     <div className={styles.specialInformationLine}>
-                                        <Field readOnly={updateData} type="text" name="achievments" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
+                                        <Field readOnly={updateData} type="text" name="achievements" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
                                         <Field readOnly={updateData} type="text" name="experience" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
                                     </div>
                                     <div className={styles.specialInformationLine}>
