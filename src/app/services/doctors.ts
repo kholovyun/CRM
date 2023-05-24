@@ -12,15 +12,9 @@ const doctorsApi = api.injectEndpoints({
             }),
             providesTags: ["Doctor"]
         }),
-        getDoctorById: build.query<IDoctorWithUser, {id: string}>({
-            query: ({id}) => ({
-                url: `/doctors/${id}`,
-                method: "GET"
-            }),
-        }),
         getDoctorByUserId: build.query<IDoctorWithUser, {id: string}>({
             query: ({id}) => ({
-                url: `/doctors/personal/${id}`,
+                url: `/doctors/${id}`,
                 method: "GET"
             }),
         }),
@@ -53,7 +47,6 @@ const doctorsApi = api.injectEndpoints({
 
 export const {
     useGetDoctorsQuery,
-    useGetDoctorByIdQuery,
     useGetDoctorByUserIdQuery,
     useEditDoctorMutation,
     useActivateDoctorMutation,

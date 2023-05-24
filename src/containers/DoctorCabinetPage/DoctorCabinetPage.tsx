@@ -21,7 +21,8 @@ import { useParams } from "react-router-dom";
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { user } = useAppSelector(state => state.auth);
-    const {data: doctor} = useGetDoctorByUserIdQuery({id: String(params.id)});
+    const {data: doctor} = useGetDoctorByUserIdQuery({id: params.id ? String(params.id) : String(user!.id)});
+
     const [updateData, setUpdateData] = useState(true);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showUserUpadteModal, setShowUserUpadteModal] = useState(false);

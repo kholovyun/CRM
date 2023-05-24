@@ -38,8 +38,6 @@ const Login: React.FC = (): React.ReactElement => {
                 navigator("/admin-page/doctors");
             } else if (user.role === ERoles.DOCTOR) {
                 navigator("/cabinet");
-            } else {
-                navigator(`/doctor-cabinet/${user.id}`);
             }
         }
     }, [user]);
