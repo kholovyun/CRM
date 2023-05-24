@@ -56,6 +56,7 @@ export const MenuBurger: React.FC = () => {
                     allowedRoles={[ERoles.ADMIN, ERoles.DOCTOR, ERoles.PARENT, ERoles.SUPERADMIN]}
                 >
                     <Btn
+                        style={{marginBottom: "40px"}}
                         title={"Выйти"}
                         size={EBtnSize.small}
                         btnClass={EBtnClass.dark_active}

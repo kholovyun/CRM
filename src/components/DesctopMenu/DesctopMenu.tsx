@@ -36,7 +36,7 @@ export const DesctopMenu: React.FC = () => {
                 </div>
             }
             <Btn
-                style={{marginLeft: "30px"}}
+                style={{marginLeft: "30px", marginBottom: "0px"}}
                 title="Поддержка"
                 onclick={() => toast.info("Функционал пока недоступен")}
                 size={EBtnSize.small}
@@ -46,7 +46,7 @@ export const DesctopMenu: React.FC = () => {
                 allowedRoles={[ERoles.ADMIN, ERoles.DOCTOR, ERoles.PARENT, ERoles.SUPERADMIN]}
             >
                 <Btn
-                    style={{marginLeft: "30px"}}
+                    style={{marginLeft: "30px", marginBottom: "0px"}}
                     title={"Выйти"}
                     size={EBtnSize.small}
                     btnClass={EBtnClass.dark_active}
