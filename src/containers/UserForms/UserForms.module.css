@@ -69,6 +69,56 @@
     margin-bottom: 1.5rem;
 }
 
+.select_flag_wrapper {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 0.2rem;
+}
+
+.country_select {
+    font-size: 1rem;
+    color: var(--black_blue);
+    padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    
+}
+
+.country_select:active, select:focus{
+    outline:none
+  }
+
+.select_wrapper {
+    position: relative;
+}
+
+.select_wrapper::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    display: block;
+    transform: translateY(-50%);
+    left: 35px;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10.4px 6px 0 6px;
+    border-color: #7e9bbd transparent transparent transparent;
+}
+
+.flag_wrapper {
+
+}
+
+.flag_image {
+    margin-left: 10px;
+    padding-top: 5px;
+}
+
 @media screen and (min-width: 320px) {
     .LoginInput::placeholder {
         font-size: 1rem;

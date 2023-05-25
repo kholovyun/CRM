@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../UserForms.module.css";
 import { Formik, Field, Form } from "formik";
 import { validationSchemaRegUser } from "../../../schemas/validationSchemaRegUser";
@@ -16,28 +16,40 @@ import { FormBox } from "../FormBox/FormBox";
 import { Title } from "../Title/Title";
 import { useNavigate } from "react-router-dom";
 import { ERoles } from "../../../enums/ERoles";
+import { KGMask, KZMask, RUMask } from "../../../helpers/countryRegexs";
+import KZFlag from "../../../assets/img/kz.png";
+import KGFlag from "../../../assets/img/kg.png";
+import RUFlag from "../../../assets/img/ru.png";
 
 const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): React.ReactElement => {
     const navigate = useNavigate();
     const [createUser, { isError, isSuccess, error: createUserError }] = useCreateUserMutation();
-    const phoneNumberMask = [
-        "+",
-        "7",
-        "(",
-        /\d/,
-        /\d/,
-        /\d/,
-        ")",
-        /\d/,
-        /\d/,
-        /\d/,
-        "-",
-        /\d/,
-        /\d/,
-        "-",
-        /\d/,
-        /\d/
-    ];
+    const [phoneMask, setPhoneMask] = useState(KZMask);
+    const [placeholder, setPlaceholder] = useState("+7(___)___-__-__");
+    const [flag, setFlag] = useState(KZFlag);
+
+    const phoneMaskOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        switch (e.target.value) {
+        case "RU":
+            setPhoneMask(RUMask);
+            setPlaceholder("+7(___)___-__-__");
+            setFlag(RUFlag);
+            break;
+        case "KG":
+            setPhoneMask(KGMask);
+            setPlaceholder("+996(___)__-__-__");
+            setFlag(KGFlag);
+            break;
+        case "KZ":
+            setPhoneMask(KZMask);
+            setPlaceholder("+7(___)___-__-__");
+            setFlag(KZFlag);
+            break;
+        default:
+            setPhoneMask(KZMask);
+            break;
+        }
+    };
 
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
         const err = data as IErrorResponse<IMessage>;
@@ -73,7 +85,6 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
                 onSubmit={(values) => {
                     createUser(values);
                 }}
-                
                 validationSchema={validationSchemaRegUser}
             >
                 {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
@@ -93,29 +104,38 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
                                 {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
-                                <Field
-                                    name="phone"
-                                    type="text"
-                                    render={({ ...field }) => (
-                                        <MaskedInput
-                                            {...field}
-                                            mask={phoneNumberMask}
-                                            id="phone"
-                                            placeholder="+7(___)___-__-__"
-                                            type="text"
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            className={styles.LoginInput}
-                                        />
-                                    )}
-                                >
-                                </Field>
-                            </div>
-                            <div className={styles.input_flex_column}>
-                                {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
-                                <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
+                                <div className={styles.two_inputs_row}>
+                                    <div className={styles.select_flag_wrapper}>
+                                        <div className={styles.flag_wrapper}><img className={styles.flag_image} src={flag} alt="" /></div>
+                                        <div className={styles.select_wrapper}>
+                                            <select className={styles.country_select} defaultValue={"KZ"} onChange={phoneMaskOnChange}>
+                                                <option value={"KZ"}>KZ</option>
+                                                <option value={"KG"}>KG</option>
+                                                <option value={"RU"}>RU</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <Field
+                                        name="phone"
+                                        type="text"
+                                        render={({ ...field }) => (
+                                            <MaskedInput
+                                                {...field}
+                                                mask={phoneMask}
+                                                id="phone"
+                                                placeholder={placeholder}
+                                                type="text"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                className={styles.LoginInput}
+                                            />
+                                        )}>
+                                    </Field>
+                                </div>
                             </div>
                         </div>
+                        {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
+                        <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
                         {touched.role && errors.role ? <p className={styles.typeError}>{errors.role}</p> : <p className={styles.typeText}></p>}
                         <Field hidden type="text" name="role" className={styles.LoginInput} value={props.role} />
                         <Btn disabled={!isValid} title="Создать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
