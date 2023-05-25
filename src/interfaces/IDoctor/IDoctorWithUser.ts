@@ -10,6 +10,7 @@ export default interface IDoctorWithUser {
     achievements?: string
     degree?: string
     users: {
+        id: string
         name: string
         surname: string
         patronim?: string

@@ -126,6 +126,10 @@
     border: 2px solid transparent;
 }
 
+.specialInformationField:focus {
+    outline: none
+}
+
 .violetBorder {
     border-color: var(--violet);
 }
