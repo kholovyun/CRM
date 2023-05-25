@@ -17,10 +17,16 @@ import IEditDoctorBlockProps from "./EditDoctorBlockProps";
 
 const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({close}) => {
     const phoneNumberMask = ["+","7","(",/\d/,/\d/,/\d/,")",/\d/,/\d/,/\d/,"-",/\d/,/\d/,"-",/\d/,/\d/];
-    const [editUser] = useEditUserMutation();
+    const [editUser, {isSuccess}] = useEditUserMutation();
 
     const { user } = useAppSelector(state => state.auth);
     
+    const handleSuccessRequest = () => {
+        // toast.info("Личные данные изменены");
+        close();
+    };
+
+    isSuccess && handleSuccessRequest();
     return (
         <div className={styles.editFormBox}>
             <p className={styles.editFormTitle}>Изменить данные пользователя</p>
@@ -67,6 +73,7 @@ const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({close}) => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         className={styles.LoginInput}
+                                        // value={user?.phone}
                                     />
                                 )}
                             >

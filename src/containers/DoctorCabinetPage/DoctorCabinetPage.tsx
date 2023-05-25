@@ -165,9 +165,6 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                 </div>
             </div>
 
-
-
-
             {/* РЕКОМЕНДАЦИИ */}
             <div className={styles.reccomendationBlock}>
                 <p className={styles.reccomendationBlockTop}>Написать рекомендацию</p>
