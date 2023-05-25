@@ -33,11 +33,11 @@
     width: 24px;
     height: 24px;
     background: url("../../assets/img/arrow-in-circle.svg") center/contain no-repeat;
-    transform: rotate(90deg);
+    transform: rotate(-180deg);
     opacity: 0.55;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 599px) {
     .menuBurger {
         display: flex;
         font-size: 1.25rem;
@@ -47,5 +47,22 @@
 
     .menuBurgerBox {
         display: flex;
+        top: -1rem;
+        right: -1rem;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    .menuBurger {
+        display: flex;
+        font-size: 1.25rem;
+        line-height: 100%;
+        align-items: center;
+    }
+
+    .menuBurgerBox {
+        display: flex;
+        top: -1rem;
+        right: -2rem;
     }
 }
