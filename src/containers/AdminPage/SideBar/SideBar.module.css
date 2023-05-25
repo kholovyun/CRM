@@ -3,9 +3,9 @@
     flex-direction: column;
     gap: 10px;
     background-color: var(--light_blue);
-    border-top-right-radius: 25px;
+    border-top-right-radius: 1.56rem;
     margin-bottom: 4rem;
-    border-bottom-right-radius: 25px;
+    border-bottom-right-radius: 1.56rem;
 }
 
 .sidebar_colappsed {

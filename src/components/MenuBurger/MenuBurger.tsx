@@ -26,17 +26,17 @@ export const MenuBurger: React.FC = () => {
         &#9776;
             {showMenu && <div className={styles.menuBurgerBox}>
                 <div className={styles.closeBox}>
-                    <p className={styles.close} onClick={showMenuToogle}>X</p>
+                    <p className={styles.close} onClick={showMenuToogle}></p>
                 </div>
                 {user ?
                     <div className={style.linkBox}>
-                        <NavLink style={{maxWidth: "120px", overflow: "hidden", textOverflow: "ellipsis",  whiteSpace: "nowrap", marginBottom: "40px", textAlign: "center", fontSize: "1rem"}} to={user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ?
+                        <NavLink style={{maxWidth: "120px", overflow: "hidden", textOverflow: "ellipsis",  whiteSpace: "nowrap", textAlign: "center", fontSize: "1rem"}} to={user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ?
                             "/admin-page"
                             : user.role === ERoles.DOCTOR ? `/doctor-cabinet/:${user.id}` : "/"
                         } className={style.header_link}>
                             <strong>{user.name}</strong>
                         </NavLink>
-                        <Avatar style={{margin: "0px 0px 40px 10px"}} link="login"/>
+                        <Avatar link="login"/>
                     </div> :
                     <div className={style.linkBox}>
                         <NavLink style={{whiteSpace: "nowrap", marginRight: "5px", marginBottom: "40px", textAlign: "center", fontSize: "1rem"}} to={"/login"} className={style.header_link}>
@@ -46,7 +46,6 @@ export const MenuBurger: React.FC = () => {
                     </div>
                 }
                 <Btn
-                    style={{marginBottom: "40px"}}
                     title="Поддержка"
                     onclick={() => toast.info("Функционал пока недоступен")}
                     size={EBtnSize.small}
@@ -56,7 +55,6 @@ export const MenuBurger: React.FC = () => {
                     allowedRoles={[ERoles.ADMIN, ERoles.DOCTOR, ERoles.PARENT, ERoles.SUPERADMIN]}
                 >
                     <Btn
-                        style={{marginBottom: "40px"}}
                         title={"Выйти"}
                         size={EBtnSize.small}
                         btnClass={EBtnClass.dark_active}
