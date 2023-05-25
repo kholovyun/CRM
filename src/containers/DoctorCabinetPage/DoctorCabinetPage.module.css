@@ -157,7 +157,7 @@
 }
 
 .carouselAddItem {
-    background-color: var(--white);
+    background-color: white;
     width: 180px;
     height: 266px;
     border-radius: 25px;
