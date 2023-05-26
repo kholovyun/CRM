@@ -17,6 +17,7 @@ import RegisterParent from "./containers/UserForms/RegisterParrent/RegisterParen
 import ResetPassword from "./containers/UserForms/ResetPassword/ResetPassword";
 import ForgotPassword from "./containers/UserForms/ForgotPassword/ForgotPassword";
 import AllAdmins from "./containers/AdminPage/AdminTables/AllAdmins/AllAdmins";
+import { NewBornDataForm } from "./containers/UserForms/RegisterChild/NewBornDataForm/NewBornDataForm";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -48,6 +49,7 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                         
                     </Route>
                     <Route path="/cabinet/" element={<DoctorCabinetPage />} />
+                    <Route path="/newborn-data/" element={<NewBornDataForm/>} />
                 </Route>
             </Routes>
         </BrowserRouter>

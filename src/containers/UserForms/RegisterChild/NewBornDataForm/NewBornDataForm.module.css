@@ -1,0 +1,8 @@
+.date_input{
+    max-width: 600px;
+    height: 3em;
+    background-color: lightblue;
+    border-radius: 25px;
+    padding: 5%;
+    border: none;
+};
