@@ -23,6 +23,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
+import { ERoles } from "../../enums/ERoles";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
@@ -71,11 +72,16 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     return (
         <Container>
             <Modal show={showAvatarModal} close={modalCancelHandler}>
-                <AvatarUploader modalCloser={modalCancelHandler}/>
+                <AvatarUploader 
+                    width={300}
+                    height={320}
+                    role={ERoles.DOCTOR}
+                    modalCloser={modalCancelHandler}
+                />
             </Modal>
-            <Modal show={showEditUserModal} close={modalCancelHandler}>
+            {/* <Modal show={showEditUserModal} close={modalCancelHandler}>
                 <EditDoctorBlock close={() => setShowEditUserModal(false)} />
-            </Modal>
+            </Modal> */}
             <div className={styles.doctorInformationBlock}>
                 <div className={styles.doctorAvatar}>
                     <div className={styles.backdrop} onClick={() => {setShowAvatarModal(true);}}></div>
@@ -87,61 +93,30 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                         /> : <img className="DetailedPage__image" src={defaultDoctorImg} alt={"doctor"}/>
                     }
                 </div>
-                {doctor && 
+                
                 <div className={styles.doctorInformation}>
                     <div className={styles.personalInformation}>
-                        <p className={styles.informationTitle}>Личные данные</p>
                         <div className={styles.personalInformationField}>
-                            <p>{userDoctor?.name} {userDoctor?.surname} {userDoctor?.patronim}</p>
+                            <div className={styles.filedName}>ФИО</div>
+                            <p className={styles.fiedText}>{userDoctor?.name} {userDoctor?.surname} {userDoctor?.patronim}</p>
                         </div>
                         <div className={styles.personalInformationBottom}>
                             <div className={styles.personalInformationField}>
+                                <div className={styles.filedName}>Степень</div>
+                                <p>{doctor?.degree}</p>
+                            </div>
+                            <div className={styles.personalInformationField}>
+                                <div className={styles.filedName}>Моб.телефон</div>
                                 <p>{userDoctor?.phone}</p>
                             </div>
-                            <Btn onclick={() => setShowEditUserModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
                         </div>
+
+
+                        <Btn onclick={() => setShowEditUserModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
                     </div>
-                    <div className={styles.specialInformation}>
-                        <Formik
-                            initialValues={{
-                                speciality: doctor!.speciality,
-                                placeOfWork: doctor!.placeOfWork,
-                                experience: doctor!.experience,
-                                achievements: doctor!.achievements,
-                                degree: doctor!.degree
-                            }}
-                            validateOnBlur
-                            onSubmit={async(values) => {
-                                updateDoctorData(values);
-                                // toast.info("Функционал пока недоступен");
-                                setUpdateData(true);
-                            }}
-                        >
-                            {({ handleSubmit }) => (
-                                <Form className={styles.specialInformationForm}>
-                                    <p className={styles.informationTitle}>Специальные данные</p>
-                                    <div className={styles.specialInformationLine}>
-                                        <Field readOnly={updateData} type="text" innerRef={ref} name="speciality" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                        <Field readOnly={updateData} type="text" name="degree" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                    </div>
-                                    <div className={styles.specialInformationLine}>
-                                        <Field readOnly={updateData} type="text" name="achievements" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                        <Field readOnly={updateData} type="text" name="experience" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                    </div>
-                                    <div className={styles.specialInformationLine}>
-                                        <Field readOnly={updateData} type="text" name="placeOfWork" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                        {updateData && <Btn title="Редактировать" onclick={() => {
-                                            setUpdateData(false);
-                                            setInputFocus();
-                                        }} size={EBtnSize.tiny} types={EBtnTypes.submit} />}
-                                        {!updateData && <Btn title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />}
-                                    </div>
-                                </Form>
-                            )}
-                        </Formik>
-                    </div>
+                    
                 </div>
-                }
+                
             </div>
 
             <div className={styles.slider}>

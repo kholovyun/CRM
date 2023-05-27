@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent, createRef} from "react";
+import {useState, ChangeEvent, createRef, useRef, FunctionComponent, ReactElement, useEffect} from "react";
 import AvatarEditor from "react-avatar-editor";
 import IImageProps from "./IImageProps";
 import styles from "./AvatarUploader.module.css";
@@ -10,34 +10,50 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
+import { ERoles } from "../../enums/ERoles";
 
-const AvatarUploader: React.FunctionComponent<IAvatarUploaderProps> = (props): React.ReactElement => { 
-    const [editAvatar, {isSuccess, isError, error}]= useEditDoctorMutation();
-    //const [descriptionErrorMessage, setImageDescriptionErrorMessage] = useState<string>("");
-    const { user } = useAppSelector(state => state.auth);
-    const [fileName, setFileName] = useState<string>("");
-    const {data: doctor} = useGetDoctorByUserIdQuery({id: user!.id});
+const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactElement => { 
+    const [uploadDoctorAvatar, 
+        {
+            isSuccess: isSuccesDoctorAvatar,
+            isError: isErrorDoctorAvatar,
+            error: errorDoctorAvatar, 
+            reset: resetDoctorAvatar
+        }
+    ]= useEditDoctorMutation();
 
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        resetDoctorAvatar();
         const err = data as IErrorResponse<IMessage>;
         toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
     };
 
-    isError && errorHandler(error);
-    isSuccess && props.modalCloser();
-
+    const { user } = useAppSelector(state => state.auth);
+    const {data: doctor} = useGetDoctorByUserIdQuery({id: user!.id});
+    const [fileName, setFileName] = useState<string>("");
     const editorRef: React.RefObject<AvatarEditor> = createRef();
+
+    isErrorDoctorAvatar && errorHandler(errorDoctorAvatar);
+
+    if (isSuccesDoctorAvatar) {
+        resetDoctorAvatar();
+        toast.info("Аватар изменен");
+    } 
+
+    useEffect(() => {
+        props.modalCloser();
+    }, [doctor?.photo]);
+
     const [imageProps, setImageProps] = useState<IImageProps>({
         image: "",
         allowZoomOut: false,
         position: {x: 0.5, y: 0.5},
         scale: 1,
-        rotate: 0,
         borderRadius: 25,
-        preview: "null",
-        width: 300,
-        height: 320,
+        width: props.width,
+        height: props.height,
     });
+
     const handlePositionChange = (position: {x: number, y: number}): void => {
         setImageProps(prevState => {
             return {...prevState, position: position};
@@ -45,7 +61,8 @@ const AvatarUploader: React.FunctionComponent<IAvatarUploaderProps> = (props): R
     };
 
     const handleScale = (e: ChangeEvent<HTMLInputElement>): void => {
-        const scale = parseFloat(e.target.value);
+        const scale = Number(e.target.value);
+        setRangeValue(scale);
         setImageProps(prevState => {
             return {...prevState, scale: scale};
         });
@@ -53,7 +70,6 @@ const AvatarUploader: React.FunctionComponent<IAvatarUploaderProps> = (props): R
 
     const handleNewAvatar = (e: ChangeEvent<HTMLInputElement>): void => {
         e.stopPropagation();
-        //setImageDescriptionErrorMessage("");
         const file = e.target.files && e.target.files[0];
         if (file) {
             if(file && /\.(jpg|jpeg|png)$/i.test(file.name)) {
@@ -69,16 +85,10 @@ const AvatarUploader: React.FunctionComponent<IAvatarUploaderProps> = (props): R
     };
 
     const cancelFileHandler = () => {
-        // editorRef.current?.setState();
-        // setFileName("");
-        // setImageProps(prevState => {
-        //     return {...prevState, image: ""};
-        // });
         props.modalCloser();
     };
 
     const setNewAvatar = async () => {
-        
         if (editorRef.current) {
             const canvasScaled = editorRef.current?.getImageScaledToCanvas();
             await fetch(canvasScaled.toDataURL())
@@ -87,14 +97,36 @@ const AvatarUploader: React.FunctionComponent<IAvatarUploaderProps> = (props): R
                     const file = new File([blob], "sample.png", {type: blob.type});
                     const formData = new FormData();
                     formData.append("photo", file);
-                    editAvatar({id: doctor?.id || "", doctor:formData});
+                    props.role === ERoles.DOCTOR && uploadDoctorAvatar({id: doctor?.id || "", doctor:formData});
                 }
-                );
+                ).catch((e: Error) => {
+                    toast.error(`Ошибка ${e.message}`);
+                });
         }
+    };
+
+    const [rangeValue, setRangeValue] = useState(1);
+
+    const plusRange = () => {
+        if (rangeValue >= 3) return;
+        const scale = rangeValue + 0.1;
+        setRangeValue(scale); 
+        setImageProps(prevState => {
+            return {...prevState, scale: scale};
+        });
+    };
+
+    const minusRange = () => {
+        if (rangeValue <= 1) return;
+        const scale = rangeValue - 0.1;
+        setRangeValue(scale); 
+        setImageProps(prevState => {
+            return {...prevState, scale: scale};
+        });
     };
     return (
         <div className={styles.AvatarUploaderBox}>
-            {imageProps.image !== "" ?
+            {imageProps.image !== "" &&
                 <AvatarEditor 
                     ref={editorRef}
                     scale={imageProps.scale}
@@ -102,29 +134,33 @@ const AvatarUploader: React.FunctionComponent<IAvatarUploaderProps> = (props): R
                     height={imageProps.height}
                     position={imageProps.position}
                     onPositionChange={handlePositionChange}
-                    rotate={imageProps.rotate}
                     borderRadius={imageProps.borderRadius}
                     image={imageProps.image}
                     color={[229, 232, 241]}
                     border={0}
                     style={{background: "var(--bg_light_blue)"}}
-                /> : null
+                /> 
             }
-                                
+            {fileName !== "" ?
+                <div className={styles.rangeInputField}>
+                    <div className={styles.rangeMinus} onClick={minusRange}>-</div>
+                    <input className={styles.rangeInput}
+                        name="scale" 
+                        type="range" 
+                        onChange={handleScale}
+                        min={imageProps.allowZoomOut ? "0.1":"1"}
+                        max="3" step="0.01"
+                        value={rangeValue}
+                    />
+                    <div className={styles.rangePlus} onClick={plusRange}>+</div>
+                </div> : null
+            }
+                          
             <label className={styles.inputLabel}>
                 <input type="file" onChange={handleNewAvatar} className={styles.avatarInput}/> 
-                <p>Выбрать файл</p>
+                <p className={styles.avatarBtn}>Выбрать картинку</p>
             </label>
-            <input className={styles.rangeInput}
-                name="scale" 
-                type="range" 
-                onChange={handleScale}
-                min={imageProps.allowZoomOut ? "0.1":"1"}
-                max="3" step="0.01"
-                defaultValue={"1"}
-                disabled={fileName !== "" ? false : true}
-            />
-            <span className={styles.fileName}>{fileName}</span>
+            {fileName !== "" ? <span className={styles.fileName}>{fileName}</span> : null}
             <div className={styles.avatarButtons}>
                 <button 
                     onClick={cancelFileHandler} className={styles.avatarBtn}>Отмена</button> 

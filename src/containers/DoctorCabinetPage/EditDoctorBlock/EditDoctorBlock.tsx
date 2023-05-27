@@ -1,21 +1,16 @@
 import { Formik, Field, Form } from "formik";
 import Btn from "../../../components/UI/Btn/Btn";
-import { toast } from "react-toastify";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { useEditUserMutation, useGetUserByIdQuery } from "../../../app/services/users";
+import { useEditUserMutation } from "../../../app/services/users";
 import { useAppSelector } from "../../../app/hooks";
 import { validationSchemaEditUser } from "../../../schemas/validationSchemaEditUser";
 import styles from "./EditDoctorBlock.module.css";
 import MaskedInput from "react-text-mask";
-import { FunctionComponent, ReactElement, useRef, useState } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import IEditDoctorBlockProps from "./EditDoctorBlockProps";
 
-const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({close}) => {
+const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({close}): ReactElement => {
     const phoneNumberMask = ["+","7","(",/\d/,/\d/,/\d/,")",/\d/,/\d/,/\d/,"-",/\d/,/\d/,"-",/\d/,/\d/];
     const [editUser, {isSuccess}] = useEditUserMutation();
 
@@ -73,7 +68,6 @@ const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({close}) => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         className={styles.LoginInput}
-                                        // value={user?.phone}
                                     />
                                 )}
                             >

@@ -22,6 +22,7 @@
     object-position: center;
     object-fit: cover;
     display: block;
+    background-color: white;
 }
 
 .backdrop {
@@ -64,13 +65,14 @@
 }
 
 .personalInformation {
-    background: var(--light_blue);
-    padding: 15px;
+    padding:  15px;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 25px;
+    background: var(--light_blue);
 }
+
 
 .specialInformation {
     background: var(--light_blue);
@@ -88,11 +90,16 @@
     line-height: 10px;
 }
 
-.personalInformationField {
-    padding: 10px 24px;
-    background-color: var(--bg_light_blue);
-    border-radius: 25px;
-    flex-grow: 1;
+.filedName {
+    font-size: 14px;
+    position: absolute;
+    top: -20px;
+    color: var(--black_blue);
+    opacity: 0.5;
+}
+
+.fiedText {
+    font-size: 20px;
 }
 
 .personalInformationBottom {
@@ -113,12 +120,15 @@
 }
 
 .specialInformationField, .personalInformationField {
-    padding: 10px 26px;
+    padding: 8px 26px;
     background-color: var(--bg_light_blue);
     border-radius: 25px;
     flex-grow: 1; 
     border: none;
     width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .specialInformationField {
@@ -141,7 +151,6 @@
     padding: 40px 80px;
     border-radius: 50px;
     margin-top: 50px;
-    
 }
 
 .sliderTitle {
