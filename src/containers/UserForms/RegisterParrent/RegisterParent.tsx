@@ -1,13 +1,9 @@
-// import React, { useEffect } from "react";
 import styles from "../UserForms.module.css";
 import { Formik, Field, Form, FormikConfig, FormikValues } from "formik";
 import { toast } from "react-toastify";
 import MaskedInput from "react-text-mask";
 import { validationSchemaRegParrent } from "../../../schemas/validationSchemaRegParrent";
-// import { useAppSelector } from "../../app/hooks";
-// import { useNavigate } from "react-router-dom";
 import { Container } from "../../../components/UI/Container/Container";
-import { FormBox } from "../FormBox/FormBox";
 import { Title } from "../Title/Title";
 import { ERoles } from "../../../enums/ERoles";
 import Btn from "../../../components/UI/Btn/Btn";
@@ -18,8 +14,6 @@ import React, { useState } from "react";
 
 
 const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React.ReactElement => {
-    // const { doctorId } = useAppSelector(state => state.doctor);
-    // const navigator = useNavigate();
     const phoneNumberMask = [
         "+",
         "7",
@@ -39,13 +33,9 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
         /\d/
     ];
 
-    // useEffect(() => {
-    //     doctorId === null && navigator("/");
-    // }, []);
-
     return (
         <Container>
-            <FormBox>
+            <div className={styles.form_box_parent}>
                 <Title text="Регистрация родителя пациента" />
                 <FormikStepper
                     initialValues={{
@@ -122,20 +112,40 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                             <Field className={styles.LoginInput} name="child.patronim" type="text" placeholder="Отчество" />  
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
-                                    <Field className={styles.LoginInput} name="child.dateOfBirth" type="text" placeholder="Дата рождения" />
+                                    <Field name="name" type="text" 
+                                        render={({ ...field }) => (
+                                            <MaskedInput
+                                                className={styles.date_input}
+                                                {...field}
+                                                mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
+                                                id="phone"
+                                                placeholder="_ _  .  _ _  .  _ _ _ _"
+                                                type="text"
+                                                // onChange={handleChange}
+                                                // onBlur={handleBlur}
+                                            />
+                                        )}
+                                    />
                                 </div>
                                 <div className={styles.input_flex_column}>
                                     <Field className={styles.LoginInput} name="child.sex" type="text" placeholder="Пол" />
                                 </div>
-                                <div className={styles.input_flex_column}>
+                            </div>
+                            <div>
+                                <div>
+                                    <p>Рост</p>
                                     <Field className={styles.LoginInput} name="child.height" type="number" placeholder="Рост" />
-                                    <Field className={styles.LoginInput} name="child.weight" type="number" placeholder="вес" />
                                 </div>
+                                <div>
+                                    <p>Вес</p>
+                                    <Field className={styles.LoginInput} name="child.weight" type="number" placeholder="Вес" />
+                                </div>
+                                
                             </div>
                         </div>
                     </FormikStep>     
                 </FormikStepper>
-            </FormBox>
+            </div>
         </Container>
     );
 };
@@ -171,7 +181,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
                 }
             }}
         >
-            <Form autoComplete="off">
+            <Form className={styles.parentForm} autoComplete="off">
 
                 {currentChild}
 

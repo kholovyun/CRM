@@ -1,3 +1,4 @@
+import { EPaymentType } from "../../enums/EPaymentType";
 import { ERoles } from "../../enums/ERoles";
 import { ESex } from "../../enums/ESex";
 
@@ -9,7 +10,7 @@ export default interface IUserCreateParentWithChildDto {
     surname: string
     patronim?: string
     doctorId: string
-    paymentType: string
+    paymentType: EPaymentType
     subscrType: number
     child: {
         name: string        
