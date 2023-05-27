@@ -57,10 +57,10 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                 }}
             >
                 {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
-                    <Form>
+                    <Form className={styles.form_container}>
                         <div className={styles.date_block}>
-                            <label className={styles.date_block}>
-                                <p>Родился</p>
+                            <label className={styles.label_flex}>
+                                <p className={styles.input_near_text}>Родился</p>
                                 {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
                                 <Field name="name" type="text" 
                                     render={({ ...field }) => (
@@ -77,8 +77,8 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                                     )}
                                 />
                             </label>
-                            <label className={styles.date_block}>
-                                <p>Выписан</p>
+                            <label className={styles.label_flex}>
+                                <p className={styles.input_near_text}>Выписан</p>
                                 {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
                                 <Field name="name" type="text" 
                                     render={({ ...field }) => (
@@ -96,11 +96,11 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                                 />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Ребенок от</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Ребенок от</p>
                                 {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field as="select" id="number" name="number">
+                                <Field className={styles.number_select} as="select" id="number" name="number">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -120,18 +120,18 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                                 <p>беременности</p>
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Протекающей</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Протекающей</p>
                                 {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
                                 <Field  name="name" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Роды</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text} >Роды</p>
                                 {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field as="select" id="number" name="number">
+                                <Field className={styles.number_select} as="select" id="number" name="number">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -149,29 +149,29 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                                     <option value="15">15</option>
                                 </Field>
                             </label>
-                            <label style={{"display": "flex"}}>
-                                <p>в сроки</p>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>в сроки</p>
                                 {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
                                 <Field  name="name" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>1 период, 2 период</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>1 период, 2 период</p>
                                 {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
                                 <Field  name="name" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Безводный период</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Безводный период</p>
                                 {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
                                 <Field  name="name" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Характер околоплодных вод</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Характер околоплодных вод</p>
                                 {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
                                 <Field  name="name" type="text" />
                             </label>

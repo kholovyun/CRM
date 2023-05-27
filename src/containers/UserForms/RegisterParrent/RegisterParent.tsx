@@ -1,6 +1,6 @@
 // import React, { useEffect } from "react";
 import styles from "../UserForms.module.css";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, FormikConfig, FormikValues } from "formik";
 import { toast } from "react-toastify";
 import MaskedInput from "react-text-mask";
 import { validationSchemaRegParrent } from "../../../schemas/validationSchemaRegParrent";
@@ -13,10 +13,11 @@ import { ERoles } from "../../../enums/ERoles";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import { EBtnClass } from "../../../enums/EBtnClass";
+import { IParrentRegProps } from "./IParrentRegProps";
+import React, { useState } from "react";
 
 
-const RegisterParent: React.FunctionComponent = (): React.ReactElement => {
+const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React.ReactElement => {
     // const { doctorId } = useAppSelector(state => state.doctor);
     // const navigator = useNavigate();
     const phoneNumberMask = [
@@ -46,15 +47,24 @@ const RegisterParent: React.FunctionComponent = (): React.ReactElement => {
         <Container>
             <FormBox>
                 <Title text="Регистрация родителя пациента" />
-                <Formik
+                <FormikStepper
                     initialValues={{
+                        role: ERoles.PARENT,
+                        email: "",
+                        phone: "",
                         name: "",
                         surname: "",
                         patronim: "",
-                        phone: "",
-                        email: "",
-                        // doctorId: doctorId || "",
-                        role: ERoles.PARENT
+                        doctorId: props!.doctorId,
+                        child: {
+                            name: "",      
+                            surname: "",
+                            patronim: "",
+                            dateOfBirth: "",
+                            sex: "",
+                            height: 0,
+                            weight: 0
+                        }
                     }}
                     validateOnBlur
                     onSubmit={(values) => {
@@ -63,56 +73,124 @@ const RegisterParent: React.FunctionComponent = (): React.ReactElement => {
                     }}
                     validationSchema={validationSchemaRegParrent}
                 >
-                    {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
-                        <Form className={styles.LoginForm}>
+                    <FormikStep label="1">
+                        <div className={styles.two_inputs_row}>
+                            <div className={styles.input_flex_column}>
+                                <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
+                            </div>
+                            <div className={styles.input_flex_column}>
+                                <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
+                            </div>
+                        </div>
+                        <Field className={styles.LoginInput} name="patronim" type="text" placeholder="Отчество" />                            
+                        <div className={styles.two_inputs_row}>
+                            <div className={styles.input_flex_column}>
+                                <Field
+                                    name="phone"
+                                    type="text"
+                                    render={({ ...field }) => (
+                                        <MaskedInput
+                                            {...field}
+                                            mask={phoneNumberMask}
+                                            id="phone"
+                                            placeholder="+7(___)___-__-__"
+                                            type="text"
+                                            onChange={() => console.log(1)}
+                                            className={styles.LoginInput}
+                                        />
+                                    )}
+                                >
+                                </Field>
+                            </div>
+                            <div className={styles.input_flex_column}>
+                                <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
+                            </div>
+                            <Field hidden readOnly={true} className={styles.LoginInput} name="doctorId" type="text" placeholder="ID Врача" />
+                        </div>
+                    </FormikStep>
+                    <FormikStep label="2">
+                        <div className={styles.margin_bottom}>
+
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
-                                    {touched.name && errors.name ? <p className={styles.typeError}>{errors.name}</p> : <p className={styles.typeText}></p>}
-                                    <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
+                                    <Field className={styles.LoginInput} name="child.name" type="text" placeholder="Имя" />
                                 </div>
                                 <div className={styles.input_flex_column}>
-                                    {touched.surname && errors.surname ? <p className={styles.typeError}>{errors.surname}</p> : <p className={styles.typeText}></p>}
-                                    <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
+                                    <Field className={styles.LoginInput} name="child.surname" type="text" placeholder="Фамилия" />
                                 </div>
                             </div>
-                            {touched.patronim && errors.patronim ? <p className={styles.typeError}>{errors.patronim}</p> : <p className={styles.typeText}></p>}
-                            <Field className={styles.LoginInput} name="patronim" type="text" placeholder="Отчество" />                            
+                            <Field className={styles.LoginInput} name="child.patronim" type="text" placeholder="Отчество" />  
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
-                                    {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
-                                    <Field
-                                        name="phone"
-                                        type="text"
-                                        render={({ ...field }) => (
-                                            <MaskedInput
-                                                {...field}
-                                                mask={phoneNumberMask}
-                                                id="phone"
-                                                placeholder="+7(___)___-__-__"
-                                                type="text"
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                className={styles.LoginInput}
-                                            />
-                                        )}
-                                    >
-                                    </Field>
+                                    <Field className={styles.LoginInput} name="child.dateOfBirth" type="text" placeholder="Дата рождения" />
                                 </div>
                                 <div className={styles.input_flex_column}>
-                                    {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
-                                    <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
+                                    <Field className={styles.LoginInput} name="child.sex" type="text" placeholder="Пол" />
                                 </div>
-                                <Field hidden readOnly={true} className={styles.LoginInput} name="doctorId" type="text" placeholder="ID Врача" />
+                                <div className={styles.input_flex_column}>
+                                    <Field className={styles.LoginInput} name="child.height" type="number" placeholder="Рост" />
+                                    <Field className={styles.LoginInput} name="child.weight" type="number" placeholder="вес" />
+                                </div>
                             </div>
-                            <div className={styles.margin_bottom}></div>
-                            {/* {touched.doctorId && errors.doctorId ? <p className={styles.typeError}>{errors.doctorId}</p> : <p className={styles.typeText}></p>} */}
-                            <Btn disabled={!isValid} title="Создать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} btnClass={EBtnClass.dark_active} />
-                        </Form>
-                    )}
-                </Formik>
+                        </div>
+                    </FormikStep>     
+                </FormikStepper>
             </FormBox>
         </Container>
     );
 };
+
+export interface FormikStepProps
+  extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
+  label: string;
+}
+
+export function FormikStep({ children }: FormikStepProps) {
+    return <>{children}</>;
+}
+
+export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>) {
+    const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikStepProps>[];
+    const [step, setStep] = useState(0);
+    const currentChild = childrenArray[step];
+
+    function isLastStep() {
+        return step === childrenArray.length - 1;
+    }
+
+    return (
+        <Formik
+            {...props}
+            validationSchema={currentChild.props.validationSchema}
+            onSubmit={async (values, helpers) => {
+                if (isLastStep()) {
+                    await props.onSubmit(values, helpers);
+                } else {
+                    setStep((s) => s + 1);
+                    helpers.setTouched({});
+                }
+            }}
+        >
+            <Form autoComplete="off">
+
+                {currentChild}
+
+                {step > 0 ? (
+                    <Btn
+                        onclick={() => setStep((s) => s - 1)}
+                        title="Назад"
+                        btnClass={EBtnSize.small}
+                    />
+
+                ) : null}
+                <Btn
+                    types={EBtnTypes.submit}
+                    title={isLastStep()? "Создать" : "Продолжить"}
+                    btnClass={EBtnSize.small}
+                />
+            </Form>
+        </Formik>
+    );
+}
 
 export default RegisterParent;

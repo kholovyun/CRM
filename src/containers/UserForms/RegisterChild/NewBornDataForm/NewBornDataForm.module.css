@@ -1,8 +1,38 @@
 .date_input{
-    max-width: 600px;
+    max-width: 700px;
     height: 3em;
-    background-color: lightblue;
+    padding: 10%;
     border-radius: 25px;
-    padding: 5%;
+    text-align: start;
     border: none;
-};
+    text-align: center;
+    box-sizing: border-box;
+}
+.number_select{
+    height: 2.5em;
+    border-radius: 25px;
+    padding: 2% 10%;
+    box-sizing: border-box;
+    text-align: center;
+}
+.date_input:focus{
+    text-align: left;
+}
+.date_block{
+    display: flex;
+    text-align: center;
+    gap: 15%;
+    margin: 3% 0;
+}
+.label_flex {
+    display: flex;
+    gap: 5%;
+    align-items: center;
+}
+.near_input_text{
+    white-space: nowrap;
+}
+.form_container{
+    background-color: lightblue;
+    padding: 5%;
+}
