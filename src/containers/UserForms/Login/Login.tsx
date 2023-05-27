@@ -34,11 +34,11 @@ const Login: React.FC = (): React.ReactElement => {
 
     useEffect(() => {
         if (user) {
-            if (user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN) {
-                navigator("/admin-page/doctors");
-            } else {
-                navigator(`/doctor-cabinet/${user.id}`);
-            }
+            user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ?
+                navigator("/admin-page/doctors") : 
+                user.role === ERoles.DOCTOR ?
+                    navigator(`/doctor-cabinet/${user.id}`) :
+                    navigator("/parent-cabinet");
         }
     }, [user]);
 

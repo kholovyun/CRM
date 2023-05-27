@@ -17,6 +17,7 @@ import RegisterParent from "./containers/UserForms/RegisterParrent/RegisterParen
 import ResetPassword from "./containers/UserForms/ResetPassword/ResetPassword";
 import ForgotPassword from "./containers/UserForms/ForgotPassword/ForgotPassword";
 import AllAdmins from "./containers/AdminPage/AdminTables/AllAdmins/AllAdmins";
+import { ParentCabinetPage } from "./containers/ParentCabinetPage/ParentCabinetPage";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -43,6 +44,7 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR, ERoles.PARENT]}/> }>
                         <Route path="/doctor-cabinet/:id" element={<DoctorCabinetPage />} />
+                        <Route path="/parent-cabinet" element={<ParentCabinetPage />}/>
                     </Route>
                 </Route>
             </Routes>
