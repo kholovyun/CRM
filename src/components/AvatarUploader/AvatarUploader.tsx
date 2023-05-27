@@ -32,6 +32,7 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
     const {data: doctor} = useGetDoctorByUserIdQuery({id: user!.id});
     const [fileName, setFileName] = useState<string>("");
     const editorRef: React.RefObject<AvatarEditor> = createRef();
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     isErrorDoctorAvatar && errorHandler(errorDoctorAvatar);
 
@@ -72,19 +73,29 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
         e.stopPropagation();
         const file = e.target.files && e.target.files[0];
         if (file) {
-            if(file && /\.(jpg|jpeg|png)$/i.test(file.name)) {
+            if(file && /\.(jpg|jpeg|png)$/i.test(file.name) && file.size <= 5242880) {
                 setImageProps(prevState => {
                     return {...prevState, 
                         image: e.target.files ? e.target.files[0] : ""};
                 });
                 setFileName(e.target.files && e.target.files[0] ? e.target.files[0].name : "");
+            } else if (file.size > 5242880) {
+                alert("Слишком большой размер файла");
             } else {
-                alert("Please select a valid image file (jpg, jpeg, png or gif)");
+                alert("Пожалуйста выберите соответсвующий формат файла(jpg, jpeg, png)");
             }
         }
     };
 
     const cancelFileHandler = () => {
+        setRangeValue(1);
+        setFileName("");
+        setImageProps(prevState => {
+            return {...prevState, image: "", scale: 1};
+        });
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
         props.modalCloser();
     };
 
@@ -124,6 +135,9 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
             return {...prevState, scale: scale};
         });
     };
+
+    
+
     return (
         <div className={styles.AvatarUploaderBox}>
             {imageProps.image !== "" &&
@@ -157,7 +171,7 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
             }
                           
             <label className={styles.inputLabel}>
-                <input type="file" onChange={handleNewAvatar} className={styles.avatarInput}/> 
+                <input type="file" onChange={handleNewAvatar} className={styles.avatarInput} ref={fileInputRef}/> 
                 <p className={styles.avatarBtn}>Выбрать картинку</p>
             </label>
             {fileName !== "" ? <span className={styles.fileName}>{fileName}</span> : null}

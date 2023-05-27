@@ -54,10 +54,6 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
         setShowAvatarModal(false);
     };
 
-    const setInputFocus = () => {
-        ref.current?.focus();
-    };
-
     const updateDoctorData = async (values: IDoctorUpdateDto) => {
         const formData = new FormData();
         Object.entries(values).forEach(entry => {
@@ -93,31 +89,60 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                         /> : <img className="DetailedPage__image" src={defaultDoctorImg} alt={"doctor"}/>
                     }
                 </div>
-                
                 <div className={styles.doctorInformation}>
-                    <div className={styles.personalInformation}>
+                    <div className={styles.personalInformationLine}>
                         <div className={styles.personalInformationField}>
-                            <div className={styles.filedName}>ФИО</div>
-                            <p className={styles.fiedText}>{userDoctor?.name} {userDoctor?.surname} {userDoctor?.patronim}</p>
+                            <p className={styles.fieldTitle}>ФИО</p>
+                            <p className={styles.fieldText}>{userDoctor?.name} {userDoctor?.surname} {userDoctor?.patronim}</p>
                         </div>
-                        <div className={styles.personalInformationBottom}>
-                            <div className={styles.personalInformationField}>
-                                <div className={styles.filedName}>Степень</div>
-                                <p>{doctor?.degree}</p>
-                            </div>
-                            <div className={styles.personalInformationField}>
-                                <div className={styles.filedName}>Моб.телефон</div>
-                                <p>{userDoctor?.phone}</p>
-                            </div>
-                        </div>
-
-
-                        <Btn onclick={() => setShowEditUserModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
                     </div>
-                    
-                </div>
-                
+                    <div className={styles.personalInformationLine}>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Специальность</p>
+                            <p className={styles.fieldText}>{doctor?.speciality}</p>
+                        </div>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Степень</p>
+                            <p className={styles.fieldText}>{doctor?.degree}</p>
+                        </div>
+                    </div>
+                    <div className={styles.personalInformationLine}>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Стаж</p>
+                            <p className={styles.fieldText}>
+                                <span>{doctor?.experience} </span>
+                                {
+                                    doctor?.experience === 1 ? "год" : 
+                                        doctor!.experience > 1 && doctor!.experience <=4 ? "года" : "лет"
+                                }
+                            </p>
+                        </div>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Моб.телефон</p>
+                            <p className={styles.fieldText}>{userDoctor?.phone}</p>
+                        </div>
+                    </div>
+                    <div className={styles.personalInformationLine}>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Достижения</p>
+                            <p className={styles.fieldText}>{doctor?.achievements}</p>
+                        </div>
+                    </div>
+                    <div className={styles.personalInformationLine}>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Место работы</p>
+                            <p className={styles.fieldText}>{doctor?.placeOfWork}</p>
+                        </div>
+                        <div className={styles.personalInformationButton}>
+                            <Btn onclick={() => setShowEditUserModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
+                        </div>
+                    </div>       
+                </div>       
             </div>
+
+
+
+
 
             <div className={styles.slider}>
                 <p className={styles.sliderTitle}>Сертификаты о дополнительном образовании</p>
