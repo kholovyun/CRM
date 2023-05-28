@@ -85,10 +85,10 @@ const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({modalCloser,
                 <div className={toggleState === 2 ? `${styles.content} ${styles.activeContent}` : styles.content}>
                     <Formik
                         initialValues={{
-                            name: user!.name,
-                            surname: user!.surname,
-                            patronim: user!.patronim,
-                            phone: user!.phone,
+                            name: user!.name || "",
+                            surname: user!.surname || "",
+                            patronim: user!.patronim || "",
+                            phone: user!.phone || ""
                         }}
                         validateOnBlur
                         onSubmit={(values) => {
@@ -152,11 +152,11 @@ const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({modalCloser,
                 <div className={toggleState === 1 ? `${styles.content} ${styles.activeContent}` : styles.content}>
                     <Formik
                         initialValues={{
-                            degree: doctorData.degree,
-                            experience: doctorData.experience,
-                            placeOfWork: doctorData.placeOfWork,
-                            achievements: doctorData.achievements,
-                            speciality: doctorData.speciality
+                            degree: doctorData?.degree || "",
+                            experience: doctorData?.experience || 0,
+                            placeOfWork: doctorData?.placeOfWork || "",
+                            achievements: doctorData?.achievements || "",
+                            speciality: doctorData?.speciality || ""
                         }}
                         validateOnBlur
                         onSubmit={(values) => {

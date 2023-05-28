@@ -97,7 +97,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                             <p className={styles.fieldTitle}>Стаж</p>
                             <p className={styles.fieldText}>
                                 <span>{doctor?.experience} </span>
-                                {ageTextFormat(doctor!.experience)}
+                                {doctor?.experience && ageTextFormat(doctor.experience)}
                             </p>
                         </div>
                         <div className={styles.personalInformationField}>
