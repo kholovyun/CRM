@@ -11,6 +11,9 @@ import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import { IParrentRegProps } from "./IParrentRegProps";
 import React, { useState } from "react";
+import { ESex } from "../../../enums/ESex";
+import { ESubscriptionType } from "../../../enums/ESubscriptionType";
+import { EPaymentType } from "../../../enums/EPaymentType";
 
 
 const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React.ReactElement => {
@@ -36,7 +39,6 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
     return (
         <Container>
             <div className={styles.form_box_parent}>
-                <Title text="Регистрация родителя пациента" />
                 <FormikStepper
                     initialValues={{
                         role: ERoles.PARENT,
@@ -46,14 +48,16 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                         surname: "",
                         patronim: "",
                         doctorId: props!.doctorId,
+                        paymentType: "",
+                        subscrType: "",
                         child: {
                             name: "",      
                             surname: "",
                             patronim: "",
                             dateOfBirth: "",
                             sex: "",
-                            height: 0,
-                            weight: 0
+                            height: "",
+                            weight: ""
                         }
                     }}
                     validateOnBlur
@@ -66,13 +70,25 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                     <FormikStep label="1">
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
-                                <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
+                                <Field 
+                                    className={styles.LoginInput} 
+                                    name="name" 
+                                    type="text" 
+                                    placeholder="Имя" />
                             </div>
                             <div className={styles.input_flex_column}>
-                                <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
+                                <Field 
+                                    className={styles.LoginInput} 
+                                    name="surname" 
+                                    type="text" 
+                                    placeholder="Фамилия" />
                             </div>
                         </div>
-                        <Field className={styles.LoginInput} name="patronim" type="text" placeholder="Отчество" />                            
+                        <Field 
+                            className={styles.LoginInput} 
+                            name="patronim" 
+                            type="text" 
+                            placeholder="Отчество" />                            
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
                                 <Field
@@ -93,33 +109,54 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                 </Field>
                             </div>
                             <div className={styles.input_flex_column}>
-                                <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
+                                <Field 
+                                    className={styles.LoginInput} 
+                                    name="email" 
+                                    type="text" 
+                                    placeholder="Email" />
                             </div>
-                            <Field hidden readOnly={true} className={styles.LoginInput} name="doctorId" type="text" placeholder="ID Врача" />
+                            <Field 
+                                hidden readOnly={true}
+                                className={styles.LoginInput} 
+                                name="doctorId"
+                                type="text" 
+                                placeholder="ID Врача" />
                         </div>
                     </FormikStep>
                     <FormikStep label="2">
-                        <div className={styles.margin_bottom}>
+                        <div className={styles.parentForm}>
 
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
-                                    <Field className={styles.LoginInput} name="child.name" type="text" placeholder="Имя" />
+                                    <Field 
+                                        className={styles.LoginInput}
+                                        name="child.name" 
+                                        type="text" 
+                                        placeholder="Имя" />
                                 </div>
                                 <div className={styles.input_flex_column}>
-                                    <Field className={styles.LoginInput} name="child.surname" type="text" placeholder="Фамилия" />
+                                    <Field 
+                                        className={styles.LoginInput} 
+                                        name="child.surname" 
+                                        type="text" 
+                                        placeholder="Фамилия" />
                                 </div>
                             </div>
-                            <Field className={styles.LoginInput} name="child.patronim" type="text" placeholder="Отчество" />  
-                            <div className={styles.two_inputs_row}>
+                            <Field 
+                                className={styles.LoginInput} 
+                                name="child.patronim" 
+                                type="text" 
+                                placeholder="Отчество" />  
+                            <div className={styles.input_select_row}>
                                 <div className={styles.input_flex_column}>
                                     <Field name="name" type="text" 
                                         render={({ ...field }) => (
                                             <MaskedInput
-                                                className={styles.date_input}
+                                                className={styles.LoginInput}
                                                 {...field}
                                                 mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
                                                 id="phone"
-                                                placeholder="_ _  .  _ _  .  _ _ _ _"
+                                                placeholder="Дата рождения"
                                                 type="text"
                                                 // onChange={handleChange}
                                                 // onBlur={handleBlur}
@@ -128,21 +165,74 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                     />
                                 </div>
                                 <div className={styles.input_flex_column}>
-                                    <Field className={styles.LoginInput} name="child.sex" type="text" placeholder="Пол" />
+                                    <Field
+                                        as="select" 
+                                        className={styles.LoginInput} 
+                                        name="child.sex" 
+                                        placeholder="Пол"
+                                        id="sex"
+                                        default=""
+                                    >   
+                                        <option value="" disabled hidden>Пол</option>
+                                        <option value={ESex.FEMALE}>{ESex.FEMALE}</option>
+                                        <option value={ESex.MALE}>{ESex.MALE}</option>
+                                    </Field>
+
                                 </div>
                             </div>
-                            <div>
-                                <div>
-                                    <p>Рост</p>
-                                    <Field className={styles.LoginInput} name="child.height" type="number" placeholder="Рост" />
+                            <div className={styles.form_labels_controlls}>
+                                <div className={styles.text_select_box}>
+                                    <Field 
+                                        className={styles.numInput} 
+                                        name="child.height" 
+                                        type="number" 
+                                        placeholder="Рост" />
+                                    <p>см</p>
                                 </div>
-                                <div>
-                                    <p>Вес</p>
-                                    <Field className={styles.LoginInput} name="child.weight" type="number" placeholder="Вес" />
+                                <div className={styles.text_select_box}>
+                                    <Field 
+                                        className={styles.numInput} 
+                                        name="child.weight" 
+                                        type="number" 
+                                        placeholder="Вес" />
+                                    <p>кг</p>
                                 </div>
                                 
                             </div>
                         </div>
+                    </FormikStep>
+                    <FormikStep label="3">
+                        <div className={styles.two_inputs_row}>
+                            <div className={styles.input_flex_column}>
+                                <p>Тип подписки</p>
+                                <Field
+                                    as="select" 
+                                    className={styles.LoginInput} 
+                                    name="subscrType" 
+                                    id="subsribe"
+                                    default=""
+                                >   
+                                    <option value="" disabled hidden></option>
+                                    <option value={ESubscriptionType.MOUNTH}>{ESubscriptionType.MOUNTH} месяц</option>
+                                    <option value={ESubscriptionType.HALF_YEAR}>{ESubscriptionType.HALF_YEAR} месяцев</option>
+                                    <option value={ESubscriptionType.YEAR}>год</option>
+                                </Field>
+                            </div>
+                            <div className={styles.input_flex_column}>
+                                <p>Способ оплаты</p>
+                                <Field
+                                    as="select" 
+                                    className={styles.LoginInput} 
+                                    name="paymentType" 
+                                    id="payment"
+                                    default=""
+                                >   
+                                    <option value="" disabled hidden></option>
+                                    <option value={EPaymentType.AQUIR}>{EPaymentType.AQUIR}</option>
+                                    <option value={EPaymentType.CASH}>{EPaymentType.CASH}</option>
+                                </Field>
+                            </div>
+                        </div>  
                     </FormikStep>     
                 </FormikStepper>
             </div>
@@ -167,6 +257,14 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
     function isLastStep() {
         return step === childrenArray.length - 1;
     }
+    function TitlePicker() {
+        if(step === 0)
+            return "Регистрация родителя пациента";
+        else if(step === 1)
+            return "Регистрация пациента";
+        else 
+            return "Оформление подписки";
+    }
 
     return (
         <Formik
@@ -182,22 +280,24 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
             }}
         >
             <Form className={styles.parentForm} autoComplete="off">
-
+                <Title text={TitlePicker()} />
                 {currentChild}
+                <div className={styles.form_labels_controlls}>
+                    {step > 0 ? (
+                        <Btn
+                            onclick={() => setStep((s) => s - 1)}
+                            title="Назад"
+                            btnClass={EBtnSize.small}
+                        />
 
-                {step > 0 ? (
+                    ) : null}
                     <Btn
-                        onclick={() => setStep((s) => s - 1)}
-                        title="Назад"
+                        types={EBtnTypes.submit}
+                        title={isLastStep()? "Создать" : "Продолжить"}
                         btnClass={EBtnSize.small}
                     />
 
-                ) : null}
-                <Btn
-                    types={EBtnTypes.submit}
-                    title={isLastStep()? "Создать" : "Продолжить"}
-                    btnClass={EBtnSize.small}
-                />
+                </div>
             </Form>
         </Formik>
     );
