@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useRef, useState } from "react";
+import { FunctionComponent, ReactElement, useEffect, useRef, useState } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { Field, Formik, Form } from "formik";
 import { useAppSelector } from "../../app/hooks";
@@ -10,74 +10,60 @@ import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import styles from "./DoctorCabinetPage.module.css";
 import "./Carousel.css";
-import { useEditDoctorMutation, useGetDoctorByUserIdQuery } from "../../app/services/doctors";
+import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import Modal from "../../components/UI/Modal/Modal";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import defaultDoctorImg from "../../assets/img/default-doctor.svg";
-import IDoctorUpdateDto from "../../interfaces/IDoctor/IDoctorUpdateDto";
 import { useParams } from "react-router-dom";
-
 import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBlock";
-import { useEditUserMutation, useGetUserByIdQuery } from "../../app/services/users";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IMessage } from "../../interfaces/IUser/IMessage";
-import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
+import { useGetUserByIdQuery } from "../../app/services/users";
 import { ERoles } from "../../enums/ERoles";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
-    const { user } = useAppSelector(state => state.auth);
-    const [editUser, { isError, isSuccess, error: editUserError }] = useEditUserMutation();
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
-    };
-
-    const successHandler = () => { 
-        setShowEditUserModal(false);
-        toast.info("Личные данные изменены");
-    };
-
-    isError && errorHandler(editUserError);
-    isSuccess && successHandler();
     const params = useParams();
+    const { user } = useAppSelector(state => state.auth);
+    // const {data: doctor} = useGetDoctorByUserIdQuery({id: user!.id});
     const {data: doctor} = useGetDoctorByUserIdQuery({id: params.id ? String(params.id) : String(user!.id)});
-
-    const [updateData, setUpdateData] = useState(true);
+    const {data: userDoctor} = useGetUserByIdQuery(user!.id);
+    
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showEditUserModal, setShowEditUserModal] = useState(false);
-    const ref = useRef<HTMLInputElement>(null);
-    const [editDoctor]= useEditDoctorMutation();
 
-    const modalCancelHandler = () => {
-        setShowEditUserModal(false);
+    const editAvatarModalCloser = () => {
         setShowAvatarModal(false);
     };
 
-    const updateDoctorData = async (values: IDoctorUpdateDto) => {
-        const formData = new FormData();
-        Object.entries(values).forEach(entry => {
-            const [key, value] = entry;
-            formData.append(key, value);
-        });
-        editDoctor({id: doctor?.id || "", doctor:formData});
+    const editPersonalInformationModalCloser = () => {
+        setShowEditUserModal(false);
     };
 
-    const {data: userDoctor} = useGetUserByIdQuery(user!.id);
+    const ageTextFormat = (number: number) => {  
+        const titles = ["год", "года", "лет"];
+        const cases = [2, 0, 1, 1, 1, 2];  
+        return titles[(number % 100 > 4 && number % 100 < 20) 
+            ? 
+            2 : cases[(number % 10 < 5) ? number % 10 : 5]];  
+    };
+    
+    
 
     return (
         <Container>
-            <Modal show={showAvatarModal} close={modalCancelHandler}>
+            <Modal show={showAvatarModal} close={editAvatarModalCloser}>
                 <AvatarUploader 
                     width={300}
                     height={320}
                     role={ERoles.DOCTOR}
-                    modalCloser={modalCancelHandler}
+                    modalCloser={editAvatarModalCloser}
                 />
             </Modal>
-            {/* <Modal show={showEditUserModal} close={modalCancelHandler}>
-                <EditDoctorBlock close={() => setShowEditUserModal(false)} />
-            </Modal> */}
+            <Modal show={showEditUserModal} close={editPersonalInformationModalCloser}>
+                <EditDoctorBlock 
+                    modalCloser={editPersonalInformationModalCloser} 
+                    doctorData={doctor!}
+                />
+            </Modal>
+
             <div className={styles.doctorInformationBlock}>
                 <div className={styles.doctorAvatar}>
                     <div className={styles.backdrop} onClick={() => {setShowAvatarModal(true);}}></div>
@@ -111,10 +97,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                             <p className={styles.fieldTitle}>Стаж</p>
                             <p className={styles.fieldText}>
                                 <span>{doctor?.experience} </span>
-                                {
-                                    doctor?.experience === 1 ? "год" : 
-                                        doctor!.experience > 1 && doctor!.experience <=4 ? "года" : "лет"
-                                }
+                                {ageTextFormat(doctor!.experience)}
                             </p>
                         </div>
                         <div className={styles.personalInformationField}>
