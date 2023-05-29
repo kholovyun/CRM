@@ -48,7 +48,6 @@ export const KGMask = [
     ")",
     /\d/,
     /\d/,
-    /\d/,
     "-",
     /\d/,
     /\d/,
