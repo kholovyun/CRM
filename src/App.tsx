@@ -46,10 +46,13 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                         <Route path="/doctor-cabinet/:id" element={<DoctorCabinetPage />} />
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.DOCTOR]}/> }>
-                        
+                        <Route path="/cabinet/" element={<DoctorCabinetPage />} />
                     </Route>
+<<<<<<< src/App.tsx
                     <Route path="/cabinet/" element={<DoctorCabinetPage />} />
                     <Route path="/newborn-data/" element={<NewBornDataForm/>} />
+=======
+>>>>>>> src/App.tsx
                 </Route>
             </Routes>
         </BrowserRouter>

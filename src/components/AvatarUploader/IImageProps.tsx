@@ -3,9 +3,7 @@ export default interface IImageProps {
     allowZoomOut: boolean,
     position: {x: number, y: number},
     scale: number,
-    rotate: number,
     borderRadius: number,
-    preview: unknown,
     width: number,
     height: number
 }
