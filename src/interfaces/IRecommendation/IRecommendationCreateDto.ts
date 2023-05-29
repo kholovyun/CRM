@@ -1,5 +1,5 @@
 export default interface IRecommendationCreateDto {
     doctorId: string
-    url?: string
+    url?: string | File | undefined
     text: string
 } 

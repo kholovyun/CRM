@@ -3,4 +3,5 @@ export default interface IRecommendationGetDto {
     doctorId: string
     url?: string
     text: string
+    createdAt: Date
 } 
