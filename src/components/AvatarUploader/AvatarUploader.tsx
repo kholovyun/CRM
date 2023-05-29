@@ -129,7 +129,8 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
 
     const minusRange = () => {
         if (rangeValue <= 1) return;
-        const scale = rangeValue - 0.1;
+        let scale = rangeValue - 0.1;
+        if (scale < 1) scale = 1;
         setRangeValue(scale); 
         setImageProps(prevState => {
             return {...prevState, scale: scale};
