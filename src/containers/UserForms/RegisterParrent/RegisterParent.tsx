@@ -1,8 +1,8 @@
 import styles from "../UserForms.module.css";
-import { Formik, Field, Form, FormikConfig, FormikValues } from "formik";
+import * as Yup from "yup";
+import { Formik, Field, Form, FormikConfig, FormikValues , ErrorMessage} from "formik";
 import { toast } from "react-toastify";
 import MaskedInput from "react-text-mask";
-import { validationSchemaRegParrent } from "../../../schemas/validationSchemaRegParrent";
 import { Container } from "../../../components/UI/Container/Container";
 import { Title } from "../Title/Title";
 import { ERoles } from "../../../enums/ERoles";
@@ -14,6 +14,8 @@ import React, { useState } from "react";
 import { ESex } from "../../../enums/ESex";
 import { ESubscriptionType } from "../../../enums/ESubscriptionType";
 import { EPaymentType } from "../../../enums/EPaymentType";
+
+
 
 
 const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React.ReactElement => {
@@ -35,7 +37,38 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
         /\d/,
         /\d/
     ];
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Поле 'Имя' обязательно для заполнения"),
+        surname: Yup.string().required("Поле 'Фамилия' обязательно для заполнения"),
+        patronim: Yup.string().required("Поле 'Отчество' обязательно для заполнения"),
+        // phone: Yup.string().required("Поле 'Телефон' обязательно для заполнения"),
+        email: Yup.string().required("Поле 'Email' обязательно для заполнения").email("Некорректный формат Email"),
+        // "child.name": Yup.string().required("Поле 'Имя ребенка' обязательно для заполнения"),
+        // "child.surname": Yup.string().required("Поле 'Фамилия ребенка' обязательно для заполнения"),
+        // "child.patronim": Yup.string().required("Поле 'Отчество ребенка' обязательно для заполнения"),
+        // "child.dateOfBirth": Yup.string().required("Поле 'Дата рождения ребенка' обязательно для заполнения"),
+        // "child.sex": Yup.string().required("Поле 'Пол ребенка' обязательно для заполнения"),
+        // "child.height": Yup.number().required("Поле 'Рост ребенка' обязательно для заполнения"),
+        // "child.weight": Yup.number().required("Поле 'Вес ребенка' обязательно для заполнения"),
+        // subscrType: Yup.string().required("Поле 'Тип подписки' обязательно для заполнения"),
+        // paymentType: Yup.string().required("Поле 'Способ оплаты' обязательно для заполнения"),
+    });
 
+    const validationFirst = Yup.object().shape({
+        name: Yup.string().required("Поле 'Имя' обязательно для заполнения"),
+        surname: Yup.string().required("Поле 'Фамилия' обязательно для заполнения"),
+        patronim: Yup.string().required("Поле 'Отчество' обязательно для заполнения"),
+        email: Yup.string().required("Поле 'Email' обязательно для заполнения").email("Некорректный формат Email"),
+    });
+    const validationSec = Yup.object().shape({
+        "child.name": Yup.string().required("Поле 'Имя ребенка' обязательно для заполнения"),
+        "child.surname": Yup.string().required("Поле 'Фамилия ребенка' обязательно для заполнения"),
+        "child.patronim": Yup.string().required("Поле 'Отчество ребенка' обязательно для заполнения"),
+        "child.dateOfBirth": Yup.string().required("Поле 'Дата рождения ребенка' обязательно для заполнения"),
+        "child.sex": Yup.string().required("Поле 'Пол ребенка' обязательно для заполнения"),
+        "child.height": Yup.number().required("Поле 'Рост ребенка' обязательно для заполнения"),
+        "child.weight": Yup.number().required("Поле 'Вес ребенка' обязательно для заполнения"),
+    });
     return (
         <Container>
             <div className={styles.form_box_parent}>
@@ -60,14 +93,12 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                             weight: ""
                         }
                     }}
-                    validateOnBlur
                     onSubmit={(values) => {
                         console.log(values);
                         toast.info("Данные корректны");
                     }}
-                    validationSchema={validationSchemaRegParrent}
                 >
-                    <FormikStep label="1">
+                    <FormikStep label="1" validationSchema = {validationFirst}>
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
                                 <Field 
@@ -75,6 +106,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                     name="name" 
                                     type="text" 
                                     placeholder="Имя" />
+                                <ErrorMessage name="name" component="div"/>
                             </div>
                             <div className={styles.input_flex_column}>
                                 <Field 
@@ -82,16 +114,18 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                     name="surname" 
                                     type="text" 
                                     placeholder="Фамилия" />
+                                <ErrorMessage name="surname" component="div"/>
                             </div>
                         </div>
                         <Field 
                             className={styles.LoginInput} 
                             name="patronim" 
                             type="text" 
-                            placeholder="Отчество" />                            
+                            placeholder="Отчество" />
+                        <ErrorMessage name="patronim" component="div"/>                            
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
-                                <Field
+                                {/* <Field
                                     name="phone"
                                     type="text"
                                     render={({ ...field }) => (
@@ -106,7 +140,8 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                         />
                                     )}
                                 >
-                                </Field>
+                                    <ErrorMessage name="phone" component="div"/>
+                                </Field> */}
                             </div>
                             <div className={styles.input_flex_column}>
                                 <Field 
@@ -114,6 +149,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                     name="email" 
                                     type="text" 
                                     placeholder="Email" />
+                                <ErrorMessage name="email" component="div"/>
                             </div>
                             <Field 
                                 hidden readOnly={true}
@@ -123,7 +159,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                 placeholder="ID Врача" />
                         </div>
                     </FormikStep>
-                    <FormikStep label="2">
+                    <FormikStep label="2" validationSchema={validationSec}>
                         <div className={styles.parentForm}>
 
                             <div className={styles.two_inputs_row}>
@@ -133,6 +169,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                         name="child.name" 
                                         type="text" 
                                         placeholder="Имя" />
+                                    <ErrorMessage name="child.name" component="div"/>
                                 </div>
                                 <div className={styles.input_flex_column}>
                                     <Field 
@@ -140,6 +177,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                         name="child.surname" 
                                         type="text" 
                                         placeholder="Фамилия" />
+                                    <ErrorMessage name="child.name" component="div"/>
                                 </div>
                             </div>
                             <Field 
@@ -149,20 +187,21 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                 placeholder="Отчество" />  
                             <div className={styles.input_select_row}>
                                 <div className={styles.input_flex_column}>
-                                    <Field name="name" type="text" 
+                                    <Field name="child.dateOfBirth" type="text" 
                                         render={({ ...field }) => (
                                             <MaskedInput
                                                 className={styles.LoginInput}
                                                 {...field}
                                                 mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
-                                                id="phone"
+                                                id="child.dateOfBirth"
                                                 placeholder="Дата рождения"
                                                 type="text"
-                                                // onChange={handleChange}
+                                                onChange={()=>console.log(1)}
                                                 // onBlur={handleBlur}
                                             />
                                         )}
                                     />
+                                    <ErrorMessage name="child.dateOfBirth" component="div"/>
                                 </div>
                                 <div className={styles.input_flex_column}>
                                     <Field
@@ -279,6 +318,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
                 }
             }}
         >
+            
             <Form className={styles.parentForm} autoComplete="off">
                 <Title text={TitlePicker()} />
                 {currentChild}
