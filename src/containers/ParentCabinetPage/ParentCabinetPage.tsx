@@ -6,10 +6,16 @@ import Btn from "../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../enums/EBtnSize";
 import { FunctionalBox } from "../../components/UI/FunctionalBox/FunctionalBox";
 import { InfoTable } from "../../components/UI/InfoTable/InfoTable";
-import { InfoTableChild } from "../../components/UI/InfoTableChild/InfoTableChild";
+import { SupportTextAria } from "../../components/SupportTextAria/SupportTextAria";
+import { ChildrenCardBox } from "../ChildrenCardBox/ChildrenCardBox";
 
 export const ParentCabinetPage: React.FC = () => {
     const { user } = useAppSelector(state => state.auth);
+    const arrayChild = [
+        {id: "001", name: "Dolf", surname: "Lungren", patronim: "Vasilevich", dateOfBirth:"05.01.2013"},
+        {id: "002", name: "Terminator", surname: "Mashine", patronim: "Vasilevich", dateOfBirth:"01.01.2000"},
+        {id: "003", name: "Vasiliy", surname: "Kovalev", patronim: "Vasilevich", dateOfBirth:"25.05.2015"},
+    ];
 
     return (
             <Container>
@@ -61,73 +67,12 @@ export const ParentCabinetPage: React.FC = () => {
                 <a className={styles.tab}>Vasilina</a>
                 <a className={styles.tab}>Aleksandr</a>
             </div>
-            <div className={styles.childTabText}>
-                <textarea className={styles.childInput} placeholder="Задать вопрос"></textarea>
-                <div className={styles.btnBox}>
-                    <Btn title="Отправить" size={EBtnSize.tiny}/>
-                </div>
-            </div>
-            <div className={styles.childBoxInf}>
-            <InfoTableChild>
-                <FunctionalBox>
-                    <div className={styles.docAvatar}>Img</div>
-                    <div className={styles.docInfoBlock}>
-                        <p className={styles.doctorText}>Dolf</p>
-                        <p className={styles.doctorText}>Lungren</p>
-                        <p className={styles.doctorText}>Vasilevich</p>
-                    </div>
-                </FunctionalBox>
-                <FunctionalBox>
-                    <p className={styles.dateChildStyle}>05.01.2013</p>
-                </FunctionalBox>
-                <Btn title="Подробнее" size={EBtnSize.tiny}/>
-            </InfoTableChild>
 
-            <InfoTableChild>
-                <FunctionalBox>
-                    <div className={styles.docAvatar}>Img</div>
-                    <div className={styles.docInfoBlock}>
-                        <p className={styles.doctorText}>Terminator</p>
-                        <p className={styles.doctorText}>Mashine</p>
-                        <p className={styles.doctorText}>Vasilevich</p>
-                    </div>
-                </FunctionalBox>
-                <FunctionalBox>
-                    <p className={styles.dateChildStyle}>01.01.2000</p>
-                </FunctionalBox>
-                <Btn title="Подробнее" size={EBtnSize.tiny}/>
-            </InfoTableChild>
-        
-            <InfoTableChild>
-                <FunctionalBox>
-                    <div className={styles.docAvatar}>Img</div>
-                    <div className={styles.docInfoBlock}>
-                        <p className={styles.doctorText}>Vasiliy</p>
-                        <p className={styles.doctorText}>Kovalev</p>
-                        <p className={styles.doctorText}>Vasilevich</p>
-                    </div>
-                </FunctionalBox>
-                <FunctionalBox>
-                    <p className={styles.dateChildStyle}>25.05.2015</p>
-                </FunctionalBox>
-                <Btn title="Подробнее" size={EBtnSize.tiny}/>
-            </InfoTableChild>
-            <InfoTableChild>
-                <FunctionalBox>
-                    <p style={{width: "100%", textAlign: "center"}}>Добавить ребенка</p>
-                </FunctionalBox>
-                <FunctionalBox>
-                    <p className={styles.addChildPlas}>+</p>
-                </FunctionalBox>
-            </InfoTableChild>
-            </div>
+            <SupportTextAria btnName="Отправить" ph="Задать вопрос"/>
+            
+            <ChildrenCardBox array={arrayChild}/>
 
-            <div className={styles.childTabText}>
-                <textarea className={styles.childInput} placeholder="Поделитесь впечатлениями или пожеланиями по работе сервиса..."></textarea>
-                <div className={styles.btnBox}>
-                    <Btn title="Отправить" size={EBtnSize.tiny}/>
-                </div>
-            </div>
+            <SupportTextAria btnName="Отправить" ph="Поделитесь впечатлениями или пожеланиями по работе сервиса..."/>
         </Container>
     );
 };
