@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactElement, useEffect, useRef, useState } from "react";
 import { Container } from "../../components/UI/Container/Container";
-import { Field, Formik, Form } from "formik";
+// import { Field, Formik, Form } from "formik";
 import { useAppSelector } from "../../app/hooks";
 import { toast } from "react-toastify";
 import { EBtnTypes } from "../../enums/EBtnTypes";
@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBlock";
 import { useGetUserByIdQuery } from "../../app/services/users";
 import { ERoles } from "../../enums/ERoles";
+import RecommendationsBlock from "./RecommendationsBlock/RecommendationsBlock";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
@@ -123,10 +124,6 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                 </div>       
             </div>
 
-
-
-
-
             <div className={styles.slider}>
                 <p className={styles.sliderTitle}>Сертификаты о дополнительном образовании</p>
                 <div className={styles.carousel}>
@@ -148,38 +145,9 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                 </div>
             </div>
 
-            {/* РЕКОМЕНДАЦИИ */}
-            <div className={styles.reccomendationBlock}>
-                <p className={styles.reccomendationBlockTop}>Написать рекомендацию</p>
-                <Formik
-                    initialValues={{
-                        doctorId: doctor?.id,
-                        text: "" 
-                    }}
-                    onSubmit={() => {
-                        toast.info("Функционал пока недоступен");
-                    }}
-                >
-                    <Form>
-                        <Field as={"textarea"} type="text" name="speciality" className={styles.textarea}/>
-                        <div className={styles.reccomendationBlockBottom}>
-                            <label className={styles.inputFileLabel}>
-                                <input
-                                    className={styles.fileInput}
-                                    type="file"
-                                    name={"image"}
-                                />
-                                <p className={styles.halo}>Прикрепить файл</p>
-                                <div className={styles.fileIcon} />
-                            </label>
-                            <div className={styles.publicationBtn}>
-                                <Btn size={EBtnSize.small} types={EBtnTypes.submit} title="Опубликовать" />
-                            </div>
-                        </div>
-                    </Form>
-                </Formik> 
-            </div>
-
+            {/* <БЛОК РЕКОМЕНДАЦИИ> */}
+            <RecommendationsBlock doctorData={doctor!}/>
+            
             {/* ВОПРОСЫ */}
             <div className={styles.questionsBlock}>
                 <div className={styles.questionsBlockLeft}>

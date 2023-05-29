@@ -1,0 +1,55 @@
+
+.reccomendationBlock {
+    margin-top: 60px;
+    background-color: var(--light_blue);
+    padding: 30px 80px;
+    border-radius: 50px;
+}
+
+.reccomendationBlockTop {
+    font-size: 20px;
+    color: var(--black_blue);
+}
+
+.textarea {
+    margin-top: 20px;
+    background: none;
+    border: none;
+    width: 100%;
+    resize: none;
+    height: 100px;
+    font-size: 18px;
+}
+
+.textarea:focus { 
+    outline: none;
+}
+
+.publicationBtn {
+    text-align: end;
+}
+
+.fileInput {
+    display: none;
+}
+
+.reccomendationBlockBottom {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 30px;
+    position: relative;
+}
+
+.fileIcon {
+    background: url("../../../assets/img/icon-file.svg");
+    width: 22px;
+    height: 27.5px;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.inputFileLabel {
+    display: flex;
+    align-items: center;
+}

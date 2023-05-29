@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../app/hooks";
 import { validationSchemaEditUser } from "../../../schemas/validationSchemaEditUser";
 import styles from "./EditDoctorBlock.module.css";
 import MaskedInput from "react-text-mask";
-import { FunctionComponent, ReactElement, useEffect, useRef, useState } from "react";
+import { FunctionComponent, ReactElement, useRef, useState } from "react";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import IEditDoctorBlockProps from "./EditDoctorBlockProps";
@@ -196,10 +196,8 @@ const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({modalCloser,
                                         <Btn title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
                                     </div>    
                                 </div>
-                            </Form>
-                            
-                        )}
-                        
+                            </Form>                           
+                        )}     
                     </Formik>
                 </div>
                 <Btn title="Закрыть" onclick={modalCloser} size={EBtnSize.tiny} types={EBtnTypes.submit} />
