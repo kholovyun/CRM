@@ -16,6 +16,7 @@ import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
 import Loader from "../../../../components/UI/Loader/Loader";
+import { NavLink } from "react-router-dom";
 
 const AllAdmins: React.FunctionComponent = (): React.ReactElement => {
     
@@ -64,10 +65,16 @@ const AllAdmins: React.FunctionComponent = (): React.ReactElement => {
     return (
         <div className={styles.list_container}>
             <div className={styles.group_row}>
-                <h1 className={styles.h1_title}>Список врачей</h1>
-                <TransparentLink title={"Зарегистрировать администратора"} 
-                    size={EBtnSize.tiny} 
-                    pathTo={"/admin-page/register-admin"}/>
+                <h1 className={styles.h1_title}>Список администраторов</h1>
+                <div className={styles.add_link_colappsed}>
+                    <NavLink className={`${styles.add_icon} ${styles.add_admin_icon}`}
+                        to={"/admin-page/register-admin"}></NavLink>
+                </div>
+                <div className={styles.collapsing_link}>
+                    <TransparentLink title={"Зарегистрировать администратора"} 
+                        size={EBtnSize.tiny} 
+                        pathTo={"/admin-page/register-admin"}/>
+                </div>
             </div>
             <Modal
                 show={showModal}
