@@ -10,19 +10,19 @@ import { toast } from "react-toastify";
 
 export const rtkQueryErrorLogger: Middleware =
   (api: MiddlewareAPI) => (next) => (action) => {
-    if (isRejectedWithValue(action)) { 
-        if(action.payload.status === 401){
-            api.dispatch(logout())
-            window.location.href = "/login";
-        } else if (action.payload.status === 403){
-            window.location.href = "/cabinet";
-        } else if (action.payload.status === "FETCH_ERROR") {
-            toast.error('Ошибка соединения');   
-        } 
-    }
+      if (isRejectedWithValue(action)) { 
+          if(action.payload.status === 401){
+              api.dispatch(logout());
+              window.location.href = "/login";
+          } else if (action.payload.status === 403){
+              window.location.href = "/cabinet";
+          } else if (action.payload.status === "FETCH_ERROR") {
+              toast.error("Ошибка соединения");   
+          } 
+      }
 
-    return next(action)
-  }
+      return next(action);
+  };
 
 const persistConfig = {
     key: "root",

@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useRef, useState } from "react";
+import { FunctionComponent, ReactElement, useEffect, useRef, useState } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { Field, Formik, Form } from "formik";
 import { useAppSelector } from "../../app/hooks";
@@ -10,50 +10,60 @@ import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import styles from "./DoctorCabinetPage.module.css";
 import "./Carousel.css";
-import { useEditDoctorMutation, useGetDoctorByUserIdQuery } from "../../app/services/doctors";
+import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import Modal from "../../components/UI/Modal/Modal";
-import UploadAvatar from "../../components/UploadAvatar/UploadAvatar";
-import EditUserByDoctor from "./EditUserByDoctor/EditUserByDoctor";
+import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import defaultDoctorImg from "../../assets/img/default-doctor.svg";
-import IDoctorUpdateDto from "../../interfaces/IDoctor/IDoctorUpdateDto";
 import { useParams } from "react-router-dom";
+import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBlock";
+import { useGetUserByIdQuery } from "../../app/services/users";
+import { ERoles } from "../../enums/ERoles";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { user } = useAppSelector(state => state.auth);
-    const {data: doctor} = useGetDoctorByUserIdQuery({id: String(params.id)});
-    const [updateData, setUpdateData] = useState(true);
+    // const {data: doctor} = useGetDoctorByUserIdQuery({id: user!.id});
+    const {data: doctor} = useGetDoctorByUserIdQuery({id: params.id ? String(params.id) : String(user!.id)});
+    const {data: userDoctor} = useGetUserByIdQuery(user!.id);
+    
     const [showAvatarModal, setShowAvatarModal] = useState(false);
-    const [showUserUpadteModal, setShowUserUpadteModal] = useState(false);
-    const ref = useRef<HTMLInputElement>(null);
-    const [editDoctor]= useEditDoctorMutation();
+    const [showEditUserModal, setShowEditUserModal] = useState(false);
 
-    const modalCancelHandler = () => {
-        setShowUserUpadteModal(false);
+    const editAvatarModalCloser = () => {
         setShowAvatarModal(false);
     };
 
-    const setInputFocus = () => {
-        ref.current?.focus();
+    const editPersonalInformationModalCloser = () => {
+        setShowEditUserModal(false);
     };
 
-    const updateDoctorData = async (values: IDoctorUpdateDto) => {
-        const formData = new FormData();
-        Object.entries(values).forEach(entry => {
-            const [key, value] = entry;
-            formData.append(key, value);
-        });
-        editDoctor({id: doctor?.id || "", doctor:formData});
+    const ageTextFormat = (number: number) => {  
+        const titles = ["год", "года", "лет"];
+        const cases = [2, 0, 1, 1, 1, 2];  
+        return titles[(number % 100 > 4 && number % 100 < 20) 
+            ? 
+            2 : cases[(number % 10 < 5) ? number % 10 : 5]];  
     };
+    
+    
 
     return (
         <Container>
-            <Modal show={showAvatarModal} close={modalCancelHandler}>
-                <UploadAvatar click={() => setShowAvatarModal(false)}/>
+            <Modal show={showAvatarModal} close={editAvatarModalCloser}>
+                <AvatarUploader 
+                    width={300}
+                    height={320}
+                    role={ERoles.DOCTOR}
+                    modalCloser={editAvatarModalCloser}
+                />
             </Modal>
-            <Modal show={showUserUpadteModal} close={modalCancelHandler}>
-                <EditUserByDoctor />
+            <Modal show={showEditUserModal} close={editPersonalInformationModalCloser}>
+                <EditDoctorBlock 
+                    modalCloser={editPersonalInformationModalCloser} 
+                    doctorData={doctor!}
+                />
             </Modal>
+
             <div className={styles.doctorInformationBlock}>
                 <div className={styles.doctorAvatar}>
                     <div className={styles.backdrop} onClick={() => {setShowAvatarModal(true);}}></div>
@@ -65,62 +75,57 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                         /> : <img className="DetailedPage__image" src={defaultDoctorImg} alt={"doctor"}/>
                     }
                 </div>
-                {doctor && 
                 <div className={styles.doctorInformation}>
-                    <div className={styles.personalInformation}>
-                        <p className={styles.informationTitle}>Личные данные</p>
+                    <div className={styles.personalInformationLine}>
                         <div className={styles.personalInformationField}>
-                            <p>{user?.name} {user?.surname} {user?.patronim}</p>
-                        </div>
-                        <div className={styles.personalInformationBottom}>
-                            <div className={styles.personalInformationField}>
-                                <p>{user?.phone}</p>
-                            </div>
-                            <Btn onclick={() => setShowUserUpadteModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
+                            <p className={styles.fieldTitle}>ФИО</p>
+                            <p className={styles.fieldText}>{userDoctor?.name} {userDoctor?.surname} {userDoctor?.patronim}</p>
                         </div>
                     </div>
-                    <div className={styles.specialInformation}>
-                        <Formik
-                            initialValues={{
-                                speciality: doctor!.speciality,
-                                placeOfWork: doctor!.placeOfWork,
-                                experience: doctor!.experience,
-                                achievments: doctor!.achievements,
-                                degree: doctor!.degree
-                            }}
-                            validateOnBlur
-                            onSubmit={async(values) => {
-                                updateDoctorData(values);
-                                // toast.info("Функционал пока недоступен");
-                                setUpdateData(true);
-                            }}
-                        >
-                            {({ handleSubmit }) => (
-                                <Form className={styles.specialInformationForm}>
-                                    <p className={styles.informationTitle}>Специальные данные</p>
-                                    <div className={styles.specialInformationLine}>
-                                        <Field readOnly={updateData} type="text" innerRef={ref} name="speciality" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                        <Field readOnly={updateData} type="text" name="degree" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                    </div>
-                                    <div className={styles.specialInformationLine}>
-                                        <Field readOnly={updateData} type="text" name="achievments" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                        <Field readOnly={updateData} type="text" name="experience" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                    </div>
-                                    <div className={styles.specialInformationLine}>
-                                        <Field readOnly={updateData} type="text" name="placeOfWork" className={`${styles.specialInformationField} ${!updateData && styles.violetBorder}`}/>
-                                        {updateData && <Btn title="Редактировать" onclick={() => {
-                                            setUpdateData(false);
-                                            setInputFocus();
-                                        }} size={EBtnSize.tiny} types={EBtnTypes.submit} />}
-                                        {!updateData && <Btn title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />}
-                                    </div>
-                                </Form>
-                            )}
-                        </Formik>
+                    <div className={styles.personalInformationLine}>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Специальность</p>
+                            <p className={styles.fieldText}>{doctor?.speciality}</p>
+                        </div>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Степень</p>
+                            <p className={styles.fieldText}>{doctor?.degree}</p>
+                        </div>
                     </div>
-                </div>
-                }
+                    <div className={styles.personalInformationLine}>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Стаж</p>
+                            <p className={styles.fieldText}>
+                                <span>{doctor?.experience} </span>
+                                {doctor?.experience && ageTextFormat(doctor.experience)}
+                            </p>
+                        </div>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Моб.телефон</p>
+                            <p className={styles.fieldText}>{userDoctor?.phone}</p>
+                        </div>
+                    </div>
+                    <div className={styles.personalInformationLine}>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Достижения</p>
+                            <p className={styles.fieldText}>{doctor?.achievements}</p>
+                        </div>
+                    </div>
+                    <div className={styles.personalInformationLine}>
+                        <div className={styles.personalInformationField}>
+                            <p className={styles.fieldTitle}>Место работы</p>
+                            <p className={styles.fieldText}>{doctor?.placeOfWork}</p>
+                        </div>
+                        <div className={styles.personalInformationButton}>
+                            <Btn onclick={() => setShowEditUserModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
+                        </div>
+                    </div>       
+                </div>       
             </div>
+
+
+
+
 
             <div className={styles.slider}>
                 <p className={styles.sliderTitle}>Сертификаты о дополнительном образовании</p>
@@ -142,9 +147,6 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                     }/>
                 </div>
             </div>
-
-
-
 
             {/* РЕКОМЕНДАЦИИ */}
             <div className={styles.reccomendationBlock}>

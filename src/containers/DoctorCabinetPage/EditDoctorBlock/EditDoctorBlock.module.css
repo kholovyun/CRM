@@ -1,0 +1,77 @@
+.editFormBoxTabs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content {
+    display: none;
+    margin: 10px 0;
+}
+
+.tab {
+    flex-grow: 1;
+    padding: 10px 26px;
+    cursor: pointer;
+    background-color: var(--bg_light_blue);
+}
+
+.rightTab {
+    border-radius: 0 20px 20px 0;
+}
+
+.leftTab {
+    border-radius: 20px 0 0 20px;
+}
+
+.tab:hover {
+    background-color: var(--violet);
+    color: white;
+}
+
+.activeTab {
+    background-color: var(--violet);
+    color: white;
+}
+
+.editDoctorForm, .editUserForm {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.editDoctorLine, .editUserLine {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.editDoctorField, .editUserField {
+    width: 100%;
+}
+
+.editDoctorFieldTitle, .editUserFieldTitle {
+    font-size: 14px;
+    color: var(--black_blue);
+    opacity: 0.5;
+    margin: 0 0 2px 26px;
+}
+
+.editDoctorInput, .editUserInput {
+    width: 100%;
+    font-size: 16px;
+    padding: 8px 26px;
+    background-color: var(--bg_light_blue);
+    border-radius: 25px;
+    border: 2px solid var(--violet);
+}
+
+.saveButton {
+    align-self: flex-end;
+}
+
+.activeContent {
+    display: block;
+}
+
+

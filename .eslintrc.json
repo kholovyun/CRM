@@ -24,6 +24,7 @@
             4
         ],
         "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-non-null-assertion": "off",
         "linebreak-style": [
             "error",
             "windows"

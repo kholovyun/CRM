@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { ERoles } from "../enums/ERoles";
 
-export const validationSchemaRegUser = yup.object().shape({
+export const validationSchemaEditUser = yup.object().shape({
     name: yup.string()
         .test("no-spaces", "Имя не должно содержать пробелы", function (value) {
             if (value && /\s/.test(value)) {
@@ -26,14 +26,6 @@ export const validationSchemaRegUser = yup.object().shape({
             return true;
         }),
     phone: yup.string()
-        .matches(/^\+\d{1,3}\(\d{3}\)\d{3}-\d{2}-\d{2}$/, "Не соответствует формату")
-        .required("Введите номер телефона"),
-    email: yup.string()
-        .email("Введите корректный Email")
-        .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            "Введите корректный Email")
-        .required("Поле не должно быть пустым"),
-    role: yup.string()
-        .oneOf(Object.values(ERoles), "Выберите роль пользователя")
-        .required("Обязательно для заполнения"),
+        .matches(/^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/, "Не соответствует формату")
+        .required("Введите номер телефона")
 });
