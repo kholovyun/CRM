@@ -1,4 +1,4 @@
-import styles from "./functionalBox.module.css";
+import styles from "./FunctionalBox.module.css";
 import React from "react";
 
 export const FunctionalBox = ({ children }: { children: React.ReactNode }) => {
