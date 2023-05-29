@@ -37,14 +37,8 @@
 .tiny:hover,
 .tiny:active {
     font-weight: 500;
-    color: var(--violet);
-    background-color: rgba(229, 232, 241, 0.7);
-}
-
-.big:hover::after,
-.small:hover::after,
-.tiny:hover::after {
-    background: url("../../../assets/img/arrow-violet.svg") center/contain no-repeat;
+    color: var(--dark_blue);
+    background-color: var(--light_blue);
 }
 
 .big {
