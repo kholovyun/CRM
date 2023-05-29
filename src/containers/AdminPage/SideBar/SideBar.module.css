@@ -8,6 +8,13 @@
     border-bottom-right-radius: 1.56rem;
 }
 
+.sidebar_colappsed_icons_column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
 .sidebar_colappsed {
     display: flex;
     flex-direction: column;
@@ -16,7 +23,7 @@
     background-color: var(--light_blue);
     border-radius: 50%;
     align-self: flex-start;
-    padding: 20px;
+    padding: 1rem;
 }
 
 .open_btn {
@@ -48,4 +55,16 @@
     line-height: 100%;
     text-transform: uppercase;
     color: var(--black_blue);
+}
+
+@media screen and (min-width: 320px) {
+    .sidebar_colappsed_icons_column {
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 1052px) {
+    .sidebar_colappsed_icons_column {
+        margin: 0 0 0 -12px;
+    }
 }
