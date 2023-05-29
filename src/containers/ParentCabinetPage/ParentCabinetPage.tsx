@@ -51,7 +51,7 @@ export const ParentCabinetPage: React.FC = () => {
                         <p>Стаж работы</p>
                         <p>25 лет</p>
                     </FunctionalBox>
-                    <Btn title="Иванов Иван" size={EBtnSize.tiny}/>
+                    <Btn title="Иванов Иван!" size={EBtnSize.tiny}/>
                 </InfoTable>
             </div>
         </Container>
