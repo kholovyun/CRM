@@ -4,6 +4,7 @@ import IUserCreateDto from "../../interfaces/IUser/IUserCreateDto";
 import IUserGetDtoWithToken from "../../interfaces/IUser/IUserGetDtoWithToken";
 import IUserLoginDto from "../../interfaces/IUser/IUserLoginDto";
 import IUserUpdateDto from "../../interfaces/IUser/IUpdateUserDto";
+import IUserCreateParentWithChildDto from "../../interfaces/IUser/IUserCreateParentWithChildDto";
 
 const usersApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -52,7 +53,15 @@ const usersApi = api.injectEndpoints({
                 body: user
             }),
             invalidatesTags: ["User"]
-        })
+        }),
+        createUserParent: build.mutation<IUserCreateParentWithChildDto, IUserCreateParentWithChildDto>({
+            query: (userDto: IUserCreateParentWithChildDto) => ({
+                url: "/users/parent",
+                method: "POST",
+                body: userDto
+            }),
+            invalidatesTags: ["User", "Doctor"]
+        }),
     })
 });
 
@@ -62,6 +71,7 @@ export const {
     useCreateUserMutation, 
     useLoginMutation, 
     useBlockUserMutation,
-    useEditUserMutation
+    useEditUserMutation,
+    useCreateUserParentMutation
 } = usersApi;
 export default usersApi;
