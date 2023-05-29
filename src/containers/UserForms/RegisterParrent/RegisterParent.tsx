@@ -14,11 +14,11 @@ import React, { useState } from "react";
 import { ESex } from "../../../enums/ESex";
 import { ESubscriptionType } from "../../../enums/ESubscriptionType";
 import { EPaymentType } from "../../../enums/EPaymentType";
-
-
+import { useCreateUserParentMutation } from "../../../app/services/users";
 
 
 const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React.ReactElement => {
+    const [createUserParent, { isError, isSuccess, error: createUserParentError }] = useCreateUserParentMutation();
     const phoneNumberMask = [
         "+",
         "7",
@@ -37,23 +37,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
         /\d/,
         /\d/
     ];
-    const validationSchema = Yup.object().shape({
-        name: Yup.string().required("Поле 'Имя' обязательно для заполнения"),
-        surname: Yup.string().required("Поле 'Фамилия' обязательно для заполнения"),
-        patronim: Yup.string().required("Поле 'Отчество' обязательно для заполнения"),
-        // phone: Yup.string().required("Поле 'Телефон' обязательно для заполнения"),
-        email: Yup.string().required("Поле 'Email' обязательно для заполнения").email("Некорректный формат Email"),
-        // "child.name": Yup.string().required("Поле 'Имя ребенка' обязательно для заполнения"),
-        // "child.surname": Yup.string().required("Поле 'Фамилия ребенка' обязательно для заполнения"),
-        // "child.patronim": Yup.string().required("Поле 'Отчество ребенка' обязательно для заполнения"),
-        // "child.dateOfBirth": Yup.string().required("Поле 'Дата рождения ребенка' обязательно для заполнения"),
-        // "child.sex": Yup.string().required("Поле 'Пол ребенка' обязательно для заполнения"),
-        // "child.height": Yup.number().required("Поле 'Рост ребенка' обязательно для заполнения"),
-        // "child.weight": Yup.number().required("Поле 'Вес ребенка' обязательно для заполнения"),
-        // subscrType: Yup.string().required("Поле 'Тип подписки' обязательно для заполнения"),
-        // paymentType: Yup.string().required("Поле 'Способ оплаты' обязательно для заполнения"),
-    });
-
+    
     const validationFirst = Yup.object().shape({
         name: Yup.string().required("Поле 'Имя' обязательно для заполнения"),
         surname: Yup.string().required("Поле 'Фамилия' обязательно для заполнения"),
@@ -62,12 +46,12 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
     });
     const validationSec = Yup.object().shape({
         "child.name": Yup.string().required("Поле 'Имя ребенка' обязательно для заполнения"),
-        "child.surname": Yup.string().required("Поле 'Фамилия ребенка' обязательно для заполнения"),
-        "child.patronim": Yup.string().required("Поле 'Отчество ребенка' обязательно для заполнения"),
-        "child.dateOfBirth": Yup.string().required("Поле 'Дата рождения ребенка' обязательно для заполнения"),
-        "child.sex": Yup.string().required("Поле 'Пол ребенка' обязательно для заполнения"),
-        "child.height": Yup.number().required("Поле 'Рост ребенка' обязательно для заполнения"),
-        "child.weight": Yup.number().required("Поле 'Вес ребенка' обязательно для заполнения"),
+        // "child.surname": Yup.string().required("Поле 'Фамилия ребенка' обязательно для заполнения"),
+        // "child.patronim": Yup.string().required("Поле 'Отчество ребенка' обязательно для заполнения"),
+        // "child.dateOfBirth": Yup.string().required("Поле 'Дата рождения ребенка' обязательно для заполнения"),
+        // "child.sex": Yup.string().required("Поле 'Пол ребенка' обязательно для заполнения"),
+        // "child.height": Yup.number().required("Поле 'Рост ребенка' обязательно для заполнения"),
+        // "child.weight": Yup.number().required("Поле 'Вес ребенка' обязательно для заполнения"),
     });
     return (
         <Container>
@@ -76,11 +60,11 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                     initialValues={{
                         role: ERoles.PARENT,
                         email: "",
-                        phone: "",
+                        phone: "87074144093",
                         name: "",
                         surname: "",
                         patronim: "",
-                        doctorId: props!.doctorId,
+                        doctorId: props.doctorId,
                         paymentType: "",
                         subscrType: "",
                         child: {
@@ -96,6 +80,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                     onSubmit={(values) => {
                         console.log(values);
                         toast.info("Данные корректны");
+                        createUserParent(values);
                     }}
                 >
                     <FormikStep label="1" validationSchema = {validationFirst}>
@@ -159,7 +144,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                 placeholder="ID Врача" />
                         </div>
                     </FormikStep>
-                    <FormikStep label="2" validationSchema={validationSec}>
+                    <FormikStep label="2">
                         <div className={styles.parentForm}>
 
                             <div className={styles.two_inputs_row}>
@@ -177,30 +162,18 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                         name="child.surname" 
                                         type="text" 
                                         placeholder="Фамилия" />
-                                    <ErrorMessage name="child.name" component="div"/>
+                                    <ErrorMessage name="child.surname" component="div"/>
                                 </div>
                             </div>
                             <Field 
                                 className={styles.LoginInput} 
                                 name="child.patronim" 
                                 type="text" 
-                                placeholder="Отчество" />  
+                                placeholder="Отчество" />
+                            <ErrorMessage name="child.patronim" component="div"/>  
                             <div className={styles.input_select_row}>
                                 <div className={styles.input_flex_column}>
-                                    <Field name="child.dateOfBirth" type="text" 
-                                        render={({ ...field }) => (
-                                            <MaskedInput
-                                                className={styles.LoginInput}
-                                                {...field}
-                                                mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
-                                                id="child.dateOfBirth"
-                                                placeholder="Дата рождения"
-                                                type="text"
-                                                onChange={()=>console.log(1)}
-                                                // onBlur={handleBlur}
-                                            />
-                                        )}
-                                    />
+                                    <Field name="child.dateOfBirth" type="date" className={styles.LoginInput}/>
                                     <ErrorMessage name="child.dateOfBirth" component="div"/>
                                 </div>
                                 <div className={styles.input_flex_column}>
@@ -319,7 +292,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
             }}
         >
             
-            <Form className={styles.parentForm} autoComplete="off">
+            <Form className={styles.parentForm}>
                 <Title text={TitlePicker()} />
                 {currentChild}
                 <div className={styles.form_labels_controlls}>

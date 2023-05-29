@@ -40,7 +40,7 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                         </Route>                                         
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR]}/> }>
-                        <Route path="/register-parent" element={<RegisterParent />} />
+                        <Route path="/register-parent" element={<RegisterParent doctorId="ed22037e-1482-48be-13b5-0047d7573adb"/>} />
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.PARENT]}/> }>
                         <Route path="/doctor-cabinet/:id" element={<DoctorCabinetPage />} />
