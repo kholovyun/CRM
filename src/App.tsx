@@ -17,13 +17,10 @@ import RegisterParent from "./containers/UserForms/RegisterParrent/RegisterParen
 import ResetPassword from "./containers/UserForms/ResetPassword/ResetPassword";
 import ForgotPassword from "./containers/UserForms/ForgotPassword/ForgotPassword";
 import AllAdmins from "./containers/AdminPage/AdminTables/AllAdmins/AllAdmins";
-<<<<<<< src/App.tsx
 import { ParentCabinetPage } from "./containers/ParentCabinetPage/ParentCabinetPage";
-=======
 import { NewBornDataForm } from "./containers/UserForms/RegisterChild/NewBornDataForm/NewBornDataForm";
 import AdminProfile from "./containers/AdminPage/AdminProfile";
 import EditAdminForm from "./containers/UserForms/EditAdminForm/EditAdminForm";
->>>>>>> src/App.tsx
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
