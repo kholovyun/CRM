@@ -13,7 +13,7 @@ export const SupportTextAria: React.FC<ISupportText> = (props) => {
     const [userText, setUserText] = useState("");
     const inputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setUserText(e.target.value);
-    }
+    };
 
     return (
         <ChildTabText>

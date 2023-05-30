@@ -28,5 +28,5 @@ export const CardDoctor: React.FC = () => {
             </FunctionalBox>
             <Btn title="Иванов Иван" size={EBtnSize.tiny}/>
         </InfoTable>
-    )
-}
+    );
+};

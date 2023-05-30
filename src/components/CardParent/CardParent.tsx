@@ -9,7 +9,7 @@ import { CardTitle } from "../UI/ParrentUi/CardTitle/CardTitle";
 
 type TUser = {
     userData: IUserCreateDto
-}
+};
 
 export const CardParent: React.FC<TUser> = (props) => {
     return (
@@ -33,5 +33,5 @@ export const CardParent: React.FC<TUser> = (props) => {
             </FunctionalBox>
             <Btn title="Продлить подписку" size={EBtnSize.tiny}/>
         </InfoTable>
-    )
-}
+    );
+};

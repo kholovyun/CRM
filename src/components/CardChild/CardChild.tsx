@@ -16,17 +16,17 @@ interface ICardAddSome {
 export const CardChild: React.FC<ICardAddSome> = (props) => {
     return (
         <InfoTableChild>
-        <FunctionalBox>
-            <div className={styles.docAvatar} style={{ background: props.avatar ? `url(${props.avatar})` : "white"}}>Img</div>
-            <div className={styles.docInfoBlock}>
-                <p className={styles.doctorText}>{props.name}</p>
-                <p className={styles.doctorText}>{props.surname}</p>
-                <p className={styles.doctorText}>{props.patronim || ""}</p>
-            </div>
-        </FunctionalBox>
-        <FunctionalBox>
-            <p className={styles.dateChildStyle}>{props.dateOfBirth}</p>
-        </FunctionalBox>
+            <FunctionalBox>
+                <div className={styles.docAvatar} style={{ background: props.avatar ? `url(${props.avatar})` : "white"}}>Img</div>
+                <div className={styles.docInfoBlock}>
+                    <p className={styles.doctorText}>{props.name}</p>
+                    <p className={styles.doctorText}>{props.surname}</p>
+                    <p className={styles.doctorText}>{props.patronim || ""}</p>
+                </div>
+            </FunctionalBox>
+            <FunctionalBox>
+                <p className={styles.dateChildStyle}>{props.dateOfBirth}</p>
+            </FunctionalBox>
             <Btn title="Подробнее" size={EBtnSize.tiny}/>
         </InfoTableChild>
     );
