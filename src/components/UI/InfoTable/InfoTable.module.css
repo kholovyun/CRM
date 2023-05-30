@@ -1,0 +1,16 @@
+.infoTable {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 25px ;
+    background: #E5E8F1;
+    border-radius: 50px;
+    flex-basis: 49%;
+}
+
+@media screen  and (max-width: 670px)  {
+    .infoTable {
+        padding: 40px 30px 40px ;
+        border-radius: 25px;
+    }
+}

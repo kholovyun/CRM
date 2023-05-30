@@ -1,0 +1,42 @@
+.childInput {
+    min-width: 100%;
+    max-width: 100%;
+    resize: none;
+    background: inherit;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    min-height: 7rem;
+    border: none;
+    outline: none;
+}
+
+.childInput::-webkit-scrollbar {
+    width: 8px;
+}
+
+.childInput::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+.childInput::-webkit-scrollbar-thumb {
+    background-color: #888;
+}
+
+.childInput::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+@media screen and (max-width: 670px) {
+    .childInput {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .btnBox {
+        padding: 20px 0;
+    }
+}
