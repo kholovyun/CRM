@@ -1,6 +1,5 @@
-import { FunctionComponent, ReactElement, useEffect, useRef, useState } from "react";
+import { FunctionComponent, ReactElement, useState } from "react";
 import { Container } from "../../components/UI/Container/Container";
-// import { Field, Formik, Form } from "formik";
 import { useAppSelector } from "../../app/hooks";
 import { toast } from "react-toastify";
 import { EBtnTypes } from "../../enums/EBtnTypes";
@@ -16,17 +15,13 @@ import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import defaultDoctorImg from "../../assets/img/default-doctor.svg";
 import { useParams } from "react-router-dom";
 import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBlock";
-import { useGetUserByIdQuery } from "../../app/services/users";
 import { ERoles } from "../../enums/ERoles";
 import RecommendationsBlock from "./RecommendationsBlock/RecommendationsBlock";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { user } = useAppSelector(state => state.auth);
-    // const {data: doctor} = useGetDoctorByUserIdQuery({id: user!.id});
-    const {data: doctor} = useGetDoctorByUserIdQuery({id: params.id ? String(params.id) : String(user!.id)});
-    const {data: userDoctor} = useGetUserByIdQuery(user!.id);
-    
+    const {data: doctor} = useGetDoctorByUserIdQuery({id: user?.role === ERoles.DOCTOR ? user?.id : String(params.id)});
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showEditUserModal, setShowEditUserModal] = useState(false);
 
@@ -46,18 +41,17 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
             2 : cases[(number % 10 < 5) ? number % 10 : 5]];  
     };
     
-    
-
     return (
         <Container>
             <Modal show={showAvatarModal} close={editAvatarModalCloser}>
                 <AvatarUploader 
+                    doctor={doctor!}
                     width={300}
                     height={320}
-                    role={ERoles.DOCTOR}
                     modalCloser={editAvatarModalCloser}
                 />
             </Modal>
+            
             <Modal show={showEditUserModal} close={editPersonalInformationModalCloser}>
                 <EditDoctorBlock 
                     modalCloser={editPersonalInformationModalCloser} 
@@ -80,7 +74,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                     <div className={styles.personalInformationLine}>
                         <div className={styles.personalInformationField}>
                             <p className={styles.fieldTitle}>ФИО</p>
-                            <p className={styles.fieldText}>{userDoctor?.name} {userDoctor?.surname} {userDoctor?.patronim}</p>
+                            <p className={styles.fieldText}>{doctor?.users.name} {doctor?.users.surname} {doctor?.users.patronim}</p>
                         </div>
                     </div>
                     <div className={styles.personalInformationLine}>
@@ -103,7 +97,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                         </div>
                         <div className={styles.personalInformationField}>
                             <p className={styles.fieldTitle}>Моб.телефон</p>
-                            <p className={styles.fieldText}>{userDoctor?.phone}</p>
+                            <p className={styles.fieldText}>{doctor?.users.phone}</p>
                         </div>
                     </div>
                     <div className={styles.personalInformationLine}>

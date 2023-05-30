@@ -1,12 +1,12 @@
 
-.reccomendationBlock {
+.recommendationBlock {
     margin-top: 60px;
     background-color: var(--light_blue);
     padding: 30px 80px;
     border-radius: 50px;
 }
 
-.reccomendationBlockTop {
+.recommendationBlockTop {
     font-size: 20px;
     color: var(--black_blue);
 }
@@ -33,7 +33,7 @@
     display: none;
 }
 
-.reccomendationBlockBottom {
+.recommendationBlockBottom {
     display: flex;
     align-items: center;
     justify-content: end;
@@ -52,4 +52,16 @@
 .inputFileLabel {
     display: flex;
     align-items: center;
+}
+
+.recommendationsList {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: var(--bg_light_blue);
+    max-height: 370px;
+    overflow-y: scroll;
 }

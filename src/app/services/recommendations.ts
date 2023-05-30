@@ -7,7 +7,7 @@ const recommendationssApi = api.injectEndpoints({
     endpoints: (build) => ({
         getRecommendationsByDoctor: build.query<IRecomendationGetDto[], string>({
             query: (id: string) => ({
-                // url: `/recomendations/${id}`,
+                // url: `/recommendations/${id}`,
                 url: `/recomendations/${id}`,
                 method: "GET",
             }),
@@ -16,6 +16,7 @@ const recommendationssApi = api.injectEndpoints({
         createRecommendation: build.mutation<IRecomendationGetDto, IRecommendationCreateDto>({
             query: (recommendationDto: IRecommendationCreateDto) => ({
                 url: "/recomendations/",
+                // url: "/recommendations/",
                 method: "POST",
                 body: recommendationDto
             }),

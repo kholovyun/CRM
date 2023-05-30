@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactElement } from "react";
 import styles from "./RecommendationsBlock.module.css";
-import IReccomendationsBlockProps from "./IRecommendationsBlockProps";
+import IRecommendationsBlockProps from "./IRecommendationsBlockProps";
 import { Field, Formik, Form } from "formik";
 import { toast } from "react-toastify";
 import Btn from "../../../components/UI/Btn/Btn";
@@ -11,11 +11,20 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
+import Recommendation from "./Recommendation/Recommendation";
 
-const RecommendationsBlock: FunctionComponent<IReccomendationsBlockProps> = ({doctorData}): ReactElement => {
-    
+const RecommendationsBlock: FunctionComponent<IRecommendationsBlockProps> = ({doctorData}): ReactElement => {
+    // const {
+    //     data: recommendations, 
+    //     isError: isErrorGetRecommendations, 
+    //     error: errorGetRecommendations,
+    // } = useGetRecommendationsByDoctorQuery(doctorData?.id);
 
-    const {data: reccomendations} = useGetRecommendationsByDoctorQuery(doctorData.id);
+    const {
+        data: recommendations, 
+        isError: isErrorGetRecommendations, 
+        error: errorGetRecommendations,
+    } = useGetRecommendationsByDoctorQuery("286f36a0-a6f4-69b2-d949-d96f190e5a48");
 
     const [createRecommendation, {
         isSuccess: isSuccessCreateRecommendation, 
@@ -33,12 +42,12 @@ const RecommendationsBlock: FunctionComponent<IReccomendationsBlockProps> = ({do
         resetCreateRecommendation();
         toast.info("Новая рекомендация создана");
     }
-
+    isErrorGetRecommendations && errorHandler(errorGetRecommendations);
     isErrorCreateRecommendation && errorHandler(errorCreateRecommendation);
 
     return (
-        <div className={styles.reccomendationBlock}>
-            <p className={styles.reccomendationBlockTop}>Написать рекомендацию</p>
+        <div className={styles.recommendationBlock}>
+            <p className={styles.recommendationBlockTop}>Написать рекомендацию</p>
             <div className={styles.createRecommendationBox}>
                 <Formik
                     initialValues={{
@@ -46,14 +55,14 @@ const RecommendationsBlock: FunctionComponent<IReccomendationsBlockProps> = ({do
                         text: "" 
                     }}
                     onSubmit={(values) => {
-                        console.log(values);
+                        
                         createRecommendation(values);
                     }}
                 >
                     {({handleSubmit }) => (
                         <Form>
                             <Field as={"textarea"} type="text" name="text" className={styles.textarea}/>
-                            <div className={styles.reccomendationBlockBottom}>
+                            <div className={styles.recommendationBlockBottom}>
                                 <label className={styles.inputFileLabel}>
                                     <input
                                         className={styles.fileInput}
@@ -71,7 +80,13 @@ const RecommendationsBlock: FunctionComponent<IReccomendationsBlockProps> = ({do
                     )}
                 </Formik> 
             </div>
-
+            <div className={styles.recommendationsList}>
+                {
+                    recommendations && recommendations.map(el => {
+                        return <Recommendation key={el.id} recommendation={el} />;
+                    })
+                }
+            </div>
         </div>
     );
 };

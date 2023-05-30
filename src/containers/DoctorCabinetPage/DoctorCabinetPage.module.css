@@ -56,14 +56,16 @@
 /* ========= */
 
 .doctorInformation {
-    height: 320px;
-    flex-grow: 1;
+    min-height: 320px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding:  15px;
     background: var(--light_blue);
     border-radius: 25px;
+    flex-grow: 1;
+    gap: 5px;
 }
 
 .personalInformationLine {

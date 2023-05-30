@@ -1,0 +1,9 @@
+.recommendation {
+    background-color: var(--light_blue);
+    padding: 20px 26px;
+    border-radius: 25px;
+}
+
+.recommendationDatetime {
+    margin-bottom: 20px;
+}
