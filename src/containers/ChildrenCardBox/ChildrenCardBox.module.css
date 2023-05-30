@@ -1,6 +1,22 @@
 .childBoxInf {
     display: flex;
     box-sizing: border-box;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
+    padding: 40px 0;
+    gap: 30px;
+}
+
+@media screen and (max-width: 557px) {
+    .childBoxInf {
+        flex-direction: column;
+        gap: 20px;
+    }  
+}
+
+@media screen and (max-width: 608px) {
+    .childBoxInf {
+        /* flex-direction: column; */
+        gap: 10px;
+    }  
 }

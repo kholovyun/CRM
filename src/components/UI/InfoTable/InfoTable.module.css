@@ -5,9 +5,7 @@
     padding: 25px ;
     background: #E5E8F1;
     border-radius: 50px;
-    min-width: 270px;
     flex-basis: 49%;
-    margin-bottom: 40px
 }
 
 @media screen  and (max-width: 670px)  {

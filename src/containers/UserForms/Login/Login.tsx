@@ -37,7 +37,7 @@ const Login: React.FC = (): React.ReactElement => {
             user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ?
                 navigator("/admin-page/doctors") : 
                 user.role === ERoles.DOCTOR ?
-                    navigator(`/doctor-cabinet/${user.id}`) :
+                    navigator(`/cabinet`) :
                     navigator("/parent-cabinet");
         }
     }, [user]);

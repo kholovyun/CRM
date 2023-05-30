@@ -47,7 +47,7 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                         <Route path="/parent-cabinet" element={<ParentCabinetPage />}/>
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.DOCTOR]}/> }>
-                        <Route path="/cabinet/" element={<DoctorCabinetPage />} />
+                        <Route path="/cabinet" element={<DoctorCabinetPage />} />
                     </Route>
                 </Route>
             </Routes>

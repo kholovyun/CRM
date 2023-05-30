@@ -20,7 +20,7 @@ export const ChildrenCardBox: React.FC<IchildrenProps> = (props) => {
     <div className={styles.childBoxInf}>
         {props.array.length && props.array.map((child) => {
             return <CardChild key={child.id} name={child.name} surname={child.surname} patronim={child.patronim} dateOfBirth={child.dateOfBirth} />
-        })};
+        })}
         <CardAddSome title="Добавить ребенка"/>
     </div>
   )
