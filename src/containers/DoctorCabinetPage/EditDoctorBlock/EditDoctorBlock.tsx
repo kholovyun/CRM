@@ -24,15 +24,13 @@ const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({modalCloser,
     const [editUser, { 
         isError: isErrorEditUser, 
         isSuccess: isSuccesEditUser, 
-        error: errorEditUser,
-        reset: resetEditUser
+        error: errorEditUser
     }] = useEditUserMutation();
 
     const [editDoctor, { 
         isError: isErrorEditDoctor, 
         isSuccess: isSuccesEditDoctor, 
-        error: errorEditDoctor,
-        reset: resetEditDoctor
+        error: errorEditDoctor
     }] = useEditDoctorMutation();
 
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
@@ -40,17 +38,22 @@ const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({modalCloser,
         toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
     };
 
-    isErrorEditUser && errorHandler(errorEditUser);
-    isErrorEditDoctor && errorHandler(errorEditDoctor);
-    
-    if (isSuccesEditUser) {
-        resetEditUser();
-        toast.info("Личные данные изменены");
-    }
-    if (isSuccesEditDoctor) {
-        resetEditDoctor();
-        toast.info("Специальные данные изменены");
-    }
+    useEffect(() => {
+        isErrorEditUser && errorHandler(errorEditUser);
+    }, [isErrorEditUser]);
+
+    useEffect(() => {
+        isErrorEditDoctor && errorHandler(errorEditDoctor);
+    }, [isErrorEditDoctor]);
+
+    useEffect(() => {
+        isSuccesEditUser && toast.info("Личные данные изменены");
+    }, [isSuccesEditUser]);
+ 
+    useEffect(() => {
+        isSuccesEditDoctor && toast.info("Специальные данные изменены");
+    }, [isSuccesEditDoctor]);
+
     const updateDoctorData = async (values: IDoctorUpdateDto) => {
         const formData = new FormData();
         Object.entries(values).forEach(entry => {
@@ -196,10 +199,8 @@ const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({modalCloser,
                                         <Btn title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
                                     </div>    
                                 </div>
-                            </Form>
-                            
-                        )}
-                        
+                            </Form>                           
+                        )}     
                     </Formik>
                 </div>
                 <Btn title="Закрыть" onclick={modalCloser} size={EBtnSize.tiny} types={EBtnTypes.submit} />

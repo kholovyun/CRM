@@ -2,17 +2,16 @@ import {useState, ChangeEvent, createRef, useRef, FunctionComponent, ReactElemen
 import AvatarEditor from "react-avatar-editor";
 import IImageProps from "./IImageProps";
 import styles from "./AvatarUploader.module.css";
-import { useEditDoctorMutation, useGetDoctorByUserIdQuery } from "../../app/services/doctors";
+import { useEditDoctorMutation } from "../../app/services/doctors";
 import IAvatarUploaderProps from "./IAvatarUploaderProps";
-import { useAppSelector } from "../../app/hooks";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
-import { ERoles } from "../../enums/ERoles";
 
 const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactElement => { 
+    const {doctor} = props;
     const [uploadDoctorAvatar, 
         {
             isSuccess: isSuccesDoctorAvatar,
@@ -28,22 +27,21 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
         toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
     };
 
-    const { user } = useAppSelector(state => state.auth);
-    const {data: doctor} = useGetDoctorByUserIdQuery({id: user!.id});
     const [fileName, setFileName] = useState<string>("");
     const editorRef: React.RefObject<AvatarEditor> = createRef();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    isErrorDoctorAvatar && errorHandler(errorDoctorAvatar);
+    useEffect(()=> {
+        isErrorDoctorAvatar && errorHandler(errorDoctorAvatar);
+    }, [isErrorDoctorAvatar]);
 
-    if (isSuccesDoctorAvatar) {
-        resetDoctorAvatar();
-        toast.info("Аватар изменен");
-    } 
-
-    useEffect(() => {
-        props.modalCloser();
-    }, [doctor?.photo]);
+    useEffect(()=> {
+        if(isSuccesDoctorAvatar) {
+            toast.info("Аватар изменен");
+            props.modalCloser();
+            cancelFileHandler();
+        }
+    }, [isSuccesDoctorAvatar]);
 
     const [imageProps, setImageProps] = useState<IImageProps>({
         image: "",
@@ -108,7 +106,7 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
                     const file = new File([blob], "sample.png", {type: blob.type});
                     const formData = new FormData();
                     formData.append("photo", file);
-                    props.role === ERoles.DOCTOR && uploadDoctorAvatar({id: doctor?.id || "", doctor:formData});
+                    uploadDoctorAvatar({id: doctor?.id || "", doctor:formData});
                 }
                 ).catch((e: Error) => {
                     toast.error(`Ошибка ${e.message}`);
@@ -129,14 +127,13 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
 
     const minusRange = () => {
         if (rangeValue <= 1) return;
-        const scale = rangeValue - 0.1;
+        let scale = rangeValue - 0.1;
+        if (scale < 1) scale = 1;
         setRangeValue(scale); 
         setImageProps(prevState => {
             return {...prevState, scale: scale};
         });
     };
-
-    
 
     return (
         <div className={styles.AvatarUploaderBox}>
