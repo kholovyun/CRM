@@ -15,44 +15,47 @@ import { ESex } from "../../../enums/ESex";
 import { ESubscriptionType } from "../../../enums/ESubscriptionType";
 import { EPaymentType } from "../../../enums/EPaymentType";
 import { useCreateUserParentMutation } from "../../../app/services/users";
+import { KGMask} from "../../../helpers/countryRegexs";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { IMessage } from "../../../interfaces/IUser/IMessage";
+import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 
 
 const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React.ReactElement => {
     const [createUserParent, { isError, isSuccess, error: createUserParentError }] = useCreateUserParentMutation();
-    const phoneNumberMask = [
-        "+",
-        "7",
-        "(",
-        /\d/,
-        /\d/,
-        /\d/,
-        ")",
-        /\d/,
-        /\d/,
-        /\d/,
-        "-",
-        /\d/,
-        /\d/,
-        "-",
-        /\d/,
-        /\d/
-    ];
     
+    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        const err = data as IErrorResponse<IMessage>;
+        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
+    };
+
+    const successHandler = () => {
+        toast.info("Пользователь успешно создан");
+    };
+
+    isError && errorHandler(createUserParentError);
+    isSuccess && successHandler();
+
     const validationFirst = Yup.object().shape({
         name: Yup.string().required("Поле 'Имя' обязательно для заполнения"),
         surname: Yup.string().required("Поле 'Фамилия' обязательно для заполнения"),
-        patronim: Yup.string().required("Поле 'Отчество' обязательно для заполнения"),
         email: Yup.string().required("Поле 'Email' обязательно для заполнения").email("Некорректный формат Email"),
+        phone: Yup.string().required("Поле 'Телефон' обязательно для заполнения")
     });
     const validationSec = Yup.object().shape({
-        "child.name": Yup.string().required("Поле 'Имя ребенка' обязательно для заполнения"),
-        // "child.surname": Yup.string().required("Поле 'Фамилия ребенка' обязательно для заполнения"),
-        // "child.patronim": Yup.string().required("Поле 'Отчество ребенка' обязательно для заполнения"),
-        // "child.dateOfBirth": Yup.string().required("Поле 'Дата рождения ребенка' обязательно для заполнения"),
-        // "child.sex": Yup.string().required("Поле 'Пол ребенка' обязательно для заполнения"),
-        // "child.height": Yup.number().required("Поле 'Рост ребенка' обязательно для заполнения"),
-        // "child.weight": Yup.number().required("Поле 'Вес ребенка' обязательно для заполнения"),
+        child: Yup.object().shape({
+            name: Yup.string().required("Поле 'Имя ребенка' обязательно для заполнения"),
+            surname: Yup.string().required("Поле 'Фамилия ребенка' обязательно для заполнения"),
+            patronim: Yup.string().required("Поле 'Отчество ребенка' обязательно для заполнения"),
+            dateOfBirth: Yup.string().required("Поле 'Дата рождения ребенка' обязательно для заполнения"),
+            sex: Yup.string().required("Поле 'Пол ребенка' обязательно для заполнения"),
+            height: Yup.number().required("Поле 'Рост ребенка' обязательно для заполнения"),
+            weight: Yup.number().required("Поле 'Вес ребенка' обязательно для заполнения").nonNullable(),
+        }),
     });
+
+
     return (
         <Container>
             <div className={styles.form_box_parent}>
@@ -79,7 +82,6 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                     }}
                     onSubmit={(values) => {
                         console.log(values);
-                        toast.info("Данные корректны");
                         createUserParent(values);
                     }}
                 >
@@ -110,23 +112,21 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                         <ErrorMessage name="patronim" component="div"/>                            
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
-                                {/* <Field
+                                <Field
                                     name="phone"
                                     type="text"
-                                    render={({ ...field }) => (
+                                >
+                                    {({ ...field }) => (
                                         <MaskedInput
                                             {...field}
-                                            mask={phoneNumberMask}
+                                            mask={KGMask}
                                             id="phone"
-                                            placeholder="+7(___)___-__-__"
                                             type="text"
-                                            onChange={() => console.log(1)}
+                                            placeholder="+996(___)__-__-__"
                                             className={styles.LoginInput}
                                         />
                                     )}
-                                >
-                                    <ErrorMessage name="phone" component="div"/>
-                                </Field> */}
+                                </Field>
                             </div>
                             <div className={styles.input_flex_column}>
                                 <Field 
@@ -144,7 +144,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                 placeholder="ID Врача" />
                         </div>
                     </FormikStep>
-                    <FormikStep label="2">
+                    <FormikStep label="2" validationSchema={validationSec}>
                         <div className={styles.parentForm}>
 
                             <div className={styles.two_inputs_row}>
@@ -189,7 +189,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                         <option value={ESex.FEMALE}>{ESex.FEMALE}</option>
                                         <option value={ESex.MALE}>{ESex.MALE}</option>
                                     </Field>
-
+                                    <ErrorMessage name="child.sex" component="div"/>
                                 </div>
                             </div>
                             <div className={styles.form_labels_controlls}>
@@ -200,6 +200,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                         type="number" 
                                         placeholder="Рост" />
                                     <p>см</p>
+
                                 </div>
                                 <div className={styles.text_select_box}>
                                     <Field 
@@ -208,9 +209,12 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                                         type="number" 
                                         placeholder="Вес" />
                                     <p>кг</p>
-                                </div>
-                                
+                                </div>               
                             </div>
+                            <div>
+                                <ErrorMessage name="child.height" component="div"/>
+                                <ErrorMessage name="child.weight" component="div"/>
+                            </div>  
                         </div>
                     </FormikStep>
                     <FormikStep label="3">
@@ -290,8 +294,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
                     helpers.setTouched({});
                 }
             }}
-        >
-            
+        >   
             <Form className={styles.parentForm}>
                 <Title text={TitlePicker()} />
                 {currentChild}
@@ -312,6 +315,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 
                 </div>
             </Form>
+            
         </Formik>
     );
 }

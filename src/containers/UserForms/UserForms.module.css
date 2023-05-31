@@ -164,8 +164,7 @@
 
 .form_labels_controlls {
     display: flex;
-    gap: 3rem;
-    justify-content: space-between;
+    gap: 1rem;
 }
 
 .text_select_box {
