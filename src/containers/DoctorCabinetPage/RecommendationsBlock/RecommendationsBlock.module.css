@@ -4,11 +4,16 @@
     background-color: var(--light_blue);
     padding: 30px 80px;
     border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .recommendationBlockTop {
     font-size: 20px;
     color: var(--black_blue);
+    align-self: flex-start;
 }
 
 .textarea {
@@ -64,4 +69,72 @@
     background-color: var(--bg_light_blue);
     max-height: 370px;
     overflow-y: scroll;
+    width: 100%;
+    animation-name: list;
+    animation-duration: 0.5s;
+}
+
+
+.recommendationsList::-webkit-scrollbar {
+    width: 20px;
+}
+
+.recommendationsList::-webkit-scrollbar-thumb {
+    background: var(--violet);
+    border-radius: 25px;
+    border: 4px solid var(--bg_light_blue);
+}
+
+.recommendationsList::-webkit-scrollbar-thumb:hover {
+    background: rgb(104, 84, 134);
+}
+
+.recommendationsList::-webkit-scrollbar-track {
+    background-color: var(--bg_light_blue);
+    border-radius: 25px;
+    margin-block: 20px;
+}
+
+@keyframes list {
+    from {height: 0;  padding: 0;}
+    to {height: 370px;  padding: 20px;}
+}
+
+.recommendationBtn {
+    padding: 4px 20px;
+    border-radius: 15px;
+    border: none;
+    background-color: var(--violet);
+}
+
+.recommendationBtn:hover {
+    background-color: var(--black_blue);
+}
+
+.createRecommendationFormBox {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.recommendationsBottom {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.arrowDown {
+    width: 0; 
+    height: 0; 
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
+}
+
+.arrowUp {
+    width: 0; 
+    height: 0; 
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
 }

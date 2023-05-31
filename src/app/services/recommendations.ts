@@ -21,11 +21,20 @@ const recommendationssApi = api.injectEndpoints({
                 body: recommendationDto
             }),
             invalidatesTags: ["Recommendation"]
+        }),
+        deleteRecommendation: build.mutation<string, string>({
+            query: (id: string) => ({
+                url: `/recomendations/${id}`,
+                // url: "/recommendations/${id}",
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Recommendation"]
         })
     }),
 });
 
 export const {
     useCreateRecommendationMutation,
-    useGetRecommendationsByDoctorQuery
+    useGetRecommendationsByDoctorQuery,
+    useDeleteRecommendationMutation
 } = recommendationssApi;
