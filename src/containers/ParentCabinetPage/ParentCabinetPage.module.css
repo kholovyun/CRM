@@ -1,0 +1,23 @@
+.parentboxContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 40px 0;
+    gap: 20px;
+}
+
+.btnBox {
+    text-align: right;
+}
+
+@media screen and (max-width: 670px) {
+    .parentboxContainer {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .btnBox {
+        padding: 20px 0;
+    }
+}

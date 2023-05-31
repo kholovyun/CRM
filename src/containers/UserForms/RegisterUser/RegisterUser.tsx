@@ -20,6 +20,7 @@ import { KGMask, KZMask, RUMask } from "../../../helpers/countryRegexs";
 import KZFlag from "../../../assets/img/kz.png";
 import KGFlag from "../../../assets/img/kg.png";
 import RUFlag from "../../../assets/img/ru.png";
+import { EDoctorLevel } from "../../../enums/EDoctorLevel";
 
 const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): React.ReactElement => {
     const navigate = useNavigate();
@@ -79,7 +80,8 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
                     patronim: "",
                     phone: "",
                     email: "",
-                    role: props.role
+                    role: props.role,
+                    price: props.role === ERoles.DOCTOR ? 0 : null
                 }}
                 validateOnBlur
                 onSubmit={(values) => {
@@ -117,8 +119,8 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
                                     </div>
                                     <Field
                                         name="phone"
-                                        type="text"
-                                        render={({ ...field }) => (
+                                        type="text">
+                                        {({ ...field }) => (
                                             <MaskedInput
                                                 {...field}
                                                 mask={phoneMask}
@@ -129,13 +131,25 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
                                                 onBlur={handleBlur}
                                                 className={styles.LoginInput}
                                             />
-                                        )}>
+                                        )}
                                     </Field>
                                 </div>
                             </div>
                         </div>
                         {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
                         <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
+                        {props.role === ERoles.DOCTOR ?
+                            <div className={styles.input_flex_column}>
+                                <div className={styles.select_wrapper}>
+                                    <Field className={styles.custom_select} name="price" as="select" placeholder="Уровень цены">
+                                        <option disabled value="">Уровень цены</option>
+                                        <option value={EDoctorLevel.JUNIOR}>{EDoctorLevel.JUNIOR}</option>
+                                        <option value={EDoctorLevel.MIDLLE}>{EDoctorLevel.MIDLLE}</option>
+                                        <option value={EDoctorLevel.SENIOR}>{EDoctorLevel.SENIOR}</option>
+                                    </Field>
+                                </div>
+                            </div>                                                        
+                            : null}
                         {touched.role && errors.role ? <p className={styles.typeError}>{errors.role}</p> : <p className={styles.typeText}></p>}
                         <Field hidden type="text" name="role" className={styles.LoginInput} value={props.role} />
                         <Btn disabled={!isValid} title="Создать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />

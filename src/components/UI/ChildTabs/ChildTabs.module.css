@@ -1,0 +1,31 @@
+.tabsBox {
+    display: flex;
+    padding: 0 30px;
+    width: 100%;
+}
+
+.tabChildren {
+    padding: 12px 30px;
+    min-width: 68px;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: #E5E8F1;
+    border-radius: 20px 20px 0px 0px;
+}
+
+@media screen and (max-width: 670px) {
+    .tabChildren {
+        padding: 12px 15px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .tabsBox {
+        padding: 0px;
+    }
+    .tabChildren {
+        padding: 12px 10px;
+    }
+}

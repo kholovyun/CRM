@@ -20,10 +20,7 @@ export const DesctopMenu: React.FC = () => {
         <div className={styles.descMenu}>
             {user ?
                 <div className={style.linkBox}>
-                    <NavLink style={{maxWidth: "190px", overflow: "hidden", textOverflow: "ellipsis",  whiteSpace: "nowrap", textAlign: "center", fontSize: "1rem"}} to={user.role === ERoles.ADMIN || user.role === ERoles.SUPERADMIN ?
-                        "/admin-page"
-                        : user.role === ERoles.DOCTOR ? `/doctor-cabinet/:${user.id}` : "/"
-                    } className={style.header_link}>
+                    <NavLink style={{maxWidth: "190px", overflow: "hidden", textOverflow: "ellipsis",  whiteSpace: "nowrap", textAlign: "center", fontSize: "1rem"}} to={"/login"} className={style.header_link}>
                         <strong>{user.name}</strong>
                     </NavLink>
                     <Avatar style={{marginLeft: "10px"}} link="login"/>

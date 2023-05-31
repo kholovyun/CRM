@@ -19,6 +19,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "no-var": "error",
         "indent": [
             "error",
             4

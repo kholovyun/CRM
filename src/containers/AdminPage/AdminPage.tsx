@@ -2,9 +2,7 @@ import { Outlet } from "react-router-dom";
 import styles from "./AdminPage.module.css";
 import SideBar from "./SideBar/SideBar";
 
-
 const AdminPage: React.FC = (): React.ReactElement => {
-
     return (
         <div className={styles.AdminPage_row}>
             <SideBar />

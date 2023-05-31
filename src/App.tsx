@@ -17,7 +17,10 @@ import RegisterParent from "./containers/UserForms/RegisterParrent/RegisterParen
 import ResetPassword from "./containers/UserForms/ResetPassword/ResetPassword";
 import ForgotPassword from "./containers/UserForms/ForgotPassword/ForgotPassword";
 import AllAdmins from "./containers/AdminPage/AdminTables/AllAdmins/AllAdmins";
+import { ParentCabinetPage } from "./containers/ParentCabinetPage/ParentCabinetPage";
 import { NewBornDataForm } from "./containers/UserForms/RegisterChild/NewBornDataForm/NewBornDataForm";
+import AdminProfile from "./containers/AdminPage/AdminProfile";
+import EditAdminForm from "./containers/UserForms/EditAdminForm/EditAdminForm";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -33,6 +36,8 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                         <Route path="/admin-page" element={<AdminPage />}>
                             <Route path="/admin-page/doctors" element={<AllDoctors />}/>
                             <Route path="/admin-page/register-doctor" element={<RegisterDoctor />} />
+                            <Route path="/admin-page/profile" element={<AdminProfile />} />
+                            <Route path="/admin-page/edit-profile" element={<EditAdminForm />} />
                             <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN]}/> }>
                                 <Route path="/admin-page/admins" element={<AllAdmins />}/>
                                 <Route path="/admin-page/register-admin" element={<RegisterAdmin />} />
@@ -44,15 +49,12 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.PARENT]}/> }>
                         <Route path="/doctor-cabinet/:id" element={<DoctorCabinetPage />} />
+                        <Route path="/parent-cabinet" element={<ParentCabinetPage />}/>
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.DOCTOR]}/> }>
-                        <Route path="/cabinet/" element={<DoctorCabinetPage />} />
+                        <Route path="/cabinet" element={<DoctorCabinetPage />} />
                     </Route>
-<<<<<<< src/App.tsx
-                    <Route path="/cabinet/" element={<DoctorCabinetPage />} />
                     <Route path="/newborn-data/" element={<NewBornDataForm/>} />
-=======
->>>>>>> src/App.tsx
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -11,7 +11,7 @@ import { EBtnClass } from "../../../../enums/EBtnClass";
 import SwitchDiv from "../../../../components/UI/SwitchDiv/SwitchDiv";
 import IDoctorWithUser from "../../../../interfaces/IDoctor/IDoctorWithUser";
 import TransparentLink from "../../../../components/UI/TransparentLink/TransparentLink";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
@@ -84,9 +84,15 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
         <div className={styles.list_container}>
             <div className={styles.group_row}>
                 <h1 className={styles.h1_title}>Список врачей</h1>
-                <TransparentLink title={"Зарегистрировать врача"} 
-                    size={EBtnSize.tiny} 
-                    pathTo={"/admin-page/register-doctor"}/>
+                <div className={styles.add_link_colappsed}>
+                    <NavLink className={`${styles.add_icon} ${styles.add_doctor_icon}`}
+                        to={"/admin-page/register-doctor"}></NavLink>
+                </div>
+                <div className={styles.collapsing_link}>
+                    <TransparentLink title={"Зарегистрировать врача"} 
+                        size={EBtnSize.tiny} 
+                        pathTo={"/admin-page/register-doctor"}/>
+                </div>                
             </div>            
             <Modal
                 show={showModal}
