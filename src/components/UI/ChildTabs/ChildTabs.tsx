@@ -5,7 +5,7 @@ export const ChildTabs: React.FC<IchildrenProps> = (props) => {
     return (
         <div className={styles.tabsBox}>
             {props.array.length && props.array.map((el) => {
-                return <a className={styles.tabChildren}>{el.name}</a>;
+                return <a key={el.id} className={styles.tabChildren}>{el.name}</a>;
             })}
         </div>
     );
