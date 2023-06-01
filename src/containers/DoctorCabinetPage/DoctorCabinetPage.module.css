@@ -99,60 +99,6 @@
     align-self: flex-end;
 }
 
-
-/* СЕРТИФИКАТЫ */
-
-.slider {
-    background-color: var(--light_blue_half_opacity);
-    padding: 40px 80px;
-    border-radius: 50px;
-    margin-top: 50px;
-}
-
-.sliderTitle {
-    font-size: 45px;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-/* .carousel {
-    overflow: hidden;
-} */
-
-.carouselItem {
-    width: 180px;
-    height: 266px;
-    border-radius: 25px;
-}
-
-.carouselAddItem {
-    background-color: white;
-    width: 180px;
-    height: 266px;
-    border-radius: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-.carouselAddItem:hover {
-    transition: 0.3s;
-    box-shadow: 0 0 9px var(--gray_blue);
-}
-
-.carouselAddItemIcon {
-    background: url("../../assets/img/plus.svg") center/cover no-repeat;
-    width: 75px;
-    height: 75px;
-}
-
-.carouselAddItem:hover > .carouselAddItemIcon {
-    width: 85px;
-    height: 85px;
-    transition: 0.3s;
-}
-
 /* ВОПРОСЫ */
 
 .questionsBlock {
@@ -164,7 +110,6 @@
 
 .questionsBlockleft {
     width: 35%;
-
 }
 
 .questionsBlockRight {
