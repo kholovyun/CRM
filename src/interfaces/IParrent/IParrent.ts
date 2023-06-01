@@ -1,5 +1,5 @@
-import { ERoles } from "../../enums/ERoles";
-import { ESex } from "../../enums/ESex";
+import IUserGetDto from "../IUser/IUserGetDto";
+import iUserWithSubscribe from "../IUser/iUserWithSubscribe";
 import { IChildrenData } from "./IChildren/IChildrenData";
 
 export default interface IParent {
@@ -8,16 +8,7 @@ export default interface IParent {
         doctorId: string,
         registerDate: Date,
         isActive: boolean,
-        users: {
-            id: string,
-            role: ERoles,
-            email: string,
-            phone: string,
-            name: string,
-            surname: string,
-            patronim?: string | null,
-            isBlocked: boolean
-        },
+        users: iUserWithSubscribe,
         doctors: {
             id: string,
             userId: string,
@@ -29,16 +20,7 @@ export default interface IParent {
             price: string,
             achievements: string,
             degree: string,
-            users: {
-                id: string,
-                role: ERoles,
-                email: string
-                phone: string,
-                name: string,
-                surname: string,
-                patronim?: string | null,
-                isBlocked: boolean
-            }
+            users: IUserGetDto
         },
         children: IChildrenData[]
 }

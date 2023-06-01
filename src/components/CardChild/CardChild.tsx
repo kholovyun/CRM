@@ -4,28 +4,31 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import styles from "./CardChild.module.css";
 import Btn from "../UI/Btn/Btn";
 import React from "react";
+import { IChildrenData } from "../../interfaces/IParrent/IChildren/IChildrenData";
+import defaultImage from "../../assets/img/icon_children_sidebar.svg";
 
-interface ICardAddSome {
-    avatar?: string,
-    name: string,
-    surname: string,
-    patronim?: string,
-    dateOfBirth: string,
+type TChildCard = {
+    child: IChildrenData;
 }
 
-export const CardChild: React.FC<ICardAddSome> = (props) => {
+export const CardChild: React.FC<TChildCard> = (props) => {
+    console.log(props);
     return (
         <InfoTableChild>
             <FunctionalBox>
-                <div className={styles.docAvatar} style={{ background: props.avatar ? `url(${props.avatar})` : "white"}}>Img</div>
+                <img        className={styles.childAvatar}
+                            onError={(e) => { e.currentTarget.src = defaultImage;}}
+                            src={`${import.meta.env.VITE_BASE_URL}/uploads/childrenImgs/${props.child.photo}`} alt={"childPhoto"}
+                    />
                 <div className={styles.docInfoBlock}>
-                    <p className={styles.doctorText}>{props.name}</p>
-                    <p className={styles.doctorText}>{props.surname}</p>
-                    <p className={styles.doctorText}>{props.patronim || ""}</p>
+                    <p className={styles.doctorText}>{props.child.name}</p>
+                    <p className={styles.doctorText}>{props.child.surname}</p>
+                    <p className={styles.doctorText}>{props.child.patronim || ""}</p>
                 </div>
             </FunctionalBox>
             <FunctionalBox>
-                <p className={styles.dateChildStyle}>{props.dateOfBirth}</p>
+                <p className={styles.doctorText}>Дата рождения</p>
+                <p className={styles.dateChildStyle}>{props.child.dateOfBirth}</p>
             </FunctionalBox>
             <Btn title="Подробнее" size={EBtnSize.tiny}/>
         </InfoTableChild>

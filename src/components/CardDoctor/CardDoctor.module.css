@@ -19,3 +19,9 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.InfoBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

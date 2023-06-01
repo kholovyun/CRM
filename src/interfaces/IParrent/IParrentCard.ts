@@ -4,4 +4,5 @@ export default interface IParrentCard {
     surname: string,
     patronim?: string | null,
     phone: string,
+    subscriptions: string
 }

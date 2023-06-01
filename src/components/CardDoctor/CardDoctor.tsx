@@ -5,6 +5,7 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import styles from "./CardDoctor.module.css";
 import Btn from "../UI/Btn/Btn";
 import { ERoles } from "../../enums/ERoles";
+import defaultImage from "../../assets/img/default-doctor.svg";
 
 interface IDoctorInfo {
     doc: {
@@ -36,7 +37,11 @@ export const CardDoctor = (props: IDoctorInfo) => {
         <InfoTable>
             <CardTitle title="Данные о враче"/>
             <FunctionalBox>
-                <div className={styles.docAvatar}>Img</div>
+                <img
+                    className={styles.docAvatar}
+                    onError={(e) => { e.currentTarget.src = defaultImage;}}
+                    src={`${import.meta.env.BASE_URL}/public/uploads/${props.doc.photo}`}
+                    alt="doctor" />
                 <div className={styles.InfoBlock}>
                     <p className={styles.torText}>{props.doc.users.name}</p>
                     <p className={styles.torText}>{props.doc.users.surname}</p>

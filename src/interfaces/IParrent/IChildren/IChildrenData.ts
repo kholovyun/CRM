@@ -6,7 +6,7 @@ export interface IChildrenData {
     photo: string,
     name: string,
     surname: string,
-    dateOfBirth: Date,
+    dateOfBirth: string,
     sex: ESex,
     height: number,
     weight: number,

@@ -13,6 +13,7 @@ type TUser = {
 
 export const CardParent: React.FC<TUser> = (props) => {
     const date = new Date(props.userData.registerDate).toLocaleDateString();
+    const endDate = new Date(props.userData.subscriptions).toLocaleDateString();
     return (
         <InfoTable>
             <CardTitle title={"Личные данные"} />
@@ -30,7 +31,7 @@ export const CardParent: React.FC<TUser> = (props) => {
             </FunctionalBox>
             <FunctionalBox>
                 <p>Дата окончания подписки</p>
-                <p>25.05.2023</p>
+                <p>{endDate}</p>
             </FunctionalBox>
             <Btn title="Продлить подписку" size={EBtnSize.tiny}/>
         </InfoTable>
