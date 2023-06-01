@@ -1,4 +1,5 @@
+import { IChildrenData } from "./IChildrenData";
 
-interface IchildrenProps {
-    array: IChildren[],
+export interface IchildrenProps {
+    array: IChildrenData[],
 }
