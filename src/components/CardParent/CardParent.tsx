@@ -1,17 +1,18 @@
 import React from "react";
-import IUserCreateDto from "../../interfaces/IUser/IUserCreateDto";
 import { FunctionalBox } from "../UI/FunctionalBox/FunctionalBox";
 import { InfoTable } from "../UI/InfoTable/InfoTable";
 import { EBtnSize } from "../../enums/EBtnSize";
 import styles from "./CardParent.module.css";
 import Btn from "../UI/Btn/Btn";
 import { CardTitle } from "../UI/ParrentUi/CardTitle/CardTitle";
+import IParrentCard from "../../interfaces/IParrent/IParrentCard";
 
 type TUser = {
-    userData: IUserCreateDto
+    userData: IParrentCard
 };
 
 export const CardParent: React.FC<TUser> = (props) => {
+    const date = new Date(props.userData.registerDate).toLocaleDateString();
     return (
         <InfoTable>
             <CardTitle title={"Личные данные"} />
@@ -25,7 +26,7 @@ export const CardParent: React.FC<TUser> = (props) => {
             </FunctionalBox>
             <FunctionalBox>
                 <p>Дата регистрации</p>
-                <p>25.05.2023</p>
+                <p>{date}</p>
             </FunctionalBox>
             <FunctionalBox>
                 <p>Дата окончания подписки</p>

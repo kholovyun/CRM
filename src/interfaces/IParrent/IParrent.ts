@@ -1,5 +1,6 @@
 import { ERoles } from "../../enums/ERoles";
 import { ESex } from "../../enums/ESex";
+import { IChildrenData } from "./IChildren/IChildrenData";
 
 export default interface IParent {
         id: string,
@@ -39,19 +40,5 @@ export default interface IParent {
                 isBlocked: boolean
             }
         },
-        children: [
-            {
-                id: string,
-                parentId: string,
-                photo: string,
-                name: string,
-                surname: string,
-                dateOfBirth: Date,
-                sex: ESex,
-                height: number,
-                weight: number,
-                patronim?: string | null,
-                isActive: boolean,
-            }
-        ]
+        children: IChildrenData[]
 }

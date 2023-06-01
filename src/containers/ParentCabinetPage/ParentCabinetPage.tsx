@@ -5,14 +5,13 @@ import styles from "./ParentCabinetPage.module.css";
 import { SupportTextAria } from "../../components/SupportTextAria/SupportTextAria";
 import { ChildrenCardBox } from "../ChildrenCardBox/ChildrenCardBox";
 import { CardParent } from "../../components/CardParent/CardParent";
-import { CardDoctor } from "../../components/CardDoctor/CardDoctor";
 import { ChildTabs } from "../../components/UI/ChildTabs/ChildTabs";
 import { useGetParentbyUserIdMutation } from "../../app/services/users";
+import { CardDoctor } from "../../components/CardDoctor/CardDoctor";
 
 export const ParentCabinetPage: React.FC = () => {
     const { user } = useAppSelector(state => state.auth);
-    const { parrent } = useAppSelector(state => state.parent);
-    const [getParentbyUserId, {data, isSuccess, isError, error}] = useGetParentbyUserIdMutation();
+    const [getParentbyUserId, {data, isSuccess}] = useGetParentbyUserIdMutation();
 
     const arrayChild = [
         {id: "001", name: "Рональд", surname: "Ерохин", patronim: "Васильевич", dateOfBirth:"05.01.2013"},
@@ -21,7 +20,7 @@ export const ParentCabinetPage: React.FC = () => {
         {id: "004", name: "Александр", surname: "Пушкин", patronim: "Васильевич", dateOfBirth:"25.05.2015"},
     ];
 
-    isSuccess && console.log("Hello");
+    isSuccess && console.log(data);
     
     const getParentHandler = async (data: string) => {
         await getParentbyUserId({id: data});
@@ -33,10 +32,16 @@ export const ParentCabinetPage: React.FC = () => {
 
     return (
         <Container>
-            <button onClick={() => console.log(parrent)}>Show Parrent</button>
+            {/* <button onClick={() => console.log(parent)}>Show Parrent</button> */}
             <div className={styles.parentboxContainer}>
-                {user && <CardParent userData={user}/>}
-                {user && <CardDoctor />}
+                {data && <CardParent userData={{
+                    registerDate: data?.registerDate,
+                    name: data.users.name, 
+                    surname: data.users.surname,
+                    patronim: data.users.patronim,
+                    phone: data.users.phone,}
+                    }/>}
+                {data?.doctors && <CardDoctor doc={data.doctors} />}
             </div>
             <ChildTabs array={arrayChild}/>
 
