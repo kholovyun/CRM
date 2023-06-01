@@ -6,6 +6,7 @@ import { PERSIST, persistReducer, persistStore, PURGE, REGISTER } from "redux-pe
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
 import { toast } from "react-toastify";
+import parentReducer from "../features/parrentSlice";
 
 
 export const rtkQueryErrorLogger: Middleware =
@@ -34,6 +35,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    parent: parentReducer,
     doctor: doctorReducer,
     [api.reducerPath]: api.reducer,
 });

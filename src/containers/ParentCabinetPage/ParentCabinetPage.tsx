@@ -10,6 +10,8 @@ import { ChildTabs } from "../../components/UI/ChildTabs/ChildTabs";
 
 export const ParentCabinetPage: React.FC = () => {
     const { user } = useAppSelector(state => state.auth);
+    const { parrent } = useAppSelector(state => state.parent);
+
     const arrayChild = [
         {id: "001", name: "Рональд", surname: "Ерохин", patronim: "Васильевич", dateOfBirth:"05.01.2013"},
         {id: "002", name: "Арнольд", surname: "Митюшкин", patronim: "Васильевич", dateOfBirth:"01.01.2000"},
@@ -19,6 +21,7 @@ export const ParentCabinetPage: React.FC = () => {
 
     return (
         <Container>
+            <button onClick={() => console.log(parrent)}>Show Parrent</button>
             <div className={styles.parentboxContainer}>
                 {user && <CardParent userData={user}/>}
                 {user && <CardDoctor />}
