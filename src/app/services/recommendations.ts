@@ -3,7 +3,7 @@ import IRecommendationCreateDto from "../../interfaces/IRecommendation/IRecommen
 import IRecomendationGetDto from "../../interfaces/IRecommendation/IRecommendationGetDto";
 import {api} from "./api";
 
-const recommendationssApi = api.injectEndpoints({
+const recommendationsApi = api.injectEndpoints({
     endpoints: (build) => ({
         getRecommendationsByDoctor: build.query<IRecomendationGetDto[], string>({
             query: (id: string) => ({
@@ -37,4 +37,4 @@ export const {
     useCreateRecommendationMutation,
     useGetRecommendationsByDoctorQuery,
     useDeleteRecommendationMutation
-} = recommendationssApi;
+} = recommendationsApi;

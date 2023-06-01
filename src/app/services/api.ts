@@ -13,5 +13,5 @@ export const api = createApi({
         },
     }),
     endpoints: () => ({}),
-    tagTypes: ["User", "Doctor", "Recommendation"],
+    tagTypes: ["User", "Doctor", "Recommendation", "Diploma"],
 });

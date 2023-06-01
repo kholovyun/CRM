@@ -71,7 +71,7 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
         e.stopPropagation();
         const file = e.target.files && e.target.files[0];
         if (file) {
-            if(file && /\.(jpg|jpeg|png)$/i.test(file.name) && file.size <= 5242880) {
+            if(file && /\.(jpg|jpeg|png|webp)$/i.test(file.name) && file.size <= 5242880) {
                 setImageProps(prevState => {
                     return {...prevState, 
                         image: e.target.files ? e.target.files[0] : ""};

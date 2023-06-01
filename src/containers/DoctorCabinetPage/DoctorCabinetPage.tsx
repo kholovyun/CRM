@@ -5,10 +5,8 @@ import { toast } from "react-toastify";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { EBtnSize } from "../../enums/EBtnSize";
 import Btn from "../../components/UI/Btn/Btn";
-import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import styles from "./DoctorCabinetPage.module.css";
-import "./Carousel.css";
 import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import Modal from "../../components/UI/Modal/Modal";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
@@ -17,6 +15,7 @@ import { useParams } from "react-router-dom";
 import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBlock";
 import { ERoles } from "../../enums/ERoles";
 import RecommendationsBlock from "./RecommendationsBlock/RecommendationsBlock";
+import DiplomasBlock from "./DiplomasBlock/DiplomasBlock";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
@@ -46,8 +45,8 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
             <Modal show={showAvatarModal} close={editAvatarModalCloser}>
                 <AvatarUploader 
                     doctor={doctor!}
-                    width={300}
-                    height={320}
+                    width={250}
+                    height={1500}
                     modalCloser={editAvatarModalCloser}
                 />
             </Modal>
@@ -118,26 +117,8 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                 </div>       
             </div>
 
-            <div className={styles.slider}>
-                <p className={styles.sliderTitle}>Сертификаты о дополнительном образовании</p>
-                <div className={styles.carousel}>
-                    <AliceCarousel disableDotsControls responsive={{0: {
-                        items: 1, 
-                    }, 500: {
-                        items: 3,
-                        itemsFit: "contain",
-                    }, 1000: {
-                        items: 5,
-                        itemsFit: "contain",
-                    }}} items={
-                        [
-                            <div onClick={() => toast.info("Функционал пока недоступен")} className={styles.carouselAddItem} key={"3"}  role="presentation">
-                                <div className={styles.carouselAddItemIcon} />
-                            </div>                            
-                        ]
-                    }/>
-                </div>
-            </div>
+            {/* <БЛОК СЕРТИФИКАТОВ> */}
+            <DiplomasBlock />
 
             {/* <БЛОК РЕКОМЕНДАЦИИ> */}
             <RecommendationsBlock doctorData={doctor!}/>

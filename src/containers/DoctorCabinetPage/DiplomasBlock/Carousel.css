@@ -1,13 +1,13 @@
-.alice-carousel__wrapper {
-    overflow-y: visible;
-    overflow-x: visible;
+.alice-carousel__stage {
+    width: 850px
 }
+
 .alice-carousel span {
     display: none;
 }
 
 .alice-carousel__prev-btn-item, .alice-carousel__next-btn-item {
-    background: url("../../assets/img/arrow-carousel.svg") center no-repeat;
+    background: url("../../../assets/img/arrow-carousel.svg") center no-repeat;
     width: 30px;
     height: 30px;
     border-radius: 50%;
