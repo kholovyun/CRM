@@ -1,13 +1,18 @@
 import React from "react";
 import styles from "./ChildTabs.module.css";
-import { IchildrenProps } from "../../../interfaces/IParrent/IChildren/IchildrenProps";
+import { IchildrenProps } from "../../../interfaces/IParent/IChildren/IСhildrenProps";
 
 export const ChildTabs: React.FC<IchildrenProps> = (props) => {
     return (
         <div className={styles.tabsBox}>
-            {props.array && props.array.map((el) => {
-                return <a key={el.id} className={styles.tabChildren}>{el.name}</a>;
-            })}
+            {props.array &&
+                props.array.map((el) => {
+                    return (
+                        <a key={el.id} className={styles.tabChildren}>
+                            {el.name}
+                        </a>
+                    );
+                })}
         </div>
     );
 };
