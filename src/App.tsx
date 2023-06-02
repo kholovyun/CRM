@@ -21,6 +21,9 @@ import { ParentCabinetPage } from "./containers/ParentCabinetPage/ParentCabinetP
 import { NewBornDataForm } from "./containers/UserForms/RegisterChild/NewBornDataForm/NewBornDataForm";
 import AdminProfile from "./containers/AdminPage/AdminProfile";
 import EditAdminForm from "./containers/UserForms/EditAdminForm/EditAdminForm";
+import DoctorAdminPage from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorAdminPage";
+import AllChildren from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorTables/AllChildren/AllChildren";
+import AllParents from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorTables/AllParents/AllParents";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -32,34 +35,37 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN]}/> }>
+                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN]} />}>
                         <Route path="/admin-page" element={<AdminPage />}>
-                            <Route path="/admin-page/doctors" element={<AllDoctors />}/>
+                            <Route path="/admin-page/doctors" element={<AllDoctors />} />
                             <Route path="/admin-page/register-doctor" element={<RegisterDoctor />} />
                             <Route path="/admin-page/profile" element={<AdminProfile />} />
                             <Route path="/admin-page/edit-profile" element={<EditAdminForm />} />
-                            <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN]}/> }>
-                                <Route path="/admin-page/admins" element={<AllAdmins />}/>
+                            <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN]} />}>
+                                <Route path="/admin-page/admins" element={<AllAdmins />} />
                                 <Route path="/admin-page/register-admin" element={<RegisterAdmin />} />
-                            </Route>                            
-                        </Route>                                         
+                            </Route>
+                        </Route>
                     </Route>
-                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR]}/> }>
+                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR]} />}>
+                        <Route path="/doctor-admin-page/:id" element={<DoctorAdminPage />}>
+                            <Route path="/doctor-admin-page/:id/children" element={<AllChildren />} />
+                            <Route path="/doctor-admin-page/:id/parents" element={<AllParents />} />
+                        </Route>
                         <Route path="/register-parent" element={<RegisterParent doctorId="ed22037e-1482-48be-13b5-0047d7573adb"/>} />
                     </Route>
-                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.PARENT]}/> }>
+                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.PARENT]} />}>
                         <Route path="/doctor-cabinet/:id" element={<DoctorCabinetPage />} />
-                        <Route path="/parent-cabinet" element={<ParentCabinetPage />}/>
+                        <Route path="/parent-cabinet" element={<ParentCabinetPage />} />
                     </Route>
-                    <Route element={<PrivateRoute allowedRoles={[ERoles.DOCTOR]}/> }>
+                    <Route element={<PrivateRoute allowedRoles={[ERoles.DOCTOR]} />}>
                         <Route path="/cabinet" element={<DoctorCabinetPage />} />
                     </Route>
-                    <Route path="/newborn-data/" element={<NewBornDataForm/>} />
+                    <Route path="/newborn-data/" element={<NewBornDataForm />} />
                 </Route>
             </Routes>
         </BrowserRouter>
     );
 };
-
 
 export default App;

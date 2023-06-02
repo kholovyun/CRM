@@ -26,6 +26,10 @@
     opacity: 0.55;
 }
 
+.children_icon {
+    background: url("../../../assets/img/icon_children_sidebar.svg") center/contain no-repeat;
+}
+
 .doctors_icon {
     background: url("../../../assets/img/icon_doctors_sidebar.svg") center/contain no-repeat;
 }
