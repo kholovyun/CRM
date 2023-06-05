@@ -105,7 +105,7 @@ const AllAdmins: React.FunctionComponent = (): React.ReactElement => {
             {isLoading && <Loader/>}
             {
                 admins === undefined || !admins.length ?
-                    <p>No data</p>
+                    <p>Нет данных</p>
                     :
                     <div className={styles.list_table_box}>
                         <div className={styles.Table_box}>
