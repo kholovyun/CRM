@@ -1,5 +1,4 @@
 import styles from "../UserForms.module.css";
-import * as Yup from "yup";
 import { Formik, Field, Form, FormikConfig, FormikValues , ErrorMessage} from "formik";
 import { toast } from "react-toastify";
 import MaskedInput from "react-text-mask";
@@ -9,7 +8,6 @@ import { ERoles } from "../../../enums/ERoles";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import { IParrentRegProps } from "./IParrentRegProps";
 import React, { useState } from "react";
 import { ESex } from "../../../enums/ESex";
 import { ESubscriptionType } from "../../../enums/ESubscriptionType";
@@ -20,9 +18,14 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
+import { useDoctorId } from "../../DoctorCabinetPage/DoctorAdminPage/DoctorAdminPage";
+import IUserCreateParentWithChildDto from "../../../interfaces/IUser/IUserCreateParentWithChildDto";
+import { validationFirst, validationSec } from "../../../schemas/validationScremasRegisterParent";
+import { FormikStepProps } from "./IFormikInterface";
 
 
-const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React.ReactElement => {
+const RegisterParent: React.FunctionComponent= (): React.ReactElement => {
+    const doctorId = useDoctorId()
     const [createUserParent, { isError, isSuccess, error: createUserParentError }] = useCreateUserParentMutation();
     
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
@@ -37,25 +40,6 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
     isError && errorHandler(createUserParentError);
     isSuccess && successHandler();
 
-    const validationFirst = Yup.object().shape({
-        name: Yup.string().required("Поле 'Имя' обязательно для заполнения"),
-        surname: Yup.string().required("Поле 'Фамилия' обязательно для заполнения"),
-        email: Yup.string().required("Поле 'Email' обязательно для заполнения").email("Некорректный формат Email"),
-        phone: Yup.string().required("Поле 'Телефон' обязательно для заполнения")
-    });
-    const validationSec = Yup.object().shape({
-        child: Yup.object().shape({
-            name: Yup.string().required("Поле 'Имя ребенка' обязательно для заполнения"),
-            surname: Yup.string().required("Поле 'Фамилия ребенка' обязательно для заполнения"),
-            patronim: Yup.string().required("Поле 'Отчество ребенка' обязательно для заполнения"),
-            dateOfBirth: Yup.string().required("Поле 'Дата рождения ребенка' обязательно для заполнения"),
-            sex: Yup.string().required("Поле 'Пол ребенка' обязательно для заполнения"),
-            height: Yup.number().required("Поле 'Рост ребенка' обязательно для заполнения"),
-            weight: Yup.number().required("Поле 'Вес ребенка' обязательно для заполнения").nonNullable(),
-        }),
-    });
-
-
     return (
         <Container>
             <div className={styles.form_box_parent}>
@@ -67,7 +51,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                         name: "",
                         surname: "",
                         patronim: "",
-                        doctorId: props.doctorId,
+                        doctorId: doctorId.doctorId,
                         paymentType: "",
                         subscrType: "",
                         child: {
@@ -80,9 +64,9 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                             weight: ""
                         }
                     }}
-                    onSubmit={(values) => {
-                        console.log(values);
-                        createUserParent(values);
+                    onSubmit={(values:FormikValues) => {
+                        console.log(values)
+                        createUserParent(values as IUserCreateParentWithChildDto);
                     }}
                 >
                     <FormikStep label="1" validationSchema = {validationFirst}>
@@ -256,17 +240,12 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
     );
 };
 
-export interface FormikStepProps
-  extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
-  label: string;
-}
-
 export function FormikStep({ children }: FormikStepProps) {
     return <>{children}</>;
 }
 
 export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>) {
-    const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikStepProps>[];
+    const childrenArray = React.Children.toArray(children as React.ReactNode) as React.ReactElement<FormikStepProps>[];
     const [step, setStep] = useState(0);
     const currentChild = childrenArray[step];
 
