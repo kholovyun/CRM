@@ -11,7 +11,7 @@ import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import Modal from "../../components/UI/Modal/Modal";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import defaultDoctorImg from "../../assets/img/default-doctor.svg";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBlock";
 import { ERoles } from "../../enums/ERoles";
 import RecommendationsBlock from "./RecommendationsBlock/RecommendationsBlock";
@@ -143,6 +143,9 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                 <div className={styles.navLinkBox}>
                     <p className={styles.navLink}>Перейти в админ панель</p>
                     <div className={styles.arrowRight}></div>
+                    {doctor && <NavLink to={`/doctor-admin-page/${doctor.id}/register-parent`}>
+                            Перейти в админ панель
+                    </NavLink> }
                 </div>
             </div>
         </Container>

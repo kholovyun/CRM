@@ -9,7 +9,6 @@ import { ERoles } from "../../../enums/ERoles";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import { IParrentRegProps } from "./IParrentRegProps";
 import React, { useState } from "react";
 import { ESex } from "../../../enums/ESex";
 import { ESubscriptionType } from "../../../enums/ESubscriptionType";
@@ -20,9 +19,12 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
+import { useDoctorId } from "../../DoctorCabinetPage/DoctorAdminPage/DoctorAdminPage";
+import IUserCreateParentWithChildDto from "../../../interfaces/IUser/IUserCreateParentWithChildDto";
 
 
-const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React.ReactElement => {
+const RegisterParent: React.FunctionComponent= (): React.ReactElement => {
+    const doctorId = useDoctorId()
     const [createUserParent, { isError, isSuccess, error: createUserParentError }] = useCreateUserParentMutation();
     
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
@@ -67,7 +69,7 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                         name: "",
                         surname: "",
                         patronim: "",
-                        doctorId: props.doctorId,
+                        doctorId: doctorId.doctorId,
                         paymentType: "",
                         subscrType: "",
                         child: {
@@ -80,9 +82,9 @@ const RegisterParent: React.FunctionComponent<IParrentRegProps> = (props): React
                             weight: ""
                         }
                     }}
-                    onSubmit={(values) => {
-                        console.log(values);
-                        createUserParent(values);
+                    onSubmit={(values:FormikValues) => {
+                        console.log(values)
+                        createUserParent(values as IUserCreateParentWithChildDto);
                     }}
                 >
                     <FormikStep label="1" validationSchema = {validationFirst}>
@@ -266,7 +268,7 @@ export function FormikStep({ children }: FormikStepProps) {
 }
 
 export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>) {
-    const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikStepProps>[];
+    const childrenArray = React.Children.toArray(children as React.ReactNode) as React.ReactElement<FormikStepProps>[];
     const [step, setStep] = useState(0);
     const currentChild = childrenArray[step];
 
