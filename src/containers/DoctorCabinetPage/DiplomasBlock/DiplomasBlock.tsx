@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import "./Carousel.css";
 import Modal from "../../../components/UI/Modal/Modal";
 import AvatarEditor from "react-avatar-editor";
-import defaultDiplomaImg from "../../../assets/img/default-diploma.jpg";
 import { useCreateDiplomaMutation, useGetDiplomasByDoctorQuery } from "../../../app/services/diplomas";
 
 interface IImageProps {
@@ -135,8 +134,8 @@ const DiplomasBlock: React.FunctionComponent = (): React.ReactElement => {
         return  <div className={styles.carouselItem} key={el.id}  role="presentation">
             <img 
                 className={styles.diplomaImg}
-                onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
-                src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${el?.url}` : defaultDiplomaImg} alt={"diploma"} />
+                onError={(e) => { e.currentTarget.src = "defaultDiplomaImg";}}
+                src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${el?.url}` : "defaultDiplomaImg"} alt={"diploma"} />
         </div>; 
     }));
 
