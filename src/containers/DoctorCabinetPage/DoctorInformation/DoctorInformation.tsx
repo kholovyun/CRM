@@ -1,24 +1,19 @@
 import { FunctionComponent, ReactElement, useState } from "react";
 import styles from "./DoctorInformation.module.css";
 import Modal from "../../../components/UI/Modal/Modal";
-import AvatarUploader from "../../../components/AvatarUploader/AvatarUploader";
-import EditDoctorBlock from "../EditDoctorBlock/EditDoctorBlock";
+import EditDoctorForm from "./EditDoctorForm/EditDoctorForm";
 import IDoctorWithUser from "../../../interfaces/IDoctor/IDoctorWithUser";
-import defaultDoctorImg from "../../../assets/img/default-doctor.svg";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
+import AvatarBox from "../../../components/AvatarBox/AvatarBox";
+import { ERoles } from "../../../enums/ERoles";
+
 interface IDoctorInformationProps {
     doctor: IDoctorWithUser
 }
 const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor}): ReactElement => {
-    const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showEditUserModal, setShowEditUserModal] = useState(false);
-
-    const editAvatarModalCloser = () => {
-        setShowAvatarModal(false);
-    };
-
     const editPersonalInformationModalCloser = () => {
         setShowEditUserModal(false);
     };
@@ -32,30 +27,19 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor})
     };
     return (
         <div className={styles.doctorInformationBlock}>
-            <Modal show={showAvatarModal} close={editAvatarModalCloser}>
-                <AvatarUploader 
-                    doctor={doctor!}
-                    width={250}
-                    height={1500}
-                    modalCloser={editAvatarModalCloser}
-                />
-            </Modal>
             <Modal show={showEditUserModal} close={editPersonalInformationModalCloser}>
-                <EditDoctorBlock 
+                <EditDoctorForm 
                     modalCloser={editPersonalInformationModalCloser} 
                     doctorData={doctor!}
                 />
             </Modal>
-            <div className={styles.doctorAvatar}>
-                <div className={styles.backdrop} onClick={() => {setShowAvatarModal(true);}}></div>
-                {doctor?.photo !== undefined ? 
-                    <img 
-                        className={styles.doctorImage}
-                        onError={(e) => { e.currentTarget.src = defaultDoctorImg;}}
-                        src={doctor?.photo !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsImgs/${doctor?.photo}` : defaultDoctorImg} alt={"doctor"}
-                    /> : <img className="DetailedPage__image" src={defaultDoctorImg} alt={"doctor"}/>
-                }
-            </div>
+            <AvatarBox 
+                role={ERoles.DOCTOR}
+                height={320}
+                width={300}
+                avatar={doctor?.photo} 
+                id={doctor?.id}
+            />
             <div className={styles.doctorInformation}>
                 <div className={styles.personalInformationLine}>
                     <div className={styles.personalInformationField}>

@@ -27,5 +27,6 @@ const diplomasApi = api.injectEndpoints({
 
 export const {
     useCreateDiplomaMutation,
-    useGetDiplomasByDoctorQuery
+    useGetDiplomasByDoctorQuery,
+    useLazyGetDiplomasByDoctorQuery
 } = diplomasApi;
