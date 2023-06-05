@@ -2,16 +2,15 @@ import {useState, ChangeEvent, createRef, useRef, FunctionComponent, ReactElemen
 import AvatarEditor from "react-avatar-editor";
 import IImageProps from "./IImageProps";
 import styles from "./AvatarUploader.module.css";
-import { useEditDoctorMutation } from "../../app/services/doctors";
+import { useEditDoctorMutation } from "../../../app/services/doctors";
 import IAvatarUploaderProps from "./IAvatarUploaderProps";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../interfaces/IUser/IMessage";
+import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
+import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
 
 const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactElement => { 
-    const {doctor} = props;
     const [uploadDoctorAvatar, 
         {
             isSuccess: isSuccesDoctorAvatar,
@@ -106,7 +105,7 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
                     const file = new File([blob], "sample.png", {type: blob.type});
                     const formData = new FormData();
                     formData.append("photo", file);
-                    uploadDoctorAvatar({id: doctor?.id || "", doctor:formData});
+                    uploadDoctorAvatar({id: props.id || "", doctor:formData});
                 }
                 ).catch((e: Error) => {
                     toast.error(`Ошибка ${e.message}`);

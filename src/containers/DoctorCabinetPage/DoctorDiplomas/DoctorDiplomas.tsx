@@ -1,11 +1,13 @@
-import React, { useState, useRef, createRef, ChangeEvent, useEffect } from "react";
-import styles from "./DiplomasBlock.module.css";
+import React, { useState, useRef, createRef, ChangeEvent } from "react";
+import styles from "./DoctorDiplomas.module.css";
 import AliceCarousel from "react-alice-carousel";
 import { toast } from "react-toastify";
 import "./Carousel.css";
 import Modal from "../../../components/UI/Modal/Modal";
 import AvatarEditor from "react-avatar-editor";
-import { useCreateDiplomaMutation, useGetDiplomasByDoctorQuery } from "../../../app/services/diplomas";
+import defaultDiplomaImg from "../../../assets/img/default-diploma-photo.svg";
+import { useCreateDiplomaMutation } from "../../../app/services/diplomas";
+import IDiplomaGetDto from "../../../interfaces/IDiploma/IDiplomaGetDto";
 
 interface IImageProps {
     image: File | string,
@@ -17,7 +19,11 @@ interface IImageProps {
     height: number
 }
 
-const DiplomasBlock: React.FunctionComponent = (): React.ReactElement => {
+interface IDoctorDiplomasProps {
+    diplomas: IDiplomaGetDto[]
+}
+
+const DoctorDiplomas: React.FunctionComponent<IDoctorDiplomasProps> = ({diplomas}): React.ReactElement => {
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
@@ -26,8 +32,6 @@ const DiplomasBlock: React.FunctionComponent = (): React.ReactElement => {
     const closeModal = () => {
         setShowModal(false);
     };
-
-    const {data: diplomas} = useGetDiplomasByDoctorQuery("a05d948b-177e-63e1-0a1c-4120de08ebe1");
 
     const [createDiploma, 
     ]= useCreateDiplomaMutation();
@@ -130,23 +134,17 @@ const DiplomasBlock: React.FunctionComponent = (): React.ReactElement => {
         });
     };
 
-    const [diplomasPlus, setDiplomasPlus]= useState((diplomas ?? []).map(el => {
-        return  <div className={styles.carouselItem} key={el.id}  role="presentation">
+    const items = [<div onClick={openModal} className={styles.carouselAddItem}>
+                        <div className={styles.carouselAddItemIcon}></div>
+                   </div>].concat(diplomas && diplomas.map(el => {
+        return <div className={styles.carouselItem} key={el.id}>
             <img 
                 className={styles.diplomaImg}
-                onError={(e) => { e.currentTarget.src = "defaultDiplomaImg";}}
-                src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${el?.url}` : "defaultDiplomaImg"} alt={"diploma"} />
+                onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
+                src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${el?.url}` : defaultDiplomaImg} alt={"diploma"} />
         </div>; 
-    }));
-
-    useEffect(() => {
-        setDiplomasPlus([...diplomasPlus,
-            <div onClick={openModal} key={"diplomasPlus"} className={`${styles.carouselAddItem} carouselAddItemStop`} role="presentation">
-                <div className={styles.carouselAddItemIcon}></div>
-            </div>]);
-    }, []);
+    }))
     
-
     return (
         <div>
             <Modal show={showModal} close={closeModal}>
@@ -196,16 +194,24 @@ const DiplomasBlock: React.FunctionComponent = (): React.ReactElement => {
                 </div>
             </Modal>
             <div className={styles.carouselBlock}>
-                <p className={styles.carouselBlockTitle}>Сертификаты о дополнительном образовании</p>
-                <div className={styles.carouselBox}>
-                    <AliceCarousel disableDotsControls responsive={{800: {
-                        items: 4,
-                        itemsFit: "contain",
-                    }}} items={diplomasPlus}/>
-                </div>
+                <p className={styles.carouselTitle}>Сертификаты о дополнительном образовании</p>
+                <AliceCarousel 
+                disableDotsControls responsive={{0: {
+                    items: 1,
+                    itemsFit: "fill",
+                }, 570: {
+                    items: 2,
+                    itemsFit: "fill",
+                }, 790: {
+                    items: 3,
+                    itemsFit: "fill",
+                }, 970: {
+                    items: 4,
+                    itemsFit: "fill",
+                }}} items={items}/>
             </div>
         </div>
     );
 };
 
-export default DiplomasBlock;
+export default DoctorDiplomas;

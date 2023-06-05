@@ -1,23 +1,23 @@
 import { Formik, Field, Form } from "formik";
-import Btn from "../../../components/UI/Btn/Btn";
-import { useEditUserMutation } from "../../../app/services/users";
-import { useAppSelector } from "../../../app/hooks";
-import { validationSchemaEditUser } from "../../../schemas/validationSchemaEditUser";
-import styles from "./EditDoctorBlock.module.css";
+import Btn from "../../../../components/UI/Btn/Btn";
+import { useEditUserMutation } from "../../../../app/services/users";
+import { useAppSelector } from "../../../../app/hooks";
+import { validationSchemaEditUser } from "../../../../schemas/validationSchemaEditUser";
+import styles from "./EditDoctorForm.module.css";
 import MaskedInput from "react-text-mask";
 import { FunctionComponent, ReactElement, useEffect, useRef, useState } from "react";
-import { EBtnSize } from "../../../enums/EBtnSize";
-import { EBtnTypes } from "../../../enums/EBtnTypes";
-import IEditDoctorBlockProps from "./EditDoctorBlockProps";
-import IDoctorUpdateDto from "../../../interfaces/IDoctor/IDoctorUpdateDto";
+import { EBtnSize } from "../../../../enums/EBtnSize";
+import { EBtnTypes } from "../../../../enums/EBtnTypes";
+import IEditDoctorFormProps from "./EditDoctorFormProps";
+import IDoctorUpdateDto from "../../../../interfaces/IDoctor/IDoctorUpdateDto";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
+import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
+import { IMessage } from "../../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
-import { useEditDoctorMutation } from "../../../app/services/doctors";
+import { useEditDoctorMutation } from "../../../../app/services/doctors";
 
-const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({modalCloser, doctorData}): ReactElement => {
+const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, doctorData}): ReactElement => {
     const phoneNumberMask = ["+","7","(",/\d/,/\d/,/\d/,")",/\d/,/\d/,/\d/,"-",/\d/,/\d/,"-",/\d/,/\d/];
     const { user } = useAppSelector(state => state.auth);
     
@@ -210,4 +210,4 @@ const EditDoctorBlock: FunctionComponent<IEditDoctorBlockProps> = ({modalCloser,
     );
 };
 
-export default EditDoctorBlock;
+export default EditDoctorForm;
