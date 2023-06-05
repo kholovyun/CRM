@@ -113,18 +113,6 @@ tbody .Table_tr:hover {
     margin: 0;
 }
 
-.td_for_image {
-    padding: 0.25rem;
-}
-
-.childPhoto {
-    display: inline-block;
-    background-color: var(--bg_light_blue);
-    border-radius: 50%;
-    width: 50px;
-    vertical-align: middle;
-}
-
 .add_link_colappsed {
     display: flex;
     flex-direction: column;
@@ -146,10 +134,6 @@ tbody .Table_tr:hover {
 
 .add_icon:hover {
     opacity: 1;
-}
-
-.add_parent_icon {
-    background: url("../../../assets/img/icon_add_parent.svg") center/contain no-repeat;
 }
 
 .add_doctor_icon {

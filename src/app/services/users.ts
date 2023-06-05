@@ -6,7 +6,7 @@ import IUserLoginDto from "../../interfaces/IUser/IUserLoginDto";
 import IUserUpdateDto from "../../interfaces/IUser/IUpdateUserDto";
 import IUserCreateParentWithChildDto from "../../interfaces/IUser/IUserCreateParentWithChildDto";
 import { IId } from "../../interfaces/IId";
-import IParent from "../../interfaces/IParent/IParrent";
+import IParent from "../../interfaces/IParrent/IParrent";
 
 const usersApi = api.injectEndpoints({
     endpoints: (build) => ({
