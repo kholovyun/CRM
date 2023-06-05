@@ -143,9 +143,6 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                 <div className={styles.navLinkBox}>
                     <p className={styles.navLink}>Перейти в админ панель</p>
                     <div className={styles.arrowRight}></div>
-                    {doctor && <NavLink to={`/doctor-admin-page/${doctor.id}/register-parent`}>
-                            Перейти в админ панель
-                    </NavLink> }
                 </div>
             </div>
         </Container>
