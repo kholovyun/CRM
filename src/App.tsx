@@ -21,6 +21,9 @@ import { ParentCabinetPage } from "./containers/ParentCabinetPage/ParentCabinetP
 import { NewBornDataForm } from "./containers/UserForms/RegisterChild/NewBornDataForm/NewBornDataForm";
 import AdminProfile from "./containers/AdminPage/AdminProfile";
 import EditAdminForm from "./containers/UserForms/EditAdminForm/EditAdminForm";
+import DoctorAdminPage from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorAdminPage";
+import AllChildren from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorTables/AllChildren/AllChildren";
+import AllParents from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorTables/AllParents/AllParents";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -44,7 +47,11 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                             </Route>                            
                         </Route>                                         
                     </Route>
-                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR]}/> }>
+                    <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR]} />}>
+                        <Route path="/doctor-admin-page/:id" element={<DoctorAdminPage />}>
+                            <Route path="/doctor-admin-page/:id/children" element={<AllChildren />} />
+                            <Route path="/doctor-admin-page/:id/parents" element={<AllParents />} />
+                        </Route>
                         <Route path="/register-parent" element={<RegisterParent doctorId="ed22037e-1482-48be-13b5-0047d7573adb"/>} />
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.PARENT]}/> }>

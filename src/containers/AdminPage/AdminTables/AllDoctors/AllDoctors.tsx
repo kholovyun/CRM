@@ -133,7 +133,7 @@ const AllDoctors: React.FunctionComponent = (): React.ReactElement => {
             {isLoading && <Loader/>}
             {
                 doctors === undefined || !doctors.length ?
-                    <p>No data</p>
+                    <p>Нет данных</p>
                     :
                     <div className={styles.list_table_box}>
                         <div className={styles.Table_box}>
