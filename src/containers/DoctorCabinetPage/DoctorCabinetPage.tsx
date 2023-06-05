@@ -11,7 +11,7 @@ import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import Modal from "../../components/UI/Modal/Modal";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import defaultDoctorImg from "../../assets/img/default-doctor.svg";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import EditDoctorBlock from "./EditDoctorBlock/EditDoctorBlock";
 import { ERoles } from "../../enums/ERoles";
 import RecommendationsBlock from "./RecommendationsBlock/RecommendationsBlock";
