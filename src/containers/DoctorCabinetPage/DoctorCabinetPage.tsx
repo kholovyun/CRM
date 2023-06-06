@@ -42,7 +42,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                     <p className={styles.navLink}>Вопросы</p>
                     <div className={styles.arrowDown}></div>
                 </div>
-                <div className={styles.navLinkBox} onClick={() => navigate(`/doctor-admin-page/${doctor?.id}`)}>
+                <div className={styles.navLinkBox} onClick={() => navigate(`/doctor-admin-page/${doctor?.id}/children`)}>
                     <p className={styles.navLink}>Перейти в админ панель</p>
                     <div className={styles.arrowRight}></div>
                 </div>
