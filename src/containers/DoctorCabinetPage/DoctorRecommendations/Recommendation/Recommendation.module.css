@@ -1,5 +1,5 @@
 .recommendation {
-    background-color: var(--light_blue);
+    background-color: var(--light_blue_half_opacity);
     padding: 20px 26px;
     border-radius: 25px;
 }

@@ -14,6 +14,7 @@ interface IDoctorInformationProps {
 }
 const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor}): ReactElement => {
     const [showEditUserModal, setShowEditUserModal] = useState(false);
+    
     const editPersonalInformationModalCloser = () => {
         setShowEditUserModal(false);
     };
@@ -25,6 +26,7 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor})
             ? 
             2 : cases[(number % 10 < 5) ? number % 10 : 5]];  
     };
+    
     return (
         <div className={styles.doctorInformationBlock}>
             <Modal show={showEditUserModal} close={editPersonalInformationModalCloser}>

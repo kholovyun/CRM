@@ -36,5 +36,6 @@ const recommendationsApi = api.injectEndpoints({
 export const {
     useCreateRecommendationMutation,
     useGetRecommendationsByDoctorQuery,
-    useDeleteRecommendationMutation
+    useDeleteRecommendationMutation,
+    useLazyGetRecommendationsByDoctorQuery
 } = recommendationsApi;

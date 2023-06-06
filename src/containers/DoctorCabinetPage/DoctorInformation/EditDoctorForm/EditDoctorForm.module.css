@@ -66,6 +66,13 @@
     border: 2px solid var(--violet);
 }
 
+.textarea {
+    height: auto;
+    min-height: max-content;
+    max-height: 250px;
+    max-width: 350px;
+}
+
 .saveButton {
     align-self: flex-end;
 }
@@ -74,4 +81,79 @@
     display: block;
 }
 
+.editPhoneField {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border-radius: 25px;
+    border: 2px solid var(--violet);
+    padding: 0 26px;
+    background-color: var(--bg_light_blue);
+}
 
+.flag_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.select_wrapper {
+    position: relative;
+}
+
+.phoneInput {
+    padding-left: 10px;
+    background: none;
+    border: none;
+    
+}
+
+.phoneInput:focus {
+    outline: none
+}
+
+.country_select {
+    font-size: 1rem;
+    color: var(--black_blue);
+    padding: 2px 20px 2px 5px;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+}
+
+.country_select:active, select:focus {
+    outline: none
+}
+
+.select_wrapper {
+    position: relative;
+}
+
+.custom_select {
+    width: 100%;
+    border-radius: 1.25rem;
+    font-size: 1.125rem;
+    color: var(--black_blue);
+    padding: 1rem 2rem;
+    margin: 0;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    border: none;
+}
+
+.select_wrapper::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    display: block;
+    transform: translateY(-50%);
+    right: 0.3rem;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10.4px 6px 0 6px;
+    border-color: #7e9bbd transparent transparent transparent;
+}

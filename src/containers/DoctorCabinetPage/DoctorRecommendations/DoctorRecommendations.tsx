@@ -1,30 +1,24 @@
 import { FunctionComponent, ReactElement, useEffect, useState } from "react";
-import styles from "./RecommendationsBlock.module.css";
-import IRecommendationsBlockProps from "./IRecommendationsBlockProps";
+import styles from "./DoctorRecommendations.module.css";
+import IDoctorRecommendationsProps from "./IDoctorRecommendationsProps";
 import { Field, Formik, Form } from "formik";
 import { toast } from "react-toastify";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import { useCreateRecommendationMutation, useDeleteRecommendationMutation, useGetRecommendationsByDoctorQuery } from "../../../app/services/recommendations";
+import { useCreateRecommendationMutation, useDeleteRecommendationMutation, useLazyGetRecommendationsByDoctorQuery } from "../../../app/services/recommendations";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
-import Recommendation from "./ReccomendationsList/Recommendation/Recommendation";
+import Recommendation from "./Recommendation/Recommendation";
 
-const RecommendationsBlock: FunctionComponent<IRecommendationsBlockProps> = ({doctorData}): ReactElement => {
-    const {
+const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({doctorId}): ReactElement => {
+    const [getRecommendations, {
         data: recommendations, 
         isError: isErrorGetRecommendations, 
         error: errorGetRecommendations,
-    } = useGetRecommendationsByDoctorQuery(doctorData?.id);
-
-    // const {
-    //     data: recommendations, 
-    //     isError: isErrorGetRecommendations, 
-    //     error: errorGetRecommendations,
-    // } = useGetRecommendationsByDoctorQuery("a05d948b-177e-63e1-0a1c-4120de08ebe1");
+    }] = useLazyGetRecommendationsByDoctorQuery();
 
     const [createRecommendation, {
         isSuccess: isSuccessCreateRecommendation, 
@@ -35,8 +29,7 @@ const RecommendationsBlock: FunctionComponent<IRecommendationsBlockProps> = ({do
     const [deleteRecommendation, {
         isSuccess: isSuccessDeleteRecommendation, 
         isError: isErrorDeleteRecommendation, 
-        error: errorDeleteRecommendation,
-        reset
+        error: errorDeleteRecommendation
     }] = useDeleteRecommendationMutation();
 
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
@@ -52,17 +45,10 @@ const RecommendationsBlock: FunctionComponent<IRecommendationsBlockProps> = ({do
         isSuccessDeleteRecommendation && toast.info("Рекомендация удалена");
     }, [isSuccessDeleteRecommendation]);
 
-    
-    // useEffect(() => {
-    //     if (isErrorDeleteRecommendation) {
-    //         reset();
-    //         errorHandler(errorDeleteRecommendation);
-    //     }
-    // }, [isErrorDeleteRecommendation]);
-
     const [showList, setShowList] = useState(false);
 
     const handleShowList = () => {
+        if (doctorId) getRecommendations(doctorId);
         setShowList(!showList);
     };
 
@@ -80,7 +66,7 @@ const RecommendationsBlock: FunctionComponent<IRecommendationsBlockProps> = ({do
             <div className={styles.createRecommendationFormBox}>
                 <Formik
                     initialValues={{
-                        doctorId: doctorData?.id || "",
+                        doctorId: doctorId || "",
                         text: "" 
                     }}
                     onSubmit={(values) => {
@@ -131,4 +117,4 @@ const RecommendationsBlock: FunctionComponent<IRecommendationsBlockProps> = ({do
     );
 };
 
-export default RecommendationsBlock;
+export default DoctorRecommendations;

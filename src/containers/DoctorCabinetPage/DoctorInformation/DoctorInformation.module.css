@@ -2,10 +2,10 @@
     padding: 34px 80px;
     border-radius: 50px;
     display: flex;
+    justify-content: center;
     gap: 20px;
     background-color: var(--light_blue_half_opacity);
 }
-
 
 .doctorInformation {
     min-height: 320px;
@@ -43,6 +43,9 @@
 .fieldText {
     font-size: 16px;
     padding: 8px 26px;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
     background-color: var(--bg_light_blue);
     border-radius: 25px;
 }

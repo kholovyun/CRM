@@ -33,10 +33,8 @@ const DoctorDiplomas: React.FunctionComponent<IDoctorDiplomasProps> = ({diplomas
         setShowModal(false);
     };
 
-    const [createDiploma, 
-    ]= useCreateDiplomaMutation();
+    const [createDiploma] = useCreateDiplomaMutation();
     
-
     const [fileName, setFileName] = useState<string>("");
     const editorRef: React.RefObject<AvatarEditor> = createRef();
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -196,19 +194,19 @@ const DoctorDiplomas: React.FunctionComponent<IDoctorDiplomasProps> = ({diplomas
             <div className={styles.carouselBlock}>
                 <p className={styles.carouselTitle}>Сертификаты о дополнительном образовании</p>
                 <AliceCarousel 
-                disableDotsControls responsive={{0: {
-                    items: 1,
-                    itemsFit: "fill",
-                }, 570: {
-                    items: 2,
-                    itemsFit: "fill",
-                }, 790: {
-                    items: 3,
-                    itemsFit: "fill",
-                }, 970: {
-                    items: 4,
-                    itemsFit: "fill",
-                }}} items={items}/>
+                    disableDotsControls responsive={{0: {
+                        items: 1,
+                        itemsFit: "fill",
+                    }, 570: {
+                        items: 2,
+                        itemsFit: "fill",
+                    }, 790: {
+                        items: 3,
+                        itemsFit: "fill",
+                    }, 970: {
+                        items: 4,
+                        itemsFit: "fill",
+                    }}} items={items}/>
             </div>
         </div>
     );
