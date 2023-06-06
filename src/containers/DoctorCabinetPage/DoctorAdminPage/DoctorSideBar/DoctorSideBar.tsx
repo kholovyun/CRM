@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import { FunctionComponent, MouseEvent, ReactElement, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "../../../AdminPage/SideBar/SideBar.module.css";
 import "../../../AdminPage/SideBar/SideBarNavLink.css";
 import IDoctorSideBarProps from "./IDoctorSideBarProps";
+import { DoctorSideBarLinksArray } from "./DoctorSideBarLinksArray";
 
-const DoctorSideBar: React.FunctionComponent<IDoctorSideBarProps> = (
+const DoctorSideBar: FunctionComponent<IDoctorSideBarProps> = (
     props: IDoctorSideBarProps
-): React.ReactElement => {
+): ReactElement => {
     const [isShowingMenu, setIsShowingMenu] = useState(false);
 
-    const toogleMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+    const toogleMenu = (e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
         setIsShowingMenu(!isShowingMenu);
     };
@@ -21,24 +22,16 @@ const DoctorSideBar: React.FunctionComponent<IDoctorSideBarProps> = (
                     <div className={styles.sidebar_colappsed}>
                         <div onClick={toogleMenu} className={styles.open_btn}></div>
                     </div>
-                    <div className={styles.sidebar_colappsed}>
-                        <NavLink
-                            className={"icon children_icon"}
-                            to={`/doctor-admin-page/${props.doctorId}/children`}
-                        ></NavLink>
-                    </div>
-                    <div className={styles.sidebar_colappsed}>
-                        <NavLink
-                            className={"icon parents_icon"}
-                            to={`/doctor-admin-page/${props.doctorId}/parents`}
-                        ></NavLink>
-                    </div>
-                    <div className={styles.sidebar_colappsed}>
-                        <NavLink
-                            className={"icon statistics_icon"}
-                            to={`/doctor-admin-page/${props.doctorId}`}
-                        ></NavLink>
-                    </div>
+                    {DoctorSideBarLinksArray.map((link, i) => {
+                        return (
+                            <div key={`l-${i}`} className={styles.sidebar_colappsed}>
+                                <NavLink
+                                    className={`icon ${link.iconClass}`}
+                                    to={`/doctor-admin-page/${props.doctorId}${link.path}`}
+                                ></NavLink>
+                            </div>
+                        );
+                    })}
                 </div>
             ) : (
                 <div className={styles.sidebar}>
@@ -46,24 +39,17 @@ const DoctorSideBar: React.FunctionComponent<IDoctorSideBarProps> = (
                         <h3 className={styles.menu_text}>Меню</h3>
                         <div onClick={toogleMenu} className={styles.close_btn}></div>
                     </div>
-                    <NavLink
-                        className={"sidebar_link"}
-                        to={`/doctor-admin-page/${props.doctorId}/children`}
-                    >
-                        Пациенты
-                    </NavLink>
-                    <NavLink
-                        className={"sidebar_link_"}
-                        to={`/doctor-admin-page/${props.doctorId}/parents`}
-                    >
-                        Родители пациентов
-                    </NavLink>
-                    <NavLink
-                        className={"sidebar_link_"}
-                        to={`/doctor-admin-page/${props.doctorId}`}
-                    >
-                        Статистика
-                    </NavLink>
+                    {DoctorSideBarLinksArray.map((fullLink, i) => {
+                        return (
+                            <NavLink
+                                key={`fl-${i}`}
+                                className={"sidebar_link"}
+                                to={`/doctor-admin-page/${props.doctorId}${fullLink.path}`}
+                            >
+                                {fullLink.label}
+                            </NavLink>
+                        );
+                    })}
                 </div>
             )}
         </>
