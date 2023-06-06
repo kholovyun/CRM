@@ -1,8 +1,9 @@
-import IDoctorWithUser from "../../interfaces/IDoctor/IDoctorWithUser";
+import { ERoles } from "../../../enums/ERoles";
 
 export default interface IAvatarUploaderProps {
-    doctor: IDoctorWithUser
     width: number
     height: number
+    role: ERoles
+    id: string
     modalCloser: () => void
 }

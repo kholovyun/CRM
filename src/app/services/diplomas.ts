@@ -1,8 +1,4 @@
-
-import IDiplomaCreateDto from "../../interfaces/IDiploma/IDiplomaCreateDto";
 import IDiplomaGetDto from "../../interfaces/IDiploma/IDiplomaGetDto";
-import IRecommendationCreateDto from "../../interfaces/IRecommendation/IRecommendationCreateDto";
-import IRecomendationGetDto from "../../interfaces/IRecommendation/IRecommendationGetDto";
 import {api} from "./api";
 
 const diplomasApi = api.injectEndpoints({
@@ -27,5 +23,6 @@ const diplomasApi = api.injectEndpoints({
 
 export const {
     useCreateDiplomaMutation,
-    useGetDiplomasByDoctorQuery
+    useGetDiplomasByDoctorQuery,
+    useLazyGetDiplomasByDoctorQuery
 } = diplomasApi;
