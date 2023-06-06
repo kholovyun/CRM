@@ -17,7 +17,6 @@
     height: 266px;
     border-radius: 25px;
     cursor: pointer;
-    margin: auto;
 }
 
 .carouselAddItem {
@@ -29,7 +28,6 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    margin: auto;
     position: relative;
 }
 
@@ -46,7 +44,6 @@
     max-width: 180px;
     height: 266px;
     background-color: var(--light_blue_half_opacity);
-    margin: auto;
 }
 
 .carouselAddItem:hover::after {
@@ -58,7 +55,6 @@
     height: 266px;
     border-radius: 25px;
     background-color: var(--light_blue_half_opacity);
-    margin: auto;
 }
 
 .carouselAddItemIcon {

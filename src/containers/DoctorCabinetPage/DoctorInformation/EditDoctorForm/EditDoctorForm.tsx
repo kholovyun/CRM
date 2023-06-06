@@ -16,11 +16,33 @@ import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
 import { useEditDoctorMutation } from "../../../../app/services/doctors";
+import { KGMask, KZMask } from "../../../../helpers/countryRegexs";
+import KGFlag from "../../../../assets/img/kg.png";
+import INTFlag from "../../../../assets/img/icon_international_flag.svg";
+
 
 const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, doctorData}): ReactElement => {
-    const phoneNumberMask = ["+","7","(",/\d/,/\d/,/\d/,")",/\d/,/\d/,/\d/,"-",/\d/,/\d/,"-",/\d/,/\d/];
     const { user } = useAppSelector(state => state.auth);
-    
+    const [phoneMask, setPhoneMask] = useState(user && user.phone.startsWith("+996(") ? KGMask : KZMask);
+    const [flag, setFlag] = useState(user && user.phone.startsWith("+996(") ? KGFlag : INTFlag);
+
+    const phoneMaskOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        switch (e.target.value) {
+        case "KG":
+            setPhoneMask(KGMask);
+            setFlag(KGFlag);
+            break;
+        case "INT":
+            setPhoneMask(KZMask);
+            setFlag(INTFlag);
+            break;
+        default:
+            setPhoneMask(KZMask);
+            setFlag(INTFlag);
+            break;
+        }
+    };
+
     const [editUser, { 
         isError: isErrorEditUser, 
         isSuccess: isSuccesEditUser, 
@@ -126,22 +148,34 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                                     <div className={styles.editUserField}>
                                         {touched.phone && errors.phone ? <p>{errors.phone}</p> : <p></p>}
                                         <p className={styles.editUserFieldTitle}>Тел.</p>
-                                        <Field
-                                            name="phone"
-                                            type="text"
-                                            render={({ ...field }) => (
-                                                <MaskedInput
-                                                    {...field}
-                                                    mask={phoneNumberMask}
-                                                    id="phone"
-                                                    placeholder="+7(___)___-__-__"
-                                                    type="text"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    className={styles.editUserInput} />
-                                            )}
-                                        >
-                                        </Field>   
+                                        <div className={styles.editPhoneField}>
+                                            <div className={styles.flag_wrapper}>
+                                                <img className={styles.flag_image} src={flag} alt="" />
+                                            </div>
+                                            <div className={styles.select_wrapper}>
+                                                <select className={styles.country_select} defaultValue={user && user.phone.startsWith("+996(") ? "KG" : "INT"} onChange={phoneMaskOnChange}>
+                                                    <option value={"INT"}>INT</option>
+                                                    <option value={"KG"}>KG</option>
+                                                </select>
+                                            </div>
+                                            <Field
+                                                name="phone"
+                                                type="text"
+                                            >
+                                                {({ ...field }) => (
+                                                    <MaskedInput
+                                                        {...field}
+                                                        mask={phoneMask}
+                                                        id="phone"
+                                                        type="text"
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        className={styles.phoneInput}
+                                                        defaultValue={user?.phone}
+                                                    />
+                                                )}
+                                            </Field>
+                                        </div>
                                     </div> 
                                     <div className={styles.saveButton}>
                                         <Btn disabled={!isValid} title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
@@ -186,14 +220,14 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                                     </div> 
                                     <div className={styles.editDoctorField}>
                                         <p className={styles.editDoctorFieldTitle}>Место работы</p>
-                                        <Field className={styles.editDoctorInput} name="placeOfWork" type="text"/>
+                                        <Field as={"textarea"} className={`${styles.editDoctorInput} ${styles.textarea}`} name="placeOfWork" type="text"/>
                                     </div>       
                                 </div>
                     
                                 <div className={styles.editDoctorLine}>
                                     <div className={styles.editDoctorField}>
                                         <p className={styles.editDoctorFieldTitle}>Достижения</p>
-                                        <Field className={styles.editDoctorInput} name="achievements" type="text"/>
+                                        <Field as={"textarea"} className={`${styles.editDoctorInput} ${styles.textarea}`} name="achievements" type="text"/>
                                     </div> 
                                     <div className={styles.saveButton}>
                                         <Btn title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
