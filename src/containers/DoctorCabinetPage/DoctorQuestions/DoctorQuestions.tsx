@@ -10,7 +10,7 @@ const DoctorQuestions: FunctionComponent = (): ReactElement => {
             <div className={styles.questionsBlockRight}>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default DoctorQuestions;

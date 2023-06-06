@@ -60,6 +60,10 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
         isErrorGetRecommendations && errorHandler(errorGetRecommendations);
     }, [isErrorGetRecommendations]);
 
+    useEffect(() => {
+        isErrorDeleteRecommendation && errorHandler(errorDeleteRecommendation);
+    }, [isErrorDeleteRecommendation]);
+
     return (
         <div className={styles.recommendationBlock}>
             <p className={styles.recommendationBlockTop}>Написать рекомендацию</p>

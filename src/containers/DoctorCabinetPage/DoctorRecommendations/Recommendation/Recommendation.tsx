@@ -1,4 +1,4 @@
-import {FunctionComponent, ReactElement, useState} from "react";
+import {FunctionComponent, ReactElement} from "react";
 import styles from "./Recommendation.module.css";
 import IRecommendationProps from "./IRecommendationProps";
 

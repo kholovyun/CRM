@@ -132,16 +132,16 @@ const DoctorDiplomas: React.FunctionComponent<IDoctorDiplomasProps> = ({diplomas
         });
     };
 
-    const items = [<div onClick={openModal} className={styles.carouselAddItem}>
-                        <div className={styles.carouselAddItemIcon}></div>
-                   </div>].concat(diplomas && diplomas.map(el => {
-        return <div className={styles.carouselItem} key={el.id}>
+    const items = [<div onClick={openModal} key={"1234"} className={styles.carouselAddItem}>
+        <div className={styles.carouselAddItemIcon}></div>
+    </div>].concat(diplomas && diplomas.map(el => {
+        return  <div className={styles.carouselItem} key={el.id}>
             <img 
                 className={styles.diplomaImg}
                 onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
                 src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${el?.url}` : defaultDiplomaImg} alt={"diploma"} />
         </div>; 
-    }))
+    }));
     
     return (
         <div>

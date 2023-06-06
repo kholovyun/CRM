@@ -89,7 +89,7 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor})
                 </div>       
             </div>       
         </div>
-    )
-}
+    );
+};
 
 export default DoctorInformation;
