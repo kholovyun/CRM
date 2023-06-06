@@ -17,14 +17,14 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { user } = useAppSelector(state => state.auth);
     const {data: doctor} = useGetDoctorByUserIdQuery({id: user?.role === ERoles.DOCTOR ? user?.id : String(params.id)});
-    const [getDiplomas, {data: diplomas}] = useLazyGetDiplomasByDoctorQuery()
+    const [getDiplomas, {data: diplomas}] = useLazyGetDiplomasByDoctorQuery();
     const navigate = useNavigate();
     useEffect(() => {
         const getDip = async () => {
             doctor && await getDiplomas(doctor.id);
-        }
-        getDip()
-    }, [doctor])
+        };
+        getDip();
+    }, [doctor]);
 
     return (
         <Container>
