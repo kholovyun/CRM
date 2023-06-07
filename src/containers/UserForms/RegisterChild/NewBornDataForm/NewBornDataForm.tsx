@@ -256,55 +256,54 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                                 <Field className={styles.born_data_input} name="treatment" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>При выписке состояние: глаза</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>При выписке состояние: глаза</p>
                                 <Field className={styles.born_data_input} name="eyes" type="text" />
                             </label>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>физиологические рефлексы</p>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>физиологические рефлексы</p>
                                 <Field className={styles.born_data_input} name="reflexes" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>При выписке состояние: глаза</p>
+                        <div className={styles.right_block}>
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>цвет кожи</p>
                                 <Field className={styles.born_data_input} name="skin" type="text" />
                             </label>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>физиологические рефлексы</p>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>по органам</p>
                                 <Field className={styles.born_data_input}  name="organs" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>При выписке состояние: глаза</p>
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>стул</p>
                                 <Field className={styles.born_data_input} name="stool" type="text" />
                             </label>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>физиологические рефлексы</p>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>диурез</p>
                                 <Field className={styles.born_data_input} name="diuresis" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>При выписке состояние: глаза</p>
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>пуповинный остаток</p>
                                 <Field className={styles.born_data_input} name="umbilicalCord" type="text" />
                             </label>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>физиологические рефлексы</p>
+                        </div>
+                        </div>
+                        
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Особые заменчания</p>
                                 <Field className={styles.born_data_input} name="name" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Особые заменчания</p>
-                                <Field className={styles.born_data_input} name="name" type="text" />
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Заключение составил</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Заключение составил</p>
                                 <Field className={styles.born_data_input}  name="name" type="text" />
                             </label>
                         </div>

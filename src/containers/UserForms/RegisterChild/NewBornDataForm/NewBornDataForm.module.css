@@ -35,7 +35,8 @@
     white-space: nowrap;
 }
 .form_container{
-    background-color: lightblue;
+    background: var(--light_blue);
+    border-radius: 3.125rem;
     padding: 5%;
 }
 .born_data_input{
@@ -69,4 +70,9 @@
 .radio_btns_feed{
     display: flex;
     gap: 5%;
+}
+.right_block{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
 }
