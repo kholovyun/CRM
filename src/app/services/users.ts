@@ -8,7 +8,7 @@ import IUserCreateParentWithChildDto from "../../interfaces/IUser/IUserCreatePar
 
 const usersApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getUsers: build.query<IUserGetDto[], {offset: number, limit: number, filter: string}>({
+        getUsers: build.query<{rows: IUserGetDto[], count: number}, {offset: number, limit: number, filter: string}>({
             query: ({offset, limit, filter}) => ({
                 url: "/users",
                 method: "GET",

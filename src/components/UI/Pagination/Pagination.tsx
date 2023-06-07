@@ -1,9 +1,10 @@
+import { FunctionComponent, ReactElement } from "react";
 import { getPaginationItems } from "../../../helpers/getPaginationItems";
 import IPaginationProps from "./IPaginationProps";
 import PageLink from "./PageLink/PageLink";
 import styles from "./Pagination.module.css";
 
-const Pagination: React.FunctionComponent<IPaginationProps> = ({...props}: IPaginationProps): React.ReactElement => {
+const Pagination: FunctionComponent<IPaginationProps> = ({...props}: IPaginationProps): ReactElement => {
     const pageNums = getPaginationItems(props.currentPage, props.lastPage, props.maxLength);
 
     return (

@@ -1,0 +1,1 @@
+export type ContextTypeDoctor = { doctorId: string };

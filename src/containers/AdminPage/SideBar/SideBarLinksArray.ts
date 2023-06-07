@@ -19,4 +19,4 @@ export const SideBarLinksArray = [
         path: "/admin-page/profile",
         label: "Мой профиль"        
     }
-]
+];
