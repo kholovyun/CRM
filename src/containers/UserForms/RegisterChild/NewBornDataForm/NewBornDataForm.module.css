@@ -11,7 +11,7 @@
 .number_select{
     height: 2.5em;
     border-radius: 25px;
-    padding: 2% 10%;
+    min-width: 5rem;
     box-sizing: border-box;
     text-align: center;
 }
@@ -43,4 +43,11 @@
     background-color: var(--bg_light_blue);
     border-radius: 25px;
     border: 2px solid var(--violet);
+}
+.date_block_short{
+    display: flex;
+    text-align: center;
+    margin: 3% 0;
+    width: 50%;
+    gap: 5%;
 }
