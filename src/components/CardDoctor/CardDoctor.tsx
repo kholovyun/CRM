@@ -43,9 +43,9 @@ export const CardDoctor = (props: IDoctorInfo) => {
                     src={`${import.meta.env.BASE_URL}/public/uploads/${props.doc.photo}`}
                     alt="doctor" />
                 <div className={styles.InfoBlock}>
-                    <p className={styles.torText}>{props.doc.users.name}</p>
-                    <p className={styles.torText}>{props.doc.users.surname}</p>
-                    <p className={styles.torText}>{props.doc.users.patronim}</p>
+                    <p>{props.doc.users.name}</p>
+                    <p>{props.doc.users.surname}</p>
+                    <p>{props.doc.users.patronim}</p>
                 </div>
             </FunctionalBox>
             <FunctionalBox>
@@ -56,7 +56,7 @@ export const CardDoctor = (props: IDoctorInfo) => {
                 <p>Стаж работы</p>
                 <p>{props.doc.experience} лет</p>
             </FunctionalBox>
-            <Btn title="Иванов Иван" size={EBtnSize.tiny}/>
+            <Btn title={`${props.doc.users.name + " " + props.doc.users.surname}`} size={EBtnSize.tiny}/>
         </InfoTable>
     );
 };
