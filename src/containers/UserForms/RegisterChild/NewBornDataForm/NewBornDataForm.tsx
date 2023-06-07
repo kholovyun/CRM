@@ -60,11 +60,11 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                         <div className={styles.date_block}>
                             <label className={styles.label_flex}>
                                 <p className={styles.input_near_text}>Родился</p>
-                                <Field name="name" type="date"/>
+                                <Field className={styles.born_data_input} name="name" type="date"/>
                             </label>
                             <label className={styles.label_flex}>
                                 <p className={styles.input_near_text}>Выписан</p>
-                                <Field name="dischargedDate" type="date"/>
+                                <Field className={styles.born_data_input} name="dischargedDate" type="date"/>
                             </label>
                         </div>
                         <div className={styles.date_block}>
@@ -93,7 +93,7 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                         <div className={styles.date_block}>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>Протекающей</p>
-                                <Field  name="pregnancyDescript" type="text" />
+                                <Field className={styles.born_data_input} name="pregnancyDescript" type="text" />
                             </label>
                         </div>
                         <div className={styles.date_block}>
@@ -119,45 +119,45 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                             </label>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>в сроки</p>
-                                <Field  name="gestAge" type="text" />
+                                <Field className={styles.born_data_input} name="gestAge" type="text" />
                             </label>
                         </div>
                         <div className={styles.date_block}>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>1 период</p>
-                                <Field  name="period1" type="text" />
+                                <Field className={styles.born_data_input} name="period1" type="text" />
                                 <p className={styles.near_input_text}>2 период</p>
-                                <Field  name="period2" type="text" />
+                                <Field className={styles.born_data_input} name="period2" type="text" />
                             </label>
                         </div>
                         <div className={styles.date_block}>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>Безводный период</p>
-                                <Field  name="amnAbsPeriod" type="text" />
+                                <Field  className={styles.born_data_input} name="amnAbsPeriod" type="text" />
                             </label>
                         </div>
                         <div className={styles.date_block}>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>Характер околоплодных вод</p>
-                                <Field  name="amnDescript" type="text" />
+                                <Field  className={styles.born_data_input} name="amnDescript" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Обезболивание применялось, нет, какое</p>
-                                <Field  name="anesthesia" type="text" />
+                                <Field  className={styles.born_data_input} name="anesthesia" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Течение послеродового периода</p>
-                                <Field  name="postBirthPeriod" type="text" />
+                                <Field  className={styles.born_data_input} name="postBirthPeriod" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Состояние матери при выписке</p>
-                                <Field  name="motherState" type="text" />
+                                <Field className={styles.born_data_input}  name="motherState" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
@@ -176,31 +176,31 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Масса при рождении</p>
-                                <Field  name="birthWeight" type="text" />
+                                <Field className={styles.born_data_input} name="birthWeight" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Рост при рождении</p>
-                                <Field  name="birthHeight" type="text" />
+                                <Field className={styles.born_data_input} name="birthHeight" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Состояние ребенка при рождении</p>
-                                <Field  name="newbornState" type="text" />
+                                <Field className={styles.born_data_input} name="newbornState" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Оценка по шкале Апгар</p>
-                                <Field  name="apgarScore" type="text" />
+                                <Field className={styles.born_data_input} name="apgarScore" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Проводились ли меры по оживлению</p>
-                                <Field  name="reanimation" type="text" />
+                                <Field className={styles.born_data_input} name="reanimation" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
@@ -220,7 +220,7 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Причина вскармиливания</p>
-                                <Field  name="feeding" type="text" />   
+                                <Field className={styles.born_data_input} name="feeding" type="text" />   
                             </label>
                             <label>
                                 <Field type="radio" name="feeding" value="грудное" />
@@ -238,71 +238,71 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Диагноз</p>
-                                <Field  name="diagnosis" type="text" />
+                                <Field className={styles.born_data_input}  name="diagnosis" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Обследован</p>
-                                <Field  name="examination" type="text" />
+                                <Field className={styles.born_data_input}  name="examination" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Лечение</p>
-                                <Field  name="treatment" type="text" />
+                                <Field className={styles.born_data_input} name="treatment" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>При выписке состояние: глаза</p>
-                                <Field  name="eyes" type="text" />
+                                <Field className={styles.born_data_input} name="eyes" type="text" />
                             </label>
                             <label style={{"display": "flex"}}>
                                 <p>физиологические рефлексы</p>
-                                <Field  name="reflexes" type="text" />
+                                <Field className={styles.born_data_input} name="reflexes" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>При выписке состояние: глаза</p>
-                                <Field  name="skin" type="text" />
+                                <Field className={styles.born_data_input} name="skin" type="text" />
                             </label>
                             <label style={{"display": "flex"}}>
                                 <p>физиологические рефлексы</p>
-                                <Field  name="organs" type="text" />
+                                <Field className={styles.born_data_input}  name="organs" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>При выписке состояние: глаза</p>
-                                <Field  name="stool" type="text" />
+                                <Field className={styles.born_data_input} name="stool" type="text" />
                             </label>
                             <label style={{"display": "flex"}}>
                                 <p>физиологические рефлексы</p>
-                                <Field  name="diuresis" type="text" />
+                                <Field className={styles.born_data_input} name="diuresis" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>При выписке состояние: глаза</p>
-                                <Field  name="umbilicalCord" type="text" />
+                                <Field className={styles.born_data_input} name="umbilicalCord" type="text" />
                             </label>
                             <label style={{"display": "flex"}}>
                                 <p>физиологические рефлексы</p>
-                                <Field  name="name" type="text" />
+                                <Field className={styles.born_data_input} name="name" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Особые заменчания</p>
-                                <Field  name="name" type="text" />
+                                <Field className={styles.born_data_input} name="name" type="text" />
                             </label>
                         </div>
                         <div style={{"display": "flex"}}>
                             <label style={{"display": "flex"}}>
                                 <p>Заключение составил</p>
-                                <Field  name="name" type="text" />
+                                <Field className={styles.born_data_input}  name="name" type="text" />
                             </label>
                         </div>
                         {touched.pregnancyDescript && errors.pregnancyDescript ? <p>{errors.pregnancyDescript}</p> : <p></p>}

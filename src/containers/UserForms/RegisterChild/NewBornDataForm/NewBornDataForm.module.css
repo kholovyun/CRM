@@ -36,3 +36,11 @@
     background-color: lightblue;
     padding: 5%;
 }
+.born_data_input{
+    width: 100%;
+    font-size: 16px;
+    padding: 8px 26px;
+    background-color: var(--bg_light_blue);
+    border-radius: 25px;
+    border: 2px solid var(--violet);
+}
