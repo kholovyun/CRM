@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import usersApi from "../app/services/users";
-import IParent from "../interfaces/IParrent/IParrent";
+import IParent from "../interfaces/IParent/IParrent";
+import parentsApi from "../app/services/parents";
 
 interface IStateParrent {
     parrent: IParent | null
@@ -23,7 +23,15 @@ const parrentSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addMatcher(
-            usersApi.endpoints.getParentbyUserId.matchFulfilled,
+            parentsApi.endpoints.getParentbyId.matchFulfilled,
+            (state: IStateParrent, action: PayloadAction<IParent>) => {
+                if (action.payload) {
+                    state.parrent = action.payload;
+                }
+            }
+        );
+        builder.addMatcher(
+            parentsApi.endpoints.getParentbyUserId.matchFulfilled,
             (state: IStateParrent, action: PayloadAction<IParent>) => {
                 if (action.payload) {
                     state.parrent = action.payload;

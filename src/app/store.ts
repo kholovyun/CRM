@@ -1,23 +1,23 @@
-import { Middleware, MiddlewareAPI, combineReducers, configureStore, isRejectedWithValue } from "@reduxjs/toolkit";
+import { Middleware, combineReducers, configureStore, isRejectedWithValue } from "@reduxjs/toolkit";
 import { api } from "./services/api";
 import authReducer, { logout } from "../features/authSlice";
-import doctorReducer from "../features/doctorSlice";
 import { PERSIST, persistReducer, persistStore, PURGE, REGISTER } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
 import { toast } from "react-toastify";
-import parentReducer from "../features/parrentSlice";
-
 
 export const rtkQueryErrorLogger: Middleware =
-  (api: MiddlewareAPI) => (next) => (action) => {
-      if (isRejectedWithValue(action)) { 
-          if(action.payload.status === 401){
-              api.dispatch(logout());
+  () => (next) => (action) => {
+      if (isRejectedWithValue(action)) {
+          if(action.payload.originalStatus === 401){
+              localStorage.removeItem("persist:root");
+              store.dispatch(logout());
               window.location.href = "/login";
-          } else if (action.payload.status === 403){
-              window.location.href = "/cabinet";
+          } else if (action.payload.originalStatus === 403){
+              window.location.href = "/login";
           } else if (action.payload.status === "FETCH_ERROR") {
+              localStorage.removeItem("persist:root");
+              store.dispatch(logout());
               toast.error("Ошибка соединения");   
           } 
       }
@@ -35,8 +35,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    parent: parentReducer,
-    doctor: doctorReducer,
     [api.reducerPath]: api.reducer,
 });
 

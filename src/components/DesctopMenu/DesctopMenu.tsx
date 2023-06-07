@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import AccessControl from "../../permissionRoutes/AccessControl";
 import { NavLink } from "react-router-dom";
@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import Btn from "../UI/Btn/Btn";
 import { Avatar } from "../UI/Avatar/Avatar";
 
-export const DesctopMenu: React.FC = () => {
+export const DesctopMenu: FC = () => {
     const { user } = useAppSelector(state => state.auth);
     const dispatcher = useAppDispatch();
 
