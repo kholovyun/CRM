@@ -1,48 +1,48 @@
 import IDoctor from "../../interfaces/IDoctor/IDoctor";
 import IDoctorWithUser from "../../interfaces/IDoctor/IDoctorWithUser";
-import {api} from "./api";
+import { api } from "./api";
 
 const doctorsApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getDoctors: build.query<IDoctorWithUser[], {offset: number, limit: number}>({
-            query: ({offset, limit}) => ({
+        getDoctors: build.query<{ rows: IDoctorWithUser[], count: number }, { offset: number, limit: number }>({
+            query: ({ offset, limit }) => ({
                 url: "/doctors",
                 method: "GET",
-                params: {offset, limit}
+                params: { offset, limit },
             }),
-            providesTags: ["Doctor"]
+            providesTags: ["Doctor"],
         }),
-        getDoctorByUserId: build.query<IDoctorWithUser, {id: string}>({
-            query: ({id}) => ({
+        getDoctorByUserId: build.query<IDoctorWithUser, { id: string }>({
+            query: ({ id }) => ({
                 url: `/doctors/${id}`,
-                method: "GET"
+                method: "GET",
             }),
-            providesTags: ["Doctor", "User"]
+            providesTags: ["Doctor", "User"],
         }),
-        editDoctor: build.mutation<IDoctor, {id: string, doctor: FormData}>({
-            query: ({id, doctor}) => ({
+        editDoctor: build.mutation<IDoctor, { id: string; doctor: FormData }>({
+            query: ({ id, doctor }) => ({
                 url: `/doctors/${id}`,
                 method: "PUT",
-                body: doctor
+                body: doctor,
             }),
-            invalidatesTags: ["Doctor"]
+            invalidatesTags: ["Doctor"],
         }),
         activateDoctor: build.mutation<IDoctorWithUser, IDoctorWithUser>({
             query: (doctor) => ({
                 url: `/doctors/${doctor.id}`,
                 method: "PATCH",
-                body: doctor
+                body: doctor,
             }),
-            invalidatesTags: ["Doctor"]
+            invalidatesTags: ["Doctor"],
         }),
         blockDoctor: build.mutation<IDoctorWithUser, IDoctorWithUser>({
             query: (doctor) => ({
                 url: `/users/block/${doctor.userId}`,
                 method: "PATCH",
-                body: doctor
+                body: doctor,
             }),
-            invalidatesTags: ["Doctor"]
-        })
+            invalidatesTags: ["Doctor"],
+        }),
     }),
 });
 
@@ -51,5 +51,5 @@ export const {
     useGetDoctorByUserIdQuery,
     useEditDoctorMutation,
     useActivateDoctorMutation,
-    useBlockDoctorMutation
+    useBlockDoctorMutation,
 } = doctorsApi;
