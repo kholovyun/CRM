@@ -8,6 +8,7 @@ import { EBtnSize } from "../../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../../enums/EBtnTypes";
 import { EBtnClass } from "../../../../enums/EBtnClass";
 import styles from "./NewBornDataForm.module.css";
+import { ESex } from "../../../../enums/ESex";
 
 
 export const NewBornDataForm: FC = (): React.ReactElement => {
@@ -91,7 +92,7 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                             </label>
                         </div>
                         <div className={styles.date_block}>
-                            <label className={styles.label_flex}>
+                            <label className={styles.label_flex_long}>
                                 <p className={styles.near_input_text}>Протекающей</p>
                                 <Field className={styles.born_data_input} name="pregnancyDescript" type="text" />
                             </label>
@@ -122,7 +123,7 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                                 <Field className={styles.born_data_input} name="gestAge" type="text" />
                             </label>
                         </div>
-                        <div className={styles.date_block}>
+                        <div className={styles.date_block_short}>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>1 период</p>
                                 <Field className={styles.born_data_input} name="period1" type="text" />
@@ -130,81 +131,81 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                                 <Field className={styles.born_data_input} name="period2" type="text" />
                             </label>
                         </div>
-                        <div className={styles.date_block}>
+                        <div className={styles.date_block_short}>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>Безводный период</p>
                                 <Field  className={styles.born_data_input} name="amnAbsPeriod" type="text" />
                             </label>
                         </div>
                         <div className={styles.date_block}>
-                            <label className={styles.label_flex}>
+                            <label className={styles.label_flex_long}>
                                 <p className={styles.near_input_text}>Характер околоплодных вод</p>
                                 <Field  className={styles.born_data_input} name="amnDescript" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Обезболивание применялось, нет, какое</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Обезболивание применялось, нет, какое</p>
                                 <Field  className={styles.born_data_input} name="anesthesia" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Течение послеродового периода</p>
-                                <Field  className={styles.born_data_input} name="postBirthPeriod" type="text" />
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Течение послеродового периода</p>
+                                <Field className={styles.born_data_input} name="postBirthPeriod" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Состояние матери при выписке</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Состояние матери при выписке</p>
                                 <Field className={styles.born_data_input}  name="motherState" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
+                        <div className={styles.date_block_tiny}>
+                            <label className={styles.label_flex}>
                                 <p>Пол ребенка</p>
                                 <label>
-                                    <Field type="radio" name="picked" value="One" />
-                                        М
+                                    <Field type="radio" name="picked" value={ESex.MALE} />
+                                        Мужской
                                 </label>
                                 <label>
-                                    <Field type="radio" name="picked" value="Two" />
-                                        Ж
+                                    <Field type="radio" name="picked" value={ESex.FEMALE} />
+                                        Женский
                                 </label>
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Масса при рождении</p>
-                                <Field className={styles.born_data_input} name="birthWeight" type="text" />
+                        <div className={styles.date_block_tiny}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Масса при рождении</p>
+                                <Field className={styles.born_data_input} name="birthWeight" type="number" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Рост при рождении</p>
-                                <Field className={styles.born_data_input} name="birthHeight" type="text" />
+                        <div className={styles.date_block_tiny}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Рост при рождении</p>
+                                <Field className={styles.born_data_input} name="birthHeight" type="number" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Состояние ребенка при рождении</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Состояние ребенка при рождении</p>
                                 <Field className={styles.born_data_input} name="newbornState" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Оценка по шкале Апгар</p>
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Оценка по шкале Апгар</p>
                                 <Field className={styles.born_data_input} name="apgarScore" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Проводились ли меры по оживлению</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Проводились ли меры по оживлению</p>
                                 <Field className={styles.born_data_input} name="reanimation" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
                                 <label id="yes">
                                     <Field  type="radio" name="breastTry" value="true" />
                                     <Field  type="checkbox"/>
@@ -217,38 +218,40 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                                 </label>
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p  className={styles.input_near_text}>Причина вскармиливания</p>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Причина вскармиливания</p>
                                 <Field className={styles.born_data_input} name="feeding" type="text" />   
                             </label>
-                            <label>
+                            <div className={styles.radio_btns_feed}>
+                            <label className={styles.label_flex}>
                                 <Field type="radio" name="feeding" value="грудное" />
                                     исключительно грудное
                             </label>
-                            <label>
+                            <label className={styles.label_flex}>
                                 <Field type="radio" name="feeding" value="смешанное" />
                                     смешанное
                             </label>
-                            <label>
+                            <label className={styles.label_flex}>
                                 <Field type="radio" name="feeding" value="искусственное" />
                                     искусственное
                             </label>
+                            </div>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
                                 <p  className={styles.input_near_text}>Диагноз</p>
                                 <Field className={styles.born_data_input}  name="diagnosis" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
                                 <p  className={styles.input_near_text}>Обследован</p>
                                 <Field className={styles.born_data_input}  name="examination" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
                                 <p  className={styles.input_near_text}>Лечение</p>
                                 <Field className={styles.born_data_input} name="treatment" type="text" />
                             </label>

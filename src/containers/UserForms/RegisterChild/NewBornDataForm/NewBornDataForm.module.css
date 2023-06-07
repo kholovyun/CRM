@@ -21,13 +21,15 @@
 .date_block{
     display: flex;
     text-align: center;
-    gap: 15%;
+    gap: 5%;
     margin: 3% 0;
+    justify-content: start;
 }
 .label_flex {
     display: flex;
     gap: 5%;
     align-items: center;
+    width: 100%;
 }
 .near_input_text{
     white-space: nowrap;
@@ -48,6 +50,23 @@
     display: flex;
     text-align: center;
     margin: 3% 0;
-    width: 50%;
+    width: 60%;
+    gap: 5%;
+}
+.label_flex_long {
+    display: flex;
+    gap: 5%;
+    align-items: center;
+    width: 100%;
+}
+.date_block_tiny{
+    display: flex;
+    text-align: center;
+    margin: 5% 0;
+    width: 45%;
+    gap: 5%;
+}
+.radio_btns_feed{
+    display: flex;
     gap: 5%;
 }
