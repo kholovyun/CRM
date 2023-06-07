@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { FunctionalBox } from "../UI/FunctionalBox/FunctionalBox";
 import { InfoTable } from "../UI/InfoTable/InfoTable";
 import { EBtnSize } from "../../enums/EBtnSize";
@@ -11,7 +11,7 @@ type TParentCard = {
     userData: IParent
 };
 
-export const CardParent: React.FC<TParentCard> = (props) => {
+export const CardParent: FC<TParentCard> = (props) => {
     const date = new Date(props.userData.registerDate).toLocaleDateString();
     const endDate = new Date(props.userData.users.subscriptions[0].endDate).toLocaleDateString();
     return (

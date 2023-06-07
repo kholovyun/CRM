@@ -4,35 +4,13 @@ import { InfoTable } from "../UI/InfoTable/InfoTable";
 import { EBtnSize } from "../../enums/EBtnSize";
 import styles from "./CardDoctor.module.css";
 import Btn from "../UI/Btn/Btn";
-import { ERoles } from "../../enums/ERoles";
 import defaultImage from "../../assets/img/default-doctor.svg";
+import { FC } from "react";
+import { IDoctorInfo } from "../../interfaces/IDoctor/IDoctorInfo";
 
-interface IDoctorInfo {
-    doc: {
-        achievements: string
-        degree: string
-        experience: number 
-        id: string
-        isActive: boolean
-        photo: string
-        placeOfWork: string
-        price: string
-        speciality: string
-        userId: string
-        users: {
-            email: string
-            id: string
-            isBlocked: boolean
-            name: string
-            patronim?: string | null
-            phone: string
-            role: ERoles
-            surname : string
-        }
-    }
-};
 
-export const CardDoctor = (props: IDoctorInfo) => {
+
+export const CardDoctor: FC<IDoctorInfo> = (props) => {
     return (
         <InfoTable>
             <CardTitle title="Данные о враче"/>
@@ -40,7 +18,7 @@ export const CardDoctor = (props: IDoctorInfo) => {
                 <img
                     className={styles.docAvatar}
                     onError={(e) => { e.currentTarget.src = defaultImage;}}
-                    src={`${import.meta.env.BASE_URL}/public/uploads/${props.doc.photo}`}
+                    src={`${import.meta.env.VITE_BASE_URL}/uploads/doctorsImgs/${props.doc.photo}`}
                     alt="doctor" />
                 <div className={styles.InfoBlock}>
                     <p>{props.doc.users.name}</p>

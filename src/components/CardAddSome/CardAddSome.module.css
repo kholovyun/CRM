@@ -6,3 +6,8 @@
     font-size: 150px;
     cursor: pointer;
 }
+
+.addChildTxt {
+    width: 100%;
+    text-align: "center";
+}
