@@ -10,8 +10,8 @@ export const DoctorSideBarLinksArray = [
         label: "Родители пациентов"        
     },
     {
-        iconClass: "reviews_icon",
+        iconClass: "statistics_icon",
         path: "/",
         label: "Статистика"        
     }
-]
+];
