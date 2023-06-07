@@ -2,15 +2,14 @@ import { Outlet, useOutletContext, useParams } from "react-router-dom";
 import styles from "../../AdminPage/AdminPage.module.css";
 import DoctorSideBar from "./DoctorSideBar/DoctorSideBar";
 import { FunctionComponent, ReactElement, useEffect, useState } from "react";
-
-type ContextType = { doctorId: string };
+import { ContextTypeDoctor } from "../../../types/ContextTypeDoctor";
 
 const DoctorAdminPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const [doctorId, setDoctorId] = useState<{ doctorId: string }>({ doctorId: String(params.id) });
+    
     useEffect(() => {
         setDoctorId({ doctorId: String(params.id) });
-        console.log(String(params.id));
     }, []);
 
     return (
@@ -24,7 +23,7 @@ const DoctorAdminPage: FunctionComponent = (): ReactElement => {
 };
 
 export const useDoctorId = () => {
-    return useOutletContext<ContextType>();
+    return useOutletContext<ContextTypeDoctor>();
 };
 
 export default DoctorAdminPage;
