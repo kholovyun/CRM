@@ -7,8 +7,8 @@ import Btn from "../../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../../enums/EBtnTypes";
 import { EBtnClass } from "../../../../enums/EBtnClass";
-import MaskedInput from "react-text-mask";
 import styles from "./NewBornDataForm.module.css";
+import { ESex } from "../../../../enums/ESex";
 
 
 export const NewBornDataForm: FC = (): React.ReactElement => {
@@ -56,51 +56,22 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                     toast.info("Данные корректны");
                 }}
             >
-                {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
+                {({ isValid, errors, touched, handleSubmit}) => (
                     <Form className={styles.form_container}>
                         <div className={styles.date_block}>
                             <label className={styles.label_flex}>
                                 <p className={styles.input_near_text}>Родился</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field name="name" type="text" 
-                                    render={({ ...field }) => (
-                                        <MaskedInput
-                                            className={styles.date_input}
-                                            {...field}
-                                            mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
-                                            id="phone"
-                                            placeholder="_ _  .  _ _  .  _ _ _ _"
-                                            type="text"
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                        />
-                                    )}
-                                />
+                                <Field className={styles.born_data_input} name="name" type="date"/>
                             </label>
                             <label className={styles.label_flex}>
                                 <p className={styles.input_near_text}>Выписан</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field name="name" type="text" 
-                                    render={({ ...field }) => (
-                                        <MaskedInput
-                                            className={styles.date_input}
-                                            {...field}
-                                            mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
-                                            id="phone"
-                                            placeholder="_ _  .  _ _  .  _ _ _ _"
-                                            type="text"
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                        />
-                                    )}
-                                />
+                                <Field className={styles.born_data_input} name="dischargedDate" type="date"/>
                             </label>
                         </div>
                         <div className={styles.date_block}>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>Ребенок от</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field className={styles.number_select} as="select" id="number" name="number">
+                                <Field className={styles.number_select} as="select" id="number" name="pregnancyN">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -117,21 +88,19 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                                     <option value="14">14</option>
                                     <option value="15">15</option>
                                 </Field>
-                                <p>беременности</p>
+                                <p  className={styles.input_near_text}>беременности</p>
                             </label>
                         </div>
                         <div className={styles.date_block}>
-                            <label className={styles.label_flex}>
+                            <label className={styles.label_flex_long}>
                                 <p className={styles.near_input_text}>Протекающей</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                                <Field className={styles.born_data_input} name="pregnancyDescript" type="text" />
                             </label>
                         </div>
-                        <div className={styles.date_block}>
+                        <div className={styles.date_block_short}>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text} >Роды</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field className={styles.number_select} as="select" id="number" name="number">
+                                <Field className={styles.number_select} as="select" id="number" name="birthN">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -151,216 +120,191 @@ export const NewBornDataForm: FC = (): React.ReactElement => {
                             </label>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>в сроки</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                                <Field className={styles.born_data_input} name="gestAge" type="text" />
                             </label>
                         </div>
-                        <div className={styles.date_block}>
+                        <div className={styles.date_block_short}>
                             <label className={styles.label_flex}>
-                                <p className={styles.near_input_text}>1 период, 2 период</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                                <p className={styles.near_input_text}>1 период</p>
+                                <Field className={styles.born_data_input} name="period1" type="text" />
+                                <p className={styles.near_input_text}>2 период</p>
+                                <Field className={styles.born_data_input} name="period2" type="text" />
                             </label>
                         </div>
-                        <div className={styles.date_block}>
+                        <div className={styles.date_block_short}>
                             <label className={styles.label_flex}>
                                 <p className={styles.near_input_text}>Безводный период</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                                <Field  className={styles.born_data_input} name="amnAbsPeriod" type="text" />
+                            </label>
+                        </div>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Характер околоплодных вод</p>
+                                <Field  className={styles.born_data_input} name="amnDescript" type="text" />
+                            </label>
+                        </div>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Обезболивание применялось, нет, какое</p>
+                                <Field  className={styles.born_data_input} name="anesthesia" type="text" />
+                            </label>
+                        </div>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Течение послеродового периода</p>
+                                <Field className={styles.born_data_input} name="postBirthPeriod" type="text" />
+                            </label>
+                        </div>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Состояние матери при выписке</p>
+                                <Field className={styles.born_data_input}  name="motherState" type="text" />
+                            </label>
+                        </div>
+                        <div className={styles.date_block_tiny}>
+                            <label className={styles.label_flex}>
+                                <p>Пол ребенка</p>
+                                <label>
+                                    <Field type="radio" name="picked" value={ESex.MALE} />
+                                        Мужской
+                                </label>
+                                <label>
+                                    <Field type="radio" name="picked" value={ESex.FEMALE} />
+                                        Женский
+                                </label>
+                            </label>
+                        </div>
+                        <div className={styles.date_block_tiny}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Масса при рождении</p>
+                                <Field className={styles.born_data_input} name="birthWeight" type="number" />
+                            </label>
+                        </div>
+                        <div className={styles.date_block_tiny}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Рост при рождении</p>
+                                <Field className={styles.born_data_input} name="birthHeight" type="number" />
                             </label>
                         </div>
                         <div className={styles.date_block}>
                             <label className={styles.label_flex}>
-                                <p className={styles.near_input_text}>Характер околоплодных вод</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                                <p className={styles.near_input_text}>Состояние ребенка при рождении</p>
+                                <Field className={styles.born_data_input} name="newbornState" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Обезболивание применялось, нет, какое</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Оценка по шкале Апгар</p>
+                                <Field className={styles.born_data_input} name="apgarScore" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Течение послеродового периода</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Проводились ли меры по оживлению</p>
+                                <Field className={styles.born_data_input} name="reanimation" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Состояние матери при выписке</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Пол ребенка</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <label>
-                                    <Field type="radio" name="picked" value="One" />
-                                        М
-                                </label>
-                                <label>
-                                    <Field type="radio" name="picked" value="Two" />
-                                        Ж
-                                </label>
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Масса при рождении</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Рост при рождении</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Состояние ребенка при рождении</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Оценка по шкале Апгар</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Проводились ли меры по оживлению</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
                                 <label id="yes">
-                                    <Field  type="radio" name="bf" value="true" />
+                                    <Field  type="radio" name="breastTry" value="true" />
                                     <Field  type="checkbox"/>
                                         К груди приложен
                                 </label>
                                 <label id="no">
-                                    <Field type="radio" name="bf" value="false" />
+                                    <Field type="radio" name="breastTry" value="false" />
                                     <Field type="checkbox"/>
                                         К груди не приложен
                                 </label>
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Причина вскармиливания</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />   
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>Причина вскармиливания</p>
+                                <Field className={styles.born_data_input} name="feeding" type="text" />   
                             </label>
-                            <label>
-                                <Field type="radio" name="picked" value="One" />
+                            <div className={styles.radio_btns_feed}>
+                            <label className={styles.label_flex}>
+                                <Field type="radio" name="feeding" value="грудное" />
                                     исключительно грудное
                             </label>
-                            <label>
-                                <Field type="radio" name="picked" value="Two" />
+                            <label className={styles.label_flex}>
+                                <Field type="radio" name="feeding" value="смешанное" />
                                     смешанное
                             </label>
-                            <label>
-                                <Field type="radio" name="picked" value="three" />
+                            <label className={styles.label_flex}>
+                                <Field type="radio" name="feeding" value="искусственное" />
                                     искусственное
                             </label>
+                            </div>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Диагноз</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Обследован</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p  className={styles.input_near_text}>Диагноз</p>
+                                <Field className={styles.born_data_input}  name="diagnosis" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Лечение</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p  className={styles.input_near_text}>Обследован</p>
+                                <Field className={styles.born_data_input}  name="examination" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>При выписке состояние: глаза</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                            <label style={{"display": "flex"}}>
-                                <p>физиологические рефлексы</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p  className={styles.input_near_text}>Лечение</p>
+                                <Field className={styles.born_data_input} name="treatment" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>При выписке состояние: глаза</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>При выписке состояние: глаза</p>
+                                <Field className={styles.born_data_input} name="eyes" type="text" />
                             </label>
-                            <label style={{"display": "flex"}}>
-                                <p>физиологические рефлексы</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>физиологические рефлексы</p>
+                                <Field className={styles.born_data_input} name="reflexes" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>При выписке состояние: глаза</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                        <div className={styles.right_block}>
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>цвет кожи</p>
+                                <Field className={styles.born_data_input} name="skin" type="text" />
                             </label>
-                            <label style={{"display": "flex"}}>
-                                <p>физиологические рефлексы</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                        </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>При выписке состояние: глаза</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
-                            </label>
-                            <label style={{"display": "flex"}}>
-                                <p>физиологические рефлексы</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>по органам</p>
+                                <Field className={styles.born_data_input}  name="organs" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Особые заменчания</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>стул</p>
+                                <Field className={styles.born_data_input} name="stool" type="text" />
+                            </label>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>диурез</p>
+                                <Field className={styles.born_data_input} name="diuresis" type="text" />
                             </label>
                         </div>
-                        <div style={{"display": "flex"}}>
-                            <label style={{"display": "flex"}}>
-                                <p>Заключение составил</p>
-                                {touched.dischargedDate && errors.dischargedDate ? <p >{errors.dischargedDate}</p> : <p ></p>}
-                                <Field  name="name" type="text" />
+                        <div className={styles.date_block_short}>
+                            <label className={styles.label_flex}>
+                                <p className={styles.near_input_text}>пуповинный остаток</p>
+                                <Field className={styles.born_data_input} name="umbilicalCord" type="text" />
+                            </label>
+                        </div>
+                        </div>
+                        
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Особые заменчания</p>
+                                <Field className={styles.born_data_input} name="name" type="text" />
+                            </label>
+                        </div>
+                        <div className={styles.date_block}>
+                            <label className={styles.label_flex_long}>
+                                <p className={styles.near_input_text}>Заключение составил</p>
+                                <Field className={styles.born_data_input}  name="name" type="text" />
                             </label>
                         </div>
                         {touched.pregnancyDescript && errors.pregnancyDescript ? <p>{errors.pregnancyDescript}</p> : <p></p>}

@@ -11,7 +11,7 @@
 .number_select{
     height: 2.5em;
     border-radius: 25px;
-    padding: 2% 10%;
+    min-width: 5rem;
     box-sizing: border-box;
     text-align: center;
 }
@@ -21,18 +21,58 @@
 .date_block{
     display: flex;
     text-align: center;
-    gap: 15%;
+    gap: 5%;
     margin: 3% 0;
+    justify-content: start;
 }
 .label_flex {
     display: flex;
     gap: 5%;
     align-items: center;
+    width: 100%;
 }
 .near_input_text{
     white-space: nowrap;
 }
 .form_container{
-    background-color: lightblue;
+    background: var(--light_blue);
+    border-radius: 3.125rem;
     padding: 5%;
+}
+.born_data_input{
+    width: 100%;
+    font-size: 16px;
+    padding: 8px 26px;
+    background-color: var(--bg_light_blue);
+    border-radius: 25px;
+    border: 2px solid var(--violet);
+}
+.date_block_short{
+    display: flex;
+    text-align: center;
+    margin: 3% 0;
+    width: 60%;
+    gap: 5%;
+}
+.label_flex_long {
+    display: flex;
+    gap: 5%;
+    align-items: center;
+    width: 100%;
+}
+.date_block_tiny{
+    display: flex;
+    text-align: center;
+    margin: 5% 0;
+    width: 45%;
+    gap: 5%;
+}
+.radio_btns_feed{
+    display: flex;
+    gap: 5%;
+}
+.right_block{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
 }
