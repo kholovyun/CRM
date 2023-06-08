@@ -5,9 +5,10 @@ import { KGMask, KZMask, RUMask } from "../../helpers/countryRegexs";
 import KZFlag from "../../assets/img/kz.png";
 import KGFlag from "../../assets/img/kg.png";
 import RUFlag from "../../assets/img/ru.png";
+import { Field } from "formik";
 import IPhoneMaskProps from "./IPhoneMaskProps";
 
-const PhoneMask: FunctionComponent<IPhoneMaskProps> = (props): ReactElement => {
+    const PhoneMask: FunctionComponent<IPhoneMaskProps>  = (props): ReactElement => {
     const [phoneMask, setPhoneMask] = useState(KZMask);
     const [placeholder, setPlaceholder] = useState("+7(___)___-__-__");
     const [flag, setFlag] = useState(KZFlag);
@@ -46,7 +47,7 @@ const PhoneMask: FunctionComponent<IPhoneMaskProps> = (props): ReactElement => {
                     </select>
                 </div>
             </div>
-            <props.field
+            <Field
                 name="phone"
                 type="text">
                 {({ ...field }) => (
@@ -61,7 +62,7 @@ const PhoneMask: FunctionComponent<IPhoneMaskProps> = (props): ReactElement => {
                         className={styles.LoginInput}
                     />
                 )}
-            </props.field>
+            </Field>
         </div>
     )
 }

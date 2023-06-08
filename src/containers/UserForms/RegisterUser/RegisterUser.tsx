@@ -77,7 +77,6 @@ const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (pr
                             <div className={styles.input_flex_column}>
                                 {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
                                 <PhoneMask
-                                    field={Field}
                                     handleBlur={handleBlur}
                                     handleChange={handleChange}
                                 />
