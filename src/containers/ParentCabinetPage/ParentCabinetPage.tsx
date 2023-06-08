@@ -6,12 +6,12 @@ import { ChildTabs } from "../../components/UI/ChildTabs/ChildTabs";
 import { CardDoctor } from "../../components/CardDoctor/CardDoctor";
 import styles from "./ParentCabinetPage.module.css";
 import { useAppSelector } from "../../app/hooks";
-import React, { useEffect } from "react";
+import { FunctionComponent, ReactElement, useEffect } from "react";
 import { redirect, useNavigate, useParams } from "react-router-dom";
 import { useGetParentbyIdMutation, useGetParentbyUserIdMutation } from "../../app/services/parents";
 import { ERoles } from "../../enums/ERoles";
 
-export const ParentCabinetPage: React.FC = () => {
+export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { user } = useAppSelector(state => state.auth);

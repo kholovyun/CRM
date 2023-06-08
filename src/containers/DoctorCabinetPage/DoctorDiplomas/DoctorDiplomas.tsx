@@ -1,4 +1,4 @@
-import React, { useState, useRef, createRef, ChangeEvent } from "react";
+import { useState, useRef, createRef, ChangeEvent, FunctionComponent, ReactElement, RefObject } from "react";
 import styles from "./DoctorDiplomas.module.css";
 import AliceCarousel from "react-alice-carousel";
 import { toast } from "react-toastify";
@@ -23,7 +23,7 @@ interface IDoctorDiplomasProps {
     diplomas: IDiplomaGetDto[]
 }
 
-const DoctorDiplomas: React.FunctionComponent<IDoctorDiplomasProps> = ({diplomas}): React.ReactElement => {
+const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas}): ReactElement => {
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
@@ -36,7 +36,7 @@ const DoctorDiplomas: React.FunctionComponent<IDoctorDiplomasProps> = ({diplomas
     const [createDiploma] = useCreateDiplomaMutation();
     
     const [fileName, setFileName] = useState<string>("");
-    const editorRef: React.RefObject<AvatarEditor> = createRef();
+    const editorRef: RefObject<AvatarEditor> = createRef();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [imageProps, setImageProps] = useState<IImageProps>({

@@ -14,7 +14,7 @@ interface IAvatarBoxProps {
     height: number
 }
 
-const AvatarBox: FunctionComponent<IAvatarBoxProps> = (props): ReactElement => {
+const AvatarBox: FunctionComponent<IAvatarBoxProps> = (props: IAvatarBoxProps): ReactElement => {
     const defaultImg = props.role === ERoles.DOCTOR ? defaultDoctorImg : defaultChildImg;
     const imgSrc = props.role === ERoles.DOCTOR ? "doctorsImgs" : props.role === ERoles.CHILD ? "childrenImgs" : "doctorsImgs";
     const [showAvatarModal, setShowAvatarModal] = useState(false);

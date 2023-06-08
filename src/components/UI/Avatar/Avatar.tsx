@@ -1,4 +1,4 @@
-import React from "react";
+import { FunctionComponent, ReactElement } from "react";
 import styles from "./Avatar.module.css";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +7,7 @@ type TAvatar = {
     style?: {[key: string]: string}
 };
 
-export const Avatar: React.FC<TAvatar> = (props) => {
+export const Avatar: FunctionComponent<TAvatar> = (props): ReactElement => {
     const navigator = useNavigate();
 
     return (

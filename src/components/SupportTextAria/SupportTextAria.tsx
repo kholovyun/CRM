@@ -1,6 +1,6 @@
 import { EBtnSize } from "../../enums/EBtnSize";
 import Btn from "../UI/Btn/Btn";
-import React, { useState } from "react";
+import { FunctionComponent, ReactElement, useState } from "react";
 import styles from "./SupportTextAria.module.css";
 import { ChildTabText } from "../UI/ChildTabText/ChildTabText";
 
@@ -9,7 +9,7 @@ interface ISupportText {
     btnName: string,
 }
 
-export const SupportTextAria: React.FC<ISupportText> = (props) => {
+export const SupportTextAria: FunctionComponent<ISupportText> = (props: ISupportText): ReactElement => {
     const [userText, setUserText] = useState("");
     const inputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setUserText(e.target.value);

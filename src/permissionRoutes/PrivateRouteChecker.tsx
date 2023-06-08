@@ -1,13 +1,14 @@
 import { Navigate, Route } from "react-router-dom";
 import  PropTypes  from "prop-types";
 import { useAppSelector } from "../app/hooks";
+import { FunctionComponent, ReactNode } from "react";
 
 interface PrivateRouteProps {
   pathTo: string;
-  element: React.ReactNode;
+  element: ReactNode;
 }
 
-const PrivateRouteChecker: React.FC<PrivateRouteProps> = (props) => {
+const PrivateRouteChecker: FunctionComponent<PrivateRouteProps> = (props) => {
     const { user } = useAppSelector(state => state.auth);
 
     return user ? (

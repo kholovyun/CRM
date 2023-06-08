@@ -1,4 +1,4 @@
-import {useState, ChangeEvent, createRef, useRef, FunctionComponent, ReactElement, useEffect} from "react";
+import {useState, ChangeEvent, createRef, useRef, FunctionComponent, ReactElement, useEffect, RefObject} from "react";
 import AvatarEditor from "react-avatar-editor";
 import IImageProps from "./IImageProps";
 import styles from "./AvatarUploader.module.css";
@@ -10,7 +10,7 @@ import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
 
-const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactElement => { 
+const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarUploaderProps): ReactElement => { 
     const [uploadDoctorAvatar, 
         {
             isSuccess: isSuccesDoctorAvatar,
@@ -27,7 +27,7 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props): ReactEl
     };
 
     const [fileName, setFileName] = useState<string>("");
-    const editorRef: React.RefObject<AvatarEditor> = createRef();
+    const editorRef: RefObject<AvatarEditor> = createRef();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(()=> {

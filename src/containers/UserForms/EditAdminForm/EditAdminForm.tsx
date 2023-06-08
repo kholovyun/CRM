@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { ChangeEvent, FunctionComponent, ReactElement, useState } from "react";
 import styles from "../UserForms.module.css";
 import { Formik, Field, Form } from "formik";
 import Btn from "../../../components/UI/Btn/Btn";
@@ -20,7 +20,7 @@ import { useAppSelector } from "../../../app/hooks";
 import { validationSchemaEditUser } from "../../../schemas/validationSchemaEditUser";
 import { useNavigate } from "react-router-dom";
 
-const EditAdminForm: React.FunctionComponent = (): React.ReactElement => {
+const EditAdminForm: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
     const { user } = useAppSelector(state => state.auth);
     const [editUser, { 
@@ -32,7 +32,7 @@ const EditAdminForm: React.FunctionComponent = (): React.ReactElement => {
     const [phoneMask, setPhoneMask] = useState(user && user.phone.startsWith("+996(") ? KGMask : KZMask);
     const [flag, setFlag] = useState(user && user.phone.startsWith("+996(") ? KGFlag : INTFlag);
 
-    const phoneMaskOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const phoneMaskOnChange = (e: ChangeEvent<HTMLSelectElement>) => {
         switch (e.target.value) {
         case "KG":
             setPhoneMask(KGMask);

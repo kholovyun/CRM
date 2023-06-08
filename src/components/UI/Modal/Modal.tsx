@@ -1,8 +1,8 @@
-import React from "react";
+import { FunctionComponent, ReactElement } from "react";
 import styles from "./Modal.module.css";
 import IModalProps from "./IModalProps";
 
-const Modal: React.FC<IModalProps> = (props: IModalProps) => {
+const Modal: FunctionComponent<IModalProps> = (props: IModalProps): ReactElement => {
     return (
         <>
             {props.show ? <div onClick={props.close} className={styles.modal_bg} /> : null}

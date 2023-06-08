@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { FunctionComponent, MouseEvent, ReactElement, useState } from "react";
 import ITabsProps from "./ITabsProps";
 import TabTitle from "./TabTitle/TabTitle";
 import styles from "./Tabs.module.css";
 
-const Tabs: React.FunctionComponent<ITabsProps> = ({children, callbacks}: ITabsProps): React.ReactElement => {
+const Tabs: FunctionComponent<ITabsProps> = ({children, callbacks}: ITabsProps): ReactElement => {
     const [selectedTab, setSelectedTab] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const changeTab = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
+    const changeTab = (e: MouseEvent<HTMLDivElement>, index: number) => {
         e.stopPropagation();
         setSelectedTab(index);
         setActiveIndex(index);

@@ -1,8 +1,8 @@
-import React from 'react';
+import { FunctionComponent, ReactElement } from "react";
 import styles from "./NotFoundPage.module.css";
 import {Container} from "../../components/UI/Container/Container";
 
-const NotFoundPage: React.FC = (): React.ReactElement => {
+const NotFoundPage: FunctionComponent = (): ReactElement => {
     return (<div className={styles.bg}>
         <Container>
             <h2 className={styles.title}>404</h2>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { FunctionComponent, ReactElement, useEffect } from "react";
 import { validationSchema } from "../../../schemas/validationSchema";
 import { useLoginMutation } from "../../../app/services/users";
 import { useAppSelector } from "../../../app/hooks";
@@ -19,7 +19,7 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { ERoles } from "../../../enums/ERoles";
 import { EBtnClass } from "../../../enums/EBtnClass";
 
-const Login: React.FC = (): React.ReactElement => {
+const Login: FunctionComponent = (): ReactElement => {
     const [loginUser, { data, isError, isSuccess, error: loginErrors }] = useLoginMutation();
     const { user } = useAppSelector(state => state.auth);
     const navigator = useNavigate();

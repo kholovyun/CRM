@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent, ReactElement } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./containers/UserForms/Login/Login";
 import Layout from "./components/Layout/Layout";
@@ -27,7 +27,7 @@ import AllParents from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorTab
 import NotFoundPage from "./containers/NotFoundPage/NotFoundPage.tsx";
 import { ChildCabinetPage } from "./containers/ChildCabinetPage/ChildCabinetPage";
 
-const App: React.FunctionComponent = (): React.ReactElement => {
+const App: FunctionComponent = (): ReactElement => {
     return (
         <BrowserRouter>
             <ToastContainer theme="colored" autoClose={2000} />
@@ -72,6 +72,5 @@ const App: React.FunctionComponent = (): React.ReactElement => {
         </BrowserRouter>
     );
 };
-
 
 export default App;

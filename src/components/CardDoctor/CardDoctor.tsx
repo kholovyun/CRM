@@ -5,13 +5,13 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import styles from "./CardDoctor.module.css";
 import Btn from "../UI/Btn/Btn";
 import defaultImage from "../../assets/img/default-doctor.svg";
-import { FC } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { IDoctorInfo } from "../../interfaces/IDoctor/IDoctorInfo";
 import { useNavigate } from "react-router-dom";
 
 
 
-export const CardDoctor: FC<IDoctorInfo> = (props) => {
+export const CardDoctor: FunctionComponent<IDoctorInfo> = (props: IDoctorInfo): ReactElement => {
     const navigate = useNavigate();
     return (
         <InfoTable>

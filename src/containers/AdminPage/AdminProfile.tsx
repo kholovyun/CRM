@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
 import styles from "./AdminPage.module.css";
 import { useAppSelector } from "../../app/hooks";
+import { FunctionComponent, ReactElement } from "react";
 
-const AdminProfile: React.FC = (): React.ReactElement => {
+const AdminProfile: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     return (
         <>

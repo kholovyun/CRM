@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FunctionComponent, ReactElement, useState } from "react";
 import styles from "../UserForms.module.css";
 import { Formik, Field, Form } from "formik";
 import { validationSchemaRegUser } from "../../../schemas/validationSchemaRegUser";
@@ -22,7 +22,7 @@ import KGFlag from "../../../assets/img/kg.png";
 import RUFlag from "../../../assets/img/ru.png";
 import { EDoctorLevel } from "../../../enums/EDoctorLevel";
 
-const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): React.ReactElement => {
+const RegisterUser: FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): ReactElement => {
     const navigate = useNavigate();
     const [createUser, { isError, isSuccess, error: createUserError }] = useCreateUserMutation();
     const [phoneMask, setPhoneMask] = useState(KZMask);

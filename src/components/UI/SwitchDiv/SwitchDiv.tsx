@@ -1,8 +1,8 @@
-import React from "react";
+import { FunctionComponent, ReactElement } from "react";
 import styles from "./SwitchDiv.module.css";
 import ISwitchDivProps from "./ISwitchDivProps";
 
-const SwitchDiv: React.FC<ISwitchDivProps> = (props: ISwitchDivProps) => {
+const SwitchDiv: FunctionComponent<ISwitchDivProps> = (props: ISwitchDivProps): ReactElement => {
    
     return (
         <>
