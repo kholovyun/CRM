@@ -1,6 +1,6 @@
-import { FunctionComponent, ReactElement, useState } from "react"
+import { FunctionComponent, ReactElement, useState } from "react";
 import styles from "../../containers/UserForms/UserForms.module.css";
-import MaskedInput from "react-text-mask"
+import MaskedInput from "react-text-mask";
 import { KGMask, KZMask, RUMask } from "../../helpers/countryRegexs";
 import KZFlag from "../../assets/img/kz.png";
 import KGFlag from "../../assets/img/kg.png";
@@ -8,31 +8,31 @@ import RUFlag from "../../assets/img/ru.png";
 import { Field } from "formik";
 import IPhoneMaskProps from "./IPhoneMaskProps";
 
-    const PhoneMask: FunctionComponent<IPhoneMaskProps>  = (props): ReactElement => {
+const PhoneMask: FunctionComponent<IPhoneMaskProps>  = (props): ReactElement => {
     const [phoneMask, setPhoneMask] = useState(KZMask);
     const [placeholder, setPlaceholder] = useState("+7(___)___-__-__");
     const [flag, setFlag] = useState(KZFlag);
 
     const phoneMaskOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         switch (e.target.value) {
-            case "RU":
-                setPhoneMask(RUMask);
-                setPlaceholder("+7(___)___-__-__");
-                setFlag(RUFlag);
-                break;
-            case "KG":
-                setPhoneMask(KGMask);
-                setPlaceholder("+996(___)__-__-__");
-                setFlag(KGFlag);
-                break;
-            case "KZ":
-                setPhoneMask(KZMask);
-                setPlaceholder("+7(___)___-__-__");
-                setFlag(KZFlag);
-                break;
-            default:
-                setPhoneMask(KZMask);
-                break;
+        case "RU":
+            setPhoneMask(RUMask);
+            setPlaceholder("+7(___)___-__-__");
+            setFlag(RUFlag);
+            break;
+        case "KG":
+            setPhoneMask(KGMask);
+            setPlaceholder("+996(___)__-__-__");
+            setFlag(KGFlag);
+            break;
+        case "KZ":
+            setPhoneMask(KZMask);
+            setPlaceholder("+7(___)___-__-__");
+            setFlag(KZFlag);
+            break;
+        default:
+            setPhoneMask(KZMask);
+            break;
         }
     };
     return (
@@ -64,7 +64,7 @@ import IPhoneMaskProps from "./IPhoneMaskProps";
                 )}
             </Field>
         </div>
-    )
-}
+    );
+};
 
-export default PhoneMask
+export default PhoneMask;

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./containers/UserForms/Login/Login";
 import Layout from "./components/Layout/Layout";

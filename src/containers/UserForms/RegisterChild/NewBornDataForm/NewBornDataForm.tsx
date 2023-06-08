@@ -10,7 +10,6 @@ import { EBtnClass } from "../../../../enums/EBtnClass";
 import styles from "./NewBornDataForm.module.css";
 import { ESex } from "../../../../enums/ESex";
 
-
 export const NewBornDataForm: FunctionComponent = (): ReactElement => {
     return (
         <Container>
