@@ -3,7 +3,7 @@ import { FunctionalBox } from "../UI/FunctionalBox/FunctionalBox";
 import { EBtnSize } from "../../enums/EBtnSize";
 import styles from "./CardChild.module.css";
 import Btn from "../UI/Btn/Btn";
-import React, { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { IChildrenData } from "../../interfaces/IParent/IChildren/IChildrenData";
 import defaultImage from "../../assets/img/icon_children_sidebar.svg";
 import { useNavigate } from "react-router-dom";
