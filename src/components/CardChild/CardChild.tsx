@@ -6,12 +6,15 @@ import Btn from "../UI/Btn/Btn";
 import { FC } from "react";
 import { IChildrenData } from "../../interfaces/IParent/IChildren/IChildrenData";
 import defaultImage from "../../assets/img/icon_children_sidebar.svg";
+import { useNavigate } from "react-router-dom";
 
 type TChildCard = {
     child: IChildrenData;
 };
 
 export const CardChild: FC<TChildCard> = (props) => {
+    const navigate = useNavigate();
+
     return (
         <InfoTableChild>
             <FunctionalBox>
@@ -35,7 +38,7 @@ export const CardChild: FC<TChildCard> = (props) => {
                 <p >Дата рождения</p>
                 <p className={styles.dateChildStyle}>{props.child.dateOfBirth}</p>
             </FunctionalBox>
-            <Btn title="Подробнее" size={EBtnSize.tiny} />
+            <Btn title="Подробнее" size={EBtnSize.tiny} onclick={() => navigate(`/child-cabinet/${props.child.id}`)}/>
         </InfoTableChild>
     );
 };

@@ -7,10 +7,12 @@ import Btn from "../UI/Btn/Btn";
 import defaultImage from "../../assets/img/default-doctor.svg";
 import { FC } from "react";
 import { IDoctorInfo } from "../../interfaces/IDoctor/IDoctorInfo";
+import { useNavigate } from "react-router-dom";
 
 
 
 export const CardDoctor: FC<IDoctorInfo> = (props) => {
+    const navigate = useNavigate();
     return (
         <InfoTable>
             <CardTitle title="Данные о враче"/>
@@ -34,7 +36,10 @@ export const CardDoctor: FC<IDoctorInfo> = (props) => {
                 <p>Стаж работы</p>
                 <p>{props.doc.experience} лет</p>
             </FunctionalBox>
-            <Btn title={`${props.doc.users.name + " " + props.doc.users.surname}`} size={EBtnSize.tiny}/>
+            <Btn title={`${props.doc.users.name + " " + props.doc.users.surname}`}
+                size={EBtnSize.tiny}
+                onclick={() => navigate(`/doctor-cabinet/${props.doc.users.id}`)}
+            />
         </InfoTable>
     );
 };
