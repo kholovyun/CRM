@@ -6,9 +6,16 @@ import Btn from "../../components/UI/Btn/Btn";
 import homePhoto from "../../assets/img/Home.png";
 import { EBtnClass } from "../../enums/EBtnClass";
 import TransparentLink from "../../components/UI/TransparentLink/TransparentLink";
+import { useEffect } from "react";
+import { useAppSelector } from "../../app/hooks";
 
 export const Home = () => {
     const navigate = useNavigate();
+    const { user } = useAppSelector(state => state.auth);
+
+    useEffect(() => {
+        user && navigate("/login");
+    }, [user]);
 
     return (
         <Container>
