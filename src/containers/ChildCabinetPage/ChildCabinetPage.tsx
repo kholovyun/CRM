@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import defaultImage from "../../assets/img/icon_children_sidebar.svg";
 import styles from "./ChildCabinetPage.module.css";
 import { Container } from "../../components/UI/Container/Container";
 
-export const ChildCabinetPage: FC = () => {
+export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     return (
         <Container>
             <img className={styles.childPageIcon} src={defaultImage} alt="babyIcon" />

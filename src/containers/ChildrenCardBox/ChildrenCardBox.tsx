@@ -1,10 +1,10 @@
-import React from "react";
+import { FunctionComponent, ReactElement } from "react";
 import styles from "./ChildrenCardBox.module.css";
 import { CardChild } from "../../components/CardChild/CardChild";
 import { CardAddSome } from "../../components/CardAddSome/CardAddSome";
 import { IchildrenProps } from "../../interfaces/IParent/IChildren/IchildrenProps";
 
-export const ChildrenCardBox: React.FC<IchildrenProps> = (props) => {
+export const ChildrenCardBox: FunctionComponent<IchildrenProps> = (props: IchildrenProps): ReactElement => {
     return (
         <div className={styles.childBoxInf}>
             {props.array.length &&

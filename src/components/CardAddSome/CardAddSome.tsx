@@ -1,13 +1,13 @@
 import { FunctionalBox } from "../UI/FunctionalBox/FunctionalBox";
 import { InfoTableChild } from "../UI/InfoTableChild/InfoTableChild";
-import { FC } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import styles from "./CardAddSome.module.css";
 
 interface ICardAddSome {
     title: string,
 }
 
-export const CardAddSome: FC<ICardAddSome> = (props) => {
+export const CardAddSome: FunctionComponent<ICardAddSome> = (props: ICardAddSome): ReactElement => {
     return (
         <InfoTableChild>
             <FunctionalBox>

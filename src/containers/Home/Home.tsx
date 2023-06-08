@@ -6,10 +6,10 @@ import Btn from "../../components/UI/Btn/Btn";
 import homePhoto from "../../assets/img/Home.png";
 import { EBtnClass } from "../../enums/EBtnClass";
 import TransparentLink from "../../components/UI/TransparentLink/TransparentLink";
-import { useEffect } from "react";
+import { FunctionComponent, ReactElement, useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
 
-export const Home = () => {
+export const Home: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
     const { user } = useAppSelector(state => state.auth);
 

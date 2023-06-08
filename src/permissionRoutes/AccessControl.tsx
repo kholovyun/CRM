@@ -1,12 +1,12 @@
-import React from "react";
+import { FunctionComponent, ReactNode } from "react";
 import { useAppSelector } from "../app/hooks";
 
 interface AccessControlProps {
   allowedRoles: string[];
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const AccessControl: React.FC<AccessControlProps> = ({
+const AccessControl: FunctionComponent<AccessControlProps> = ({
     allowedRoles,
     children
 }) => {

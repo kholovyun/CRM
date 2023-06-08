@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FunctionComponent, ReactElement, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import AccessControl from "../../permissionRoutes/AccessControl";
 import { NavLink } from "react-router-dom";
@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import Btn from "../UI/Btn/Btn";
 import { Avatar } from "../UI/Avatar/Avatar";
 
-export const MenuBurger: React.FC = () => {
+export const MenuBurger: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     const [showMenu, setShowMenu] = useState(false);
     const dispatcher = useAppDispatch();

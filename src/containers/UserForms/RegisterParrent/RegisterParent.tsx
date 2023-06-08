@@ -8,7 +8,7 @@ import { ERoles } from "../../../enums/ERoles";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import React, { useState } from "react";
+import { Children, FunctionComponent, ReactElement, ReactNode, useState } from "react";
 import { ESex } from "../../../enums/ESex";
 import { ESubscriptionType } from "../../../enums/ESubscriptionType";
 import { EPaymentType } from "../../../enums/EPaymentType";
@@ -24,8 +24,8 @@ import { validationFirst, validationSec } from "../../../schemas/validationScrem
 import { FormikStepProps } from "./IFormikInterface";
 
 
-const RegisterParent: React.FunctionComponent= (): React.ReactElement => {
-    const doctorId = useDoctorId()
+const RegisterParent: FunctionComponent= (): ReactElement => {
+    const doctorId = useDoctorId();
     const [createUserParent, { isError, isSuccess, error: createUserParentError }] = useCreateUserParentMutation();
     
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
@@ -65,7 +65,7 @@ const RegisterParent: React.FunctionComponent= (): React.ReactElement => {
                         }
                     }}
                     onSubmit={(values:FormikValues) => {
-                        console.log(values)
+                        console.log(values);
                         createUserParent(values as IUserCreateParentWithChildDto);
                     }}
                 >
@@ -245,7 +245,7 @@ export function FormikStep({ children }: FormikStepProps) {
 }
 
 export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>) {
-    const childrenArray = React.Children.toArray(children as React.ReactNode) as React.ReactElement<FormikStepProps>[];
+    const childrenArray = Children.toArray(children as ReactNode) as ReactElement<FormikStepProps>[];
     const [step, setStep] = useState(0);
     const currentChild = childrenArray[step];
 

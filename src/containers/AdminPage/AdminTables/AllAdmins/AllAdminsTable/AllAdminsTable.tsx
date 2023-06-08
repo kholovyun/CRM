@@ -34,7 +34,7 @@ const AllAdminsTable: FunctionComponent<IAllAdminsTableProps> = (props: IAllAdmi
         setModalTitle("");
     };
 
-    const cklickBlockHandler = (e: MouseEvent<HTMLDivElement>, thisUser: IUserGetDto, text: string) => {
+    const clickBlockHandler = (e: MouseEvent<HTMLDivElement>, thisUser: IUserGetDto, text: string) => {
         e.stopPropagation();
         setUser({...thisUser});
         setShowModal(true);
@@ -97,7 +97,7 @@ const AllAdminsTable: FunctionComponent<IAllAdminsTableProps> = (props: IAllAdmi
                         return (
                             <AdminRow key={admin.id} 
                                 admin={admin}
-                                clickBlock={(e: MouseEvent<HTMLDivElement>) => cklickBlockHandler(e, admin, admin.isBlocked ? "разблокировать" : "заблокировать")}
+                                clickBlock={(e: MouseEvent<HTMLDivElement>) => clickBlockHandler(e, admin, admin.isBlocked ? "разблокировать" : "заблокировать")}
                             />
                         );
                     })}

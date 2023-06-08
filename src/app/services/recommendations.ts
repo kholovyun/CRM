@@ -1,4 +1,3 @@
-
 import IRecommendationCreateDto from "../../interfaces/IRecommendation/IRecommendationCreateDto";
 import IRecomendationGetDto from "../../interfaces/IRecommendation/IRecommendationGetDto";
 import {api} from "./api";

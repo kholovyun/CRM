@@ -4,7 +4,7 @@ import styles from "../UserForms.module.css";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
-import React from "react";
+import { FunctionComponent, ReactElement } from "react";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import { Container } from "../../../components/UI/Container/Container";
@@ -17,7 +17,7 @@ import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import { useNavigate } from "react-router-dom";
 
-const ForgotPassword: React.FunctionComponent = (): React.ReactElement => {
+const ForgotPassword: FunctionComponent = (): ReactElement => {
     const [resetPassword, { data, isError, isSuccess, error: forgotError }] = useResetPasswordMutation();
     const navigator = useNavigate();
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {

@@ -1,7 +1,7 @@
 import styles from "./FunctionalBox.module.css";
-import React from "react";
+import { ReactNode } from "react";
 
-export const FunctionalBox = ({ children }: { children: React.ReactNode }) => {
+export const FunctionalBox = ({ children }: { children: ReactNode }) => {
     return (
         <div className={styles.functionalBox}>
             {children}

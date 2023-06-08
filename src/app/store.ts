@@ -6,22 +6,20 @@ import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
 import { toast } from "react-toastify";
 
-export const rtkQueryErrorLogger: Middleware =
-  () => (next) => (action) => {
-      if (isRejectedWithValue(action)) {
-          if(action.payload.originalStatus === 401){
-              localStorage.removeItem("persist:root");
-              store.dispatch(logout());
-              window.location.href = "/login";
-          } else if (action.payload.originalStatus === 403){
-              window.location.href = "/login";
-          } else if (action.payload.status === "FETCH_ERROR") {
-              toast.error("Ошибка соединения");   
-          }
-      }
-
-      return next(action);
-  };
+export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
+    if (isRejectedWithValue(action)) {
+        if(action.payload.originalStatus === 401){
+            localStorage.removeItem("persist:root");
+            store.dispatch(logout());
+            window.location.href = "/login";
+        } else if (action.payload.originalStatus === 403){
+            window.location.href = "/login";
+        } else if (action.payload.status === "FETCH_ERROR") {
+            toast.error("Ошибка соединения");   
+        }
+    }
+    return next(action);
+};
 
 const persistConfig = {
     key: "root",

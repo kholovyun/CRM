@@ -1,8 +1,9 @@
 import IBtnProps from "./IBtnProps";
 import styles from "./Btn.module.css";
+import { FunctionComponent, ReactElement } from "react";
 
 
-const Btn: React.FunctionComponent<IBtnProps> = (props: IBtnProps) => {
+const Btn: FunctionComponent<IBtnProps> = (props: IBtnProps): ReactElement => {
     return (
         <button
             style={props.style}

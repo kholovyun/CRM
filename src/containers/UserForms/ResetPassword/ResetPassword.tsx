@@ -1,7 +1,7 @@
 import { validationSchemaPasswords } from "../../../schemas/validationSchemaPasswords";
 import { useSetPasswordMutation } from "../../../app/services/password";
 import styles from "../UserForms.module.css";
-import React, { useEffect } from "react";
+import { FunctionComponent, ReactElement, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import Btn from "../../../components/UI/Btn/Btn";
@@ -17,7 +17,7 @@ import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { FormBox } from "../FormBox/FormBox";
 import { Title } from "../Title/Title";
 
-const ResetPassword: React.FunctionComponent = (): React.ReactElement => {
+const ResetPassword: FunctionComponent = (): ReactElement => {
     const urlParams = new URLSearchParams(window.location.search);
     const getQuery = urlParams.get("token");
     const navigator = useNavigate();

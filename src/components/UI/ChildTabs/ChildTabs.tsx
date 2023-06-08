@@ -1,8 +1,8 @@
-import React from "react";
 import styles from "./ChildTabs.module.css";
 import { IchildrenProps } from "../../../interfaces/IParent/IChildren/IchildrenProps";
+import { FunctionComponent, ReactElement } from "react";
 
-export const ChildTabs: React.FC<IchildrenProps> = (props) => {
+export const ChildTabs: FunctionComponent<IchildrenProps> = (props: IchildrenProps): ReactElement => {
     return (
         <div className={styles.tabsBox}>
             {props.array &&

@@ -1,4 +1,8 @@
+<<<<<<< src/containers/UserForms/RegisterUser/RegisterUser.tsx
+import { FunctionComponent, ReactElement, useState } from "react";
+=======
 import React from "react";
+>>>>>>> src/containers/UserForms/RegisterUser/RegisterUser.tsx
 import styles from "../UserForms.module.css";
 import { Formik, Field, Form } from "formik";
 import { validationSchemaRegUser } from "../../../schemas/validationSchemaRegUser";
@@ -18,7 +22,7 @@ import { ERoles } from "../../../enums/ERoles";
 import { EDoctorLevel } from "../../../enums/EDoctorLevel";
 import PhoneMask from "../../../components/PhoneMask/PhoneMask";
 
-const RegisterUser: React.FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): React.ReactElement => {
+const RegisterUser: FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): ReactElement => {
     const navigate = useNavigate();
     const [createUser, { isError, isSuccess, error: createUserError }] = useCreateUserMutation();
 
