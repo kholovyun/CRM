@@ -19,8 +19,6 @@ export const rtkQueryErrorLogger: Middleware =
               localStorage.removeItem("persist:root");
               store.dispatch(logout());
               toast.error("Ошибка соединения");   
-          } else if (action.payload.status === 500) {
-              window.location.href = "/login";
           }
       }
 
