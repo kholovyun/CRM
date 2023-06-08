@@ -33,7 +33,7 @@ const EditAdminForm: FunctionComponent = (): ReactElement => {
     const [flag, setFlag] = useState(user && user.phone.startsWith("+996(") ? KGFlag : INTFlag);
 
     const phoneMaskOnChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        switch (e.target.value) {
+        switch (e.currentTarget.value) {
         case "KG":
             setPhoneMask(KGMask);
             setFlag(KGFlag);

@@ -1,8 +1,4 @@
-<<<<<<< src/containers/UserForms/RegisterUser/RegisterUser.tsx
-import { FunctionComponent, ReactElement, useState } from "react";
-=======
-import React from "react";
->>>>>>> src/containers/UserForms/RegisterUser/RegisterUser.tsx
+import { FunctionComponent, ReactElement } from "react";
 import styles from "../UserForms.module.css";
 import { Formik, Field, Form } from "formik";
 import { validationSchemaRegUser } from "../../../schemas/validationSchemaRegUser";

@@ -9,8 +9,6 @@ import { FunctionComponent, ReactElement } from "react";
 import { IDoctorInfo } from "../../interfaces/IDoctor/IDoctorInfo";
 import { useNavigate } from "react-router-dom";
 
-
-
 export const CardDoctor: FunctionComponent<IDoctorInfo> = (props: IDoctorInfo): ReactElement => {
     const navigate = useNavigate();
     return (
