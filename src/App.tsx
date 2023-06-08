@@ -24,6 +24,7 @@ import EditAdminForm from "./containers/UserForms/EditAdminForm/EditAdminForm";
 import DoctorAdminPage from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorAdminPage";
 import AllChildren from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorTables/AllChildren/AllChildren";
 import AllParents from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorTables/AllParents/AllParents";
+import NotFoundPage from "./containers/NotFoundPage/NotFoundPage.tsx";
 
 const App: React.FunctionComponent = (): React.ReactElement => {
     return (
@@ -64,6 +65,7 @@ const App: React.FunctionComponent = (): React.ReactElement => {
                     </Route>
                     <Route path="/newborn-data/" element={<NewBornDataForm/>} />
                 </Route>
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     );
