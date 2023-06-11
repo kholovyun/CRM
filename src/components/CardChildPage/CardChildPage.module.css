@@ -1,0 +1,10 @@
+.cardChildPage {
+    display: block;
+    background: #ff85f8;
+    width: 100%;
+}
+
+.childAvatar {
+    display: block;
+    width: 150px;
+}
