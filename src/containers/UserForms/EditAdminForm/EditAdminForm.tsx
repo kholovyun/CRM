@@ -1,6 +1,6 @@
 import { ChangeEvent, FunctionComponent, ReactElement, useState } from "react";
 import styles from "../UserForms.module.css";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
@@ -19,6 +19,7 @@ import INTFlag from "../../../assets/img/icon_international_flag.svg";
 import { useAppSelector } from "../../../app/hooks";
 import { validationSchemaEditUser } from "../../../schemas/validationSchemaEditUser";
 import { useNavigate } from "react-router-dom";
+import { EBtnClass } from "../../../enums/EBtnClass";
 
 const EditAdminForm: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
@@ -51,7 +52,7 @@ const EditAdminForm: FunctionComponent = (): ReactElement => {
 
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
         const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
+        toast.error(`Ошибка ${err.data.message}`);
     };
 
     isErrorEditUser && errorHandler(errorEditUser);
@@ -63,8 +64,7 @@ const EditAdminForm: FunctionComponent = (): ReactElement => {
     }
 
     return (
-        <FormBox>
-            <Title text={"Редактировать профиль"} />
+        <FormBox>            
             {user ? 
                 <Formik
                     initialValues={{
@@ -79,23 +79,24 @@ const EditAdminForm: FunctionComponent = (): ReactElement => {
                     }}
                     validationSchema={validationSchemaEditUser}
                 >
-                    {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
-                        <Form className={styles.LoginForm}>
+                    {({ isValid, handleSubmit, handleChange, handleBlur }) => (
+                        <Form className={styles.form_column}>
+                            <Title text={"Редактировать профиль"} />
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
-                                    {touched.name && errors.name ? <p className={styles.typeError}>{errors.name}</p> : <p className={styles.typeText}></p>}
-                                    <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
+                                    <ErrorMessage className={styles.error_text} name="name" component="div"/>
+                                    <Field className={styles.login_input} name="name" type="text" placeholder="Имя" />
                                 </div>
                                 <div className={styles.input_flex_column}>
-                                    {touched.surname && errors.surname ? <p className={styles.typeError}>{errors.surname}</p> : <p className={styles.typeText}></p>}
-                                    <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
+                                    <ErrorMessage className={styles.error_text} name="surname" component="div"/>
+                                    <Field className={styles.login_input} name="surname" type="text" placeholder="Фамилия" />
                                 </div>
                             </div>
-                            {touched.patronim && errors.patronim ? <p className={styles.typeError}>{errors.patronim}</p> : <p className={styles.typeText}></p>}
-                            <Field className={styles.LoginInput} name="patronim" type="text" placeholder="Отчество" />
+                            <ErrorMessage className={styles.error_text} name="patronim" component="div"/>
+                            <Field className={styles.login_input} name="patronim" type="text" placeholder="Отчество" />
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
-                                    {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
+                                    <ErrorMessage className={styles.error_text} name="phone" component="div"/>
                                     <div className={styles.two_inputs_row}>
                                         <div className={styles.select_flag_wrapper}>
                                             <div className={styles.flag_wrapper}><img className={styles.flag_image} src={flag} alt="" /></div>
@@ -118,15 +119,22 @@ const EditAdminForm: FunctionComponent = (): ReactElement => {
                                                     type="text"
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    className={styles.LoginInput}
+                                                    className={styles.login_input}
                                                     defaultValue={user.phone}
                                                 />
                                             )}
                                         </Field>
                                     </div>
                                 </div>
-                            </div>                        
-                            <Btn disabled={!isValid} title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
+                            </div>
+                            <div className={styles.added_margin_top}>
+                                <Btn disabled={!isValid} 
+                                    title="Сохранить" 
+                                    onclick={handleSubmit} 
+                                    size={EBtnSize.big} 
+                                    types={EBtnTypes.submit}
+                                    btnClass={EBtnClass.dark_active} />
+                            </div>                            
                         </Form>
                     )}
                 </Formik>

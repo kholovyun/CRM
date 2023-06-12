@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import { ERoles } from "../enums/ERoles";
 
 export const validationSchemaRegUser = yup.object().shape({
     name: yup.string()
@@ -19,7 +18,7 @@ export const validationSchemaRegUser = yup.object().shape({
         })
         .required("Обязательно для заполнения"),
     patronim: yup.string()
-        .test("no-spaces", "Отчество не должна содержать пробелы", function (value) {
+        .test("no-spaces", "Отчество не должно содержать пробелы", function (value) {
             if (value && /\s/.test(value)) {
                 return false;
             }
@@ -32,8 +31,5 @@ export const validationSchemaRegUser = yup.object().shape({
         .email("Введите корректный Email")
         .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
             "Введите корректный Email")
-        .required("Поле не должно быть пустым"),
-    role: yup.string()
-        .oneOf(Object.values(ERoles), "Выберите роль пользователя")
-        .required("Обязательно для заполнения"),
+        .required("Поле не должно быть пустым")
 });

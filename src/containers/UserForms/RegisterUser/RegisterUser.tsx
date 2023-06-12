@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactElement } from "react";
 import styles from "../UserForms.module.css";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import { validationSchemaRegUser } from "../../../schemas/validationSchemaRegUser";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { ERoles } from "../../../enums/ERoles";
 import { EDoctorLevel } from "../../../enums/EDoctorLevel";
 import PhoneMask from "../../../components/PhoneMask/PhoneMask";
+import { EBtnClass } from "../../../enums/EBtnClass";
 
 const RegisterUser: FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): ReactElement => {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ const RegisterUser: FunctionComponent<{role: string, title: string}> = (props: {
 
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
         const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
+        toast.error(`Ошибка ${err.data.message}`);
     };
 
     const successHandler = () => {
@@ -41,8 +42,7 @@ const RegisterUser: FunctionComponent<{role: string, title: string}> = (props: {
     isSuccess && successHandler();
 
     return (
-        <FormBox>
-            <Title text={props.title} />
+        <FormBox>            
             <Formik
                 initialValues={{
                     name: "",
@@ -59,46 +59,54 @@ const RegisterUser: FunctionComponent<{role: string, title: string}> = (props: {
                 }}
                 validationSchema={validationSchemaRegUser}
             >
-                {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
-                    <Form className={styles.LoginForm}>
+                {({ isValid, handleSubmit, handleChange, handleBlur }) => (
+                    <Form className={styles.form_column}>
+                        <Title text={props.title} />
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
-                                {touched.name && errors.name ? <p className={styles.typeError}>{errors.name}</p> : <p className={styles.typeText}></p>}
-                                <Field className={styles.LoginInput} name="name" type="text" placeholder="Имя" />
+                                <ErrorMessage className={styles.error_text} name="name" component="div"/>
+                                <Field className={styles.login_input} name="name" type="text" placeholder="Имя" />
                             </div>
                             <div className={styles.input_flex_column}>
-                                {touched.surname && errors.surname ? <p className={styles.typeError}>{errors.surname}</p> : <p className={styles.typeText}></p>}
-                                <Field className={styles.LoginInput} name="surname" type="text" placeholder="Фамилия" />
+                                <ErrorMessage className={styles.error_text} name="surname" component="div"/>
+                                <Field className={styles.login_input} name="surname" type="text" placeholder="Фамилия" />
                             </div>
                         </div>
-                        {touched.patronim && errors.patronim ? <p className={styles.typeError}>{errors.patronim}</p> : <p className={styles.typeText}></p>}
-                        <Field className={styles.LoginInput} name="patronim" type="text" placeholder="Отчество" />
+                        <ErrorMessage className={styles.error_text} name="patronim" component="div"/>
+                        <Field className={styles.login_input} name="patronim" type="text" placeholder="Отчество" />
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
-                                {touched.phone && errors.phone ? <p className={styles.typeError}>{errors.phone}</p> : <p className={styles.typeText}></p>}
+                                <ErrorMessage className={styles.error_text} name="phone" component="div"/>
                                 <PhoneMask
                                     handleBlur={handleBlur}
                                     handleChange={handleChange}
                                 />
                             </div>
                         </div>
-                        {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
-                        <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
+                        <ErrorMessage className={styles.error_text} name="email" component="div"/>
+                        <Field className={styles.login_input} name="email" type="text" placeholder="Email" />
                         {props.role === ERoles.DOCTOR ?
-                            <div className={styles.input_flex_column}>
-                                <div className={styles.select_wrapper}>
-                                    <Field className={styles.custom_select} name="price" as="select" placeholder="Уровень цены">
-                                        <option disabled value="">Уровень цены</option>
-                                        <option value={EDoctorLevel.JUNIOR}>{EDoctorLevel.JUNIOR}</option>
-                                        <option value={EDoctorLevel.MIDLLE}>{EDoctorLevel.MIDLLE}</option>
-                                        <option value={EDoctorLevel.SENIOR}>{EDoctorLevel.SENIOR}</option>
-                                    </Field>
+                            <div className={styles.input_row}>
+                                <label htmlFor={"price"} className={styles.label_text}>Базовая цена подписки</label>
+                                <div className={styles.input_flex_column}>
+                                    <div className={styles.select_wrapper}>                                    
+                                        <Field className={styles.custom_select} id={"price"} name="price" as="select" placeholder="Уровень цены">
+                                            <option className={styles.custom_option} value={EDoctorLevel.JUNIOR}>{EDoctorLevel.JUNIOR}</option>
+                                            <option className={styles.custom_option} value={EDoctorLevel.MIDLLE}>{EDoctorLevel.MIDLLE}</option>
+                                            <option className={styles.custom_option} value={EDoctorLevel.SENIOR}>{EDoctorLevel.SENIOR}</option>
+                                        </Field>
+                                    </div>
                                 </div>
                             </div>                                                        
                             : null}
-                        {touched.role && errors.role ? <p className={styles.typeError}>{errors.role}</p> : <p className={styles.typeText}></p>}
-                        <Field hidden type="text" name="role" className={styles.LoginInput} value={props.role} />
-                        <Btn disabled={!isValid} title="Создать" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} />
+                        <Field hidden type="text" name="role" className={styles.login_input} value={props.role} />
+                        <div className={styles.added_margin_top}>
+                            <Btn disabled={!isValid} 
+                                title="Создать" 
+                                onclick={handleSubmit} size={EBtnSize.big} 
+                                types={EBtnTypes.submit}
+                                btnClass={EBtnClass.dark_active} />
+                        </div>
                     </Form>
                 )}
             </Formik>

@@ -3,7 +3,7 @@ import { useSetPasswordMutation } from "../../../app/services/password";
 import styles from "../UserForms.module.css";
 import { FunctionComponent, ReactElement, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
@@ -43,7 +43,6 @@ const ResetPassword: FunctionComponent = (): ReactElement => {
     return (
         <Container>
             <FormBox>
-                <Title text="Сменить пароль" />
                 <Formik
                     initialValues={{
                         password: "",
@@ -58,12 +57,13 @@ const ResetPassword: FunctionComponent = (): ReactElement => {
                     }}
                     validationSchema={validationSchemaPasswords}
                 >
-                    {({ errors, touched, isValid, handleSubmit }) => (
-                        <Form className={styles.LoginForm}>
-                            {touched.password && errors.password ? <p className={styles.typeError}>{errors.password}</p> : <p className={styles.typeText}></p>}
-                            <Field className={styles.LoginInput} name="password" type="password" placeholder="Пароль" />
-                            {touched.passwordRepeat && errors.passwordRepeat ? <p className={styles.typeError}>{errors.passwordRepeat}</p> : <p className={styles.typeText}></p>}
-                            <Field className={`${styles.LoginInput} ${styles.margin_bottom}`} name="passwordRepeat" type="password" placeholder="Повторите пароль" />
+                    {({ isValid, handleSubmit }) => (
+                        <Form className={styles.form_column}>
+                            <Title text="Сменить пароль" />
+                            <ErrorMessage className={styles.error_text} name="password" component="div"/>
+                            <Field className={styles.login_input} name="password" type="password" placeholder="Пароль" />
+                            <ErrorMessage className={styles.error_text} name="passwordRepeat" component="div"/>
+                            <Field className={styles.login_input} name="passwordRepeat" type="password" placeholder="Повторите пароль" />
                             <Btn disabled={!isValid} title="Подтвердить" onclick={handleSubmit} size={EBtnSize.big} types={EBtnTypes.submit} btnClass={EBtnClass.dark_active}/>
                         </Form>
                     )}
