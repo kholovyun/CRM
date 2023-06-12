@@ -1,0 +1,22 @@
+.titleBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.questionBlock {
+    width: 100%;
+    background: #E5E8F1;
+    border-radius: 35px;
+    padding: 20px 60px;
+    word-wrap: break-word;
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.closeBtn {
+    background: url("../../assets/img/Vector.png") center/contain no-repeat;
+    width: 47px;
+    height: 30px;
+    cursor: pointer;
+}
