@@ -22,7 +22,8 @@ import { useDoctorId } from "../../DoctorCabinetPage/DoctorAdminPage/DoctorAdmin
 import IUserCreateParentWithChildDto from "../../../interfaces/IUser/IUserCreateParentWithChildDto";
 import { validationFirst, validationSec } from "../../../schemas/validationScremasRegisterParent";
 import { FormikStepProps } from "./IFormikInterface";
-
+import { FormBox } from "../FormBox/FormBox";
+import { EBtnClass } from "../../../enums/EBtnClass";
 
 const RegisterParent: FunctionComponent= (): ReactElement => {
     const doctorId = useDoctorId();
@@ -30,7 +31,7 @@ const RegisterParent: FunctionComponent= (): ReactElement => {
     
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
         const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
+        toast.error(`Ошибка ${err.data.message}`);
     };
 
     const successHandler = () => {
@@ -42,7 +43,7 @@ const RegisterParent: FunctionComponent= (): ReactElement => {
 
     return (
         <Container>
-            <div className={styles.form_box_parent}>
+            <FormBox>
                 <FormikStepper
                     initialValues={{
                         role: ERoles.PARENT,
@@ -72,28 +73,27 @@ const RegisterParent: FunctionComponent= (): ReactElement => {
                     <FormikStep label="1" validationSchema = {validationFirst}>
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
+                                <ErrorMessage className={styles.error_text} name="name" component="div"/>
                                 <Field 
-                                    className={styles.LoginInput} 
+                                    className={styles.login_input} 
                                     name="name" 
                                     type="text" 
-                                    placeholder="Имя" />
-                                <ErrorMessage name="name" component="div"/>
+                                    placeholder="Имя" />                                
                             </div>
                             <div className={styles.input_flex_column}>
-                                <Field 
-                                    className={styles.LoginInput} 
+                                <ErrorMessage className={styles.error_text} name="surname" component="div"/><Field 
+                                    className={styles.login_input} 
                                     name="surname" 
                                     type="text" 
-                                    placeholder="Фамилия" />
-                                <ErrorMessage name="surname" component="div"/>
+                                    placeholder="Фамилия" />                                
                             </div>
                         </div>
+                        <ErrorMessage className={styles.error_text} name="patronim" component="div"/>
                         <Field 
-                            className={styles.LoginInput} 
+                            className={styles.login_input} 
                             name="patronim" 
                             type="text" 
-                            placeholder="Отчество" />
-                        <ErrorMessage name="patronim" component="div"/>                            
+                            placeholder="Отчество" />                            
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
                                 <Field
@@ -107,135 +107,142 @@ const RegisterParent: FunctionComponent= (): ReactElement => {
                                             id="phone"
                                             type="text"
                                             placeholder="+996(___)__-__-__"
-                                            className={styles.LoginInput}
+                                            className={styles.login_input}
                                         />
                                     )}
                                 </Field>
                             </div>
                             <div className={styles.input_flex_column}>
+                                <ErrorMessage className={styles.error_text} name="email" component="div"/>
                                 <Field 
-                                    className={styles.LoginInput} 
+                                    className={styles.login_input} 
                                     name="email" 
                                     type="text" 
-                                    placeholder="Email" />
-                                <ErrorMessage name="email" component="div"/>
+                                    placeholder="Email" />                                
                             </div>
                             <Field 
                                 hidden readOnly={true}
-                                className={styles.LoginInput} 
+                                className={styles.login_input} 
                                 name="doctorId"
                                 type="text" 
                                 placeholder="ID Врача" />
                         </div>
                     </FormikStep>
                     <FormikStep label="2" validationSchema={validationSec}>
-                        <div className={styles.parentForm}>
+                        <div className={styles.form_column}>
 
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="child.name" component="div"/>
                                     <Field 
-                                        className={styles.LoginInput}
+                                        className={styles.login_input}
                                         name="child.name" 
                                         type="text" 
-                                        placeholder="Имя" />
-                                    <ErrorMessage name="child.name" component="div"/>
+                                        placeholder="Имя" />                                    
                                 </div>
                                 <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="child.surname" component="div"/>
                                     <Field 
-                                        className={styles.LoginInput} 
+                                        className={styles.login_input} 
                                         name="child.surname" 
                                         type="text" 
-                                        placeholder="Фамилия" />
-                                    <ErrorMessage name="child.surname" component="div"/>
+                                        placeholder="Фамилия" />                                    
                                 </div>
                             </div>
+                            <ErrorMessage className={styles.error_text} name="child.patronim" component="div"/>
                             <Field 
-                                className={styles.LoginInput} 
+                                className={styles.login_input} 
                                 name="child.patronim" 
                                 type="text" 
-                                placeholder="Отчество" />
-                            <ErrorMessage name="child.patronim" component="div"/>  
-                            <div className={styles.input_select_row}>
+                                placeholder="Отчество" />                              
+                            <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
-                                    <Field name="child.dateOfBirth" type="date" className={styles.LoginInput}/>
-                                    <ErrorMessage name="child.dateOfBirth" component="div"/>
+                                    <ErrorMessage className={styles.error_text} name="child.dateOfBirth" component="div"/>
+                                    <Field name="child.dateOfBirth" type="date" className={styles.login_input}/>                                    
                                 </div>
                                 <div className={styles.input_flex_column}>
-                                    <Field
-                                        as="select" 
-                                        className={styles.LoginInput} 
-                                        name="child.sex" 
-                                        placeholder="Пол"
-                                        id="sex"
-                                        default=""
-                                    >   
-                                        <option value="" disabled hidden>Пол</option>
-                                        <option value={ESex.FEMALE}>{ESex.FEMALE}</option>
-                                        <option value={ESex.MALE}>{ESex.MALE}</option>
-                                    </Field>
-                                    <ErrorMessage name="child.sex" component="div"/>
+                                    <ErrorMessage className={styles.error_text} name="child.sex" component="div"/>
+                                    <div className={styles.select_wrapper}>
+                                        <Field
+                                            as="select" 
+                                            className={styles.custom_select} 
+                                            name="child.sex" 
+                                            placeholder="Пол"
+                                            id="sex"
+                                            default=""
+                                        >   
+                                            <option className={styles.custom_option} value="" disabled hidden>Пол</option>
+                                            <option className={styles.custom_option} value={ESex.FEMALE}>{ESex.FEMALE}</option>
+                                            <option className={styles.custom_option} value={ESex.MALE}>{ESex.MALE}</option>
+                                        </Field>
+                                    </div>     
                                 </div>
                             </div>
-                            <div className={styles.form_labels_controlls}>
-                                <div className={styles.text_select_box}>
-                                    <Field 
-                                        className={styles.numInput} 
-                                        name="child.height" 
-                                        type="number" 
-                                        placeholder="Рост" />
-                                    <p>см</p>
-
+                            <div className={styles.two_inputs_row}>
+                                <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="child.height" component="div"/>
+                                    <div className={styles.text_select_box}>
+                                        <div className={styles.select_wrapper}>
+                                            <Field 
+                                                className={styles.num_input} 
+                                                name="child.height" 
+                                                type="number" 
+                                                placeholder="Рост" />                                            
+                                        </div>
+                                        <p className={styles.label_text}>см</p>
+                                    </div>
                                 </div>
-                                <div className={styles.text_select_box}>
-                                    <Field 
-                                        className={styles.numInput} 
-                                        name="child.weight" 
-                                        type="number" 
-                                        placeholder="Вес" />
-                                    <p>кг</p>
+                                <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="child.weight" component="div"/>
+                                    <div className={styles.text_select_box}>
+                                        <div className={styles.select_wrapper}>
+                                            <Field 
+                                                className={styles.num_input}
+                                                name="child.weight" 
+                                                type="number" 
+                                                placeholder="Вес" />                                            
+                                        </div>
+                                        <p className={styles.label_text}>кг</p>
+                                    </div>
                                 </div>               
                             </div>
-                            <div>
-                                <ErrorMessage name="child.height" component="div"/>
-                                <ErrorMessage name="child.weight" component="div"/>
-                            </div>  
                         </div>
                     </FormikStep>
                     <FormikStep label="3">
                         <div className={styles.two_inputs_row}>
-                            <div className={styles.input_flex_column}>
-                                <p>Тип подписки</p>
-                                <Field
-                                    as="select" 
-                                    className={styles.LoginInput} 
-                                    name="subscrType" 
-                                    id="subsribe"
-                                    default=""
-                                >   
-                                    <option value="" disabled hidden></option>
-                                    <option value={ESubscriptionType.MOUNTH}>{ESubscriptionType.MOUNTH} месяц</option>
-                                    <option value={ESubscriptionType.HALF_YEAR}>{ESubscriptionType.HALF_YEAR} месяцев</option>
-                                    <option value={ESubscriptionType.YEAR}>год</option>
-                                </Field>
+                            <div className={styles.input_subscribe_column}>
+                                <label htmlFor={"subsribe"} className={styles.label_text}>Тип подписки</label>
+                                <div className={styles.select_wrapper}>
+                                    <Field
+                                        as="select" 
+                                        className={styles.custom_select}
+                                        name="subscrType" 
+                                        id="subsribe"
+                                    >   
+                                        <option className={styles.custom_option} value={ESubscriptionType.MOUNTH}>{ESubscriptionType.MOUNTH} месяц</option>
+                                        <option className={styles.custom_option} value={ESubscriptionType.HALF_YEAR}>{ESubscriptionType.HALF_YEAR} месяцев</option>
+                                        <option className={styles.custom_option} value={ESubscriptionType.YEAR}>год</option>
+                                    </Field>
+                                </div>
                             </div>
-                            <div className={styles.input_flex_column}>
-                                <p>Способ оплаты</p>
-                                <Field
-                                    as="select" 
-                                    className={styles.LoginInput} 
-                                    name="paymentType" 
-                                    id="payment"
-                                    default=""
-                                >   
-                                    <option value="" disabled hidden></option>
-                                    <option value={EPaymentType.AQUIR}>{EPaymentType.AQUIR}</option>
-                                    <option value={EPaymentType.CASH}>{EPaymentType.CASH}</option>
-                                </Field>
+                            <div className={styles.input_subscribe_column}>
+                                <label htmlFor={"payment"} className={styles.label_text}>Способ оплаты</label>
+                                <div className={styles.select_wrapper}>
+                                    <Field
+                                        as="select" 
+                                        className={styles.custom_select}
+                                        name="paymentType" 
+                                        id="payment"
+                                    >   
+                                        <option className={styles.custom_option} value={EPaymentType.AQUIR}>{EPaymentType.AQUIR}</option>
+                                        <option className={styles.custom_option} value={EPaymentType.CASH}>{EPaymentType.CASH}</option>
+                                    </Field>
+                                </div>
                             </div>
-                        </div>  
+                        </div>
                     </FormikStep>     
                 </FormikStepper>
-            </div>
+            </FormBox>
         </Container>
     );
 };
@@ -274,27 +281,26 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
                 }
             }}
         >   
-            <Form className={styles.parentForm}>
+            <Form className={styles.form_column}>
                 <Title text={TitlePicker()} />
                 {currentChild}
-                <div className={styles.form_labels_controlls}>
+                <div className={styles.two_inputs_row}>
                     {step > 0 ? (
                         <Btn
                             onclick={() => setStep((s) => s - 1)}
                             title="Назад"
-                            btnClass={EBtnSize.small}
+                            size={EBtnSize.small}
+                            btnClass={EBtnClass.white_active}
                         />
-
                     ) : null}
                     <Btn
                         types={EBtnTypes.submit}
                         title={isLastStep()? "Создать" : "Продолжить"}
-                        btnClass={EBtnSize.small}
+                        size={EBtnSize.small}
+                        btnClass={EBtnClass.dark_active}
                     />
-
                 </div>
-            </Form>
-            
+            </Form>            
         </Formik>
     );
 }

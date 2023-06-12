@@ -18,7 +18,7 @@ export const validationSchemaEditUser = yup.object().shape({
         })
         .required("Обязательно для заполнения"),
     patronim: yup.string()
-        .test("no-spaces", "Отчество не должна содержать пробелы", function (value) {
+        .test("no-spaces", "Отчество не должно содержать пробелы", function (value) {
             if (value && /\s/.test(value)) {
                 return false;
             }

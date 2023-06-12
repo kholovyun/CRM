@@ -21,8 +21,8 @@
 }
 
 .big {
-    font-size: 1.3rem;
-    min-width: 11rem;
+    font-size: 1.2rem;
+    min-width: 10rem;
     padding: 0.9rem 2rem;
 }
 
@@ -59,8 +59,8 @@
 
 @media screen and (min-width: 600px) {
     .big {
-        font-size: 1.3rem;
-        min-width: 11rem;
+        font-size: 1.2rem;
+        min-width: 10rem;
     }
 
     .small {

@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../app/hooks";
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "../UserForms.module.css";
 import { toast } from "react-toastify";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
@@ -44,8 +44,7 @@ const Login: FunctionComponent = (): ReactElement => {
 
     return (
         <Container>
-            <FormBox>
-                <Title text="Вход" />
+            <FormBox>                
                 <Formik
                     initialValues={{
                         email: "",
@@ -57,13 +56,14 @@ const Login: FunctionComponent = (): ReactElement => {
                     }}
                     validationSchema={validationSchema}
                 >
-                    {({ errors, touched, isValid, handleSubmit }) => (
-                        <Form className={styles.LoginForm}>
-                            {touched.email && errors.email ? <p className={styles.typeError}>{errors.email}</p> : <p className={styles.typeText}></p>}
-                            <Field className={styles.LoginInput} name="email" type="text" placeholder="Email" />
-                            {touched.password && errors.password ? <p className={styles.typeError}>{errors.password}</p> : <p className={styles.typeText}></p>}
-                            <Field className={styles.LoginInput} name="password" type="password" placeholder="Пароль" />
-                            <NavLink to={"/forgot-password"} className={styles.forgotlink}>Забыли пароль?</NavLink>
+                    {({ isValid, handleSubmit }) => (
+                        <Form className={styles.form_column}>
+                            <Title text="Вход" />
+                            <ErrorMessage className={styles.error_text} name="email" component="div"/>
+                            <Field className={styles.login_input} name="email" type="text" placeholder="Email" />
+                            <ErrorMessage className={styles.error_text} name="password" component="div"/>
+                            <Field className={styles.login_input} name="password" type="password" placeholder="Пароль" />
+                            <NavLink to={"/forgot-password"} className={styles.forgot_link}>Забыли пароль?</NavLink>
                             <Btn disabled={!isValid} title="Войти"
                                 onclick={handleSubmit}
                                 size={EBtnSize.big}

@@ -13,7 +13,7 @@ import AllDoctors from "./containers/AdminPage/AdminTables/AllDoctors/AllDoctors
 import DoctorCabinetPage from "./containers/DoctorCabinetPage/DoctorCabinetPage";
 import RegisterDoctor from "./containers/UserForms/RegisterUser/RegisterDoctor";
 import RegisterAdmin from "./containers/UserForms/RegisterUser/RegisterAdmin";
-import RegisterParent from "./containers/UserForms/RegisterParrent/RegisterParent";
+import RegisterParent from "./containers/UserForms/RegisterParent/RegisterParent.tsx";
 import ResetPassword from "./containers/UserForms/ResetPassword/ResetPassword";
 import ForgotPassword from "./containers/UserForms/ForgotPassword/ForgotPassword";
 import AllAdmins from "./containers/AdminPage/AdminTables/AllAdmins/AllAdmins";

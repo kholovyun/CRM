@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import { FunctionComponent, ReactElement, ChangeEvent, useState } from "react";
 import styles from "../../containers/UserForms/UserForms.module.css";
 import MaskedInput from "react-text-mask";
 import { KGMask, KZMask, RUMask } from "../../helpers/countryRegexs";
@@ -13,7 +13,7 @@ const PhoneMask: FunctionComponent<IPhoneMaskProps>  = (props): ReactElement => 
     const [placeholder, setPlaceholder] = useState("+7(___)___-__-__");
     const [flag, setFlag] = useState(KZFlag);
 
-    const phoneMaskOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const phoneMaskOnChange = (e: ChangeEvent<HTMLSelectElement>) => {
         switch (e.target.value) {
         case "RU":
             setPhoneMask(RUMask);
@@ -41,9 +41,9 @@ const PhoneMask: FunctionComponent<IPhoneMaskProps>  = (props): ReactElement => 
                 <div className={styles.flag_wrapper}><img className={styles.flag_image} src={flag} alt="" /></div>
                 <div className={styles.select_wrapper}>
                     <select className={styles.country_select} defaultValue={"KZ"} onChange={phoneMaskOnChange}>
-                        <option value={"KZ"}>KZ</option>
-                        <option value={"KG"}>KG</option>
-                        <option value={"RU"}>RU</option>
+                        <option className={styles.custom_option} value={"KZ"}>KZ</option>
+                        <option className={styles.custom_option} value={"KG"}>KG</option>
+                        <option className={styles.custom_option} value={"RU"}>RU</option>
                     </select>
                 </div>
             </div>
@@ -59,7 +59,7 @@ const PhoneMask: FunctionComponent<IPhoneMaskProps>  = (props): ReactElement => 
                         type="text"
                         onChange={props.handleChange}
                         onBlur={props.handleBlur}
-                        className={styles.LoginInput}
+                        className={styles.login_input}
                     />
                 )}
             </Field>
