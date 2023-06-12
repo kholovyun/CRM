@@ -1,28 +1,37 @@
 import styles from "./Сarousel.module.css";
-import AliceCarousel from "react-alice-carousel";
-import {FunctionComponent, ReactElement} from "react";
+// import AliceCarousel from "react-alice-carousel";
+import { FunctionComponent, ReactElement } from "react";
+import {CardTitle} from "../UI/ParrentUi/CardTitle/CardTitle.tsx";
 
 type TCarouselBox = {
     text: string,
 };
-export const Carousel: FunctionComponent<TCarouselBox> = (props): ReactElement => {
+export const Carousel: FunctionComponent<TCarouselBox> = ({text}): ReactElement => {
+    // const [showModal, setShowModal] = useState(false);
+    // const openModal = () => {
+    //     setShowModal(true);
+    // };
+    // const closeModal = () => {
+    //     setShowModal(false);
+    // };
+
+    // const items = [
+    //     <div  key={"Abc"} className={styles.carouselAddItem}>
+    //         <div className={styles.carouselAddItemIcon}></div>
+    //     </div>]
+    // ;
+    //     .concat(massive && massive.map(el => {
+    //     return  <div className={styles.carouselItem} key={el.id}>
+    //         <img
+    //             className={styles.diplomaImg}
+    //             onError={(e) => { e.currentTarget.src = defaultChildImg;}}
+    //             src={el?.photo !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/childrenImgs/${el?.photo}` : defaultChildImg} alt={"childPicture"} />
+    //     </div>;
+    // }));
+
     return (
         <div className={styles.carouselBox}>
-            <p className={styles.carouselTitle}>{props.text}</p>
-            <AliceCarousel
-                disableDotsControls responsive={{0: {
-                    items: 1,
-                    itemsFit: "fill",
-                }, 570: {
-                    items: 2,
-                    itemsFit: "fill",
-                }, 790: {
-                    items: 3,
-                    itemsFit: "fill",
-                }, 970: {
-                    items: 4,
-                    itemsFit: "fill",
-                }}}/>
+            <CardTitle title={text} />
         </div>
     );
 };

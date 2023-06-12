@@ -26,6 +26,8 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
         getDip();
     }, [doctor]);
 
+
+
     return (
         <Container>
             {doctor &&  <DoctorInformation doctor={doctor}/>}

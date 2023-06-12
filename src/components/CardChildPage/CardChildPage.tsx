@@ -1,8 +1,20 @@
 import styles from "./CardChildPage.module.css";
 import {InfoTable} from "../UI/InfoTable/InfoTable.tsx";
 import defaultImage from "../../assets/img/icon_children_sidebar.svg";
+import {FC} from "react";
+import IChildGetDto from "../../interfaces/IChild/IChildGetDto.ts";
+import { DateTime } from "luxon";
 
-export  const  CardChildPage = () => {
+
+type TChild = {
+    data: IChildGetDto
+};
+export  const  CardChildPage: FC<TChild> = ( {data} ) => {
+    const date = new Date(data ? data.dateOfBirth : "");
+    const dateNow = new Date();
+    const dateTime = DateTime.fromISO(data ? `${data.dateOfBirth}` : "12-06-2023 12:34:56 PM");
+    dateTime && dateTime.setLocale("ru");
+
     return (
         <InfoTable>
             <div className={styles.cardChildBox}>
@@ -13,21 +25,21 @@ export  const  CardChildPage = () => {
                     alt="child" />
                 <div className={styles.cardChildPage}>
                     <div className={styles.cardChildBoxGap}>
-                        <p className={styles.cardChildBoxText}>Иван</p>
-                        <p className={styles.cardChildBoxText}>Иванов</p>
+                        <p className={styles.cardChildBoxText}>{data?.name}</p>
+                        <p className={styles.cardChildBoxText}>{data?.surname}</p>
                     </div>
                     <div className={styles.cardChildBoxGap}>
-                        <p className={styles.cardChildBoxText}>Рост</p>
-                        <p className={styles.cardChildBoxText}>Вес</p>
+                        <p className={styles.cardChildBoxText}>{data?.height}</p>
+                        <p className={styles.cardChildBoxText}>{data?.weight}</p>
                     </div>
                     <div className={styles.cardChildBoxOne}>
-                        <p className={styles.cardChildBoxDateText}>31</p>
-                        <p className={styles.cardChildBoxDateText}>Февраль</p>
-                        <p className={styles.cardChildBoxDateText}>2023</p>
+                        <p className={styles.cardChildBoxDateText}>{date?.getDay()}</p>
+                        <p className={styles.cardChildBoxDateText}>{dateTime.toFormat("LLLL")}</p>
+                        <p className={styles.cardChildBoxDateText}>{date?.getFullYear()}</p>
                     </div>
                     <div className={styles.cardChildBoxGapBootom}>
-                        <p className={styles.cardChildBoxSubText}>Возраст: 5 лет</p>
-                        <p className={styles.cardChildBoxSubText}>Последнее посещение: 12.03.2023</p>
+                        <p className={styles.cardChildBoxSubText}>Возраст: {dateNow.getFullYear() - date.getFullYear()} лет</p>
+                        <p className={styles.cardChildBoxSubText}>Последнее посещение: {date && dateNow.toLocaleString()}</p>
                     </div>
                 </div>
             </div >

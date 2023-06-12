@@ -1,5 +1,6 @@
 import IChildWithParentIdDto from "../../interfaces/IChild/IChildWithParentIdDto";
 import { api } from "./api";
+import IChildGetDto from "../../interfaces/IChild/IChildGetDto.ts";
 
 const childrenApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -10,10 +11,16 @@ const childrenApi = api.injectEndpoints({
                 params: {offset, limit}
             }),
             providesTags: ["Child"]
+        }),
+        getChildrenById: build.query<{result: IChildGetDto}, string >({
+            query: (data) => ({
+                url: `/children/${data}`,
+                method: "GET",
+            }),
         })
     })
 });
 
 export const {
-    useGetChildrenByDoctorQuery
+    useGetChildrenByDoctorQuery, useGetChildrenByIdQuery
 } = childrenApi;

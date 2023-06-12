@@ -1,19 +1,21 @@
-import {FunctionComponent, ReactElement} from "react";
+import {FunctionComponent, ReactElement } from "react";
 import {Container} from "../../components/UI/Container/Container";
 import {CardChildPage} from "../../components/CardChildPage/CardChildPage.tsx";
 import {SupportTextAria} from "../../components/SupportTextAria/SupportTextAria.tsx";
-import styles from "./ChildCabinetPage.module.css";
-import {CardTitle} from "../../components/UI/ParrentUi/CardTitle/CardTitle.tsx";
 import ContentLink from "../../components/UI/ContentLink/ContentLink.tsx";
 import {ContentLinkBox} from "../../components/UI/ContentLinkBox/ContentLinkBox.tsx";
+import {Carousel} from "../../components/Сarousel/Сarousel.tsx";
+import {useGetChildrenByIdQuery} from "../../app/services/children.ts";
+import {useParams} from "react-router-dom";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
+    const params = useParams();
+    const { data , isSuccess} = useGetChildrenByIdQuery(`${params.id}`);
+
     return (
         <Container>
-            <CardChildPage />
-            <div className={styles.functionalBox}>
-                <CardTitle title={"Результаты последних обследований"} />
-            </div>
+            {isSuccess && <CardChildPage data={data.result}/>}
+            <Carousel text={"Результаты последних обследований"} />
             <SupportTextAria ph={"Задать вопрос врачу"} btnName={"Отправить"} />
             <ContentLinkBox>
                 <ContentLink fn={() => console.log("Ранее заданные вопросы")} text={"Ранее заданные вопросы"}/>
