@@ -4,6 +4,11 @@ import defaultImage from "../../assets/img/icon_children_sidebar.svg";
 import {FC} from "react";
 import IChildGetDto from "../../interfaces/IChild/IChildGetDto.ts";
 import { DateTime } from "luxon";
+import {SubInfoTable} from "../UI/SubInfoTable/SubInfoTable.tsx";
+import {InfoTableContent} from "../UI/InfoTableContent/InfoTableContent.tsx";
+import {InfoTextBoxAlone} from "../UI/infoTextBoxes/infoTextBoxAlone/infoTextBoxAlone.tsx";
+import {InfoTextBoxDouble} from "../UI/infoTextBoxes/infoTextBoxDouble/infoTextBoxDouble.tsx";
+import {InfoTextBoxTriple} from "../UI/infoTextBoxes/infoTextBoxTriple/infoTextBoxTriple.tsx";
 
 
 type TChild = {
@@ -17,32 +22,32 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
 
     return (
         <InfoTable>
-            <div className={styles.cardChildBox}>
+            <SubInfoTable>
                 <img
                     className={styles.childAvatar}
                     onError={(e) => { e.currentTarget.src = defaultImage;}}
                     src={defaultImage}
                     alt="child" />
-                <div className={styles.cardChildPage}>
-                    <div className={styles.cardChildBoxGap}>
-                        <p className={styles.cardChildBoxText}>{data?.name}</p>
-                        <p className={styles.cardChildBoxText}>{data?.surname}</p>
-                    </div>
-                    <div className={styles.cardChildBoxGap}>
-                        <p className={styles.cardChildBoxText}>{data?.height}</p>
-                        <p className={styles.cardChildBoxText}>{data?.weight}</p>
-                    </div>
-                    <div className={styles.cardChildBoxOne}>
-                        <p className={styles.cardChildBoxDateText}>{date?.getDay()}</p>
-                        <p className={styles.cardChildBoxDateText}>{dateTime.toFormat("LLLL")}</p>
-                        <p className={styles.cardChildBoxDateText}>{date?.getFullYear()}</p>
-                    </div>
-                    <div className={styles.cardChildBoxGapBootom}>
-                        <p className={styles.cardChildBoxSubText}>Возраст: {dateNow.getFullYear() - date.getFullYear()} лет</p>
-                        <p className={styles.cardChildBoxSubText}>Последнее посещение: {date && dateNow.toLocaleString()}</p>
-                    </div>
-                </div>
-            </div >
+                <InfoTableContent>
+                    <InfoTextBoxDouble
+                        textOne={data?.name}
+                        textTwo={data?.surname}
+                    />
+                    <InfoTextBoxDouble
+                        textOne={`${data?.height}`}
+                        textTwo={`${data?.weight}`}
+                    />
+                    <InfoTextBoxTriple
+                        day={`${date?.getDay()}`}
+                        month={`${dateTime.toFormat("LLLL")}`}
+                        year={`${date?.getFullYear()}`}
+                    />
+                    <InfoTextBoxAlone
+                        textOne={`Возраст: ${dateNow.getFullYear() - date.getFullYear()} лет`}
+                        textTwo={`Последнее посещение: ${date && data.dateOfBirth.toLocaleString()}`}
+                    />
+                </InfoTableContent>
+            </SubInfoTable>
         </InfoTable>
     );
 };
