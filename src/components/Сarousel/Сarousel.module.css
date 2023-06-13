@@ -1,0 +1,6 @@
+.carouselBox {
+    background-color: var(--light_blue_half_opacity);
+    padding: 40px 80px;
+    border-radius: 50px;
+    margin-top: 50px;
+}
