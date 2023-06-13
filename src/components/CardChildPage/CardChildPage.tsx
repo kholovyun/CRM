@@ -1,6 +1,4 @@
 import styles from "./CardChildPage.module.css";
-import {InfoTable} from "../UI/InfoTable/InfoTable.tsx";
-import defaultImage from "../../assets/img/icon_children_sidebar.svg";
 import {FC} from "react";
 import IChildGetDto from "../../interfaces/IChild/IChildGetDto.ts";
 import {SubInfoTable} from "../UI/SubInfoTable/SubInfoTable.tsx";
@@ -8,6 +6,8 @@ import {InfoTableContent} from "../UI/InfoTableContent/InfoTableContent.tsx";
 import {InfoTextBoxAlone} from "../UI/infoTextBoxes/infoTextBoxAlone/infoTextBoxAlone.tsx";
 import {InfoTextBoxDouble} from "../UI/infoTextBoxes/infoTextBoxDouble/infoTextBoxDouble.tsx";
 import {InfoTextBoxTriple} from "../UI/infoTextBoxes/infoTextBoxTriple/infoTextBoxTriple.tsx";
+import AvatarBox from "../AvatarBox/AvatarBox.tsx";
+import { ERoles } from "../../enums/ERoles.ts";
 
 
 type TChild = {
@@ -33,13 +33,16 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
     const age:number = dateNow.getFullYear() - date.getFullYear();
 
     return (
-        <InfoTable>
+        <div className={styles.childBoxFirstTop}>
+            <AvatarBox 
+                width={300}
+                height={300}
+                avatar={data.photo}
+                id={data.id}
+                role={ERoles.CHILD}
+
+            />
             <SubInfoTable>
-                <img
-                    className={styles.childAvatar}
-                    onError={(e) => { e.currentTarget.src = defaultImage;}}
-                    src={defaultImage}
-                    alt="child" />
                 <InfoTableContent>
                     <InfoTextBoxDouble
                         textOne={data?.name}
@@ -60,6 +63,6 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                     />
                 </InfoTableContent>
             </SubInfoTable>
-        </InfoTable>
+        </div>
     );
 };

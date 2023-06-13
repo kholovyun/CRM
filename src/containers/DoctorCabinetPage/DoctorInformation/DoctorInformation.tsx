@@ -8,6 +8,7 @@ import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import AvatarBox from "../../../components/AvatarBox/AvatarBox";
 import { ERoles } from "../../../enums/ERoles";
+import { SubInfoTable } from "../../../components/UI/SubInfoTable/SubInfoTable";
 
 interface IDoctorInformationProps {
     doctor: IDoctorWithUser
@@ -42,7 +43,7 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor})
                 avatar={doctor?.photo} 
                 id={doctor?.id}
             />
-            <div className={styles.doctorInformation}>
+            <SubInfoTable>
                 <div className={styles.personalInformationLine}>
                     <div className={styles.personalInformationField}>
                         <p className={styles.fieldTitle}>ФИО</p>
@@ -86,8 +87,8 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor})
                     <div className={styles.personalInformationButton}>
                         <Btn onclick={() => setShowEditUserModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
                     </div>
-                </div>       
-            </div>       
+                </div>  
+            </SubInfoTable>
         </div>
     );
 };
