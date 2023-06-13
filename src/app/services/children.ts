@@ -17,10 +17,19 @@ const childrenApi = api.injectEndpoints({
                 url: `/children/${data}`,
                 method: "GET",
             }),
-        })
+            providesTags: ["Child"]
+        }),
+        editChild: build.mutation<IChildGetDto, { id: string; child: FormData }>({
+            query: ({ id, child }) => ({
+                url: `/children/${id}`,
+                method: "PATCH",
+                body: child,
+            }),
+            invalidatesTags: ["Child"],
+        }),
     })
 });
 
 export const {
-    useGetChildrenByDoctorQuery, useGetChildrenByIdQuery
+    useGetChildrenByDoctorQuery, useGetChildrenByIdQuery, useEditChildMutation
 } = childrenApi;
