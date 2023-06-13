@@ -16,7 +16,7 @@ interface IAvatarBoxProps {
 
 const AvatarBox: FunctionComponent<IAvatarBoxProps> = (props: IAvatarBoxProps): ReactElement => {
     const defaultImg = props.role === ERoles.DOCTOR ? defaultDoctorImg : defaultChildImg;
-    const imgSrc = props.role === ERoles.DOCTOR ? "doctorsImgs" : props.role === ERoles.CHILD ? "childrenImgs" : "doctorsImgs";
+    const imgSrc = props.role === ERoles.DOCTOR ? "doctorsImgs" : "childrenImgs";
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const editAvatarModalCloser = () => {
         setShowAvatarModal(false);
@@ -34,7 +34,7 @@ const AvatarBox: FunctionComponent<IAvatarBoxProps> = (props: IAvatarBoxProps): 
             </Modal>
             <div 
                 className={styles.avatar}
-                style={{width: `${props.width}px`, height: `${props.height}px`}}
+                style={{width: `${props.width}px`}}
             >
                 <div className={styles.backdrop} onClick={() => {setShowAvatarModal(true);}}></div>
                 {props.avatar !== undefined ? 

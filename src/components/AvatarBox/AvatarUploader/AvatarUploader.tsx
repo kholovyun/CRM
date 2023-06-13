@@ -9,6 +9,8 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
+import { useEditChildMutation } from "../../../app/services/children";
+import { ERoles } from "../../../enums/ERoles";
 
 const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarUploaderProps): ReactElement => { 
     const [uploadDoctorAvatar, 
@@ -16,12 +18,18 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarU
             isSuccess: isSuccesDoctorAvatar,
             isError: isErrorDoctorAvatar,
             error: errorDoctorAvatar, 
-            reset: resetDoctorAvatar
         }
     ]= useEditDoctorMutation();
 
+    const [uploadChildAvatar, 
+        {
+            isSuccess: isSuccesChildAvatar,
+            isError: isErrorChildAvatar,
+            error: errorChildAvatar, 
+        }
+    ]= useEditChildMutation();
+
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        resetDoctorAvatar();
         const err = data as IErrorResponse<IMessage>;
         toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
     };
@@ -35,12 +43,16 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarU
     }, [isErrorDoctorAvatar]);
 
     useEffect(()=> {
-        if(isSuccesDoctorAvatar) {
+        isErrorChildAvatar && errorHandler(errorChildAvatar);
+    }, [isErrorChildAvatar]);
+
+    useEffect(()=> {
+        if(isSuccesDoctorAvatar || isSuccesChildAvatar) {
             toast.info("Аватар изменен");
             props.modalCloser();
             cancelFileHandler();
         }
-    }, [isSuccesDoctorAvatar]);
+    }, [isSuccesDoctorAvatar, isSuccesChildAvatar]);
 
     const [imageProps, setImageProps] = useState<IImageProps>({
         image: "",
@@ -105,7 +117,9 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarU
                     const file = new File([blob], "sample.png", {type: blob.type});
                     const formData = new FormData();
                     formData.append("photo", file);
-                    uploadDoctorAvatar({id: props.id || "", doctor:formData});
+                    props.role === ERoles.DOCTOR ? 
+                        uploadDoctorAvatar({id: props.id || "", doctor:formData}) :
+                        uploadChildAvatar({id: props.id || "", child:formData});
                 }
                 ).catch((e: Error) => {
                     toast.error(`Ошибка ${e.message}`);
