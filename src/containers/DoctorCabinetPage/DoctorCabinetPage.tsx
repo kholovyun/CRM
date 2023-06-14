@@ -48,6 +48,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                     fn={() => navigate("/admin-page/children")} 
                     text="Перейти в админ панель"/>
             </ContentLinkBox>
+        </Container>
     );
 };
 
