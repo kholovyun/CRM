@@ -15,10 +15,10 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        logout: (state) => {
+        logout: () => {
             localStorage.removeItem("persist:root");
-            state.user = null;
             toast.info("Выход выполнен");
+            return initialState;            
         },
     },
     extraReducers: (builder) => {

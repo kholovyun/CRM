@@ -113,6 +113,21 @@
     width: 100%;
 }
 
+.tiny_select_wraper {
+    position: relative;
+    align-self: flex-start;
+}
+
+.tiny_select {
+    padding: 0.625rem 2rem 0.625rem 1.25rem;
+    border-radius: 1.25rem;
+    font-size: 1rem;
+    margin: 0;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+}
+
 .num_input,
 .custom_select {
     width: 100%;
@@ -135,6 +150,7 @@
     margin-top: 1rem;
 }
 
+.tiny_select_wraper::after,
 .select_wrapper::after {
     content: "";
     position: absolute;

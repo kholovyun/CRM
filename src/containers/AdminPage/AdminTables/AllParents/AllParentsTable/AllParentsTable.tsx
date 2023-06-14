@@ -1,7 +1,7 @@
 import { FunctionComponent, ReactElement } from "react";
 import IAllParentsTableProps from "./IAllParentsTableProps";
 import { useNavigate } from "react-router-dom";
-import styles from "../../../../../AdminPage/AdminTables/AllTables.module.css";
+import styles from "../../AllTables.module.css";
 
 const AllParentsTable: FunctionComponent<IAllParentsTableProps> = (props: IAllParentsTableProps): ReactElement => {
     const navigate = useNavigate();
@@ -18,7 +18,8 @@ const AllParentsTable: FunctionComponent<IAllParentsTableProps> = (props: IAllPa
                     <tr className={styles.Table_tr}>
                         <th className={styles.Table_td_right}>ФИО</th>
                         <th className={styles.Table_td_right}>Email</th>
-                        <th className={styles.Table_td}>Tел.</th>
+                        <th className={styles.Table_td_right}>Tел.</th>
+                        <th className={styles.Table_td}>Дата окон. подписки</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,8 +35,11 @@ const AllParentsTable: FunctionComponent<IAllParentsTableProps> = (props: IAllPa
                                 <td className={styles.Table_td_right}>
                                     {parent.users.email}
                                 </td>
-                                <td className={styles.Table_td}>
+                                <td className={styles.Table_td_right}>
                                     {parent.users.phone}
+                                </td>
+                                <td className={styles.Table_td}>
+                                    {new Date(parent.subscriptionEndDate).toLocaleDateString()}
                                 </td>
                             </tr>
                         );

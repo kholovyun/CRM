@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import styles from "./SideBar.module.css";
 import "./SideBarNavLink.css";
 import AccessControl from "../../../permissionRoutes/AccessControl";
-import { ERoles } from "../../../enums/ERoles";
 import { SideBarLinksArray } from "./SideBarLinksArray";
 
 const SideBar: FunctionComponent = (): ReactElement => {
@@ -23,28 +22,17 @@ const SideBar: FunctionComponent = (): ReactElement => {
                     </div>
                     {SideBarLinksArray.map((link, i) => {
                         return (
-                            <div key={`l-${i}`} className={styles.sidebar_colappsed}>
-                                <NavLink
-                                    className={`icon ${link.iconClass}`}
-                                    to={link.path}
-                                ></NavLink>
-                            </div>
+                            <AccessControl key={`l-${i}`} allowedRoles={link.access}>
+                                <div className={`${styles.sidebar_colappsed} ${styles.tooltip}`}>
+                                    <NavLink
+                                        className={`icon ${link.iconClass}`}
+                                        to={link.path}
+                                    ></NavLink>
+                                    <span className={styles.tooltip_text}>{link.label}</span>
+                                </div>
+                            </AccessControl>
                         );
                     })}
-                    <AccessControl allowedRoles={[ERoles.SUPERADMIN]}>
-                        <div className={styles.sidebar_colappsed}>
-                            <NavLink
-                                className={"icon admins_icon"}
-                                to={"/admin-page/admins"}
-                            ></NavLink>
-                        </div>
-                        <div className={styles.sidebar_colappsed}>
-                            <NavLink
-                                className={"icon statistics_icon"}
-                                to={"/admin-page/"}
-                            ></NavLink>
-                        </div>
-                    </AccessControl>
                 </div>
             ) : (
                 <div className={styles.sidebar}>
@@ -54,19 +42,13 @@ const SideBar: FunctionComponent = (): ReactElement => {
                     </div>
                     {SideBarLinksArray.map((fullLink, i) => {
                         return (
-                            <NavLink key={`fl-${i}`} className={"sidebar_link"} to={fullLink.path}>
-                                {fullLink.label}
-                            </NavLink>
+                            <AccessControl key={`l-${i}`} allowedRoles={fullLink.access}>
+                                <NavLink className={"sidebar_link"} to={fullLink.path}>
+                                    {fullLink.label}
+                                </NavLink>
+                            </AccessControl>
                         );
                     })}
-                    <AccessControl allowedRoles={[ERoles.SUPERADMIN]}>
-                        <NavLink className={"sidebar_link_"} to={"/admin-page/admins"}>
-                            Администраторы
-                        </NavLink>
-                        <NavLink className={"sidebar_link_"} to={"/admin-page/"}>
-                            Статистика
-                        </NavLink>
-                    </AccessControl>
                 </div>
             )}
         </>

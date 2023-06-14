@@ -1,8 +1,8 @@
 import { FunctionComponent, ReactElement } from "react";
 import IAllChildrenTableProps from "./IAllChildrenTableProps";
-import styles from "../../../../../AdminPage/AdminTables/AllTables.module.css";
+import styles from "../../AllTables.module.css";
 import { useNavigate } from "react-router-dom";
-import defaultChildPhoto from "../../../../../../assets/img/default-child-photo.svg";
+import defaultChildPhoto from "../../../../../assets/img/default-child-photo.svg";
 
 const AllChildrenTable: FunctionComponent<IAllChildrenTableProps> = (props: IAllChildrenTableProps): ReactElement => {
     const navigate = useNavigate();
@@ -36,9 +36,7 @@ const AllChildrenTable: FunctionComponent<IAllChildrenTableProps> = (props: IAll
                                             onError={(e) => {
                                                 e.currentTarget.src = defaultChildPhoto;
                                             }}
-                                            src={`${
-                                                import.meta.env.VITE_BASE_URL
-                                            }uploads/childrenImgs/${child.photo}`}
+                                            src={`${import.meta.env.VITE_BASE_URL}uploads/childrenImgs/${child.photo}`}
                                             alt={"фото"}
                                         />
                                     ) : (
