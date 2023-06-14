@@ -30,7 +30,7 @@ const parentsApi = api.injectEndpoints({
 });
 
 export const {
-    useGetParentsByDoctorQuery,
+    useLazyGetParentsByDoctorQuery,
     useGetParentbyUserIdMutation,
     useGetParentbyIdMutation,
 } = parentsApi;

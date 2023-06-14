@@ -15,5 +15,5 @@ const childrenApi = api.injectEndpoints({
 });
 
 export const {
-    useGetChildrenByDoctorQuery
+    useLazyGetChildrenByDoctorQuery
 } = childrenApi;

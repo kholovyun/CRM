@@ -16,8 +16,8 @@ import DoctorQuestions from "./DoctorQuestions/DoctorQuestions";
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { user } = useAppSelector(state => state.auth);
-    const {data: doctor} = useGetDoctorByUserIdQuery({id: user?.role === ERoles.DOCTOR ? user?.id : String(params.id)});
-    const [getDiplomas, {data: diplomas}] = useLazyGetDiplomasByDoctorQuery();
+    const { data: doctor } = useGetDoctorByUserIdQuery({ id: user?.role === ERoles.DOCTOR ? user?.id : String(params.id) });
+    const [getDiplomas, { data: diplomas }] = useLazyGetDiplomasByDoctorQuery();
     const navigate = useNavigate();
     useEffect(() => {
         const getDip = async () => {
@@ -28,21 +28,21 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
 
     return (
         <Container>
-            {doctor &&  <DoctorInformation doctor={doctor}/>}
+            {doctor && <DoctorInformation doctor={doctor} />}
 
             <DoctorDiplomas diplomas={diplomas!} />
 
-            {doctor && <DoctorRecommendations doctorId={doctor.id}/>}
-            
+            {doctor && <DoctorRecommendations doctorId={doctor.id} />}
+
             <DoctorQuestions />
 
             {/* НАВИГАЦИОННЫЙ БЛОК */}
             <div className={styles.navigationBlock}>
-                <div className={styles.navLinkBox} onClick={() => {toast.info("Функционал пока недоступен");}}>
+                <div className={styles.navLinkBox} onClick={() => { toast.info("Функционал пока недоступен"); }}>
                     <p className={styles.navLink}>Вопросы</p>
                     <div className={styles.arrowDown}></div>
                 </div>
-                <div className={styles.navLinkBox} onClick={() => navigate(`/doctor-admin-page/${doctor?.id}/children`)}>
+                <div className={styles.navLinkBox} onClick={() => navigate("/admin-page/children")}>
                     <p className={styles.navLink}>Перейти в админ панель</p>
                     <div className={styles.arrowRight}></div>
                 </div>

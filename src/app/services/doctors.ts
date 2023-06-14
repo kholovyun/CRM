@@ -1,14 +1,15 @@
 import IDoctor from "../../interfaces/IDoctor/IDoctor";
 import IDoctorWithUser from "../../interfaces/IDoctor/IDoctorWithUser";
+import IGetListParams from "../../interfaces/IGetListParams/IGetListParams";
 import { api } from "./api";
 
 const doctorsApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getDoctors: build.query<{ rows: IDoctorWithUser[], count: number }, { offset: number, limit: number }>({
-            query: ({ offset, limit }) => ({
+        getDoctors: build.query<{ rows: IDoctorWithUser[], count: number }, IGetListParams>({
+            query: (params) => ({
                 url: "/doctors",
                 method: "GET",
-                params: { offset, limit },
+                params: params,
             }),
             providesTags: ["Doctor"],
         }),

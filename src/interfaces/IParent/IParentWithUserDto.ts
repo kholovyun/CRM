@@ -3,6 +3,7 @@ export default interface IParentWithUserDto {
     userId: string
     doctorId: string
     registerDate: Date
+    subscriptionEndDate: Date
     isActive: boolean
     users: {
         name: string
