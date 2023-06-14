@@ -1,3 +1,6 @@
+import IQuestionGetDto from "../../interfaces/IQuestion/IQuestionGetDto";
+
 export default interface IChildQuestionProps {
-    childId: string
+    questions: IQuestionGetDto[]
+    closeBtn: React.MouseEventHandler<HTMLElement>
 }

@@ -26,7 +26,6 @@ import AllChildren from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorTa
 import AllParents from "./containers/DoctorCabinetPage/DoctorAdminPage/DoctorTables/AllParents/AllParents";
 import NotFoundPage from "./containers/NotFoundPage/NotFoundPage.tsx";
 import { ChildCabinetPage } from "./containers/ChildCabinetPage/ChildCabinetPage";
-import ChildQuestion from "./components/ChildQuestion/ChildQuestion.tsx";
 
 const App: FunctionComponent = (): ReactElement => {
     return (
@@ -62,7 +61,6 @@ const App: FunctionComponent = (): ReactElement => {
                         <Route path="/parent-cabinet/:id" element={<ParentCabinetPage />} />
                         <Route path="/parent-cabinet" element={<ParentCabinetPage />} />
                         <Route path="/child-cabinet/:id" element={<ChildCabinetPage />} />
-                        <Route path="/child-cabinet/:id/questions" element={<ChildQuestion childId="1452" />} />
                     </Route>
                     <Route element={<PrivateRoute allowedRoles={[ERoles.DOCTOR]}/> }>
                         <Route path="/cabinet" element={<DoctorCabinetPage />} />
