@@ -1,0 +1,10 @@
+.subInfoTable {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+    background: var(--light_blue);
+    border-radius: 25px;
+    flex-grow: 1;
+    gap: 5px;
+}

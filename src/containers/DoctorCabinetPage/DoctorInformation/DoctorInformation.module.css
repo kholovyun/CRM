@@ -1,7 +1,8 @@
 .doctorInformationBlock {
-    padding: 34px 80px;
+    padding: 20px 16px;
     border-radius: 50px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     background-color: var(--light_blue_half_opacity);
@@ -9,7 +10,6 @@
 
 .doctorInformation {
     min-height: 320px;
-    max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -23,6 +23,8 @@
 .personalInformationLine {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .personalInformationField {
@@ -48,8 +50,29 @@
     align-items: center;
     background-color: var(--bg_light_blue);
     border-radius: 25px;
+    overflow-wrap: anywhere;
 }
 
 .personalInformationButton {
     align-self: flex-end;
+    margin-top: 20px;
+}
+
+
+@media screen and (min-width: 600px) {
+	.personalInformationLine {
+        flex-wrap: nowrap;
+    }
+    .personalInformationButton {
+        margin-top: 0;
+    }
+}
+
+@media screen and (min-width: 1052px) {
+	.doctorInformationBlock {
+        padding: 60px 36px;
+        flex-wrap: nowrap;
+        gap: 20px;
+        background-color: var(--light_blue_half_opacity);
+    }
 }

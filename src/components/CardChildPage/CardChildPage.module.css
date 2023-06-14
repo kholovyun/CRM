@@ -1,0 +1,48 @@
+.childBoxFirstTop {
+    padding: 20px 16px;
+    border-radius: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    background-color: var(--light_blue_half_opacity);
+}
+
+.childBoxTop {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+    background: var(--light_blue);
+    border-radius: 25px;
+    flex-grow: 1;
+    gap: 5px;
+}
+.childAvatar {
+    display: block;
+    width: 300px;
+}
+
+.cardChildBoxOne {
+    display: flex;
+    box-sizing: border-box;
+    gap: 0 2px;
+}
+
+@media screen and (max-width: 700px) {
+    .childAvatar {
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (min-width: 1052px) {
+	.childBoxFirstTop {
+        padding: 60px 36px;
+        border-radius: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        background-color: var(--light_blue_half_opacity);
+    }
+}
