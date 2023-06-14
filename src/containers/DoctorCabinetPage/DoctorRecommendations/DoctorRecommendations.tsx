@@ -66,39 +66,35 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
 
     return (
         <div className={styles.recommendationBlock}>
-            <p className={styles.recommendationBlockTop}>Написать рекомендацию</p>
-            <div className={styles.createRecommendationFormBox}>
-                <Formik
-                    initialValues={{
-                        doctorId: doctorId || "",
-                        text: "" 
-                    }}
-                    onSubmit={(values) => {
+            <p className={styles.recommendationBlockTitle}>Написать рекомендацию</p>
+            <Formik
+                initialValues={{
+                    doctorId: doctorId || "",
+                    text: "" 
+                }}
+                onSubmit={(values) => {
                         
-                        createRecommendation(values);
-                    }}
-                >
-                    {({handleSubmit }) => (
-                        <Form>
-                            <Field as={"textarea"} type="text" name="text" className={styles.textarea}/>
-                            <div className={styles.recommendationBlockBottom}>
-                                <label className={styles.inputFileLabel}>
-                                    <input
-                                        className={styles.fileInput}
-                                        type="file"
-                                        name={"image"}
-                                    />
-                                    <p className={styles.halo}>Прикрепить файл</p>
-                                    <div className={styles.fileIcon} />
-                                </label>
-                                <div className={styles.publicationBtn}>
-                                    <Btn size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
-                                </div>
-                            </div>
-                        </Form>
-                    )}
-                </Formik> 
-            </div>
+                    createRecommendation(values);
+                }}
+            >
+                {({handleSubmit }) => (
+                    <Form className={styles.recommendationForm}>
+                        <Field as={"textarea"} type="text" name="text" className={styles.textarea}/>
+                        <label className={styles.inputFileLabel}>
+                            <input
+                                className={styles.fileInput}
+                                type="file"
+                                name={"image"}
+                            />
+                            <p className={styles.halo}>Прикрепить файл</p>
+                            <div className={styles.fileIcon} />
+                        </label>
+                        <div className={styles.publicationBtn}>
+                            <Btn size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
+                        </div>
+                    </Form>
+                )}
+            </Formik> 
             <div className={styles.recommendationsBottom}>
                 <p>Мои рекомендации</p>
                 <button 
@@ -116,7 +112,6 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                     })
                 }
             </div> : null}
- 
         </div>
     );
 };
