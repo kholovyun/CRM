@@ -1,5 +1,5 @@
 .recommendationBlock {
-    margin-top: 60px;
+    margin-top: 30px;
     background-color: var(--light_blue);
     padding: 20px 16px;
     border-radius: 25px;
@@ -115,11 +115,6 @@
     background-color: var(--bg_light_blue);
     border-radius: 25px;
     margin-block: 20px;
-}
-
-@keyframes list {
-    from {height: 0;  padding: 0;}
-    to {height: 370px;  padding: 20px;}
 }
 
 .arrowDown {

@@ -3,19 +3,25 @@
 }
 
 .alice-carousel__prev-btn-item, .alice-carousel__next-btn-item {
-    background: url("../../../assets/img/arrow-carousel.svg") center no-repeat;
-    width: 30px;
-    height: 30px;
+    background: url("../../../assets/img/arrow-carousel.svg") center/cover no-repeat;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     position: absolute;
-    top: 117px;
+    top: 122px;
 }
 .alice-carousel__next-btn-item { 
-    right: -50px;
+    right: -40px;
 }
 
 .alice-carousel__prev-btn-item {
-    left: -50px;
+    left: -40px;
     transform: scale(-1, 1);
+}
+
+@media screen and (min-width: 600px) {
+    .alice-carousel__prev-btn-item, .alice-carousel__next-btn-item {
+        
+    }
 }
 

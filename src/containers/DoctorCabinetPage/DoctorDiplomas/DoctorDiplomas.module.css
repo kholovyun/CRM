@@ -1,12 +1,12 @@
 .carouselBlock {
     background-color: var(--light_blue_half_opacity);
-    padding: 40px 80px;
+    padding: 20px 16px;
     border-radius: 50px;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .carouselTitle {
-    font-size: 35px;
+    font-size: 24px;
     margin-bottom: 40px;
     text-align: center;
 }
@@ -179,3 +179,21 @@
     color: var(--gray_blue);
 }
 
+
+@media screen and (min-width: 600px) {
+    .carouselBlock {
+        padding: 20px 40px;
+    }
+    .carouselTitle {
+        font-size: 30px;
+    }
+}
+
+@media screen and (min-width: 1052px) {
+	.carouselBlock { 
+        padding: 36px 60px;
+    }
+    .carouselTitle {
+        font-size: 38px;
+    }
+}

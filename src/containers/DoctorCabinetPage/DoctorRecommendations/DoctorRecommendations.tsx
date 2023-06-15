@@ -6,19 +6,20 @@ import { toast } from "react-toastify";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import { useCreateRecommendationMutation, useDeleteRecommendationMutation, useLazyGetRecommendationsByDoctorQuery } from "../../../app/services/recommendations";
+import { useCreateRecommendationMutation, useDeleteRecommendationMutation, useGetRecommendationsByDoctorQuery } from "../../../app/services/recommendations";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
 import Recommendation from "./Recommendation/Recommendation";
+import { validationSchemaRecommendation } from "../../../schemas/validationSchemaRecommendation";
 
 const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({doctorId}): ReactElement => {
-    const [getRecommendations, {
+    const {
         data: recommendations, 
         isError: isErrorGetRecommendations, 
         error: errorGetRecommendations,
-    }] = useLazyGetRecommendationsByDoctorQuery();
+    } = useGetRecommendationsByDoctorQuery(doctorId);
 
     const [createRecommendation, {
         isSuccess: isSuccessCreateRecommendation, 
@@ -48,7 +49,6 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
     const [showList, setShowList] = useState(false);
 
     const handleShowList = () => {
-        if (doctorId) getRecommendations(doctorId);
         setShowList(!showList);
     };
 
@@ -76,10 +76,13 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                         
                     createRecommendation(values);
                 }}
+                validateOnBlur
+                validationSchema={validationSchemaRecommendation}
             >
-                {({handleSubmit }) => (
+                {({isValid, errors, touched, handleSubmit})=> (
                     <Form className={styles.recommendationForm}>
                         <Field as={"textarea"} type="text" name="text" className={styles.textarea}/>
+                        {touched.text && errors.text ? <p>{errors.text}</p> : <p></p>}
                         <label className={styles.inputFileLabel}>
                             <input
                                 className={styles.fileInput}
@@ -90,7 +93,7 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                             <div className={styles.fileIcon} />
                         </label>
                         <div className={styles.publicationBtn}>
-                            <Btn size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
+                            <Btn disabled={!isValid} size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
                         </div>
                     </Form>
                 )}
