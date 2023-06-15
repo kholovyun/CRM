@@ -1,67 +1,90 @@
-
 .recommendationBlock {
-    margin-top: 60px;
+    margin-top: 30px;
     background-color: var(--light_blue);
-    padding: 30px 80px;
-    border-radius: 50px;
+    padding: 20px 16px;
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
-.recommendationBlockTop {
-    font-size: 20px;
+.recommendationBlockTitle {
+    opacity: 50%;
+    font-size: 16px;
     color: var(--black_blue);
-    align-self: flex-start;
+}
+
+.recommendationForm {
+    display: flex;
+    flex-flow: wrap;
 }
 
 .textarea {
+    width: 100%;
     margin-top: 20px;
     background: none;
     border: none;
-    width: 100%;
     resize: none;
     height: 100px;
-    font-size: 18px;
+    font-size: 12px;
 }
 
 .textarea:focus { 
     outline: none;
 }
 
-.publicationBtn {
-    text-align: end;
+.inputFileLabel {
+    margin-top: 20px;
+    order: -1;
+    display: flex;
+    align-items: center;
+}
+
+.inputFileLabel p {
+    font-size: 12px;
 }
 
 .fileInput {
     display: none;
 }
 
-.recommendationBlockBottom {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    gap: 30px;
-    position: relative;
+.publicationBtn {
+   margin-left: auto;
+}
+
+.publicationBtn button:hover {
+    background-color: var(--black_blue);
 }
 
 .fileIcon {
     background: url("../../../assets/img/icon-file.svg");
-    width: 22px;
-    height: 27.5px;
+    width: 23px;
+    height: 29px;
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 8px;
+    scale: 0.7;
 }
 
-.inputFileLabel {
+.recommendationsBottom {
+    margin-top: 20px;
     display: flex;
     align-items: center;
+    gap: 10px;
+}
+
+.recommendationBtn {
+    padding: 4px 20px;
+    border-radius: 15px;
+    border: none;
+    background-color: var(--violet);
+}
+
+.recommendationBtn:hover {
+    background-color: var(--black_blue);
 }
 
 .recommendationsList {
     margin-top: 20px;
-    padding: 20px;
+    padding: 10px;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
@@ -74,9 +97,8 @@
     animation-duration: 0.5s;
 }
 
-
 .recommendationsList::-webkit-scrollbar {
-    width: 20px;
+    width: 10px;
 }
 
 .recommendationsList::-webkit-scrollbar-thumb {
@@ -95,34 +117,6 @@
     margin-block: 20px;
 }
 
-@keyframes list {
-    from {height: 0;  padding: 0;}
-    to {height: 370px;  padding: 20px;}
-}
-
-.recommendationBtn {
-    padding: 4px 20px;
-    border-radius: 15px;
-    border: none;
-    background-color: var(--violet);
-}
-
-.recommendationBtn:hover {
-    background-color: var(--black_blue);
-}
-
-.createRecommendationFormBox {
-    flex-grow: 1;
-    width: 100%;
-}
-
-.recommendationsBottom {
-    align-self: flex-start;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
 .arrowDown {
     width: 0; 
     height: 0; 
@@ -138,3 +132,60 @@
     border-right: 8px solid transparent;
     border-bottom: 8px solid white;
 }
+
+@media screen and (min-width: 600px) {
+    .recommendationBlock {
+        border-radius: 35px;
+        padding: 20px 40px;
+    }
+    
+    .recommendationBlockTitle {
+        font-size: 20px;
+    }
+
+    .textarea {
+        font-size: 12px;
+    }
+
+    .inputFileLabel {
+        order: 0;
+        margin-left: auto;
+        margin-right: 20px;
+        margin-top: 0;
+    }
+    
+    .inputFileLabel p {
+        font-size: 14px;
+    }
+    .publicationBtn {
+        margin: 0;  
+    }
+
+    .recommendationsList {
+        padding: 15px;
+    }
+
+    .recommendationsList::-webkit-scrollbar {
+        width: 15px;
+    }
+}
+
+@media screen and (min-width: 1052px) {
+	.recommendationBlock {
+        border-radius: 50px;
+        padding: 36px 60px;
+    }
+
+    .textarea {
+        font-size: 16px;
+    }
+    
+    .fileIcon {
+        scale: 1;
+    }
+    .inputFileLabel p {
+        font-size: 16px;
+    }
+}
+
+
