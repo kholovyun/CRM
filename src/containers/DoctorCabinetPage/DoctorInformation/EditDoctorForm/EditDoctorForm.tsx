@@ -19,6 +19,7 @@ import { useEditDoctorMutation } from "../../../../app/services/doctors";
 import { KGMask, KZMask } from "../../../../helpers/countryRegexs";
 import KGFlag from "../../../../assets/img/kg.png";
 import INTFlag from "../../../../assets/img/icon_international_flag.svg";
+import { validationSchemaEditDoctor } from "../../../../schemas/validationSchemaEditDoctor";
 
 
 const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, doctorData}): ReactElement => {
@@ -199,26 +200,30 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                         onSubmit={(values) => {
                             updateDoctorData(values);
                         }}
-                    
+                        validationSchema={validationSchemaEditDoctor}
                     >
-                        {({handleSubmit }) => (
+                        {({isValid, errors, touched, handleSubmit}) => (
                             <Form className={styles.editDoctorForm}>
                                 <div className={styles.editDoctorLine}>
                                     <div className={styles.editDoctorField}>
+                                        {touched.speciality && errors.speciality ? <p>{errors.speciality}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Специальность</p>
                                         <Field innerRef={focusRef} className={styles.editDoctorInput} name="speciality" type="text"/>
                                     </div>
                                     <div className={styles.editDoctorField}>
+                                        {touched.degree && errors.degree ? <p>{errors.degree}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Степень</p>
                                         <Field className={styles.editDoctorInput} name="degree" type="text"/>
                                     </div>   
                                 </div>
                                 <div className={styles.editDoctorLine}>
                                     <div className={styles.editDoctorFieldExpreience}>
+                                        {touched.experience && errors.experience ? <p>{errors.experience}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Стаж</p>
-                                        <Field className={styles.editDoctorInput} name="experience" min="0" max="100" type="number"/>
+                                        <Field className={styles.editDoctorInput} name="experience" min="1" max="100" type="number"/>
                                     </div> 
                                     <div className={styles.editDoctorField}>
+                                        {touched.placeOfWork && errors.placeOfWork ? <p>{errors.placeOfWork}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Место работы</p>
                                         <Field as={"textarea"} className={`${styles.editDoctorInput} ${styles.textarea}`} name="placeOfWork" type="text"/>
                                     </div>       
@@ -226,11 +231,12 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                     
                                 <div className={styles.editDoctorLine}>
                                     <div className={styles.editDoctorField}>
+                                        {touched.achievements && errors.achievements ? <p>{errors.achievements}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Достижения</p>
                                         <Field as={"textarea"} className={`${styles.editDoctorInput} ${styles.textarea}`} name="achievements" type="text"/>
-                                    </div> 
+                                    </div>
                                     <div className={styles.saveButton}>
-                                        <Btn title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
+                                        <Btn disabled={!isValid} title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
                                     </div>    
                                 </div>
                             </Form>                           
