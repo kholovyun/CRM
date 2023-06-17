@@ -13,23 +13,25 @@ import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
 import Recommendation from "./Recommendation/Recommendation";
 import { validationSchemaRecommendation } from "../../../schemas/validationSchemaRecommendation";
+import AccessControl from "../../../permissionRoutes/AccessControl";
+import { ERoles } from "../../../enums/ERoles";
 
-const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({doctorId}): ReactElement => {
+const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({ doctorId }): ReactElement => {
     const {
-        data: recommendations, 
-        isError: isErrorGetRecommendations, 
+        data: recommendations,
+        isError: isErrorGetRecommendations,
         error: errorGetRecommendations,
     } = useGetRecommendationsByDoctorQuery(doctorId);
 
     const [createRecommendation, {
-        isSuccess: isSuccessCreateRecommendation, 
-        isError: isErrorCreateRecommendation, 
+        isSuccess: isSuccessCreateRecommendation,
+        isError: isErrorCreateRecommendation,
         error: errorCreateRecommendation
     }] = useCreateRecommendationMutation();
 
     const [deleteRecommendation, {
-        isSuccess: isSuccessDeleteRecommendation, 
-        isError: isErrorDeleteRecommendation, 
+        isSuccess: isSuccessDeleteRecommendation,
+        isError: isErrorDeleteRecommendation,
         error: errorDeleteRecommendation
     }] = useDeleteRecommendationMutation();
 
@@ -66,41 +68,42 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
 
     return (
         <div className={styles.recommendationBlock}>
-            <p className={styles.recommendationBlockTitle}>Написать рекомендацию</p>
-            <Formik
-                initialValues={{
-                    doctorId: doctorId || "",
-                    text: "" 
-                }}
-                onSubmit={(values) => {
-                        
-                    createRecommendation(values);
-                }}
-                validateOnBlur
-                validationSchema={validationSchemaRecommendation}
-            >
-                {({isValid, errors, touched, handleSubmit})=> (
-                    <Form className={styles.recommendationForm}>
-                        <Field as={"textarea"} type="text" name="text" className={styles.textarea}/>
-                        {touched.text && errors.text ? <p>{errors.text}</p> : <p></p>}
-                        <label className={styles.inputFileLabel}>
-                            <input
-                                className={styles.fileInput}
-                                type="file"
-                                name={"image"}
-                            />
-                            <p className={styles.halo}>Прикрепить файл</p>
-                            <div className={styles.fileIcon} />
-                        </label>
-                        <div className={styles.publicationBtn}>
-                            <Btn disabled={!isValid} size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
-                        </div>
-                    </Form>
-                )}
-            </Formik> 
+            <AccessControl allowedRoles={[ERoles.DOCTOR]}>
+                <p className={styles.recommendationBlockTitle}>Написать рекомендацию</p>
+                <Formik
+                    initialValues={{
+                        doctorId: doctorId || "",
+                        text: ""
+                    }}
+                    onSubmit={(values) => {
+                        createRecommendation(values);
+                    }}
+                    validateOnBlur
+                    validationSchema={validationSchemaRecommendation}
+                >
+                    {({ isValid, errors, touched, handleSubmit }) => (
+                        <Form className={styles.recommendationForm}>
+                            <Field as={"textarea"} type="text" name="text" className={styles.textarea} />
+                            {touched.text && errors.text ? <p>{errors.text}</p> : <p></p>}
+                            <label className={styles.inputFileLabel}>
+                                <input
+                                    className={styles.fileInput}
+                                    type="file"
+                                    name={"image"}
+                                />
+                                <p className={styles.halo}>Прикрепить файл</p>
+                                <div className={styles.fileIcon} />
+                            </label>
+                            <div className={styles.publicationBtn}>
+                                <Btn disabled={!isValid} size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </AccessControl>
             <div className={styles.recommendationsBottom}>
                 <p>Мои рекомендации</p>
-                <button 
+                <button
                     className={styles.recommendationBtn}
                     onClick={handleShowList}
                 ><div className={`${showList ? styles.arrowUp : styles.arrowDown}`}></div></button>
@@ -108,8 +111,8 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
             {showList ? <div className={styles.recommendationsList}>
                 {
                     recommendations && recommendations.map(el => {
-                        return <Recommendation 
-                            key={el.id} 
+                        return <Recommendation
+                            key={el.id}
                             recommendation={el}
                             deleteRecommendation={() => deleteRecommendation(el.id)} />;
                     })

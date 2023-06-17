@@ -12,6 +12,7 @@ import { IMessage } from "../../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
 import Loader from "../../../../components/UI/Loader/Loader";
 import AllDoctorsTable from "./AllDoctorsTable/AllDoctorsTable";
+import IGetListParams from "../../../../interfaces/IGetListParams/IGetListParams";
 
 const AllDoctors: FunctionComponent = (): ReactElement => {    
     const limit = 10;
@@ -23,7 +24,7 @@ const AllDoctors: FunctionComponent = (): ReactElement => {
         error: getDoctorsError, 
         isError: isDoctorsGetError, 
         isLoading
-    } = useGetDoctorsQuery({offset, limit});
+    } = useGetDoctorsQuery({offset, limit} as IGetListParams);
 
     useEffect(() => {
         if (doctors && doctors.rows) {

@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement, MouseEvent } from "react";
 import IAllParentsTableProps from "./IAllParentsTableProps";
 import { useNavigate } from "react-router-dom";
 import styles from "../../AllTables.module.css";
@@ -6,7 +6,7 @@ import styles from "../../AllTables.module.css";
 const AllParentsTable: FunctionComponent<IAllParentsTableProps> = (props: IAllParentsTableProps): ReactElement => {
     const navigate = useNavigate();
 
-    const navigateCabinetHandler = (e: React.MouseEvent<HTMLElement>, id: string) => {
+    const navigateCabinetHandler = (e: MouseEvent<HTMLElement>, id: string) => {
         e.stopPropagation();
         navigate(`/parent-cabinet/${id}`);
     };

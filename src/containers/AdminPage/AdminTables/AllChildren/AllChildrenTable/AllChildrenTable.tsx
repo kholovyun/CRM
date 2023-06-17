@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement, MouseEvent } from "react";
 import IAllChildrenTableProps from "./IAllChildrenTableProps";
 import styles from "../../AllTables.module.css";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import defaultChildPhoto from "../../../../../assets/img/default-child-photo.svg
 const AllChildrenTable: FunctionComponent<IAllChildrenTableProps> = (props: IAllChildrenTableProps): ReactElement => {
     const navigate = useNavigate();
 
-    const navigateCabinetHandler = (e: React.MouseEvent<HTMLElement>, id: string) => {
+    const navigateCabinetHandler = (e: MouseEvent<HTMLElement>, id: string) => {
         e.stopPropagation();
         navigate(`/child-cabinet/${id}`);
     };
