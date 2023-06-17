@@ -21,7 +21,7 @@ export const SideBarLinksArray = [
     },
     {
         iconClass: "reviews_icon",
-        path: "/admin-page/",
+        path: "/admin-page/reviews",
         label: "Отзывы",
         access: [ERoles.ADMIN, ERoles.SUPERADMIN]
     },

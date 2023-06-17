@@ -93,9 +93,32 @@
     opacity: 1;
 }
 
+.empty_box {
+    width: 56px;
+    height: 47px;
+}
+
 @media screen and (min-width: 320px) {
     .sidebar_colappsed_icons_column {
         margin: 0;
+    }
+
+    .sidebar_small_screen {
+        display: block;
+    }
+
+    .sidebar_big_screen {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .sidebar_small_screen {
+        display: none;
+    }
+
+    .sidebar_big_screen {
+        display: block;
     }
 }
 
