@@ -27,8 +27,6 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
         getDip();
     }, [doctor]);
 
-
-
     return (
         <Container>
             {doctor && <DoctorInformation doctor={doctor} />}
@@ -41,12 +39,12 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
 
             {/* НАВИГАЦИОННЫЙ БЛОК */}
             <ContentLinkBox>
-                <ContentLink 
-                    fn={() => toast.info("Функционал пока недоступен")} 
-                    text="Вопросы"/>
-                <ContentLink 
-                    fn={() => navigate("/admin-page/children")} 
-                    text="Перейти в админ панель"/>
+                <ContentLink
+                    fn={() => toast.info("Функционал пока недоступен")}
+                    text="Вопросы" />
+                <ContentLink
+                    fn={() => navigate("/admin-page/children")}
+                    text="Перейти в админ панель" />
             </ContentLinkBox>
         </Container>
     );

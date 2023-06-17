@@ -39,6 +39,9 @@ const AllParents: FunctionComponent = (): ReactElement => {
 
     useEffect(() => {
         doctors && setThisDoctor(doctors.rows[0]);
+    }, [doctors]);
+
+    useEffect(() => {
         if (parents && parents.rows) {
             parents.count % limit !== 0
                 ? setPages(Math.floor(parents.count / limit) + 1)
