@@ -32,13 +32,14 @@ const AllChildren: FunctionComponent = (): ReactElement => {
     ] = useLazyGetChildrenByDoctorQuery();
 
     const getChildrenByDoctor = async () => {
-        if (thisDoctor) {
-            await getChildren({ offset, limit, id: thisDoctor.id });
-        }
+        thisDoctor && await getChildren({ offset, limit, id: thisDoctor.id });
     };
 
     useEffect(() => {
         doctors && setThisDoctor(doctors.rows[0]);
+    }, [doctors]);
+
+    useEffect(() => {
         if (children && children.rows) {
             children.count % limit !== 0
                 ? setPages(Math.floor(children.count / limit) + 1)
