@@ -25,6 +25,7 @@ import NotFoundPage from "./containers/NotFoundPage/NotFoundPage.tsx";
 import { ChildCabinetPage } from "./containers/ChildCabinetPage/ChildCabinetPage";
 import AllParents from "./containers/AdminPage/AdminTables/AllParents/AllParents.tsx";
 import AllChildren from "./containers/AdminPage/AdminTables/AllChildren/AllChildren.tsx";
+import AllReviews from "./containers/AdminPage/AdminTables/AllReviews/AllReviews.tsx";
 
 const App: FunctionComponent = (): ReactElement => {
     return (
@@ -46,6 +47,7 @@ const App: FunctionComponent = (): ReactElement => {
                                 <Route path="/admin-page/register-doctor" element={<RegisterDoctor />} />
                                 <Route path="/admin-page/profile" element={<AdminProfile />} />
                                 <Route path="/admin-page/edit-profile" element={<EditAdminForm />} />
+                                <Route path="/admin-page/reviews" element={<AllReviews />} />
                             </Route>
                             <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN]} />}>
                                 <Route path="/admin-page/admins" element={<AllAdmins />} />
