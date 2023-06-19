@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement, useEffect } from "react";
 import styles from "./ReviewForm.module.css";
 import { Field, Formik, Form, ErrorMessage } from "formik";
 import { ERoles } from "../../../enums/ERoles";
@@ -30,12 +30,13 @@ export const ReviewForm: FunctionComponent<IReviewFormProps> = (props: IReviewFo
         toast.error(`Ошибка ${err.data.message}`);
     };
 
-    isCreateReviewError && errorHandler(errorCreateReview);
+    useEffect(() => {
+        isCreateReviewError && errorHandler(errorCreateReview);
+    }, [isCreateReviewError]);
 
-    if (isSuccesCreateReview) {
-        resetCreateReview();
-        toast.info("Ваш отзыв отправлен");
-    };
+    useEffect(() => {
+        isSuccesCreateReview && toast.info("Ваш отзыв отправлен") && resetCreateReview();
+    }, [isSuccesCreateReview]);
 
     return (
         <AccessControl allowedRoles={[ERoles.PARENT]}>
