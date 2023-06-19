@@ -1,3 +1,4 @@
+import IReviewCreateDto from "../../interfaces/IReview/IReviewCreateDto";
 import IReviewWithUserGetDto from "../../interfaces/IReview/IReviewWithUserGetDto";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { api } from "./api";
@@ -12,6 +13,14 @@ const reviewsApi = api.injectEndpoints({
             }),
             providesTags: ["Review"]
         }),
+        createReview: build.mutation<IReviewCreateDto, {review: IReviewCreateDto}>({
+            query: ({review}) => ({
+                url: "/reviews",
+                method: "POST",
+                body: review
+            }),
+            invalidatesTags: ["Review"]
+        }),
         deleteReview: build.mutation<{response: IMessage}, {id: string}>({
             query: ({id}) => ({
                 url: `/reviews/${id}`,
@@ -24,5 +33,6 @@ const reviewsApi = api.injectEndpoints({
 
 export const {
     useGetReviewsQuery,
+    useCreateReviewMutation,
     useDeleteReviewMutation
 } = reviewsApi;

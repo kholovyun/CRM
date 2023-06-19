@@ -11,7 +11,7 @@ import { useGetReviewsQuery } from "../../../../app/services/reviews";
 import AllReviewsTable from "./AllReviewsTable/IAllReviewsList";
 
 const AllReviews: FunctionComponent = (): ReactElement => {
-    const limit = 10;
+    const limit = 5;
     const [pages, setPages] = useState<number>(0);
     const [offset, setOffset] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState(1);

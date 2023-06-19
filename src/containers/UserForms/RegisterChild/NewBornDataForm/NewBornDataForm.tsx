@@ -45,7 +45,7 @@ export const NewBornDataForm: FunctionComponent = (): ReactElement => {
                     stool: "",
                     diuresis: "",
                     umbilicalCord: "",
-                    examed_by: "",
+                    examedBy: "",
                     notes: "",
                     feedingReason: "",
                 }}
@@ -301,19 +301,19 @@ export const NewBornDataForm: FunctionComponent = (): ReactElement => {
                         <div className={styles.date_block}>
                             <label className={styles.label_flex_long}>
                                 <p className={styles.near_input_text}>Особые заменчания</p>
-                                <Field className={styles.born_data_input} name="name" type="text" />
+                                <Field className={styles.born_data_input} name="notes" type="text" />
                             </label>
                         </div>
                         <div className={styles.date_block}>
                             <label className={styles.label_flex_long}>
                                 <p className={styles.near_input_text}>Заключение составил</p>
-                                <Field className={styles.born_data_input} name="name" type="text" />
+                                <Field className={styles.born_data_input} name="examedBy" type="text" />
                             </label>
                         </div>
                         {touched.pregnancyDescript && errors.pregnancyDescript ? <p>{errors.pregnancyDescript}</p> : <p></p>}
                         <div className={styles.flex_end}>
                             <Btn disabled={!isValid} title="Сохранить" onclick={handleSubmit} size={EBtnSize.small} types={EBtnTypes.submit} btnClass={EBtnClass.dark_active} />
-                        </div>                        
+                        </div>
                     </Form>
                 )}
             </Formik>
