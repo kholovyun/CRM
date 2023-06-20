@@ -8,46 +8,57 @@ import styles from "./ParentCabinetPage.module.css";
 import { useAppSelector } from "../../app/hooks";
 import { FunctionComponent, ReactElement, useEffect } from "react";
 import { redirect, useNavigate, useParams } from "react-router-dom";
-import { useGetParentbyIdMutation, useGetParentbyUserIdMutation } from "../../app/services/parents";
+import { useGetParentByUserIdQuery, useGetParentByIdQuery } from "../../app/services/parents";
 import { ERoles } from "../../enums/ERoles";
 
 export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const { user } = useAppSelector(state => state.auth);
-    const [getParentbyUserId, { data }] = useGetParentbyUserIdMutation();
-    const [getParentById, {data: ParentIdData, isError: ParentIdError}] = useGetParentbyIdMutation();
+    const { user } = useAppSelector((state) => state.auth);
+    const getParentByUserIdQuery = useGetParentByUserIdQuery({ id: user!.id });
+    const { data, refetch: refetchParentByUserId } = getParentByUserIdQuery;
+    const { data: ParentIdData, isError: ParentIdError } = useGetParentByIdQuery({id: id || ""});
 
-    const getParentHandler = async (data: string) => {
-        await getParentbyUserId({id: data});
+    const getParentHandler = async () => {
+        await refetchParentByUserId();
     };
 
-    const getParentIdHandler = async (data: string) => {
-        data === undefined && redirect("/login");
+    const getParentIdHandler = async (parentId: string) => {
+        parentId === undefined && redirect("/login");
         console.log("здесь id params", id);
-        await getParentById({id: data});
+        await useGetParentByIdQuery({ id: parentId });
     };
 
-    user?.role !== ERoles.PARENT && !ParentIdData && redirect("/login");
+    if (user?.role !== ERoles.PARENT && !ParentIdData) {
+        redirect("/login");
+    }
 
     useEffect(() => {
-        !user ? redirect("/login") : user.role === ERoles.PARENT ? getParentHandler(user.id) : getParentIdHandler(id || "");
+        if (!user) {
+            redirect("/login");
+        } else if (user.role === ERoles.PARENT) {
+            getParentHandler();
+        } else {
+            getParentIdHandler(id || "");
+        }
     }, []);
 
     useEffect(() => {
-        ParentIdError && !id && navigate("/login");
+        if (ParentIdError && !id) {
+            navigate("/login");
+        }
     }, [ParentIdError]);
 
     return (
         <Container>
             <div className={styles.parentboxContainer}>
-                {data ? <CardParent userData={data}/> : ParentIdData && <CardParent userData={ParentIdData}/>}
+                {data ? <CardParent userData={data} /> : ParentIdData && <CardParent userData={ParentIdData} />}
                 {data?.doctors ? <CardDoctor doc={data.doctors} /> : ParentIdData?.doctors && <CardDoctor doc={ParentIdData.doctors} />}
             </div>
-            {data ? <ChildTabs array={data.children}/> : ParentIdData && <ChildTabs array={ParentIdData.children}/>}
-            <SupportTextAria btnName="Отправить" ph="Задать вопрос"/>
-            {data ? <ChildrenCardBox array={data.children}/> : ParentIdData && <ChildrenCardBox array={ParentIdData.children}/>}
-            <SupportTextAria btnName="Отправить" ph="Поделитесь впечатлениями или пожеланиями по работе сервиса..."/>
+            {data ? <ChildTabs array={data.children} /> : ParentIdData && <ChildTabs array={ParentIdData.children} />}
+            <SupportTextAria btnName="Отправить" ph="Задать вопрос" />
+            {data ? <ChildrenCardBox array={data.children} /> : ParentIdData && <ChildrenCardBox array={ParentIdData.children} />}
+            <SupportTextAria btnName="Отправить" ph="Поделитесь впечатлениями или пожеланиями по работе сервиса..." />
         </Container>
     );
 };
