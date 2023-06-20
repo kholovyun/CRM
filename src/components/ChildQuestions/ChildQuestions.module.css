@@ -1,4 +1,4 @@
-.questionBlock {
+.questionsList {
     width: 100%;
     background: #E5E8F1;
     border-radius: 35px;
@@ -16,7 +16,7 @@
 }
 
 .closeBtn {
-    background: url("../../assets/img/Vector.png") center/contain no-repeat;
+    background: url("../../assets/img/close_incircle.svg") center/contain no-repeat;
     width: 47px;
     height: 30px;
     cursor: pointer;
@@ -47,8 +47,30 @@
     color: #18191C;
 }
 
+.questionBtn {
+    border: none;
+}
+
 .arrowDown {
-    background: url("../../assets/img/Arrow_down.png") center/contain no-repeat;
+    background: url("../../assets/img/arrow-short_down.svg") center/contain no-repeat;
     width: 23px;
     height: 30px;
+}
+
+.arrowUp {
+    background: url("../../assets/img/arrow-short_up.svg") center/contain no-repeat;
+    width: 23px;
+    height: 30px;
+}
+
+.oneQuestionBlock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.fullQuestionBlock {
+    margin-top: 20px;
+    
 }

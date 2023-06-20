@@ -7,6 +7,7 @@ import {ContentLinkBox} from "../../components/UI/ContentLinkBox/ContentLinkBox.
 import {Carousel} from "../../components/Сarousel/Сarousel.tsx";
 import {useGetChildrenByIdQuery} from "../../app/services/children.ts";
 import {useParams} from "react-router-dom";
+import ChildQuestions from "../../components/ChildQuestions/ChildQuestions.tsx";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
@@ -25,6 +26,7 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
                 <ContentLink fn={() => console.log("Сведения об аллергическом статусе")} text={"Сведения об аллергическом статусе"}/>
                 <ContentLink fn={() => console.log("Осмотры врачами других специальностей")} text={"Осмотры врачами других специальностей"}/>
             </ContentLinkBox>
+            {data && <ChildQuestions childId={data?.result.id} /> }
         </Container>
     );
 };
