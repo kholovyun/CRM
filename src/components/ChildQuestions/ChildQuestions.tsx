@@ -1,10 +1,9 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import styles from "./ChildQuestions.module.css";
 import IChildQuestionsProps from "./IChildQuestionsProps";
 import Question from "./Question/Question";
 
 const ChildQuestions: FunctionComponent<IChildQuestionsProps> = (props): ReactElement => {
-
 
     return (
         <div className={styles.questionsList}>

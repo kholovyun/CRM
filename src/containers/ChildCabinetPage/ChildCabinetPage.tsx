@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useEffect, useState } from "react";
+import { FunctionComponent, ReactElement, useEffect } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { CardChildPage } from "../../components/CardChildPage/CardChildPage.tsx";
 import { SupportTextAria } from "../../components/SupportTextAria/SupportTextAria.tsx";
@@ -14,7 +14,6 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { data, isSuccess } = useGetChildrenByIdQuery(`${params.id}`);
     const [getQuestions, { data: questionsData }] = useLazyGetQuestionsByChildIdQuery();
-    const [showQuestions, setShowQuestions] = useState(false);
 
     useEffect(() => {
         const getQuest = async () => {
@@ -23,9 +22,7 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
         getQuest();
     }, [data]);
 
-    const handleShowQuestionBlock = () => {
-        setShowQuestions(!showQuestions);
-    };
+    
     return (
         <Container>
             {isSuccess && <CardChildPage data={data.result} />}

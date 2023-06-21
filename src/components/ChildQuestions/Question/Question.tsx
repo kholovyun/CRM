@@ -20,7 +20,7 @@ const Question: FunctionComponent<IQuestion> = (props): ReactElement => {
             </div>
             {showFullQuestion ?
                 <div className={styles.fullQuestionBlock}>
-                    kjfhjhkfjf
+                    <p>{props.question.question}</p>
                 </div>
                 : null}
         </div>
