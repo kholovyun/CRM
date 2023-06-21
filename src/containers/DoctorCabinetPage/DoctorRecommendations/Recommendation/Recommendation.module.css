@@ -65,3 +65,40 @@
         font-size: 16px;
     }
 }
+
+.avatarButtons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatarBtn {
+    background-color: var(--violet);
+    border-radius: 17px;
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.avatarBtn:hover {
+    background-color: var(--black_blue);
+}
+
+
+.fileName {
+    background-color: var(--bg_light_blue);
+    border-radius: 17px;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.avatarBtn:disabled  {
+    background-color: var(--bg_light_blue);
+    color: var(--gray_blue);
+}

@@ -34,7 +34,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
             <DoctorDiplomas diplomas={diplomas!} />
 
             {doctor && <DoctorRecommendations doctorId={doctor.id} />}
-
+            
             <DoctorQuestions />
 
             {/* НАВИГАЦИОННЫЙ БЛОК */}
