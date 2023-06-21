@@ -5,25 +5,28 @@ import { api } from "./api";
 
 const parentsApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getParentsByDoctor: build.query<{rows: IParentWithUserDto[], count: number}, {offset: number, limit: number, id: string}>({
-            query: ({offset, limit, id}) => ({
+        getParentsByDoctor: build.query<
+            { rows: IParentWithUserDto[]; count: number },
+            { offset: number; limit: number; id: string }
+        >({
+            query: ({ offset, limit, id }) => ({
                 url: `/parents/doctor/${id}`,
                 method: "GET",
-                params: {offset, limit}
+                params: { offset, limit },
             }),
-            providesTags: ["Parent"]
+            providesTags: ["Parent"],
         }),
-        getParentbyUserId: build.mutation<IParent, IId>({
+        getParentByUserId: build.query<IParent, IId>({
             query: (body: IId) => ({
                 url: "/parents/alldata",
-                method: "POST",
-                body
+                method: "GET",
+                params: body,
             }),
         }),
-        getParentbyId: build.mutation<IParent, {id: string}>({
+        getParentById: build.query<IParent, { id: string }>({
             query: (id) => ({
                 url: `/parents/data/${id.id}`,
-                method: "POST",
+                method: "GET",
             }),
         }),
     }),
@@ -31,8 +34,8 @@ const parentsApi = api.injectEndpoints({
 
 export const {
     useLazyGetParentsByDoctorQuery,
-    useGetParentbyUserIdMutation,
-    useGetParentbyIdMutation,
+    useGetParentByIdQuery,
+    useGetParentByUserIdQuery,
 } = parentsApi;
 
 export default parentsApi;
