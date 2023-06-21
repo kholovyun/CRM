@@ -1,4 +1,3 @@
-import { IId } from "../../interfaces/IId";
 import IParentWithUserDto from "../../interfaces/IParent/IParentWithUserDto";
 import IParent from "../../interfaces/IParent/IParrent";
 import { api } from "./api";
@@ -16,25 +15,18 @@ const parentsApi = api.injectEndpoints({
             }),
             providesTags: ["Parent"],
         }),
-        getParentByUserId: build.query<IParent, IId>({
-            query: (body: IId) => ({
-                url: "/parents/alldata",
+        getParentByUserId: build.query<IParent, {id: string}>({
+            query: ({ id }) => ({
+                url: `/parents/${id}`,
                 method: "GET",
-                params: body,
+                providesTags: ["Parent"],
             }),
-        }),
-        getParentById: build.query<IParent, { id: string }>({
-            query: (id) => ({
-                url: `/parents/data/${id.id}`,
-                method: "GET",
-            }),
-        }),
+        })
     }),
 });
 
 export const {
     useLazyGetParentsByDoctorQuery,
-    useGetParentByIdQuery,
     useGetParentByUserIdQuery,
 } = parentsApi;
 
