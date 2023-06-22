@@ -12,7 +12,6 @@ const LinkWithChildren = (props:TLinkWithClidren) => {
         SetShowChild(!showChild);
         !showChild && props.fn();
     };
-
     return (
         <>
             <div className={styles.linkWithChildren}>

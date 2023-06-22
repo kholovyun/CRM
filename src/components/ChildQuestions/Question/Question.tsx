@@ -8,7 +8,7 @@ const Question: FunctionComponent<IQuestion> = (props): ReactElement => {
     const handleShowFullQuestion = () => {
         setShowFullQuestion(!showFullQuestion);
     };
-    console.log(props.question);
+
     return (
         <div>
             <div className={styles.question}>
