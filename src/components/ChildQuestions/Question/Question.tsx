@@ -8,6 +8,7 @@ const Question: FunctionComponent<IQuestion> = (props): ReactElement => {
     const handleShowFullQuestion = () => {
         setShowFullQuestion(!showFullQuestion);
     };
+    console.log(props.question);
     return (
         <div>
             <div className={styles.question}>
@@ -20,7 +21,7 @@ const Question: FunctionComponent<IQuestion> = (props): ReactElement => {
             </div>
             {showFullQuestion ?
                 <div className={styles.fullQuestionBlock}>
-                    <p>{props.question.question}</p>
+                    <p>ответ пока нет</p>
                 </div>
                 : null}
         </div>
