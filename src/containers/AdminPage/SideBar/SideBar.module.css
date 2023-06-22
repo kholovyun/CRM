@@ -13,6 +13,7 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .sidebar_colappsed {
@@ -119,6 +120,7 @@
 
     .sidebar_big_screen {
         display: block;
+        margin-bottom: 2rem;
     }
 }
 

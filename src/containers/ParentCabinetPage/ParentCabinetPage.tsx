@@ -40,7 +40,7 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
             <SupportTextAria btnName="Отправить" ph="Задать вопрос" />
             {data && <ChildrenCardBox array={data.children} /> }
 
-            <SupportTextAria btnName="Отправить" ph="Поделитесь впечатлениями или пожеланиями по работе сервиса..." />
+            
 
             {user && <ReviewForm userId={user?.role === ERoles.PARENT ? user?.id : String(id)} />}
 

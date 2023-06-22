@@ -69,22 +69,22 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
     return (
         <div className={styles.recommendationBlock}>
             <AccessControl allowedRoles={[ERoles.DOCTOR]}>
-                <p className={styles.recommendationBlockTitle}>Написать рекомендацию</p>
                 <Formik
                     initialValues={{
                         doctorId: doctorId || "",
                         text: ""
                     }}
-                    onSubmit={(values) => {
-                        createRecommendation(values);
+                    onSubmit={async (values, {resetForm}) => {
+                        await createRecommendation(values);
+                        resetForm();
                     }}
                     validateOnBlur
                     validationSchema={validationSchemaRecommendation}
                 >
                     {({ isValid, errors, touched, handleSubmit }) => (
                         <Form className={styles.recommendationForm}>
-                            <Field as={"textarea"} type="text" name="text" className={styles.textarea} />
-                            {touched.text && errors.text ? <p>{errors.text}</p> : <p></p>}
+                            {touched.text && errors.text ? <p className={styles.errorText}>{errors.text}</p> : <p></p>}
+                            <Field as={"textarea"} type="text" name="text" className={styles.textarea} placeholder={"Написать рекомендацию"} />
                             <label className={styles.inputFileLabel}>
                                 <input
                                     className={styles.fileInput}
@@ -109,6 +109,7 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                 ><div className={`${showList ? styles.arrowUp : styles.arrowDown}`}></div></button>
             </div>
             {showList ? <div className={styles.recommendationsList}>
+                {!recommendations?.length && <p className={styles.noRecommendations} >Рекомендации еще нет</p>}
                 {
                     recommendations && recommendations.map(el => {
                         return <Recommendation
