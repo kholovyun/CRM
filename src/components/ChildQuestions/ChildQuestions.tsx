@@ -3,7 +3,7 @@ import styles from "./ChildQuestions.module.css";
 import IChildQuestionsProps from "./IChildQuestionsProps";
 import Question from "./Question/Question";
 
-const ChildQuestions: FunctionComponent<IChildQuestionsProps> = (props): ReactElement => {
+const ChildQuestions: FunctionComponent<IChildQuestionsProps> = (props:IChildQuestionsProps): ReactElement => {
 
     return (
         <div className={styles.questionsList}>

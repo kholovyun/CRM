@@ -2,7 +2,6 @@
     padding: 30px 40px;
     background-color: var(--light_blue);
     border-radius: 50px;
-    flex-basis: 10px 20px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -15,12 +14,10 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
 }
 
 .linkWithChildrenBox {
     width: 100%;
-    padding: 30px 40px;
     background-color: var(--light_blue);
 }
 
@@ -40,6 +37,10 @@
     color: var(--black_blue);
 }
 
+.linkWithChildrenTextContextOpen {
+    margin-bottom: 30px;
+}
+
 
 .linkWithChildrenArrow {
     background: url("../../../assets/img/arrow-short.svg") center/contain no-repeat;
@@ -53,6 +54,10 @@
 }
 
 @media screen and (max-width: 550px) {
+    .linkWithChildrenArrow {
+        width: 30px;
+        height: 20px;
+    }
     .linkWithChildren {
         padding: 13px 23px;
     }

@@ -15,10 +15,10 @@ const LinkWithChildren = (props:TLinkWithClidren) => {
 
     return (
         <>
-            <div className={styles.linkWithChildren} onClick={showChildren}>
-                <div className={styles.linkWithChildrenContext}>
+            <div className={styles.linkWithChildren}>
+                <div className={`${styles.linkWithChildrenContext} ${showChild && styles.linkWithChildrenTextContextOpen}`}>
                     <p className={styles.linkWithChildrenText}>{props.text}</p>
-                    <div className={`${styles.linkWithChildrenArrow} ${showChild && styles.arrowUp}`}></div>
+                    <div className={`${styles.linkWithChildrenArrow} ${showChild && styles.arrowUp}`} onClick={showChildren}></div>
                 </div>
                 {showChild && <div className={styles.linkWithChildrenBox}>
                     {props.children ? props.children : <p className={styles.linkWithChildrenTextContext}>нет данных</p>}
