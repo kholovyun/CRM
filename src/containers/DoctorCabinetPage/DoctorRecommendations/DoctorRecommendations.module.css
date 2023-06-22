@@ -7,12 +7,6 @@
     flex-direction: column;
 }
 
-.recommendationBlockTitle {
-    opacity: 50%;
-    font-size: 16px;
-    color: var(--black_blue);
-}
-
 .recommendationForm {
     display: flex;
     flex-flow: wrap;
@@ -133,14 +127,23 @@
     border-bottom: 8px solid white;
 }
 
+.errorText {
+    max-width: 80%;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--violet);
+    padding: 0.5rem 0rem;
+}
+
+.noRecommendations {
+    text-align: center;
+    font-size: 18px;
+}
+
 @media screen and (min-width: 600px) {
     .recommendationBlock {
         border-radius: 35px;
         padding: 20px 40px;
-    }
-    
-    .recommendationBlockTitle {
-        font-size: 20px;
     }
 
     .textarea {
