@@ -35,6 +35,12 @@
     color: var(--black_blue);
 }
 
+.linkWithChildrenTextContext {
+    text-align: center;
+    color: var(--black_blue);
+}
+
+
 .linkWithChildrenArrow {
     background: url("../../../assets/img/arrow-short.svg") center/contain no-repeat;
     width: 40px;
