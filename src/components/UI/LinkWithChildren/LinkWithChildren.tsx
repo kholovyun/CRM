@@ -15,10 +15,14 @@ const LinkWithChildren = (props:TLinkWithClidren) => {
     return (
         <>
             <div className={styles.linkWithChildren} onClick={showChildren}>
-                <p className={styles.linkWithChildrenText}>{props.text}</p>
-                <div className={styles.linkWithChildrenArrow}></div>
+                <div className={styles.linkWithChildrenContext}>
+                    <p className={styles.linkWithChildrenText}>{props.text}</p>
+                    <div className={`${styles.linkWithChildrenArrow} ${showChild && styles.arrowUp}`}></div>
+                </div>
+                {showChild && <div className={styles.linkWithChildrenBox}>
+
+                </div>}
             </div>
-            {showChild && <div>Hello Man</div>}
         </>
 
     );

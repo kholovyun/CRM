@@ -1,13 +1,27 @@
 .linkWithChildren {
-    flex-basis: 48%;
     padding: 30px 40px;
     background-color: var(--light_blue);
     border-radius: 50px;
+    flex-basis: 10px 20px;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     transition-delay: 0.5s;
+    margin-bottom: 15px;
+}
+
+.linkWithChildrenContext {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.linkWithChildrenBox {
+    width: 100%;
+    padding: 30px 40px;
+    background-color: var(--light_blue);
 }
 
 .linkWithChildren:hover {
@@ -26,6 +40,10 @@
     width: 40px;
     height: 25px;
     transform: rotate(90deg);
+}
+
+.arrowUp {
+    transform: rotate(-90deg);
 }
 
 @media screen and (max-width: 550px) {
