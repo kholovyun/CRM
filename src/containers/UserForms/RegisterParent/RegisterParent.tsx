@@ -1,5 +1,5 @@
 import styles from "../UserForms.module.css";
-import { Formik, Field, Form, FormikConfig, FormikValues, ErrorMessage } from "formik";
+import { Formik, Field, Form, FormikConfig, FormikValues, ErrorMessage, FieldProps } from "formik";
 import { toast } from "react-toastify";
 import MaskedInput from "react-text-mask";
 import { Container } from "../../../components/UI/Container/Container";
@@ -8,12 +8,12 @@ import { ERoles } from "../../../enums/ERoles";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import { useEffect, Children, FunctionComponent, ReactElement, ReactNode, useState } from "react";
+import {useEffect, Children, FunctionComponent, ReactElement, ReactNode, useState, ChangeEvent} from "react";
 import { ESex } from "../../../enums/ESex";
 import { ESubscriptionType } from "../../../enums/ESubscriptionType";
 import { EPaymentType } from "../../../enums/EPaymentType";
 import { useCreateUserParentMutation } from "../../../app/services/users";
-import { KGMask } from "../../../helpers/countryRegexs";
+import {KGMask, KZMask, RUMask} from "../../../helpers/countryRegexs";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
@@ -24,11 +24,40 @@ import { FormikStepProps } from "./IFormikInterface";
 import { FormBox } from "../FormBox/FormBox";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import { useParams } from "react-router-dom";
+import KZFlag from "../../../assets/img/kz.png";
+import RUFlag from "../../../assets/img/ru.png";
+import KGFlag from "../../../assets/img/kg.png";
 
 const RegisterParent: FunctionComponent = (): ReactElement => {
+    const [phoneMask, setPhoneMask] = useState(KZMask);
+    const [placeholder, setPlaceholder] = useState("+7(___)___-__-__");
+    const [flag, setFlag] = useState(KZFlag);
     const params = useParams();
     const [doctorId, setDoctorId] = useState<{ doctorId: string }>({ doctorId: String(params.id) });
     const [createUserParent, { isError, isSuccess, error: createUserParentError }] = useCreateUserParentMutation();
+
+    const phoneMaskOnChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        switch (e.target.value) {
+        case "RU":
+            setPhoneMask(RUMask);
+            setPlaceholder("+7(___)___-__-__");
+            setFlag(RUFlag);
+            break;
+        case "KG":
+            setPhoneMask(KGMask);
+            setPlaceholder("+996(___)__-__-__");
+            setFlag(KGFlag);
+            break;
+        case "KZ":
+            setPhoneMask(KZMask);
+            setPlaceholder("+7(___)___-__-__");
+            setFlag(KZFlag);
+            break;
+        default:
+            setPhoneMask(KZMask);
+            break;
+        }
+    };
 
     useEffect(() => {
         setDoctorId({ doctorId: String(params.id) });
@@ -53,7 +82,7 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
                     initialValues={{
                         role: ERoles.PARENT,
                         email: "",
-                        phone: "87074144093",
+                        phone: "",
                         name: "",
                         surname: "",
                         patronim: "",
@@ -99,32 +128,48 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
                             name="patronim"
                             type="text"
                             placeholder="Отчество" />
+                        <ErrorMessage className={styles.error_text} name="email" component="div" />
+                        <Field
+                            className={styles.login_input}
+                            name="email"
+                            type="text"
+                            placeholder="Email" />
+                        <ErrorMessage className={styles.error_text} name="phone" component="div" />
                         <div className={styles.two_inputs_row}>
-                            <div className={styles.input_flex_column}>
-                                <Field
-                                    name="phone"
-                                    type="text"
-                                >
-                                    {({ ...field }) => (
-                                        <MaskedInput
-                                            {...field}
-                                            mask={KGMask}
-                                            id="phone"
-                                            type="text"
-                                            placeholder="+996(___)__-__-__"
-                                            className={styles.login_input}
-                                        />
-                                    )}
-                                </Field>
+                            <div className={styles.select_flag_wrapper}>
+                                <div className={styles.flag_wrapper}><img className={styles.flag_image} src={flag} alt="" /></div>
+                                <div className={styles.select_wrapper}>
+                                    <select className={styles.country_select} defaultValue={"KZ"} onChange={phoneMaskOnChange}>
+                                        <option className={styles.custom_option} value={"KZ"}>KZ</option>
+                                        <option className={styles.custom_option} value={"KG"}>KG</option>
+                                        <option className={styles.custom_option} value={"RU"}>RU</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div className={styles.input_flex_column}>
-                                <ErrorMessage className={styles.error_text} name="email" component="div" />
-                                <Field
-                                    className={styles.login_input}
-                                    name="email"
-                                    type="text"
-                                    placeholder="Email" />
-                            </div>
+                            <Field
+                                name="phone"
+                                type="text">
+                                {({ field , form}: FieldProps<string>) => (
+                                    <MaskedInput
+                                        {...field }
+                                        mask={phoneMask}
+                                        placeholder={placeholder}
+                                        type="text"
+                                        onBlur={field.onBlur}
+                                        onChange={async (e) => {
+                                            try {
+                                                await form.setFieldValue(field.name, e.target.value);
+                                            } catch (error) {
+                                                console.error(error);
+                                            }
+                                        }}
+                                        value={field.value}
+                                        className={styles.login_input}
+                                    />
+                                )}
+                            </Field>
+                        </div>
+                        <div className={styles.two_inputs_row}>
                             <Field
                                 hidden readOnly={true}
                                 className={styles.login_input}
@@ -135,7 +180,6 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
                     </FormikStep>
                     <FormikStep label="2" validationSchema={validationSec}>
                         <div className={styles.form_column}>
-
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
                                     <ErrorMessage className={styles.error_text} name="child.name" component="div" />
