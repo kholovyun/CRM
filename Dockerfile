@@ -4,7 +4,10 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN npm i -g
+
+RUN npm i
+
 RUN npm run build
 
 FROM nginx:1.21.0
