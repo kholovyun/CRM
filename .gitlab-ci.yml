@@ -1,5 +1,3 @@
-tag: 
-  - ajsfront
 stages:
   - build
   - deploy
@@ -10,13 +8,13 @@ variables:
   DOCKER_HOST: tcp://docker:2376
 
 build_job:
+  tags:
+    - ajsfront
   stage: build
   only: ["dev"]
   image: docker:20.10.16
   services:
     - docker:20.10.16-dind
-  tags:
-    - ajsfront
 
   before_script:
     - docker info
@@ -32,10 +30,10 @@ build_job:
     - docker rmi $TAG_LATEST
 
 deploy_job:
-  stage: deploy
-  image: alpine:latest
   tags:
     - ajsfront
+  stage: deploy
+  image: alpine:latest
   script:
     - chmod ag= $ID_RSA
     - apk update && apk add openssh-client
