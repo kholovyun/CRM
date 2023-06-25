@@ -22,6 +22,7 @@ export const api = createApi({
         "Parent",
         "Question",
         "Review",
-        "Message"
+        "Message",
+        "MessagesStatus"
     ],
 });
