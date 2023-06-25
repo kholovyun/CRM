@@ -13,6 +13,7 @@
 	--light_blue: rgb(229, 232, 241);
 	--light_blue_half_opacity: rgba(229, 232, 241, 0.5);
 	--light_blue_eighty_opacity: rgba(229, 232, 241, 0.8);
+	--gray_blue_half_opacity: rgba(133, 134, 139, 0.5);
 
 	--header_height: calc(47px + 2rem);
 	--footer_height: calc(69px + 4rem);
