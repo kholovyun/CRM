@@ -8,7 +8,7 @@ variables:
   DOCKER_HOST: tcp://docker:2376
 
 build_job:
-  tags: [ajsfront]
+  tags: [front]
   stage: build
   only: ["dev"]
   image: docker:20.10.16
@@ -29,7 +29,7 @@ build_job:
     - docker rmi $TAG_LATEST
 
 deploy_job:
-  tags: [ajsfront]
+  tags: [front]
   stage: deploy
   image: alpine:latest
   script:
