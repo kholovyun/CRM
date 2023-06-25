@@ -12,7 +12,7 @@ const Btn: FunctionComponent<IBtnProps> = (props: IBtnProps): ReactElement => {
                 `${styles.btn} ${styles[props.size || ""]}`
             }
             disabled={props.disabled === undefined ? false : props.disabled}
-            type={props.types || "button"}
+            type={props.types === undefined ? undefined : props.types || "button"}
         >
             {props.title}
         </button>
