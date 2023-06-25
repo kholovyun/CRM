@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN yarn 
+RUN npm install 
 
-RUN yarn build 
+RUN npm run build
 
 FROM nginx:1.21.0
 
