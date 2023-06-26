@@ -3,7 +3,7 @@ import ITabsProps from "./ITabsProps";
 import TabTitle from "./TabTitle/TabTitle";
 import styles from "./Tabs.module.css";
 
-const Tabs: FunctionComponent<ITabsProps> = ({children, callbacks}: ITabsProps): ReactElement => {
+const Tabs: FunctionComponent<ITabsProps> = ({ children, callbacks }: ITabsProps): ReactElement => {
     const [selectedTab, setSelectedTab] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -12,19 +12,18 @@ const Tabs: FunctionComponent<ITabsProps> = ({children, callbacks}: ITabsProps):
         setSelectedTab(index);
         setActiveIndex(index);
         if (callbacks) {
-            console.log("refetched ", {index});
-            if(callbacks[index]) {
+            if (callbacks[index]) {
                 callbacks[index]();
-            }            
+            }
         }
     };
 
-    return(
-        <div className={styles.tabs_container}>
+    return (
+        <>
             <div className={styles.tabs}>
                 {children.map((item, index) => (
-                    <TabTitle 
-                        key={index} 
+                    <TabTitle
+                        key={index}
                         title={item.props.title}
                         index={index}
                         changeTab={changeTab}
@@ -34,8 +33,8 @@ const Tabs: FunctionComponent<ITabsProps> = ({children, callbacks}: ITabsProps):
             </div>
             <div className={styles.tab_content}>
                 {children[selectedTab]}
-            </div>            
-        </div>
+            </div>
+        </>
     );
 };
 
