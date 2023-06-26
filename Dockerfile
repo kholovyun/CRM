@@ -10,6 +10,9 @@ RUN npm i
 
 RUN npm run build
 
+
+
+
 FROM nginx:1.21.0
 
 WORKDIR /usr/share/nginx/html
