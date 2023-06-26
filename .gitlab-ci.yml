@@ -38,7 +38,7 @@ deploy_job:
     - apk update && apk add openssh-client
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker pull $TAG_COMMIT"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker container rm -f my-app $TAG_COMMIT || true"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker run -p 80:80 -d --name my-app $TAG_COMMIT"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker container rm -f frontend || true"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker run -p 80:80 -d --name frontend $TAG_COMMIT"
   only: 
     - dev  
