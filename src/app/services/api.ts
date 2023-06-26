@@ -21,5 +21,8 @@ export const api = createApi({
         "Child",
         "Parent",
         "Question",
-        "Review"],
+        "Review",
+        "Message",
+        "MessagesStatus"
+    ],
 });

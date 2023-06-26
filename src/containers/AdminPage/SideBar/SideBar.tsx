@@ -4,6 +4,7 @@ import styles from "./SideBar.module.css";
 import "./SideBarNavLink.css";
 import AccessControl from "../../../permissionRoutes/AccessControl";
 import { SideBarLinksArray } from "./SideBarLinksArray";
+import Tooltip from "../../../components/UI/Tooltip/Tooltip";
 
 const SideBar: FunctionComponent = (): ReactElement => {
     const [isShowingMenu, setIsShowingMenu] = useState(false);
@@ -28,8 +29,9 @@ const SideBar: FunctionComponent = (): ReactElement => {
                                         <NavLink
                                             className={`icon ${link.iconClass}`}
                                             to={link.path}
-                                        ></NavLink>
-                                        <span className={styles.tooltip_text}>{link.label}</span>
+                                        >
+                                        </NavLink>
+                                        <Tooltip top={"25%"} left={"100%"} label={link.label} />
                                     </div>
                                 </AccessControl>
                             );
@@ -55,8 +57,6 @@ const SideBar: FunctionComponent = (): ReactElement => {
             </div>
             <div className={styles.sidebar_small_screen}>
                 <div className={styles.sidebar_colappsed_icons_column}>
-                    {/* <div className={styles.empty_box}>
-                    </div> */}
                     {SideBarLinksArray.map((link, i) => {
                         return (
                             <AccessControl key={`l-${i}`} allowedRoles={link.access}>
@@ -64,8 +64,9 @@ const SideBar: FunctionComponent = (): ReactElement => {
                                     <NavLink
                                         className={`icon ${link.iconClass}`}
                                         to={link.path}
-                                    ></NavLink>
-                                    <span className={styles.tooltip_text}>{link.label}</span>
+                                    >
+                                    </NavLink>
+                                    <Tooltip top={"25%"} left={"100%"} label={link.label} />
                                 </div>
                             </AccessControl>
                         );

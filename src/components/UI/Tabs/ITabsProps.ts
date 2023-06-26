@@ -1,4 +1,6 @@
+import { ReactElement } from "react";
+
 export default interface ITabsProps {
-    children: React.ReactElement[]
+    children: ReactElement[]
     callbacks?: {(): void} []
 }
