@@ -8,7 +8,8 @@ variables:
   DOCKER_HOST: tcp://docker:2376
 
 build_job:
-  tags: [front]
+  tags:
+    - front
   stage: build
   only: ["dev"]
   image: docker:20.10.16

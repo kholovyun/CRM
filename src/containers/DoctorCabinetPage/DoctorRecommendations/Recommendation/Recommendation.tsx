@@ -19,7 +19,7 @@ const Recommendation: FunctionComponent<IRecommendationProps> = ({ recommendatio
         setShowModal(true);
     };
 
-    const [showEditButtons, setShowEditButtons] = useState(null);
+    // const [showEditButtons, setShowEditButtons] = useState(null);
 
     return (
         <div className={styles.recommendation}>
