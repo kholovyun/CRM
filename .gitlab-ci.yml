@@ -34,7 +34,7 @@ deploy_job:
   stage: deploy
   image: alpine:latest
   script:
-    - chmod ag= $ID_RSA
+    - chmod og= $ID_RSA
     - apk update && apk add openssh-client
     - ssh - $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER$IP_SERVER "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
     - ssh - $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER$IP_SERVER "docker pull $TAG_COMMIT"
