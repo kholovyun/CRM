@@ -1,5 +1,6 @@
 import IRecommendationCreateDto from "../../interfaces/IRecommendation/IRecommendationCreateDto";
 import IRecomendationGetDto from "../../interfaces/IRecommendation/IRecommendationGetDto";
+import { IMessage } from "../../interfaces/IUser/IMessage";
 import {api} from "./api";
 
 const recommendationsApi = api.injectEndpoints({
@@ -30,7 +31,7 @@ const recommendationsApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Recommendation"]
         }),
-        deleteRecommendation: build.mutation<string, string>({
+        deleteRecommendation: build.mutation<IMessage, string>({
             query: (id: string) => ({
                 url: `/recomendations/${id}`,
                 // url: "/recommendations/${id}",

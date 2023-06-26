@@ -1,18 +1,20 @@
-import { useState, useRef, useEffect, FormEvent, ChangeEventHandler, FunctionComponent, ReactElement } from "react";
+import { useState, useRef, useEffect, FormEvent, ChangeEventHandler, FunctionComponent, ReactElement, MouseEvent } from "react";
 import styles from "./DoctorDiplomas.module.css";
 import AliceCarousel from "react-alice-carousel";
 import "./Carousel.css";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Modal from "../../../components/UI/Modal/Modal";
 import defaultDiplomaImg from "../../../assets/img/default-diploma-photo.svg";
-import { useCreateDiplomaMutation } from "../../../app/services/diplomas";
+import { useCreateDiplomaMutation, useDeleteDiplomaMutation, useGetDiplomasByDoctorQuery } from "../../../app/services/diplomas";
 import IDiplomaCreateDto from "../../../interfaces/IDiploma/IDiplomaCreateDto";
 import IDoctorDiplomasProps from "./IDoctorDiplomasProps";
 import { toast } from "react-toastify";
 import { errorHandler } from "../../../helpers/errorHandler";
 import { fileToDataString } from "../../../helpers/fileToDataString";
 
-const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id}): ReactElement => {
+const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactElement => {
+    const {data: diplomas} = useGetDiplomasByDoctorQuery(id);
+    
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
@@ -27,6 +29,8 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id})
     };
     const closeFullImageModal = () => {
         setShowFullImageModal(false);
+        setClickedImageUrl("");
+        setClickedImageId("");
     };
 
     const initStateValues: IDiplomaCreateDto = {
@@ -39,7 +43,8 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id})
     
     const [createDiploma, {isError, isSuccess, error}] = useCreateDiplomaMutation();
 
-    const [clickedImage, setClickedImage] = useState<string>("");
+    const [clickedImageUrl, setClickedImageUrl] = useState<string>("");
+    const [clickedImageId, setClickedImageId] = useState<string>("");
     useEffect(() => {
         isError && errorHandler(error);
     }, [isError]);
@@ -49,13 +54,14 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id})
     }, [isSuccess]);
 
     
-    const handleClick = (url: string) => {
+    const handleClick = (url: string, id: string) => {
         openFullImageModal();
-        setClickedImage(url);
+        setClickedImageUrl(url);
+        setClickedImageId(id);
     };
 
     const items = (diplomas && diplomas.map(el => {
-        return  <div className={styles.carouselItem} key={el.id} onClick={() => {handleClick(el.url);}}>
+        return  <div className={styles.carouselItem} key={el.id} onClick={() => {handleClick(el.url, el.id);}}>
             <img 
                 className={styles.diplomaImg}
                 onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
@@ -112,15 +118,35 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id})
         closeModal();
     };
 
+    const [deleteDiploma, {isError: isErrorDelete, isSuccess: isSuccessDelete, error: errorDelete}] = useDeleteDiplomaMutation();
+
+    useEffect(() => {
+        isErrorDelete && errorHandler(errorDelete);
+    }, [isErrorDelete]);
+
+    useEffect(() => {
+        if (isSuccessDelete) {
+            closeFullImageModal();
+            toast.info("Сертификат удален");
+        }
+    }, [isSuccessDelete]);
     
+    const deleteButtonHandler = (e: MouseEvent<HTMLButtonElement>, id: string) => {
+        e.stopPropagation();
+        deleteDiploma(id);
+        setClickedImageId("");
+        setClickedImageUrl("");
+    };
+
 
     return (
         <div>
             <Modal show={showFullImageModal} close={closeFullImageModal}>
                 <div className={styles.fullImage}>
+                    <button onClick={(e) => deleteButtonHandler(e, clickedImageId)}>Delete</button>
                     <img
                         onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
-                        src={clickedImage !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${clickedImage}` : defaultDiplomaImg} alt={"diploma"} />
+                        src={clickedImageUrl !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${clickedImageUrl}` : defaultDiplomaImg} alt={"diploma"} />
                 </div>
             </Modal>
             <Modal show={showModal} close={closeModal}>
@@ -146,25 +172,28 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id})
 
             <div className={styles.carouselBlock}>
                 <p className={styles.carouselTitle}>Сертификаты о дополнительном образовании</p>
-                <AliceCarousel 
-                    responsive={{0: {
-                        items: 1,
-                        itemsFit: "fill",
-                    }, 420: {
-                        items: 2,
-                        itemsFit: "fill",
-                    }, 700: {
-                        items: 3,
-                        itemsFit: "contain",
-                    }, 900: {
-                        items: 4,
-                        itemsFit: "contain",
-                    }}} 
+                {diplomas!.length === 0 ? null
+                    :
+                    <AliceCarousel 
+                        responsive={{0: {
+                            items: 1,
+                            itemsFit: "fill",
+                        }, 420: {
+                            items: 2,
+                            itemsFit: "fill",
+                        }, 700: {
+                            items: 3,
+                            itemsFit: "contain",
+                        }, 900: {
+                            items: 4,
+                            itemsFit: "contain",
+                        }}} 
                     
-                    renderKey={1}
-                    disableDotsControls 
-                    items={items}/>
-                    
+                        renderKey={1}
+                        disableDotsControls 
+                        items={items}
+                    />
+                }      
                 <div className={styles.plus}>
                     <div className={styles.addBtn} onClick={openModal}>
                         +

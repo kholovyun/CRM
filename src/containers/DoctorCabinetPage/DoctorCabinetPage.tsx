@@ -9,7 +9,6 @@ import { ERoles } from "../../enums/ERoles";
 import DoctorRecommendations from "./DoctorRecommendations/DoctorRecommendations";
 import DoctorDiplomas from "./DoctorDiplomas/DoctorDiplomas";
 import DoctorInformation from "./DoctorInformation/DoctorInformation";
-import { useLazyGetDiplomasByDoctorQuery } from "../../app/services/diplomas";
 import DoctorQuestions from "./DoctorQuestions/DoctorQuestions";
 import { ContentLinkBox } from "../../components/UI/ContentLinkBox/ContentLinkBox";
 import ContentLink from "../../components/UI/ContentLink/ContentLink";
@@ -18,20 +17,15 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { user } = useAppSelector(state => state.auth);
     const { data: doctor } = useGetDoctorByUserIdQuery({ id: user?.role === ERoles.DOCTOR ? user?.id : String(params.id) });
-    const [getDiplomas, { data: diplomas }] = useLazyGetDiplomasByDoctorQuery();
+    
     const navigate = useNavigate();
-    useEffect(() => {
-        const getDip = async () => {
-            doctor && await getDiplomas(doctor.id);
-        };
-        getDip();
-    }, [doctor]);
+    
 
     return (
         <Container>
             {doctor && <DoctorInformation doctor={doctor} />}
 
-            {doctor && <DoctorDiplomas id={doctor!.id} diplomas={diplomas!} />}
+            {doctor && <DoctorDiplomas id={doctor.id} />}
 
             {doctor && <DoctorRecommendations doctorId={doctor.id} />}
             
