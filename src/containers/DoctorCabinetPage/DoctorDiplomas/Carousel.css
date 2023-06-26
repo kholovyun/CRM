@@ -24,11 +24,14 @@
     transform: scale(-1, 1);
 }
 
+
 .alice-carousel__stage {
-    
+    margin-right: 0 !important;
 }
 .alice-carousel__stage-item {
     padding: 10px;
+    margin-right: 0 !important;
+    
 }
 
 

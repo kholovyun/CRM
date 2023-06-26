@@ -1,141 +1,61 @@
-import { useState, useRef, createRef, ChangeEvent, FunctionComponent, ReactElement, RefObject } from "react";
+import { useState, useRef, useEffect, FormEvent, ChangeEventHandler, FunctionComponent, ReactElement } from "react";
 import styles from "./DoctorDiplomas.module.css";
 import AliceCarousel from "react-alice-carousel";
-import { toast } from "react-toastify";
 import "./Carousel.css";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Modal from "../../../components/UI/Modal/Modal";
-import AvatarEditor from "react-avatar-editor";
 import defaultDiplomaImg from "../../../assets/img/default-diploma-photo.svg";
 import { useCreateDiplomaMutation } from "../../../app/services/diplomas";
-import IDiplomaGetDto from "../../../interfaces/IDiploma/IDiplomaGetDto";
-
-interface IImageProps {
-    image: File | string,
-    allowZoomOut: boolean,
-    position: {x: number, y: number},
-    scale: number,
-    borderRadius: number,
-    width: number,
-    height: number
-}
-
-interface IDoctorDiplomasProps {
-    id: string
-    diplomas: IDiplomaGetDto[]
-}
+import IDiplomaCreateDto from "../../../interfaces/IDiploma/IDiplomaCreateDto";
+import IDoctorDiplomasProps from "./IDoctorDiplomasProps";
+import { toast } from "react-toastify";
+import { errorHandler } from "../../../helpers/errorHandler";
+import { fileToDataString } from "../../../helpers/fileToDataString";
 
 const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id}): ReactElement => {
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
     };
-
     const closeModal = () => {
         setShowModal(false);
     };
 
-    const [createDiploma] = useCreateDiplomaMutation();
-    
-    const [fileName, setFileName] = useState<string>("");
-    const editorRef: RefObject<AvatarEditor> = createRef();
+    const [showFullImageModal, setShowFullImageModal] = useState(false);
+    const openFullImageModal = () => {
+        setShowFullImageModal(true);
+    };
+    const closeFullImageModal = () => {
+        setShowFullImageModal(false);
+    };
+
+    const initStateValues: IDiplomaCreateDto = {
+        doctorId: id,
+        url: undefined
+    };
+    const [inputValues, setInputValues] = useState<IDiplomaCreateDto>(initStateValues);
+    const [previewImageSrc, setPreviewImageSrc] = useState<string>();
     const fileInputRef = useRef<HTMLInputElement>(null);
+    
+    const [createDiploma, {isError, isSuccess, error}] = useCreateDiplomaMutation();
 
-    const [imageProps, setImageProps] = useState<IImageProps>({
-        image: "",
-        allowZoomOut: false,
-        position: {x: 0.5, y: 0.5},
-        scale: 1,
-        borderRadius: 25,
-        width: 180,
-        height: 266,
-    });
+    const [clickedImage, setClickedImage] = useState<string>("");
+    useEffect(() => {
+        isError && errorHandler(error);
+    }, [isError]);
 
-    const handlePositionChange = (position: {x: number, y: number}): void => {
-        setImageProps(prevState => {
-            return {...prevState, position: position};
-        });
-    };
+    useEffect(() => {
+        isSuccess && toast.info("Сертификат создан");
+    }, [isSuccess]);
 
-    const handleScale = (e: ChangeEvent<HTMLInputElement>): void => {
-        const scale = Number(e.target.value);
-        setRangeValue(scale);
-        setImageProps(prevState => {
-            return {...prevState, scale: scale};
-        });
-    };
-
-    const handleNewAvatar = (e: ChangeEvent<HTMLInputElement>): void => {
-        e.stopPropagation();
-        const file = e.target.files && e.target.files[0];
-        if (file) {
-            if(file && /\.(jpg|jpeg|png)$/i.test(file.name) && file.size <= 5242880) {
-                setImageProps(prevState => {
-                    return {...prevState, 
-                        image: e.target.files ? e.target.files[0] : ""};
-                });
-                setFileName(e.target.files && e.target.files[0] ? e.target.files[0].name : "");
-            } else if (file.size > 5242880) {
-                alert("Слишком большой размер файла");
-            } else {
-                alert("Пожалуйста выберите соответсвующий формат файла(jpg, jpeg, png)");
-            }
-        }
-    };
-
-    const cancelFileHandler = () => {
-        setRangeValue(1);
-        setFileName("");
-        setImageProps(prevState => {
-            return {...prevState, image: "", scale: 1};
-        });
-        if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-        }
-        closeModal();
-    };
-
-    const setNewAvatar = async () => {
-        if (editorRef.current) {
-            const canvasScaled = editorRef.current?.getImageScaledToCanvas();
-            await fetch(canvasScaled.toDataURL())
-                .then((res) => res.blob())
-                .then((blob) => {
-                    const file = new File([blob], "sample.png", {type: blob.type});
-                    const formData = new FormData();
-                    formData.append("url", file);
-                    formData.append("doctorId", id);
-                    createDiploma(formData);
-                }
-                ).catch((e: Error) => {
-                    toast.error(`Ошибка ${e.message}`);
-                });
-        }
-    };
-
-    const [rangeValue, setRangeValue] = useState(1);
-
-    const plusRange = () => {
-        if (rangeValue >= 3) return;
-        const scale = rangeValue + 0.1;
-        setRangeValue(scale); 
-        setImageProps(prevState => {
-            return {...prevState, scale: scale};
-        });
-    };
-
-    const minusRange = () => {
-        if (rangeValue <= 1) return;
-        let scale = rangeValue - 0.1;
-        if (scale < 1) scale = 1;
-        setRangeValue(scale); 
-        setImageProps(prevState => {
-            return {...prevState, scale: scale};
-        });
+    
+    const handleClick = (url: string) => {
+        openFullImageModal();
+        setClickedImage(url);
     };
 
     const items = (diplomas && diplomas.map(el => {
-        return  <div className={styles.carouselItem} key={el.id}>
+        return  <div className={styles.carouselItem} key={el.id} onClick={() => {handleClick(el.url);}}>
             <img 
                 className={styles.diplomaImg}
                 onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
@@ -143,60 +63,87 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id})
         </div>; 
     }));
 
+    const handleChangeFile: ChangeEventHandler<HTMLInputElement> = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        if(file && /\.(jpg|jpeg|png)$/i.test(file.name) && file.size <= 5242880) {
+            try {
+                setPreviewImageSrc(await fileToDataString(file));
+                setFileName(e.target.files && e.target.files[0] ? e.target.files[0].name : "");
+                setInputValues(prevState => {
+                    return {
+                        ...prevState,
+                        url: e.target.files ? e.target.files[0] : undefined
+                    };
+                }); 
+            } catch (e) {
+                console.error(e);
+            }
+        } else if (file.size > 5242880) {
+            alert("Слишком большой размер файла");
+        } else {
+            alert("Пожалуйста выберите соответсвующий формат файла(jpg, jpeg, png)");
+        }
+    };
+
+    const cancelFileHandler = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+        setFileName("");
+        closeModal();
+    };
+
+    const [fileName, setFileName] = useState<string>("");
+
+    const uploadNewDiploma = async (e: FormEvent) => {
+        e.preventDefault();
+        const formData = new FormData();
+        Object.entries(inputValues).forEach(entry => {
+            const [key, value] = entry;
+            formData.append(key, value);
+        });
+        await createDiploma(formData);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+        setFileName("");
+        setInputValues(initStateValues);
+        closeModal();
+    };
+
     
-    
+
     return (
         <div>
+            <Modal show={showFullImageModal} close={closeFullImageModal}>
+                <div className={styles.fullImage}>
+                    <img
+                        onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
+                        src={clickedImage !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${clickedImage}` : defaultDiplomaImg} alt={"diploma"} />
+                </div>
+            </Modal>
             <Modal show={showModal} close={closeModal}>
-
-
-
-                
-                {/* <div className={styles.AvatarUploaderBox}>
-                    {imageProps.image !== "" &&
-                <AvatarEditor 
-                    ref={editorRef}
-                    scale={imageProps.scale}
-                    width={imageProps.width}
-                    height={imageProps.height}
-                    position={imageProps.position}
-                    onPositionChange={handlePositionChange}
-                    borderRadius={imageProps.borderRadius}
-                    image={imageProps.image}
-                    color={[229, 232, 241]}
-                    border={0}
-                    style={{background: "var(--bg_light_blue)"}}
-                /> 
-                    }
-                    {fileName !== "" ?
-                        <div className={styles.rangeInputField}>
-                            <div className={styles.rangeMinus} onClick={minusRange}>-</div>
-                            <input className={styles.rangeInput}
-                                name="scale" 
-                                type="range" 
-                                onChange={handleScale}
-                                min={imageProps.allowZoomOut ? "0.1":"1"}
-                                max="3" step="0.01"
-                                value={rangeValue}
-                            />
-                            <div className={styles.rangePlus} onClick={plusRange}>+</div>
-                        </div> : null
-                    }
-                          
+                <div className={styles.diplomaUploaderBox}>
+                    {fileName !== "" && <div className={styles.previewBox}>
+                        <img src={previewImageSrc} alt="diploma" />
+                    </div>}
                     <label className={styles.inputLabel}>
-                        <input type="file" onChange={handleNewAvatar} className={styles.avatarInput} ref={fileInputRef}/> 
-                        <p className={styles.avatarBtn}>Выбрать картинку</p>
+                        <input className={styles.diplomaInput} type="file" onChange={handleChangeFile} ref={fileInputRef}/> 
+                        <p className={styles.diplomaBtn}>Выбрать файл</p>
                     </label>
                     {fileName !== "" ? <span className={styles.fileName}>{fileName}</span> : null}
-                    <div className={styles.avatarButtons}>
+                    <div className={styles.diplomaButtons}>
+                        <button className={styles.diplomaBtn}
+                            onClick={cancelFileHandler}>Отмена</button> 
                         <button 
-                            onClick={cancelFileHandler} className={styles.avatarBtn}>Отмена</button> 
-                        <button 
+                            className={styles.diplomaBtn}
                             disabled={fileName !== "" ? false : true}
-                            onClick={setNewAvatar} className={styles.avatarBtn}>Установить</button> 
-                    </div>                 
-                </div> */}
+                            onClick={uploadNewDiploma}>Установить</button> 
+                    </div>   
+                </div>
             </Modal>
+
             <div className={styles.carouselBlock}>
                 <p className={styles.carouselTitle}>Сертификаты о дополнительном образовании</p>
                 <AliceCarousel 
@@ -206,14 +153,15 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id})
                     }, 420: {
                         items: 2,
                         itemsFit: "fill",
-                    }, 650: {
+                    }, 700: {
                         items: 3,
-                        itemsFit: "fill",
+                        itemsFit: "contain",
                     }, 900: {
                         items: 4,
-                        itemsFit: "fill",
+                        itemsFit: "contain",
                     }}} 
                     
+                    renderKey={1}
                     disableDotsControls 
                     items={items}/>
                     
