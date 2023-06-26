@@ -13,17 +13,17 @@ const LinkWithChildren = (props:TLinkWithClidren) => {
         !showChild && props.fn();
     };
     return (
-        <>
-            <div className={styles.linkWithChildren}>
-                <div className={`${styles.linkWithChildrenContext} ${showChild && styles.linkWithChildrenTextContextOpen}`}>
+        <div>
+            <div className={styles.linkWithChildren} onClick={showChildren}>
+                <div className={styles.linkWithChildrenContext}>
                     <p className={styles.linkWithChildrenText}>{props.text}</p>
-                    <div className={`${styles.linkWithChildrenArrow} ${showChild && styles.arrowUp}`} onClick={showChildren}></div>
+                    <div className={`${styles.linkWithChildrenArrow} ${showChild && styles.arrowUp}`}></div>
                 </div>
-                {showChild && <div className={styles.linkWithChildrenBox}>
-                    {props.children ? props.children : <p className={styles.linkWithChildrenTextContext}>нет данных</p>}
-                </div>}
             </div>
-        </>
+            {showChild && <div className={styles.linkWithChildrenBox}>
+                {props.children ? props.children : <p className={styles.linkWithChildrenTextContext}>нет данных</p>}
+            </div>}
+        </div>
 
     );
 };

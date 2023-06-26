@@ -11,13 +11,9 @@ const Question: FunctionComponent<IQuestion> = (props): ReactElement => {
 
     return (
         <div>
-            <div className={styles.question}>
+            <div className={styles.question}  onClick={handleShowFullQuestion}>
                 <p className={styles.questionBody}>{props.question.question}</p>
-                <button
-                    onClick={handleShowFullQuestion}
-                    className={styles.questionBtn}>
-                    <div className={`${showFullQuestion ? styles.arrowUp : styles.arrowDown}`}></div>
-                </button>
+                <div className={`${showFullQuestion ? styles.arrowUp : styles.arrowDown}`}></div>
             </div>
             {showFullQuestion ?
                 <div className={styles.fullQuestionBlock}>
