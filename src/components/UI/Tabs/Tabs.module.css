@@ -1,20 +1,24 @@
-.tabs_container {
-    position: relative;
-    box-sizing: border-box;
-}
-
 .tabs {
     display: flex;
     flex-direction: row;
-    position: absolute;
-    right: 50px;
     overflow: hidden;
+    margin-left: 2rem;
     cursor: pointer;
     width: calc(100% - 100px);
 }
 
 .tab_content {
-    position: absolute;
-    top: 54px;
     width: 100%;
+}
+
+@media (min-width: 320px) {
+    .tabs {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 600px) {
+    .tabs {
+        margin-left: 2rem;
+    }
 }
