@@ -31,7 +31,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
         <Container>
             {doctor && <DoctorInformation doctor={doctor} />}
 
-            <DoctorDiplomas diplomas={diplomas!} />
+            {doctor && <DoctorDiplomas id={doctor!.id} diplomas={diplomas!} />}
 
             {doctor && <DoctorRecommendations doctorId={doctor.id} />}
             

@@ -1,10 +1,43 @@
 .carouselBlock {
-    background-color: var(--light_blue_half_opacity);
-    padding: 20px 16px;
+    background-color: var(--light_blue);
+    padding: 20px 40px;
     border-radius: 50px;
     margin-top: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
+.plus {
+    background-color: var(--light_blue_half_opacity);
+    border-top-right-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.addTitle {
+    display: none;
+}
+
+.addBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    width: 130px;
+    height: 35px;
+    font-size: 40px;
+    font-weight: 800;
+    color: white;
+    background-color: var(--violet);
+    cursor: pointer;
+}
+
+.addBtn:hover {
+    background-color: black;
+}
 .carouselTitle {
     font-size: 24px;
     margin-bottom: 40px;
@@ -13,22 +46,8 @@
 
 .carouselItem {
     background-color: white;
-    max-width: 180px;
-    height: 266px;
     border-radius: 25px;
     cursor: pointer;
-}
-
-.carouselAddItem {
-    background-color: white;
-    max-width: 180px;
-    height: 266px;
-    border-radius: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
 }
 
 .diplomaImg {
@@ -186,6 +205,13 @@
     }
     .carouselTitle {
         font-size: 30px;
+    }
+    .addTitle {
+        display: block;
+    }
+    .plus {
+        margin-left: 10px;
+        margin-right: auto;
     }
 }
 
