@@ -3,6 +3,7 @@ import styles from "./DoctorDiplomas.module.css";
 import AliceCarousel from "react-alice-carousel";
 import { toast } from "react-toastify";
 import "./Carousel.css";
+import "react-alice-carousel/lib/alice-carousel.css";
 import Modal from "../../../components/UI/Modal/Modal";
 import AvatarEditor from "react-avatar-editor";
 import defaultDiplomaImg from "../../../assets/img/default-diploma-photo.svg";
@@ -20,10 +21,11 @@ interface IImageProps {
 }
 
 interface IDoctorDiplomasProps {
+    id: string
     diplomas: IDiplomaGetDto[]
 }
 
-const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas}): ReactElement => {
+const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas, id}): ReactElement => {
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
@@ -102,7 +104,7 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas}): Re
                     const file = new File([blob], "sample.png", {type: blob.type});
                     const formData = new FormData();
                     formData.append("url", file);
-                    formData.append("doctorId", "a05d948b-177e-63e1-0a1c-4120de08ebe1");
+                    formData.append("doctorId", id);
                     createDiploma(formData);
                 }
                 ).catch((e: Error) => {
@@ -132,9 +134,7 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas}): Re
         });
     };
 
-    const items = [<div onClick={openModal} key={"1234"} className={styles.carouselAddItem}>
-        <div className={styles.carouselAddItemIcon}></div>
-    </div>].concat(diplomas && diplomas.map(el => {
+    const items = (diplomas && diplomas.map(el => {
         return  <div className={styles.carouselItem} key={el.id}>
             <img 
                 className={styles.diplomaImg}
@@ -142,11 +142,17 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas}): Re
                 src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${el?.url}` : defaultDiplomaImg} alt={"diploma"} />
         </div>; 
     }));
+
+    
     
     return (
         <div>
             <Modal show={showModal} close={closeModal}>
-                <div className={styles.AvatarUploaderBox}>
+
+
+
+                
+                {/* <div className={styles.AvatarUploaderBox}>
                     {imageProps.image !== "" &&
                 <AvatarEditor 
                     ref={editorRef}
@@ -189,25 +195,36 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({diplomas}): Re
                             disabled={fileName !== "" ? false : true}
                             onClick={setNewAvatar} className={styles.avatarBtn}>Установить</button> 
                     </div>                 
-                </div>
+                </div> */}
             </Modal>
             <div className={styles.carouselBlock}>
                 <p className={styles.carouselTitle}>Сертификаты о дополнительном образовании</p>
                 <AliceCarousel 
-                    disableDotsControls responsive={{0: {
+                    responsive={{0: {
                         items: 1,
                         itemsFit: "fill",
-                    }, 570: {
+                    }, 420: {
                         items: 2,
                         itemsFit: "fill",
-                    }, 790: {
+                    }, 650: {
                         items: 3,
                         itemsFit: "fill",
-                    }, 970: {
+                    }, 900: {
                         items: 4,
                         itemsFit: "fill",
-                    }}} items={items}/>
+                    }}} 
+                    
+                    disableDotsControls 
+                    items={items}/>
+                    
+                <div className={styles.plus}>
+                    <div className={styles.addBtn} onClick={openModal}>
+                        +
+                    </div>
+                    <p className={styles.addTitle}>Добавить сертификат</p>
+                </div>
             </div>
+            
         </div>
     );
 };
