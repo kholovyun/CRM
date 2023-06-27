@@ -16,7 +16,7 @@ import { validationSchemaRecommendation } from "../../../schemas/validationSchem
 import AccessControl from "../../../permissionRoutes/AccessControl";
 import { ERoles } from "../../../enums/ERoles";
 
-const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({ doctorId }): ReactElement => {
+const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({ doctorId, role }): ReactElement => {
     const {
         data: recommendations,
         isError: isErrorGetRecommendations,
@@ -102,7 +102,7 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                 </Formik>
             </AccessControl>
             <div className={styles.recommendationsBottom}>
-                <p>Мои рекомендации</p>
+                <p>{role === ERoles.DOCTOR ? "Мои рекомендации" : "Рекомендации доктора"}</p>
                 <button
                     className={styles.recommendationBtn}
                     onClick={handleShowList}

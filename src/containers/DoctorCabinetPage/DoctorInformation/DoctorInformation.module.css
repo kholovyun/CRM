@@ -6,6 +6,7 @@
     justify-content: center;
     gap: 20px;
     background-color: var(--light_blue_half_opacity);
+    margin-bottom: 30px;
 }
 
 .doctorInformation {

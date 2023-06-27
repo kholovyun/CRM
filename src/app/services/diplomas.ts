@@ -1,4 +1,5 @@
 import IDiplomaGetDto from "../../interfaces/IDiploma/IDiplomaGetDto";
+import { IMessage } from "../../interfaces/IUser/IMessage";
 import {api} from "./api";
 
 const diplomasApi = api.injectEndpoints({
@@ -17,6 +18,14 @@ const diplomasApi = api.injectEndpoints({
                 body: diplomaDto
             }),
             invalidatesTags: ["Diploma"]
+        }),
+
+        deleteDiploma: build.mutation<IMessage, string>({
+            query: (id: string) => ({
+                url: `/diplomas/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Diploma"]
         })
     }),
 });
@@ -24,5 +33,5 @@ const diplomasApi = api.injectEndpoints({
 export const {
     useCreateDiplomaMutation,
     useGetDiplomasByDoctorQuery,
-    useLazyGetDiplomasByDoctorQuery
+    useDeleteDiplomaMutation
 } = diplomasApi;
