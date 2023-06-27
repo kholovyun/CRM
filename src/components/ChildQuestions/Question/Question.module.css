@@ -20,10 +20,6 @@
     margin-right: 2rem;
 }
 
-.questionBtn {
-    border: none;
-}
-
 .arrowDown {
     background: url("../../../assets/img/arrow-short_down.svg") center/contain no-repeat;
     width: 23px;

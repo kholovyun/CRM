@@ -18,7 +18,10 @@
 
 .linkWithChildrenBox {
     width: 100%;
-    background-color: var(--light_blue);
+    background-color: var(--violet);
+    border-radius: 30px;
+    padding: 30px 5px;
+    margin-bottom: 15px;
 }
 
 .linkWithChildren:hover {
