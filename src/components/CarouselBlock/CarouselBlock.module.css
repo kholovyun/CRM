@@ -2,6 +2,7 @@
     background-color: var(--light_blue);
     padding: 20px 40px;
     border-radius: 50px;
+    margin-bottom: 30px;
     margin-top: 30px;
     position: relative;
     display: flex;
@@ -148,6 +149,7 @@
     width: 800px;
     height: 400px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -155,6 +157,19 @@
 .fullImage img{
     width: max-content;
     height: 100%;
+}
+
+.deleteDiplomaBtn {
+    margin-top: 20px;
+    background-color: var(--violet);
+    padding: 10px 60px;
+    color: white;
+    border-radius: 25px;
+    font-size: 20px;
+    border: none;
+    position: absolute;
+    right: 20px;
+    top: 10px;
 }
 
 @media screen and (min-width: 600px) {

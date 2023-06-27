@@ -6,7 +6,7 @@
     padding: 0;
 }
 .alice-carousel__prev-btn-item, .alice-carousel__next-btn-item {
-    background: url("../../../assets/img/arrow-carousel.svg") center/cover no-repeat;
+    background: url("../../assets/img/arrow-carousel.svg") center/cover no-repeat;
     width: 24px;
     height: 24px;
     border-radius: 50%;

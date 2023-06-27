@@ -1,19 +1,22 @@
 import { useState, useRef, useEffect, FormEvent, ChangeEventHandler, FunctionComponent, ReactElement, MouseEvent } from "react";
-import styles from "./DoctorDiplomas.module.css";
+import styles from "./CarouselBlock.module.css";
 import AliceCarousel from "react-alice-carousel";
 import "./Carousel.css";
 import "react-alice-carousel/lib/alice-carousel.css";
-import Modal from "../../../components/UI/Modal/Modal";
-import defaultDiplomaImg from "../../../assets/img/default-diploma-photo.svg";
-import { useCreateDiplomaMutation, useDeleteDiplomaMutation, useGetDiplomasByDoctorQuery } from "../../../app/services/diplomas";
-import IDiplomaCreateDto from "../../../interfaces/IDiploma/IDiplomaCreateDto";
-import IDoctorDiplomasProps from "./IDoctorDiplomasProps";
+import Modal from "../UI/Modal/Modal";
+import defaultDiplomaImg from "../../assets/img/default-diploma-photo.svg";
+import { useCreateDiplomaMutation, useDeleteDiplomaMutation, useGetDiplomasByDoctorQuery } from "../../app/services/diplomas";
+import IDiplomaCreateDto from "../../interfaces/IDiploma/IDiplomaCreateDto";
+import ICarouselBlockProps from "./ICarouselBlockProps";
 import { toast } from "react-toastify";
-import { errorHandler } from "../../../helpers/errorHandler";
-import { fileToDataString } from "../../../helpers/fileToDataString";
+import { errorHandler } from "../../helpers/errorHandler";
+import { fileToDataString } from "../../helpers/fileToDataString";
+import { ERoles } from "../../enums/ERoles";
+import { useCreateDocumentMutation, useDeleteDocumentMutation, useGetDocumentsByChildIdQuery } from "../../app/services/documents";
+import IDocumentCreateDto from "../../interfaces/IDocument/IDocumentCreateDto";
 
-const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactElement => {
-    const {data: diplomas} = useGetDiplomasByDoctorQuery(id);
+const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockTitle}): ReactElement => {
+    const {data: elements} = role === ERoles.DOCTOR ? useGetDiplomasByDoctorQuery(id) : useGetDocumentsByChildIdQuery(id);
     
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
@@ -33,15 +36,20 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactEle
         setClickedImageId("");
     };
 
-    const initStateValues: IDiplomaCreateDto = {
+    const initDiplomaState: IDiplomaCreateDto = {
         doctorId: id,
         url: undefined
     };
-    const [inputValues, setInputValues] = useState<IDiplomaCreateDto>(initStateValues);
+
+    const initDocumentState: IDocumentCreateDto = {
+        childId: id,
+        url: undefined,
+    };
+    const [inputValues, setInputValues] = useState<IDiplomaCreateDto | IDocumentCreateDto>(role === ERoles.DOCTOR ? initDiplomaState : initDocumentState);
     const [previewImageSrc, setPreviewImageSrc] = useState<string>();
     const fileInputRef = useRef<HTMLInputElement>(null);
     
-    const [createDiploma, {isError, isSuccess, error}] = useCreateDiplomaMutation();
+    const [createElement, {isError, isSuccess, error}] = (role === ERoles.DOCTOR ? useCreateDiplomaMutation() : useCreateDocumentMutation());
 
     const [clickedImageUrl, setClickedImageUrl] = useState<string>("");
     const [clickedImageId, setClickedImageId] = useState<string>("");
@@ -50,22 +58,21 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactEle
     }, [isError]);
 
     useEffect(() => {
-        isSuccess && toast.info("Сертификат создан");
+        isSuccess && toast.info(role === ERoles.DOCTOR ? "Сертификат добавлен" : "Документ добавлен");
     }, [isSuccess]);
 
-    
     const handleClick = (url: string, id: string) => {
         openFullImageModal();
         setClickedImageUrl(url);
         setClickedImageId(id);
     };
 
-    const items = (diplomas && diplomas.map(el => {
+    const items = (elements && elements.map(el => {
         return  <div className={styles.carouselItem} key={el.id} onClick={() => {handleClick(el.url, el.id);}}>
             <img 
                 className={styles.diplomaImg}
                 onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
-                src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${el?.url}` : defaultDiplomaImg} alt={"diploma"} />
+                src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${role === ERoles.DOCTOR ? "doctorsDiplomas" : "childrenDocuments"}/${el?.url}` : defaultDiplomaImg} alt={role} />
         </div>; 
     }));
 
@@ -109,16 +116,16 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactEle
             const [key, value] = entry;
             formData.append(key, value);
         });
-        await createDiploma(formData);
+        await createElement(formData);
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
         setFileName("");
-        setInputValues(initStateValues);
+        setInputValues(role === ERoles.DOCTOR ? initDiplomaState : initDocumentState);
         closeModal();
     };
 
-    const [deleteDiploma, {isError: isErrorDelete, isSuccess: isSuccessDelete, error: errorDelete}] = useDeleteDiplomaMutation();
+    const [deleteElement, {isError: isErrorDelete, isSuccess: isSuccessDelete, error: errorDelete}] = role === ERoles.DOCTOR ? useDeleteDiplomaMutation() : useDeleteDocumentMutation();
 
     useEffect(() => {
         isErrorDelete && errorHandler(errorDelete);
@@ -127,13 +134,13 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactEle
     useEffect(() => {
         if (isSuccessDelete) {
             closeFullImageModal();
-            toast.info("Сертификат удален");
+            toast.info(role === ERoles.DOCTOR ? "Сертификат удален" : "Документ удален");
         }
     }, [isSuccessDelete]);
     
     const deleteButtonHandler = (e: MouseEvent<HTMLButtonElement>, id: string) => {
         e.stopPropagation();
-        deleteDiploma(id);
+        deleteElement(id);
         setClickedImageId("");
         setClickedImageUrl("");
     };
@@ -143,10 +150,10 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactEle
         <div>
             <Modal show={showFullImageModal} close={closeFullImageModal}>
                 <div className={styles.fullImage}>
-                    <button onClick={(e) => deleteButtonHandler(e, clickedImageId)}>Delete</button>
                     <img
                         onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
                         src={clickedImageUrl !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${clickedImageUrl}` : defaultDiplomaImg} alt={"diploma"} />
+                    <button className={styles.deleteDiplomaBtn} onClick={(e) => deleteButtonHandler(e, clickedImageId)}>Delete</button>
                 </div>
             </Modal>
             <Modal show={showModal} close={closeModal}>
@@ -156,7 +163,7 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactEle
                     </div>}
                     <label className={styles.inputLabel}>
                         <input className={styles.diplomaInput} type="file" onChange={handleChangeFile} ref={fileInputRef}/> 
-                        <p className={styles.diplomaBtn}>Выбрать файл</p>
+                        <p className={styles.diplomaBtn}>{"Выбрать файл"}</p>
                     </label>
                     {fileName !== "" ? <span className={styles.fileName}>{fileName}</span> : null}
                     <div className={styles.diplomaButtons}>
@@ -171,8 +178,8 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactEle
             </Modal>
 
             <div className={styles.carouselBlock}>
-                <p className={styles.carouselTitle}>Сертификаты о дополнительном образовании</p>
-                {diplomas!.length === 0 ? null
+                <p className={styles.carouselTitle}>{blockTitle}</p>
+                {elements && elements.length === 0 ? null
                     :
                     <AliceCarousel 
                         responsive={{0: {
@@ -206,4 +213,4 @@ const DoctorDiplomas: FunctionComponent<IDoctorDiplomasProps> = ({id}): ReactEle
     );
 };
 
-export default DoctorDiplomas;
+export default CarouselBlock;

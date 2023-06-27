@@ -12,8 +12,9 @@ import { SubInfoTable } from "../../../components/UI/SubInfoTable/SubInfoTable";
 
 interface IDoctorInformationProps {
     doctor: IDoctorWithUser
+    role: ERoles
 }
-const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor}): ReactElement => {
+const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor, role}): ReactElement => {
     const [showEditUserModal, setShowEditUserModal] = useState(false);
     
     const editPersonalInformationModalCloser = () => {
@@ -56,22 +57,26 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor})
                         <p className={styles.fieldText}>{doctor?.speciality}</p>
                     </div>
                     <div className={styles.personalInformationField}>
-                        <p className={styles.fieldTitle}>Степень</p>
-                        <p className={styles.fieldText}>{doctor?.degree}</p>
-                    </div>
-                </div>
-                <div className={styles.personalInformationLine}>
-                    <div className={styles.personalInformationField}>
                         <p className={styles.fieldTitle}>Стаж</p>
                         <p className={styles.fieldText}>
                             <span>{doctor?.experience} </span>
                             {doctor?.experience && ageTextFormat(doctor.experience)}
                         </p>
                     </div>
+                </div>
+                <div className={styles.personalInformationLine}>
                     <div className={styles.personalInformationField}>
-                        <p className={styles.fieldTitle}>Моб.телефон</p>
-                        <p className={styles.fieldText}>{doctor?.users.phone}</p>
+                        <p className={styles.fieldTitle}>Степень</p>
+                        <p className={styles.fieldText}>{doctor?.degree}</p>
                     </div>
+                    {
+                        role === ERoles.DOCTOR || 
+                        role === ERoles.ADMIN || 
+                        role === ERoles.SUPERADMIN ?  
+                            <div className={styles.personalInformationField}>
+                                {<p className={styles.fieldTitle}>Моб.телефон</p>}
+                                <p className={styles.fieldText}>{doctor?.users.phone}</p>
+                            </div> : null}
                 </div>
                 <div className={styles.personalInformationLine}>
                     <div className={styles.personalInformationField}>
