@@ -1,4 +1,4 @@
-import styles from "ActivationForm.module.css";
+import styles from "./ActivationForm.module.css";
 const ActivationForm = () => {
     return (
         <div className={styles.activationForm}>

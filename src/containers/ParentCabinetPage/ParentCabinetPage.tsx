@@ -4,15 +4,18 @@ import { CardParent } from "../../components/CardParent/CardParent";
 import { CardDoctor } from "../../components/CardDoctor/CardDoctor";
 import styles from "./ParentCabinetPage.module.css";
 import { useAppSelector } from "../../app/hooks";
-import { FunctionComponent, ReactElement, useEffect } from "react";
+import {FunctionComponent, ReactElement, useEffect, useState} from "react";
 import { redirect, useNavigate, useParams } from "react-router-dom";
 import { useGetParentByUserIdQuery } from "../../app/services/parents";
 import { ERoles } from "../../enums/ERoles";
 import ReviewForm from "./ReviewForm/ReviewForm";
 import Tabs from "../../components/UI/Tabs/Tabs";
 import Tab from "../../components/UI/Tabs/Tab/Tab";
+import Modal from "../../components/UI/Modal/Modal.tsx";
+import ActivationForm from "../UserForms/ActivationForm/ActivationForm.tsx";
 
 export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
+    const [ showActivationModal, setShowActivationModal ] = useState<boolean>(false);
     const navigate = useNavigate();
     const { id } = useParams();
     const { user } = useAppSelector(state => state.auth);
@@ -30,8 +33,16 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
         }
     }, [ParentIdError]);
 
+    useEffect(() => {
+        data && !data.isActive ? setShowActivationModal(true) : setShowActivationModal(false);
+        console.log(data);
+    }, [data]);
+
     return (
         <Container>
+            <Modal show={showActivationModal} close={() => setShowActivationModal(false)}>
+                <ActivationForm />
+            </Modal>
             <div className={styles.parentboxContainer}>
                 {data && <CardParent userData={data} />}
                 {data && <CardDoctor doc={data.doctors} />}
