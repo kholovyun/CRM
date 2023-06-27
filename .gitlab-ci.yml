@@ -8,7 +8,8 @@ variables:
   DOCKER_HOST: tcp://docker:2376
 
 build_job:
-  tags: [front]
+  tags:
+    - front
   stage: build
   only: ["dev"]
   image: docker:20.10.16
@@ -33,11 +34,11 @@ deploy_job:
   stage: deploy
   image: alpine:latest
   script:
-    - chmod ag= $ID_RSA
+    - chmod og= $ID_RSA
     - apk update && apk add openssh-client
-    - ssh - $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER$IP_SERVER "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
-    - ssh - $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER$IP_SERVER "docker pull $TAG_COMMIT"
-    - ssh - $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER$IP_SERVER "docker container rm -f my-app $TAG_COMMIT || true"
-    - ssh - $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER$IP_SERVER "docker run -p 80:80 -d --name my-app $TAG_COMMIT"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker pull $TAG_COMMIT"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker container rm -f frontend || true"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker run -p 80:80 -d --name frontend $TAG_COMMIT"
   only: 
     - dev  
