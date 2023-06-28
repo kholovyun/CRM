@@ -1,3 +1,4 @@
+import IQuestionCreateDto from "../../interfaces/IQuestion/IQuestionCreateDto";
 import IQuestionGetDto from "../../interfaces/IQuestion/IQuestionGetDto";
 import { api } from "./api";
 
@@ -9,11 +10,20 @@ const questionsApi = api.injectEndpoints({
                 method: "GET",
             }),
             providesTags: ["Question"]
-        })
+        }),
+        createQuestion: build.mutation<IQuestionGetDto, IQuestionCreateDto>({
+            query: (question: IQuestionCreateDto) => ({
+                url: "/questions/",
+                method: "POST",
+                body: question
+            }),
+            invalidatesTags: ["Question"]
+        }),
     })
 });
 
 export const {
     useGetQuestionsByChildIdQuery,
-    useLazyGetQuestionsByChildIdQuery
+    useLazyGetQuestionsByChildIdQuery,
+    useCreateQuestionMutation
 } = questionsApi;
