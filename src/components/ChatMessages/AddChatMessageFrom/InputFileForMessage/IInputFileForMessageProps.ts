@@ -1,9 +1,9 @@
-import { ChangeEvent, MutableRefObject } from "react";
+import { ChangeEvent, RefObject } from "react";
 
 export default interface IInputFileForMessageProps {
     inputName: string
     onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void
-    fileReference: MutableRefObject<null>
+    fileReference: RefObject<HTMLInputElement>
     iconClass: string
     tooltipLabel: string
 }
