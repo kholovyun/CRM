@@ -11,6 +11,7 @@ import { ERoles } from "../../enums/ERoles";
 import ReviewForm from "./ReviewForm/ReviewForm";
 import Tabs from "../../components/UI/Tabs/Tabs";
 import Tab from "../../components/UI/Tabs/Tab/Tab";
+import AskQuestionForm from "../../components/AskQuestionForm/AskQuestionForm";
 
 export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
@@ -40,14 +41,17 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
                 <Tabs>
                     {data.children.map((ch) =>
                         <Tab key={ch.id} title={ch.name}>
-                            <div>Здесь должен быть компонент формы создания вопроса, принимающий ребёнка, из которого понадобятся id ребёнка {ch.id} и
-                                id родителя {ch.parentId}, а также принимающий id врача {data.doctorId}
-                            </div>
+                            <AskQuestionForm 
+                                transparent
+                                childId={ch.id}
+                                doctorId={data.doctorId}
+                                parentId={ch.parentId}
+                            />
                         </Tab>
                     )}
                 </Tabs>
             }
-            {data && <ChildrenCardBox array={data.children} />}
+            {data && <ChildrenCardBox array={data.children} doctorId={data.doctorId}/>}
             {user && <ReviewForm userId={user?.role === ERoles.PARENT ? user?.id : String(id)} />}
         </Container>
     );

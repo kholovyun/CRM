@@ -1,18 +1,20 @@
 import { FunctionComponent, ReactElement } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { CardChildPage } from "../../components/CardChildPage/CardChildPage.tsx";
-import { SupportTextAria } from "../../components/SupportTextAria/SupportTextAria.tsx";
 import { useGetChildrenByIdQuery } from "../../app/services/children.ts";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import ChildQuestions from "../../components/ChildQuestions/ChildQuestions.tsx";
 import { useLazyGetQuestionsByChildIdQuery } from "../../app/services/questions.ts";
 import { ContentLinkRow } from "../../components/UI/ContentLinkRow/ContentLinkRow.tsx";
 import LinkWithChildren from "../../components/UI/LinkWithChildren/LinkWithChildren.tsx";
 import { ERoles } from "../../enums/ERoles.ts";
 import CarouselBlock from "../../components/CarouselBlock/CarouselBlock.tsx";
+import AskQuestionForm from "../../components/AskQuestionForm/AskQuestionForm.tsx";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
+    const location = useLocation();
+    const doctorId: string = location.state.doctorId;
     const { data, isSuccess } = useGetChildrenByIdQuery(`${params.id}`);
     const [getQuestions, { data: questionsData }] = useLazyGetQuestionsByChildIdQuery();
 
@@ -24,7 +26,11 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
                 blockTitle="Результаты последних обследований"
                 role={ERoles.CHILD}
             />}
-            <SupportTextAria ph={"Задать вопрос врачу"} btnName={"Отправить"} />
+            {data && <AskQuestionForm 
+                childId={String(params.id)}
+                doctorId={doctorId}
+                parentId={data.result.parentId}
+            />}
             {data && <ContentLinkRow>
                 <LinkWithChildren fn={() => getQuestions(data.result.id)} text={"Ранее заданные вопросы"}>
                     {data && questionsData &&
