@@ -1,31 +1,30 @@
+
 import IRecommendationCreateDto from "../../interfaces/IRecommendation/IRecommendationCreateDto";
-import IRecomendationGetDto from "../../interfaces/IRecommendation/IRecommendationGetDto";
+import IRecommendationGetDto from "../../interfaces/IRecommendation/IRecommendationGetDto";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import {api} from "./api";
 
 const recommendationsApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getRecommendationsByDoctor: build.query<IRecomendationGetDto[], string>({
+        getRecommendationsByDoctor: build.query<IRecommendationGetDto[], string>({
             query: (id: string) => ({
                 // url: `/recommendations/${id}`,
-                url: `/recomendations/${id}`,
+                url: `/recommendations/${id}`,
                 method: "GET",
             }),
             providesTags: ["Recommendation"]
         }),
-        createRecommendation: build.mutation<IRecomendationGetDto, IRecommendationCreateDto>({
+        createRecommendation: build.mutation<IRecommendationGetDto, IRecommendationCreateDto>({
             query: (recommendationDto: IRecommendationCreateDto) => ({
-                url: "/recomendations/",
-                // url: "/recommendations/",
+                url: "/recommendations/",
                 method: "POST",
                 body: recommendationDto
             }),
             invalidatesTags: ["Recommendation"]
         }),
-        editRecommendation: build.mutation<IRecomendationGetDto, {id: string, recommendation: IRecommendationCreateDto}>({
+        editRecommendation: build.mutation<IRecommendationGetDto, {id: string, recommendation: IRecommendationCreateDto}>({
             query: ({id, recommendation}) => ({
-                url: `/recomendations/${id}`,
-                // url: "/recommendations/",
+                url: `/recommendations/${id}`,
                 method: "PUT",
                 body: recommendation
             }),
@@ -33,8 +32,7 @@ const recommendationsApi = api.injectEndpoints({
         }),
         deleteRecommendation: build.mutation<IMessage, string>({
             query: (id: string) => ({
-                url: `/recomendations/${id}`,
-                // url: "/recommendations/${id}",
+                url: `/recommendations/${id}`,
                 method: "DELETE"
             }),
             invalidatesTags: ["Recommendation"]
