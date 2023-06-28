@@ -145,14 +145,13 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
         setClickedImageUrl("");
     };
 
-
     return (
         <div>
             <Modal show={showFullImageModal} close={closeFullImageModal}>
                 <div className={styles.fullImage}>
                     <img
                         onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
-                        src={clickedImageUrl !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/doctorsDiplomas/${clickedImageUrl}` : defaultDiplomaImg} alt={"diploma"} />
+                        src={clickedImageUrl !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${role === ERoles.DOCTOR ? "doctorsDiplomas" : "childrenDocuments"}/${clickedImageUrl}` : defaultDiplomaImg} alt={"diploma"} />
                     <button className={styles.deleteDiplomaBtn} onClick={(e) => deleteButtonHandler(e, clickedImageId)}>Delete</button>
                 </div>
             </Modal>
