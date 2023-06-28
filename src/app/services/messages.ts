@@ -18,14 +18,14 @@ const messagesApi = api.injectEndpoints({
                 method: "POST",
                 body: newMessage
             }),
-            invalidatesTags: ["Message"]
+            invalidatesTags: ["Message", "MessagesStatus"]
         }),
         deleteMessage: build.mutation<{response: IMessage}, {id: string}>({
             query: ({id}) => ({
                 url: `/messages/${id}`,
                 method: "DELETE"
             }),
-            invalidatesTags: ["Message"]
+            invalidatesTags: ["Message", "MessagesStatus"]
         })
     }),
 });

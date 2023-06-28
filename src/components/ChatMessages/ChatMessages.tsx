@@ -62,7 +62,7 @@ export const ChatMessages: FunctionComponent<IChatMessagesProps> = (props: IChat
     }, [isDeleteMessageError]);
 
     const scrollToLast = () => {
-        const element = document.getElementById("scrollHere");
+        const element = document.getElementById(`scrollHere_${props.questionId}`);
         if (element) {
             element.scrollIntoView({ behavior: "smooth" });
         }
@@ -110,7 +110,7 @@ export const ChatMessages: FunctionComponent<IChatMessagesProps> = (props: IChat
                                 />
                             );
                         })}
-                        <p id={"scrollHere"}></p>
+                        <p id={`scrollHere_${props.questionId}`}></p>
                     </div>
                 }
             </div>
