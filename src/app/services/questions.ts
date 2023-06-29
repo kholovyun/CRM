@@ -11,6 +11,13 @@ const questionsApi = api.injectEndpoints({
             }),
             providesTags: ["Question"]
         }),
+        getQuestionsByDoctorId: build.query<IQuestionGetDto[], string>({
+            query: (id: string) => ({
+                url: `/questions/doctor/${id}`,
+                method: "GET",
+            }),
+            providesTags: ["Question"]
+        }),
         createQuestion: build.mutation<IQuestionGetDto, IQuestionCreateDto>({
             query: (question: IQuestionCreateDto) => ({
                 url: "/questions/",
@@ -25,5 +32,7 @@ const questionsApi = api.injectEndpoints({
 export const {
     useGetQuestionsByChildIdQuery,
     useLazyGetQuestionsByChildIdQuery,
-    useCreateQuestionMutation
+    useCreateQuestionMutation,
+    useLazyGetQuestionsByDoctorIdQuery,
+    useGetQuestionsByDoctorIdQuery
 } = questionsApi;

@@ -12,14 +12,18 @@ import DoctorInformation from "./DoctorInformation/DoctorInformation";
 import DoctorQuestions from "./DoctorQuestions/DoctorQuestions";
 import { ContentLinkBox } from "../../components/UI/ContentLinkBox/ContentLinkBox";
 import ContentLink from "../../components/UI/ContentLink/ContentLink";
+import styles from "./DoctorCabinetPage.module.css";
+import { useLazyGetQuestionsByDoctorIdQuery } from "../../app/services/questions";
+import ChildQuestion from "./ChildQuestion/ChildQuestion";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { user } = useAppSelector(state => state.auth);
     const { data: doctor } = useGetDoctorByUserIdQuery({ id: user?.role === ERoles.DOCTOR ? user?.id : String(params.id) });
-    
     const navigate = useNavigate();
     
+
+    const [getQuestions, {data: questions}] = useLazyGetQuestionsByDoctorIdQuery();
 
     return (
         <Container>
@@ -37,12 +41,20 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
             {/* НАВИГАЦИОННЫЙ БЛОК */}
             <ContentLinkBox>
                 <ContentLink
-                    fn={() => toast.info("Функционал пока недоступен")}
+                    fn={() => getQuestions(doctor!.id)}
                     text="Вопросы" />
                 <ContentLink
                     fn={() => navigate("/admin-page/children")}
                     text="Перейти в админ панель" />
             </ContentLinkBox>
+
+            {questions && doctor && <div className={styles.allQuestions}>
+                {
+                    questions.map((el) => {
+                        return <ChildQuestion key={el.id} childId={el.childId} question={el}/>;
+                    })
+                }
+            </div>}
         </Container>
     );
 };

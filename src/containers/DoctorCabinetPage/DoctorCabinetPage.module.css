@@ -49,3 +49,16 @@
 .arrowDown {
     transform: rotate(90deg);
 }
+
+.allQuestions {
+    background-color: var(--light_blue);
+    padding: 20px;
+    border-radius: 50px;
+}
+
+.question {
+    padding: 10px;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    background-color: var(--bg_light_blue);
+}

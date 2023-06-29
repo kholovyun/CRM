@@ -1,0 +1,40 @@
+.ChildQuestion {
+    margin-bottom: 20px;
+    background-color: var(--bg_light_blue);
+    border-radius: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ChildQuestion:hover {
+    transition: 0.2s;
+    box-shadow: 0 0 9px var(--gray_blue);
+}
+
+.childImg {
+    align-self: baseline;
+    width: 70px;
+    height: 70px;
+    background-color: var(--light_blue);
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
+    padding: 10px;
+    margin: 10px;
+}
+
+.childImg img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.title {
+    font-size: 20px;
+}
+
+.questionChat {
+    width: 100%;
+}
