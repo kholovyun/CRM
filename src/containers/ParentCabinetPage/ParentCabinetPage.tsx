@@ -6,7 +6,7 @@ import styles from "./ParentCabinetPage.module.css";
 import { useAppSelector } from "../../app/hooks";
 import {FunctionComponent, ReactElement, useEffect, useState} from "react";
 import { redirect, useNavigate, useParams } from "react-router-dom";
-import { useGetParentByUserIdQuery } from "../../app/services/parents";
+import {useActivateParentMutation, useGetParentByUserIdQuery} from "../../app/services/parents";
 import { ERoles } from "../../enums/ERoles";
 import ReviewForm from "./ReviewForm/ReviewForm";
 import Tabs from "../../components/UI/Tabs/Tabs";
@@ -19,7 +19,12 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { user } = useAppSelector(state => state.auth);
-    const { data, isError: ParentIdError } = useGetParentByUserIdQuery({ id: user?.role === ERoles.PARENT ? user?.id : String(id) });
+    const { data, isError: ParentIdError, refetch } = useGetParentByUserIdQuery({ id: user?.role === ERoles.PARENT ? user?.id : String(id) });
+    const [activateParent, { isSuccess }] = useActivateParentMutation();
+
+    const activateParentHandler = async ():Promise<void> => {
+        await activateParent({id: `${data?.id}`});
+    };
 
     useEffect(() => {
         if (!user) {
@@ -34,8 +39,13 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     }, [ParentIdError]);
 
     useEffect(() => {
+        if (isSuccess) {
+            refetch();
+        }
+    }, [isSuccess]);
+
+    useEffect(() => {
         data && !data.isActive ? setShowActivationModal(true) : setShowActivationModal(false);
-        console.log(data);
     }, [data]);
 
     return (
@@ -43,6 +53,7 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
             <Modal show={showActivationModal} close={() => setShowActivationModal(false)}>
                 <ActivationForm />
             </Modal>
+            <button onClick={activateParentHandler}>Activate</button>
             <div className={styles.parentboxContainer}>
                 {data && <CardParent userData={data} />}
                 {data && <CardDoctor doc={data.doctors} />}
