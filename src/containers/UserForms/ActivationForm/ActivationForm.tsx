@@ -3,6 +3,7 @@ import styles from "./ActivationForm.module.css";
 import {validationSchemaActivateParent} from "../../../schemas/validationSchemaActivateParent.ts";
 import Btn from "../../../components/UI/Btn/Btn.tsx";
 import {EBtnTypes} from "../../../enums/EBtnTypes.ts";
+import {EBtnSize} from "../../../enums/EBtnSize.ts";
 
 type TActivationProps = {
     fn: () => void;
@@ -42,6 +43,7 @@ const ActivationForm = (props: TActivationProps) => {
                     <Btn
                         title={"Сохранить"}
                         types={EBtnTypes.submit}
+                        size={EBtnSize.big}
                         disabled={!values.offerChecked || !values.privacyChecked || !values.childInfoChecked}
                     />
                 </Form>

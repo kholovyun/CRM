@@ -40,6 +40,7 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
 
     useEffect(() => {
         if (isSuccess) {
+            setShowActivationModal(false);
             refetch();
         }
     }, [isSuccess]);
@@ -50,10 +51,9 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
 
     return (
         <Container>
-            <Modal show={showActivationModal} close={() => setShowActivationModal(false)}>
-                <ActivationForm />
-            </Modal>
-            <button onClick={activateParentHandler}>Activate</button>
+            {showActivationModal && <Modal show={showActivationModal} close={() => setShowActivationModal(false)}>
+                <ActivationForm fn={activateParentHandler}/>
+            </Modal>}
             <div className={styles.parentboxContainer}>
                 {data && <CardParent userData={data} />}
                 {data && <CardDoctor doc={data.doctors} />}

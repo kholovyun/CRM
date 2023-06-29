@@ -22,7 +22,7 @@ const parentsApi = api.injectEndpoints({
                 providesTags: ["Parent"],
             }),
         }),
-        activateParent: build.mutation<IParent, {id: string}>({
+        activateParent: build.mutation<IParentWithUserDto, {id: string}>({
             query: (parent) => ({
                 url: `/parents/${parent.id}`,
                 method: "PATCH",
