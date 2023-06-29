@@ -9,7 +9,7 @@ const AllChildrenTable: FunctionComponent<IAllChildrenTableProps> = (props: IAll
 
     const navigateCabinetHandler = (e: MouseEvent<HTMLElement>, id: string) => {
         e.stopPropagation();
-        navigate(`/child-cabinet/${id}`);
+        navigate(`/child-cabinet/${id}`, {state: {doctorId: props.doctorId}});
     };
 
     return (

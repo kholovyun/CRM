@@ -2,7 +2,7 @@ import { FunctionComponent, ReactElement } from "react";
 import styles from "./Header.module.css";
 import Logo from "../Logo/Logo";
 import { MenuBurger } from "../MenuBurger/MenuBurger";
-import { DesctopMenu } from "../DesctopMenu/DesctopMenu";
+import { DesctopMenu } from "../DesktopMenu/DesctopMenu";
 
 const Header: FunctionComponent = (): ReactElement => {
     return (
