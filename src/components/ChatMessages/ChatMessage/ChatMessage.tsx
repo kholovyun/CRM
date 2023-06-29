@@ -27,7 +27,6 @@ const ChatMessage: FunctionComponent<IChatMessageProps> = (props: IChatMessagePr
     useEffect(() => {
         if (statusArray) {
             const result = statusArray.find(s => s.userId !== props.message.authorId && s.isRead === true);
-            console.log(JSON.stringify(result));
             result ? setIsMessageRead(true) : setIsMessageRead(false);
         }
     }, [statusArray, user]);

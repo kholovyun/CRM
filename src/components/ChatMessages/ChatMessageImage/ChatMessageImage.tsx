@@ -35,7 +35,7 @@ export const ChatMessageImage: FunctionComponent<IChatMessageImageProps> = (prop
                                     onError={(e) => {
                                         e.currentTarget.src = defaultPhoto;
                                     }}
-                                    src={`${import.meta.env.VITE_BASE_URL}uploads/messagesFiles/${props.url}`} alt={"изображение"}
+                                    src={`${import.meta.env.VITE_BASE_URL}/uploads/messagesFiles/${props.url}`} alt={"изображение"}
                                 />
                                 :
                                 <img className={styles.modal_full_image} src={defaultPhoto} alt={"изображение"}
@@ -52,7 +52,7 @@ export const ChatMessageImage: FunctionComponent<IChatMessageImageProps> = (prop
                     onError={(e) => {
                         e.currentTarget.src = defaultPhoto;
                     }}
-                    src={`${import.meta.env.VITE_BASE_URL}uploads/messagesFiles/${props.url}`}
+                    src={`${import.meta.env.VITE_BASE_URL}/uploads/messagesFiles/${props.url}`}
                     alt={"изображение"}
                 />
             </div>
