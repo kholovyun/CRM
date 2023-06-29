@@ -21,6 +21,14 @@ const parentsApi = api.injectEndpoints({
                 method: "GET",
                 providesTags: ["Parent"],
             }),
+        }),
+        activateParent: build.mutation<IParentWithUserDto, {id: string}>({
+            query: (parent) => ({
+                url: `/parents/${parent.id}`,
+                method: "PATCH",
+                body: parent
+            }),
+            invalidatesTags: ["Parent"],
         })
     }),
 });
@@ -28,6 +36,7 @@ const parentsApi = api.injectEndpoints({
 export const {
     useLazyGetParentsByDoctorQuery,
     useGetParentByUserIdQuery,
+    useActivateParentMutation,
 } = parentsApi;
 
 export default parentsApi;
