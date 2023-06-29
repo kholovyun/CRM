@@ -57,15 +57,19 @@
 }
 
 .image_box {
-    width: 150px;
+    display: flex;
+    align-items: center;
+    max-width: 150px;
+    max-height: 150px;
+    justify-content: center;
     align-self: center;
 }
 
 .message_img {
     display: inline-block;
-    background-color: var(--bg_light_blue);
+    background-color: var(--light_blue);
     border-radius: 2px;
-    width: 100%;
+    max-width: 100%;
     vertical-align: middle;
 }
 
@@ -88,7 +92,6 @@
     display: inline-block;
     width: 20px;
     height: 12px;
-    vertical-align: center;
 }
 
 .is_read {
@@ -136,7 +139,7 @@
     overflow: hidden;
     max-width: 95vw;
     max-height: 90vh;
-    background-color: var(--gray_blue);
+    background-color: var(--bg_light_blue);
     border-radius: 4px;
 }
 

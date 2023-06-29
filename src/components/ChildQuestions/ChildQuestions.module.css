@@ -1,7 +1,6 @@
 .questionsList {
     width: 100%;
-    word-wrap: break-word;
-    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
-
-

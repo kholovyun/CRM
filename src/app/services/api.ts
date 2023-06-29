@@ -24,6 +24,7 @@ export const api = createApi({
         "Question",
         "Review",
         "Message",
-        "MessagesStatus"
+        "MessagesStatus",
+        "Visit"
     ],
 });

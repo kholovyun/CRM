@@ -21,9 +21,14 @@ export const MenuBurger: FunctionComponent = (): ReactElement => {
         setShowMenu(!showMenu);
     };
 
+    const logoutHandler = () => {
+        dispatcher(logout());
+        toast.info("Выход выполнен");
+    };
+
     return (
         <div className={styles.menuBurger} onClick={showMenuToogle}>
-        &#9776;
+            &#9776;
             {showMenu && <div className={styles.menuBurgerBox}>
                 <div className={styles.closeBox}>
                     <p className={styles.close} onClick={showMenuToogle}></p>
@@ -33,13 +38,13 @@ export const MenuBurger: FunctionComponent = (): ReactElement => {
                         <NavLink to={"/login"} className={styles.burgerLink}>
                             <strong>{user.name}</strong>
                         </NavLink>
-                        <Avatar link="login"/>
+                        <Avatar link="login" />
                     </div> :
                     <div className={style.linkBox}>
-                        <NavLink style={{whiteSpace: "nowrap", marginRight: "5px", marginBottom: "40px", textAlign: "center", fontSize: "1rem"}} to={"/login"} className={styles.burgerLink}>
+                        <NavLink style={{ whiteSpace: "nowrap", marginRight: "5px", marginBottom: "40px", textAlign: "center", fontSize: "1rem" }} to={"/login"} className={styles.burgerLink}>
                             Личный кабинет
                         </NavLink>
-                        <Avatar style={{marginBottom: "40px"}} link="login"/>
+                        <Avatar style={{ marginBottom: "40px" }} link="login" />
                     </div>
                 }
                 <Btn
@@ -55,7 +60,7 @@ export const MenuBurger: FunctionComponent = (): ReactElement => {
                         title={"Выйти"}
                         size={EBtnSize.small}
                         btnClass={EBtnClass.dark_active}
-                        onclick={() => dispatcher(logout())} />
+                        onclick={logoutHandler} />
                 </AccessControl>
             </div>
             }

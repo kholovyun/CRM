@@ -8,12 +8,10 @@ import { toast } from "react-toastify";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
     if (isRejectedWithValue(action)) {
-        console.log(action.payload);
-        if(action.payload.originalStatus === 401 || action.payload.status === 401){
-            localStorage.removeItem("persist:root");
+        if (action.payload.originalStatus === 401 || action.payload.status === 401) {
             store.dispatch(logout());
             window.location.href = "/login";
-        } else if (action.payload.originalStatus === 403 || action.payload.status === 403){
+        } else if (action.payload.originalStatus === 403 || action.payload.status === 403) {
             window.location.href = "/404";
         } else if (action.payload.status === "FETCH_ERROR") {
             toast.error("Ошибка соединения");   

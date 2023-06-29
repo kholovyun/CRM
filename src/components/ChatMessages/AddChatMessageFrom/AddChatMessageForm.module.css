@@ -13,6 +13,10 @@
     align-items: center;
 }
 
+.min_width {
+    min-width: 230px;
+}
+
 .add_file_column {
     display: flex;
     flex-direction: column;

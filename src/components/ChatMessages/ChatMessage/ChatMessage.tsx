@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, MouseEvent, useEffect } from "react";
+import { FunctionComponent, ReactElement, MouseEvent, useEffect, useState } from "react";
 import IChatMessageProps from "./IChatMessageProps";
 import styles from "./ChatMessage.module.css";
 import { useAppSelector } from "../../../app/hooks";
@@ -8,26 +8,39 @@ import { useCreateMessageStatusMutation, useGetMessagesStatusByMessageQuery } fr
 
 const ChatMessage: FunctionComponent<IChatMessageProps> = (props: IChatMessageProps): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
-    const { data: statusArray } = useGetMessagesStatusByMessageQuery({ id: props.message.id });
+    const { data: statusArray } = useGetMessagesStatusByMessageQuery({ id: props.message.id }, { pollingInterval: 30000 });
     const [createStatus, { reset }] = useCreateMessageStatusMutation();
+    const [isMessageRead, setIsMessageRead] = useState<boolean | null>(null);
 
     const addStatus = async () => {
-        await createStatus({
-            newStatus: {
-                isRead: true,
-                messageId: props.message.id,
-                userId: props.message.id
-            }
-        });
+        if (user && [ERoles.DOCTOR, ERoles.PARENT].includes(user.role)) {
+            await createStatus({
+                newStatus: {
+                    isRead: true,
+                    messageId: props.message.id,
+                    userId: user.id
+                }
+            });
+        }
     };
+
+    useEffect(() => {
+        if (statusArray) {
+            const result = statusArray.find(s => s.userId !== props.message.authorId && s.isRead === true);
+            console.log(JSON.stringify(result));
+            result ? setIsMessageRead(true) : setIsMessageRead(false);
+        }
+    }, [statusArray, user]);
 
     useEffect(() => {
         setTimeout(() => {
             const result = statusArray?.find(s => s.userId === props.message.authorId && s.isRead === true);
-            if (user && user.id !== props.message.authorId && !result) {
-                addStatus().then(() => reset());
+            if (user && [ERoles.DOCTOR, ERoles.PARENT].includes(user.role) && user.id !== props.message.authorId && !result) {
+                addStatus().then(() => {
+                    reset();
+                });
             }
-        }, 3000);
+        }, 300);
     }, []);
 
     return (
@@ -60,8 +73,9 @@ const ChatMessage: FunctionComponent<IChatMessageProps> = (props: IChatMessagePr
                 <p className={`${styles.author_row} ${styles.align_self_end}`}>
                     {new Date(props.message.createdAt).toLocaleTimeString().slice(0, -3)}
                     {user && user.id === props.message.authorId ?
-                        statusArray && statusArray.find(s => s.userId !== props.message.authorId && s.isRead === true) ?
-                            <span className={`${styles.icon_for_read} ${styles.is_read}`}></span> :
+                        isMessageRead ?
+                            <span className={`${styles.icon_for_read} ${styles.is_read}`}></span>
+                            :
                             <span className={`${styles.icon_for_read} ${styles.is_not_read}`}></span>
                         : null
                     }

@@ -17,7 +17,7 @@ import { EBtnTypes } from "../../../enums/EBtnTypes";
 import InputFileForMessage from "./InputFileForMessage/InputFileForMessage";
 
 export const AddChatMessageFrom: FunctionComponent<IAddChatMessageFormProps> = (props: IAddChatMessageFormProps): ReactElement => {
-    const fileInput = useRef(null);
+    const fileInput = useRef<HTMLInputElement>(null);
     const [fileName, setFileName] = useState<string>("");
     const [count, setCount] = useState(0);
     const initStateValues: IChatMessageCreateDto = {
@@ -72,8 +72,9 @@ export const AddChatMessageFrom: FunctionComponent<IAddChatMessageFormProps> = (
     };
 
     const cancelFileHandler = () => {
-        const currentInput = fileInput.current! as { value: string };
-        currentInput.value = "";
+        if (fileInput.current) {
+            fileInput.current.value = "";
+        }
         setFileName("");
         setInputValues(prevState => {
             return {
@@ -153,7 +154,7 @@ export const AddChatMessageFrom: FunctionComponent<IAddChatMessageFormProps> = (
                                         <img className={styles.preview_img} src={preview} alt={"предварительный просмотр"} />
                                         <p className={styles.modal_title}>Текст сообщения</p>
                                         <textarea
-                                            className={styles.add_message_textarea}
+                                            className={`${styles.add_message_textarea} ${styles.min_width}`}
                                             onChange={inputHandler}
                                             name={"text"}
                                             value={inputValues.text}

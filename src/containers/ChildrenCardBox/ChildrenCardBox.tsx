@@ -9,7 +9,10 @@ export const ChildrenCardBox: FunctionComponent<IchildrenProps> = (props: Ichild
         <div className={styles.childBoxInf}>
             {props.array.length &&
                 props.array.map((child) => {
-                    return <CardChild key={child.id} child={child} />;
+                    return <CardChild 
+                        key={child.id} 
+                        child={child} 
+                        doctorId={props.doctorId} />;
                 })}
             <CardAddSome title="Добавить ребенка" />
         </div>

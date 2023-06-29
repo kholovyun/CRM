@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 type TChildCard = {
     child: IChildrenData;
+    doctorId: string
 };
 
 export const CardChild: FunctionComponent<TChildCard> = (props): ReactElement => {
@@ -38,7 +39,10 @@ export const CardChild: FunctionComponent<TChildCard> = (props): ReactElement =>
                 <p >Дата рождения</p>
                 <p className={styles.dateChildStyle}>{props.child.dateOfBirth}</p>
             </FunctionalBox>
-            <Btn title="Подробнее" size={EBtnSize.tiny} onclick={() => navigate(`/child-cabinet/${props.child.id}`)}/>
+            <Btn 
+                title="Подробнее" 
+                size={EBtnSize.tiny} 
+                onclick={() => navigate(`/child-cabinet/${props.child.id}`, {state: {doctorId: props.doctorId}})}/>
         </InfoTableChild>
     );
 };

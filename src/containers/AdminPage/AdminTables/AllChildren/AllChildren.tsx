@@ -101,7 +101,9 @@ const AllChildren: FunctionComponent = (): ReactElement => {
                 <p>Нет данных</p>
                 :
                 <div className={styles.list_table_box}>
-                    <AllChildrenTable allChildren={children.rows} />
+                    {thisDoctor && <AllChildrenTable
+                        doctorId={thisDoctor.id} 
+                        allChildren={children.rows} />}
                     {pages > 1 ? (
                         <Pagination
                             currentPage={currentPage}
