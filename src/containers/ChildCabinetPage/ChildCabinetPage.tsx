@@ -11,12 +11,18 @@ import { ERoles } from "../../enums/ERoles.ts";
 import CarouselBlock from "../../components/CarouselBlock/CarouselBlock.tsx";
 import AskQuestionForm from "../../components/AskQuestionForm/AskQuestionForm.tsx";
 
+
+
+import { useLazyGetVisitsByChildIdQuery } from "../../app/services/visits.ts";
+import ChildVisits from "../../components/ChildVisits/ChildVisits.tsx";
+
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const location = useLocation();
     const doctorId: string = location.state.doctorId;
     const { data, isSuccess } = useGetChildrenByIdQuery(`${params.id}`);
     const [getQuestions, { data: questionsData }] = useLazyGetQuestionsByChildIdQuery();
+    const [getVisits, { data: visitsData }] = useLazyGetVisitsByChildIdQuery();
 
     return (
         <Container>
@@ -45,7 +51,9 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
                             } />
                     }
                 </LinkWithChildren>
-                <LinkWithChildren fn={() => console.log("Приемы у врача")} text={"Приемы у врача"} />
+                <LinkWithChildren fn={() => getVisits(data.result.id)} text={"Приемы у врача"}>
+                    {data && visitsData && <ChildVisits visits={visitsData} />}
+                </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"} />
                 <LinkWithChildren fn={() => console.log("Сведения о профилактических прививках")} text={"Сведения о профилактических прививках"} />
                 <LinkWithChildren fn={() => console.log("Сведения об аллергическом статусе")} text={"Сведения об аллергическом статусе"} />
