@@ -25,9 +25,9 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
                 <table className={stylesTable.Table}>
                     <thead>
                         <tr className={stylesTable.Table_tr}>
-                            <th className={styles.allergiesTable_td_right}>Вид аллергии</th>
-                            <th className={styles.allergiesTable_td_right}>Симптомы</th>
-                            <th className={styles.allergiesTable_td}>Провоцирующие факторы</th>
+                            <th className={stylesTable.Table_td_right}>Вид аллергии</th>
+                            <th className={stylesTable.Table_td_right}>Симптомы</th>
+                            <th className={stylesTable.Table_td}>Провоцирующие факторы</th>
                         </tr>
                     </thead>
                     <tbody>
