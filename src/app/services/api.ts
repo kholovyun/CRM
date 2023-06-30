@@ -25,6 +25,7 @@ export const api = createApi({
         "Review",
         "Message",
         "MessagesStatus",
-        "Visit"
+        "Visit",
+        "Allergy"
     ],
 });
