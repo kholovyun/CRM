@@ -15,6 +15,7 @@ import AskQuestionForm from "../../components/AskQuestionForm/AskQuestionForm.ts
 
 import { useLazyGetVisitsByChildIdQuery } from "../../app/services/visits.ts";
 import ChildVisits from "../../components/ChildVisits/ChildVisits.tsx";
+import ChildAllergies from "../../components/ChildAllergies/ChildAllergies.tsx";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
@@ -56,7 +57,9 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"} />
                 <LinkWithChildren fn={() => console.log("Сведения о профилактических прививках")} text={"Сведения о профилактических прививках"} />
-                <LinkWithChildren fn={() => console.log("Сведения об аллергическом статусе")} text={"Сведения об аллергическом статусе"} />
+                <LinkWithChildren fn={() => console.log("Сведения об аллергическом статусе")} text={"Сведения об аллергическом статусе"}>
+                    {<ChildAllergies />}
+                </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Осмотры врачами других специальностей")} text={"Осмотры врачами других специальностей"} />
             </ContentLinkRow>
             }
