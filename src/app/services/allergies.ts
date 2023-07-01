@@ -1,6 +1,7 @@
 import IAllergyGetDto from "../../interfaces/IAllergy/IAllergyGetDto";
 import IAllergyCreateDto from "../../interfaces/IAllergy/IAllergyCreateDto";
 import { api } from "./api";
+import { IMessage } from "../../interfaces/IUser/IMessage";
 
 const allergiesApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -18,6 +19,13 @@ const allergiesApi = api.injectEndpoints({
                 body: allergyDto
             }),
             invalidatesTags: ["Allergy"]
+        }),
+        deleteAllergy: build.mutation<IMessage, string>({
+            query: (id: string) => ({
+                url: `/allergies/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Allergy"]
         })
     })
 });
@@ -25,5 +33,6 @@ const allergiesApi = api.injectEndpoints({
 export const {
     useGetAllergiesByChildIdQuery,
     useLazyGetAllergiesByChildIdQuery,
-    useCreateAllergyMutation
+    useCreateAllergyMutation,
+    useDeleteAllergyMutation
 } = allergiesApi;
