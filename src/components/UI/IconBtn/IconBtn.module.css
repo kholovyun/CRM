@@ -32,3 +32,9 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.delete_btn {
+    width: 30px;
+    height: 30px;
+    background: url("../../../assets/img/icon-trash-can.svg") center/contain no-repeat;
+}

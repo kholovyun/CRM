@@ -10,11 +10,10 @@ import LinkWithChildren from "../../components/UI/LinkWithChildren/LinkWithChild
 import { ERoles } from "../../enums/ERoles.ts";
 import CarouselBlock from "../../components/CarouselBlock/CarouselBlock.tsx";
 import AskQuestionForm from "../../components/AskQuestionForm/AskQuestionForm.tsx";
-
-
-
 import { useLazyGetVisitsByChildIdQuery } from "../../app/services/visits.ts";
 import ChildVisits from "../../components/ChildVisits/ChildVisits.tsx";
+import ChildAllergies from "../../components/ChildAllergies/ChildAllergies.tsx";
+import { useLazyGetAllergiesByChildIdQuery } from "../../app/services/allergies.ts";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
@@ -23,7 +22,7 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const { data, isSuccess } = useGetChildrenByIdQuery(`${params.id}`);
     const [getQuestions, { data: questionsData }] = useLazyGetQuestionsByChildIdQuery();
     const [getVisits, { data: visitsData }] = useLazyGetVisitsByChildIdQuery();
-
+    const [getAllergies, { data: allergiesData}] = useLazyGetAllergiesByChildIdQuery();
     return (
         <Container>
             {isSuccess && <CardChildPage data={data.result} />}
@@ -56,7 +55,9 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"} />
                 <LinkWithChildren fn={() => console.log("Сведения о профилактических прививках")} text={"Сведения о профилактических прививках"} />
-                <LinkWithChildren fn={() => console.log("Сведения об аллергическом статусе")} text={"Сведения об аллергическом статусе"} />
+                <LinkWithChildren fn={() => getAllergies(data.result.id)} text={"Сведения об аллергическом статусе"}>
+                    {data && allergiesData && <ChildAllergies childId={data.result.id} allergies={allergiesData} />}
+                </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Осмотры врачами других специальностей")} text={"Осмотры врачами других специальностей"} />
             </ContentLinkRow>
             }
