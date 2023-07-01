@@ -15,8 +15,11 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
+import { useAppSelector } from "../../app/hooks";
+import { ERoles } from "../../enums/ERoles";
 
 const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactElement => {
+    const { user } = useAppSelector(state => state.auth);
     const [showAddModal, setShowAddModal] = useState(false);
 
     const addNewAllergyCloser = () => {
@@ -44,39 +47,42 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
 
     return (
         <div>
-            <Modal show={showAddModal} close={addNewAllergyCloser}>
+            {user?.role === ERoles.DOCTOR ? <Modal show={showAddModal} close={addNewAllergyCloser}>
                 <div>
                     <CreateAllergy childId={props.childId} modalCloser={addNewAllergyCloser} />
                 </div>
-            </Modal>
+            </Modal> : null}
+
             <div className={styles.child_allergies}>
                 <table className={stylesTable.Table}>
                     <thead>
                         <tr className={stylesTable.Table_tr}>
                             <th className={stylesTable.Table_td_right}>Вид аллергии</th>
                             <th className={stylesTable.Table_td_right}>Симптомы</th>
-                            <th className={stylesTable.Table_td_right}>Провоцирующие факторы</th>
-                            <th className={stylesTable.Table_td}></th>
+                            <th className={user?.role === ERoles.DOCTOR ? stylesTable.Table_td_right: stylesTable.Table_td}>Провоцирующие факторы</th>
+                            {user?.role === ERoles.DOCTOR ? <th className={stylesTable.Table_td}></th> : null}
+
                         </tr>
                     </thead>
                     <tbody>
                         {props.allergies && props.allergies.map((allergy) => {
-                            return <AllergyRow 
-                                key={allergy.id} 
-                                allergy={allergy} 
+                            return <AllergyRow
+                                key={allergy.id}
+                                allergy={allergy}
                                 deleteAllergy={() => deleteAllergy(allergy.id)} />;
                         })}
                     </tbody>
                 </table>
             </div>
-            <div className={styles.allergyAdd_btn}>
+            {user?.role === ERoles.DOCTOR ? <div className={styles.allergyAdd_btn}>
                 <Btn
                     onclick={() => setShowAddModal(true)}
                     title="Добавить"
                     size={EBtnSize.small}
                     types={EBtnTypes.button}
                     btnClass={EBtnClass.dark_active} />
-            </div>
+            </div> : null}
+
         </div>
     );
 };
