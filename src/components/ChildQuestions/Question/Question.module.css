@@ -11,6 +11,7 @@
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+    cursor: pointer;
 }
 
 .question_body_text {
@@ -27,6 +28,12 @@
 .author {
     color: var(--gray_blue);
     font-weight: 600;
+}
+
+.child_data_text:hover,
+.child_data_text:hover .author {
+    cursor: pointer;
+    color: var(--black_blue);
 }
 
 .arrow_icon {

@@ -37,3 +37,12 @@
     outline: 2px solid var(--black_blue);
     outline-offset: 2px;
 }
+
+.disabled {
+    opacity: 0.6;
+}
+
+.disabled:hover {
+    cursor: not-allowed;
+    outline: none;
+}

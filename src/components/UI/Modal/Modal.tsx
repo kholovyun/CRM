@@ -8,7 +8,7 @@ const Modal: FunctionComponent<IModalProps> = (props: IModalProps): ReactElement
             {props.show ? <div onClick={props.close} className={styles.modal_bg} /> : null}
             <div className={styles.modal_box}
                 style={{
-                    transform: props.show ? "translate(-50%, -50%)" : "translate(-50%, -100vh)",
+                    transform: props.show ? "translate(-50%, -50%)" : "translate(-50%, -200vh)",
                     opacity: props.show ? "1" : "0"
                 }}
             >

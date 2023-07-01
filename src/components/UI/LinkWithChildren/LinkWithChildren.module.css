@@ -2,7 +2,6 @@
     padding: 30px 60px;
     background-color: var(--light_blue);
     border-radius: 2rem;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,14 +14,12 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .linkWithChildrenBox {
     width: 100%;
     background-color: var(--light_blue);
-    /* border-radius: 30px;
-    padding: 30px 5px;
-    margin-bottom: 15px; */
 }
 
 .linkWithChildren:hover {

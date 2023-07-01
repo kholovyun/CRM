@@ -2,6 +2,7 @@ import { FunctionComponent, ReactElement, MouseEvent } from "react";
 import IAllParentsTableProps from "./IAllParentsTableProps";
 import { useNavigate } from "react-router-dom";
 import styles from "../../AllTables.module.css";
+import SwitchDiv from "../../../../../components/UI/SwitchDiv/SwitchDiv";
 
 const AllParentsTable: FunctionComponent<IAllParentsTableProps> = (props: IAllParentsTableProps): ReactElement => {
     const navigate = useNavigate();
@@ -19,7 +20,8 @@ const AllParentsTable: FunctionComponent<IAllParentsTableProps> = (props: IAllPa
                         <th className={styles.Table_td_right}>ФИО</th>
                         <th className={styles.Table_td_right}>Email</th>
                         <th className={styles.Table_td_right}>Tел.</th>
-                        <th className={styles.Table_td}>Дата окон. подписки</th>
+                        <th className={styles.Table_td_right}>Дата окон. подписки</th>
+                        <th className={styles.Table_td}>Активация</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,8 +40,13 @@ const AllParentsTable: FunctionComponent<IAllParentsTableProps> = (props: IAllPa
                                 <td className={styles.Table_td_right}>
                                     {parent.users.phone}
                                 </td>
-                                <td className={styles.Table_td}>
+                                <td className={styles.Table_td_right}>
                                     {new Date(parent.subscriptionEndDate).toLocaleDateString()}
+                                </td>
+                                <td className={styles.Table_td}>
+                                    <div className={styles.switch_td}>
+                                        <SwitchDiv isOn={parent.isActive} disabled={true} />
+                                    </div>
                                 </td>
                             </tr>
                         );
