@@ -1,3 +1,4 @@
 export default interface ISwitchDivProps {
-    isOn: boolean;
+    isOn: boolean
+    disabled?: boolean
 }

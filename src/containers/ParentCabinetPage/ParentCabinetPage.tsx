@@ -4,9 +4,9 @@ import { CardParent } from "../../components/CardParent/CardParent";
 import { CardDoctor } from "../../components/CardDoctor/CardDoctor";
 import styles from "./ParentCabinetPage.module.css";
 import { useAppSelector } from "../../app/hooks";
-import {FunctionComponent, ReactElement, useEffect, useState} from "react";
+import { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { redirect, useNavigate, useParams } from "react-router-dom";
-import {useActivateParentMutation, useGetParentByUserIdQuery} from "../../app/services/parents";
+import { useActivateParentMutation, useGetParentByUserIdQuery } from "../../app/services/parents";
 import { ERoles } from "../../enums/ERoles";
 import ReviewForm from "./ReviewForm/ReviewForm";
 import Tabs from "../../components/UI/Tabs/Tabs";
@@ -14,17 +14,18 @@ import Tab from "../../components/UI/Tabs/Tab/Tab";
 import Modal from "../../components/UI/Modal/Modal.tsx";
 import ActivationForm from "../UserForms/ActivationForm/ActivationForm.tsx";
 import AskQuestionForm from "../../components/AskQuestionForm/AskQuestionForm";
+import AccessControl from "../../permissionRoutes/AccessControl.tsx";
 
 export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
-    const [ showActivationModal, setShowActivationModal ] = useState<boolean>(false);
+    const [showActivationModal, setShowActivationModal] = useState<boolean>(false);
     const navigate = useNavigate();
     const { id } = useParams();
     const { user } = useAppSelector(state => state.auth);
     const { data, isError: ParentIdError, refetch } = useGetParentByUserIdQuery({ id: user?.role === ERoles.PARENT ? user?.id : String(id) });
     const [activateParent, { isSuccess }] = useActivateParentMutation();
 
-    const activateParentHandler = async ():Promise<void> => {
-        await activateParent({id: `${data?.id}`});
+    const activateParentHandler = async (): Promise<void> => {
+        await activateParent({ id: `${data?.id}` });
     };
 
     useEffect(() => {
@@ -53,27 +54,29 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     return (
         <Container>
             {showActivationModal && <Modal show={showActivationModal} close={() => setShowActivationModal(false)}>
-                <ActivationForm fn={activateParentHandler}/>
+                <ActivationForm fn={activateParentHandler} />
             </Modal>}
             <div className={styles.parentboxContainer}>
                 {data && <CardParent userData={data} />}
                 {data && <CardDoctor doc={data.doctors} />}
             </div>
-            {data &&
-                <Tabs>
-                    {data.children.map((ch) =>
-                        <Tab key={ch.id} title={ch.name}>
-                            <AskQuestionForm 
-                                transparent
-                                childId={ch.id}
-                                doctorId={data.doctorId}
-                                parentId={ch.parentId}
-                            />
-                        </Tab>
-                    )}
-                </Tabs>
-            }
-            {data && <ChildrenCardBox array={data.children} doctorId={data.doctorId}/>}
+            <AccessControl allowedRoles={[ERoles.PARENT]}>
+                {data &&
+                    <Tabs>
+                        {data.children.map((ch) =>
+                            <Tab key={ch.id} title={ch.name}>
+                                <AskQuestionForm
+                                    transparent
+                                    childId={ch.id}
+                                    doctorId={data.doctorId}
+                                    parentId={ch.parentId}
+                                />
+                            </Tab>
+                        )}
+                    </Tabs>
+                }
+            </AccessControl>
+            {data && <ChildrenCardBox array={data.children} doctorId={data.doctorId} />}
             {user && <ReviewForm userId={user?.role === ERoles.PARENT ? user?.id : String(id)} />}
         </Container>
     );
