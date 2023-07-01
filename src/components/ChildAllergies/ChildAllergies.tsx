@@ -8,6 +8,7 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { EBtnClass } from "../../enums/EBtnClass";
 import Modal from "../UI/Modal/Modal";
+import CreateAllergy from "./CreateAllergy/CreateAllergy";
 
 const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactElement => {
     const [showAddModal, setShowAddModal] = useState(false);
@@ -19,7 +20,9 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
     return (
         <div>
             <Modal show={showAddModal} close={addNewAllergyCloser}>
-                <div>djhdfdxfd</div>
+                <div>
+                    <CreateAllergy childId={props.childId} modalCloser={addNewAllergyCloser} />
+                </div>
             </Modal>
             <div className={styles.child_allergies}>
                 <table className={stylesTable.Table}>
