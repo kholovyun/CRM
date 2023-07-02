@@ -268,6 +268,7 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
                                         name="subscrType"
                                         id="subsribe"
                                     >
+                                        <option className={styles.custom_option} value="" disabled hidden>Выберите</option>
                                         <option className={styles.custom_option} value={ESubscriptionType.MOUNTH}>{ESubscriptionType.MOUNTH} месяц</option>
                                         <option className={styles.custom_option} value={ESubscriptionType.HALF_YEAR}>{ESubscriptionType.HALF_YEAR} месяцев</option>
                                         <option className={styles.custom_option} value={ESubscriptionType.YEAR}>год</option>
@@ -283,6 +284,7 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
                                         name="paymentType"
                                         id="payment"
                                     >
+                                        <option className={styles.custom_option} value="" disabled hidden>Выберите</option>
                                         <option className={styles.custom_option} value={EPaymentType.AQUIR}>{EPaymentType.AQUIR}</option>
                                         <option className={styles.custom_option} value={EPaymentType.CASH}>{EPaymentType.CASH}</option>
                                     </Field>
@@ -304,6 +306,14 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
     const childrenArray = Children.toArray(children as ReactNode) as ReactElement<FormikStepProps>[];
     const [step, setStep] = useState(0);
     const currentChild = childrenArray[step];
+    const frorward = () => {
+        setStep((s) => s +1);
+        console.log(step);
+    };
+    const back = () => {
+        setStep((s) => s -1);
+        console.log(step);
+    };
 
     function isLastStep() {
         return step === childrenArray.length - 1;
@@ -325,7 +335,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
                 if (isLastStep()) {
                     await props.onSubmit(values, helpers);
                 } else {
-                    setStep((s) => s + 1);
+                    frorward();
                     helpers.setTouched({});
                 }
             }}
@@ -336,7 +346,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
                 <div className={styles.two_inputs_row}>
                     {step > 0 ? (
                         <Btn
-                            onclick={() => setStep((s) => s - 1)}
+                            onclick={() => back()}
                             title="Назад"
                             size={EBtnSize.small}
                             btnClass={EBtnClass.white_active}
