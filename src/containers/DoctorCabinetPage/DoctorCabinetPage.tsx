@@ -1,7 +1,6 @@
 import { FunctionComponent, ReactElement } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { useAppSelector } from "../../app/hooks";
-import { toast } from "react-toastify";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,8 +19,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { user } = useAppSelector(state => state.auth);
     const { data: doctor } = useGetDoctorByUserIdQuery({ id: user?.role === ERoles.DOCTOR ? user?.id : String(params.id) });
-    const navigate = useNavigate();
-    
+    const navigate = useNavigate();    
 
     const [getQuestions, {data: questions}] = useLazyGetQuestionsByDoctorIdQuery();
 

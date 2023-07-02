@@ -13,6 +13,6 @@ export default interface IChildWithParentIdDto {
     patronim?: string
     isActive: boolean
     parents: {
-        id: string
+        userId: string
     }
 }

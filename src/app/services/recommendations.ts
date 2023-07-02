@@ -8,7 +8,6 @@ const recommendationsApi = api.injectEndpoints({
     endpoints: (build) => ({
         getRecommendationsByDoctor: build.query<IRecommendationGetDto[], string>({
             query: (id: string) => ({
-                // url: `/recommendations/${id}`,
                 url: `/recommendations/${id}`,
                 method: "GET",
             }),
