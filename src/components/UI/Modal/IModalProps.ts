@@ -1,3 +1,5 @@
+import React from "react";
+
 export default interface IModalProps {
     show: boolean
     close: () => void
