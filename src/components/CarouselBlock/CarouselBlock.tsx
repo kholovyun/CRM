@@ -14,6 +14,7 @@ import { fileToDataString } from "../../helpers/fileToDataString";
 import { ERoles } from "../../enums/ERoles";
 import { useCreateDocumentMutation, useDeleteDocumentMutation, useGetDocumentsByChildIdQuery } from "../../app/services/documents";
 import IDocumentCreateDto from "../../interfaces/IDocument/IDocumentCreateDto";
+import AccessControl from "../../permissionRoutes/AccessControl";
 
 const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockTitle}): ReactElement => {
     const {data: elements} = role === ERoles.DOCTOR ? useGetDiplomasByDoctorQuery(id) : useGetDocumentsByChildIdQuery(id);
@@ -146,7 +147,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
     };
 
     return (
-        <div>
+        <>
             <Modal show={showFullImageModal} close={closeFullImageModal}>
                 <div className={styles.fullImage}>
                     <img
@@ -178,7 +179,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
 
             <div className={styles.carouselBlock}>
                 <p className={styles.carouselTitle}>{blockTitle}</p>
-                {elements && elements.length === 0 ? null
+                {elements && elements.length === 0 ? <p className={styles.noElements}>{role === ERoles.DOCTOR ? "Сертификаты еще не добавлены" : "Результаты еще не добавлены"}</p>
                     :
                     <AliceCarousel 
                         responsive={{0: {
@@ -199,16 +200,17 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
                         disableDotsControls 
                         items={items}
                     />
-                }      
-                <div className={styles.plus}>
-                    <div className={styles.addBtn} onClick={openModal}>
+                }
+                <AccessControl allowedRoles={role === ERoles.DOCTOR ? [ERoles.DOCTOR] : [ERoles.PARENT]}>
+                    <div className={styles.plus}>
+                        <div className={styles.addBtn} onClick={openModal}>
                         +
+                        </div>
+                        <p className={styles.addTitle}>Добавить сертификат</p>
                     </div>
-                    <p className={styles.addTitle}>Добавить сертификат</p>
-                </div>
-            </div>
-            
-        </div>
+                </AccessControl>      
+            </div> 
+        </>
     );
 };
 

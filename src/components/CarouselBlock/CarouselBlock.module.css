@@ -9,6 +9,11 @@
     flex-direction: column;
 }
 
+.noElements {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
 /* Carousel items */
 
 .carouselItem {
