@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactElement, useEffect } from "react";
 import styles from "./ReviewForm.module.css";
-import { Field, Formik, Form, ErrorMessage } from "formik";
+import { Field, Formik, Form } from "formik";
 import { ERoles } from "../../../enums/ERoles";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
@@ -55,7 +55,6 @@ export const ReviewForm: FunctionComponent<IReviewFormProps> = (props: IReviewFo
                 >
                     {({ isValid, handleSubmit }) => (
                         <Form className={styles.form_column}>
-                            <ErrorMessage className={styles.error_text} name="text" component="div" />
                             <Field as={"textarea"} type="text" name="text" className={styles.textarea}
                                 placeholder={"Поделитесь впечатлениями или пожеланиями по работе сервиса..."} />
                             <div className={styles.btn_row}>
