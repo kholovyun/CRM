@@ -102,6 +102,7 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
                     onSubmit={(values: FormikValues) => {
                         console.log(values);
                         createUserParent(values as IUserCreateParentWithChildDto);
+                        // navigator('') куда то перевести
                     }}
                 >
                     <FormikStep label="1" validationSchema={validationFirst}>
