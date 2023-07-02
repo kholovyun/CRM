@@ -1,7 +1,6 @@
 import { FunctionComponent, ReactElement } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { useAppSelector } from "../../app/hooks";
-import { toast } from "react-toastify";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { useGetDoctorByUserIdQuery } from "../../app/services/doctors";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,7 +8,6 @@ import { ERoles } from "../../enums/ERoles";
 import DoctorRecommendations from "./DoctorRecommendations/DoctorRecommendations";
 import CarouselBlock from "../../components/CarouselBlock/CarouselBlock";
 import DoctorInformation from "./DoctorInformation/DoctorInformation";
-import DoctorQuestions from "./DoctorQuestions/DoctorQuestions";
 import { ContentLinkBox } from "../../components/UI/ContentLinkBox/ContentLinkBox";
 import ContentLink from "../../components/UI/ContentLink/ContentLink";
 import styles from "./DoctorCabinetPage.module.css";
@@ -36,9 +34,6 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
 
             {doctor && <DoctorRecommendations role={user!.role} doctorId={doctor.id} />}
             
-            <DoctorQuestions />
-
-            {/* НАВИГАЦИОННЫЙ БЛОК */}
             <ContentLinkBox>
                 <ContentLink
                     fn={() => getQuestions(doctor!.id)}
