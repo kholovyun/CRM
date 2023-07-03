@@ -151,16 +151,6 @@
         font-size: 12px;
     }
 
-    .inputFileLabel {
-        order: 0;
-        margin-left: auto;
-        margin-right: 20px;
-        margin-top: 0;
-    }
-    
-    .inputFileLabel p {
-        font-size: 14px;
-    }
     .publicationBtn {
         margin: 0;  
     }

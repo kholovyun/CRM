@@ -20,6 +20,7 @@ import { KGMask, KZMask } from "../../../../helpers/countryRegexs";
 import KGFlag from "../../../../assets/img/kg.png";
 import INTFlag from "../../../../assets/img/icon_international_flag.svg";
 import { validationSchemaEditDoctor } from "../../../../schemas/validationSchemaEditDoctor";
+import { errorHandler } from "../../../../helpers/errorHandler";
 
 
 const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, doctorData}): ReactElement => {
@@ -55,11 +56,6 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
         isSuccess: isSuccesEditDoctor, 
         error: errorEditDoctor
     }] = useEditDoctorMutation();
-
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
-    };
 
     useEffect(() => {
         isErrorEditUser && errorHandler(errorEditUser);
