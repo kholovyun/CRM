@@ -4,12 +4,12 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import styles from "./CardChild.module.css";
 import Btn from "../UI/Btn/Btn";
 import { FunctionComponent, ReactElement } from "react";
-import { IChildrenData } from "../../interfaces/IParent/IChildren/IChildrenData";
 import defaultImage from "../../assets/img/icon_children_sidebar.svg";
 import { useNavigate } from "react-router-dom";
+import IChildGetDto from "../../interfaces/IChild/IChildGetDto";
 
 type TChildCard = {
-    child: IChildrenData;
+    child: IChildGetDto;
     doctorId: string
 };
 
@@ -24,9 +24,7 @@ export const CardChild: FunctionComponent<TChildCard> = (props): ReactElement =>
                     onError={(e) => {
                         e.currentTarget.src = defaultImage;
                     }}
-                    src={`${import.meta.env.VITE_BASE_URL}/uploads/childrenImgs/${
-                        props.child.photo
-                    }`}
+                    src={`${import.meta.env.VITE_BASE_URL}/uploads/childrenImgs/${props.child.photo}`}
                     alt={"childPhoto"}
                 />
                 <div className={styles.docInfoBlock}>
@@ -37,12 +35,12 @@ export const CardChild: FunctionComponent<TChildCard> = (props): ReactElement =>
             </FunctionalBox>
             <FunctionalBox>
                 <p >Дата рождения</p>
-                <p className={styles.dateChildStyle}>{props.child.dateOfBirth}</p>
+                <p className={styles.dateChildStyle}>{new Date(props.child.dateOfBirth).toLocaleDateString()}</p>
             </FunctionalBox>
-            <Btn 
-                title="Подробнее" 
-                size={EBtnSize.tiny} 
-                onclick={() => navigate(`/child-cabinet/${props.child.id}`, {state: {doctorId: props.doctorId}})}/>
+            <Btn
+                title="Подробнее"
+                size={EBtnSize.tiny}
+                onclick={() => navigate(`/child-cabinet/${props.child.id}`, { state: { doctorId: props.doctorId } })} />
         </InfoTableChild>
     );
 };

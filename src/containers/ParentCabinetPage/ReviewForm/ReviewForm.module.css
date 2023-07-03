@@ -12,14 +12,6 @@
     width: 100%;
 }
 
-.error_text {
-    max-width: 80%;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--violet);
-    padding: 0.5rem 0rem;
-}
-
 .btn_row {
     padding-top: 0.5rem;
     display: flex;

@@ -2,16 +2,16 @@ import { FunctionComponent, ReactElement } from "react";
 import styles from "./ChildrenCardBox.module.css";
 import { CardChild } from "../../components/CardChild/CardChild";
 import { CardAddSome } from "../../components/CardAddSome/CardAddSome";
-import { IchildrenProps } from "../../interfaces/IParent/IChildren/IchildrenProps";
+import IChildrenCardBoxProps from "./IChildrenCardBoxProps";
 
-export const ChildrenCardBox: FunctionComponent<IchildrenProps> = (props: IchildrenProps): ReactElement => {
+export const ChildrenCardBox: FunctionComponent<IChildrenCardBoxProps> = (props: IChildrenCardBoxProps): ReactElement => {
     return (
         <div className={styles.childBoxInf}>
-            {props.array.length &&
-                props.array.map((child) => {
-                    return <CardChild 
-                        key={child.id} 
-                        child={child} 
+            {props.childrenArray.length &&
+                props.childrenArray.map((child) => {
+                    return <CardChild
+                        key={child.id}
+                        child={child}
                         doctorId={props.doctorId} />;
                 })}
             <CardAddSome title="Добавить ребенка" />

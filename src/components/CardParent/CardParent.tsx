@@ -5,15 +5,15 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import styles from "./CardParent.module.css";
 import Btn from "../UI/Btn/Btn";
 import { CardTitle } from "../UI/ParrentUi/CardTitle/CardTitle";
-import IParent from "../../interfaces/IParent/IParrent";
+import IParentWithUserAndDoctorDto from "../../interfaces/IParent/IParentWithUserAndDoctorDto";
 
 type TParentCard = {
-    userData: IParent
+    userData: IParentWithUserAndDoctorDto
 };
 
 export const CardParent: FunctionComponent<TParentCard> = (props): ReactElement => {
     const date = new Date(props.userData.registerDate).toLocaleDateString();
-    const endDate = new Date(props.userData.users.subscriptions[0].endDate).toLocaleDateString();
+    const endDate = new Date(props.userData.subscriptionEndDate).toLocaleDateString();
     return (
         <InfoTable>
             <CardTitle title={"Личные данные"} />
@@ -33,7 +33,7 @@ export const CardParent: FunctionComponent<TParentCard> = (props): ReactElement 
                 <p>Дата окончания подписки</p>
                 <p>{endDate}</p>
             </FunctionalBox>
-            <Btn title="Продлить подписку" size={EBtnSize.tiny}/>
+            <Btn title="Продлить подписку" size={EBtnSize.tiny} />
         </InfoTable>
     );
 };

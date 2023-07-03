@@ -13,6 +13,7 @@ import Tabs from "../../components/UI/Tabs/Tabs";
 import Tab from "../../components/UI/Tabs/Tab/Tab";
 import Modal from "../../components/UI/Modal/Modal.tsx";
 import ActivationForm from "../UserForms/ActivationForm/ActivationForm.tsx";
+import { useLazyGetChildrenByParentQuery } from "../../app/services/children.ts";
 import AskQuestionForm from "../../components/AskQuestionForm/AskQuestionForm";
 import AccessControl from "../../permissionRoutes/AccessControl.tsx";
 
@@ -21,11 +22,20 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { user } = useAppSelector(state => state.auth);
-    const { data, isError: ParentIdError, refetch } = useGetParentByUserIdQuery({ id: user?.role === ERoles.PARENT ? user?.id : String(id) });
+    const { data: parent, isError: ParentIdError, refetch } = useGetParentByUserIdQuery({ id: user?.role === ERoles.PARENT ? user?.id : String(id) });
     const [activateParent, { isSuccess }] = useActivateParentMutation();
+    const [getChildren, { data: children }] = useLazyGetChildrenByParentQuery();
+
+    const getChildrenByParent = async () => {
+        if (parent) {
+            await getChildren(parent.id);
+        }
+    };
 
     const activateParentHandler = async (): Promise<void> => {
-        await activateParent({ id: `${data?.id}` });
+        if (parent) {
+            await activateParent(parent.id);
+        }
     };
 
     useEffect(() => {
@@ -48,8 +58,9 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     }, [isSuccess]);
 
     useEffect(() => {
-        data && !data.isActive ? setShowActivationModal(true) : setShowActivationModal(false);
-    }, [data]);
+        getChildrenByParent();
+        parent && !parent.isActive ? setShowActivationModal(true) : setShowActivationModal(false);
+    }, [parent]);
 
     return (
         <Container>
@@ -57,18 +68,19 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
                 <ActivationForm fn={activateParentHandler} />
             </Modal>}
             <div className={styles.parentboxContainer}>
-                {data && <CardParent userData={data} />}
-                {data && <CardDoctor doc={data.doctors} />}
+                {parent && <CardParent userData={parent} />}
+                {parent && <CardDoctor doctor={parent.doctors} />}
             </div>
+
             <AccessControl allowedRoles={[ERoles.PARENT]}>
-                {data &&
+                {parent && children !== undefined &&
                     <Tabs>
-                        {data.children.map((ch) =>
+                        {children.map((ch) =>
                             <Tab key={ch.id} title={ch.name}>
                                 <AskQuestionForm
                                     transparent
                                     childId={ch.id}
-                                    doctorId={data.doctorId}
+                                    doctorId={parent.doctorId}
                                     parentId={ch.parentId}
                                 />
                             </Tab>
@@ -76,7 +88,7 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
                     </Tabs>
                 }
             </AccessControl>
-            {data && <ChildrenCardBox array={data.children} doctorId={data.doctorId} />}
+            {parent && children && <ChildrenCardBox childrenArray={children} doctorId={parent.doctorId} />}
             {user && <ReviewForm userId={user?.role === ERoles.PARENT ? user?.id : String(id)} />}
         </Container>
     );

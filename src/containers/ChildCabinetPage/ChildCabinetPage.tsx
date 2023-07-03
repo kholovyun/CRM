@@ -22,41 +22,41 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const { data, isSuccess } = useGetChildrenByIdQuery(`${params.id}`);
     const [getQuestions, { data: questionsData }] = useLazyGetQuestionsByChildIdQuery();
     const [getVisits, { data: visitsData }] = useLazyGetVisitsByChildIdQuery();
-    const [getAllergies, { data: allergiesData}] = useLazyGetAllergiesByChildIdQuery();
+    const [getAllergies, { data: allergiesData }] = useLazyGetAllergiesByChildIdQuery();
     return (
         <Container>
-            {isSuccess && <CardChildPage data={data.result} />}
+            {isSuccess && <CardChildPage data={data} />}
             {data && <CarouselBlock
-                id={data?.result.id}
+                id={data?.id}
                 blockTitle="Результаты последних обследований"
                 role={ERoles.CHILD}
             />}
-            {data && <AskQuestionForm 
+            {data && <AskQuestionForm
                 childId={String(params.id)}
                 doctorId={doctorId}
-                parentId={data.result.parentId}
+                parentId={data.parentId}
             />}
             {data && <ContentLinkRow>
-                <LinkWithChildren fn={() => getQuestions(data.result.id)} text={"Ранее заданные вопросы"}>
+                <LinkWithChildren fn={() => getQuestions(data.id)} text={"Ранее заданные вопросы"}>
                     {data && questionsData &&
                         <ChildQuestions questions={questionsData}
                             childData={
                                 {
-                                    name: data.result.name,
-                                    surname: data.result.surname,
-                                    patronim: data.result.patronim ? data.result.patronim : "",
-                                    photo: data.result.photo
+                                    name: data.name,
+                                    surname: data.surname,
+                                    patronim: data.patronim ? data.patronim : "",
+                                    photo: data.photo
                                 }
                             } />
                     }
                 </LinkWithChildren>
-                <LinkWithChildren fn={() => getVisits(data.result.id)} text={"Приемы у врача"}>
+                <LinkWithChildren fn={() => getVisits(data.id)} text={"Приемы у врача"}>
                     {data && visitsData && <ChildVisits visits={visitsData} />}
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"} />
                 <LinkWithChildren fn={() => console.log("Сведения о профилактических прививках")} text={"Сведения о профилактических прививках"} />
-                <LinkWithChildren fn={() => getAllergies(data.result.id)} text={"Сведения об аллергическом статусе"}>
-                    {data && allergiesData && <ChildAllergies childId={data.result.id} allergies={allergiesData} />}
+                <LinkWithChildren fn={() => getAllergies(data.id)} text={"Сведения об аллергическом статусе"}>
+                    {data && allergiesData && <ChildAllergies childId={data.id} allergies={allergiesData} />}
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Осмотры врачами других специальностей")} text={"Осмотры врачами других специальностей"} />
             </ContentLinkRow>
