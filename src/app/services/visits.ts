@@ -1,6 +1,7 @@
 import IVisitGetDto from "../../interfaces/IVisit/IVisitGetDto";
 import IVisitCreateDto from "../../interfaces/IVisit/IVisitCreateDto";
 import { api } from "./api";
+import { IMessage } from "../../interfaces/IUser/IMessage";
 
 const visitsApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -18,6 +19,13 @@ const visitsApi = api.injectEndpoints({
                 body: visitDto
             }),
             invalidatesTags: ["Visit"]
+        }),
+        deleteVisit: build.mutation<IMessage, string>({
+            query: (id: string) => ({
+                url: `/visits/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Visit"]
         })
     })
 });
@@ -25,5 +33,6 @@ const visitsApi = api.injectEndpoints({
 export const {
     useGetVisitsByChildIdQuery,
     useLazyGetVisitsByChildIdQuery,
-    useCreateVisitMutation
+    useCreateVisitMutation,
+    useDeleteVisitMutation
 } = visitsApi;
