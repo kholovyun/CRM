@@ -20,6 +20,7 @@ import { KGMask, KZMask } from "../../../../helpers/countryRegexs";
 import KGFlag from "../../../../assets/img/kg.png";
 import INTFlag from "../../../../assets/img/icon_international_flag.svg";
 import { validationSchemaEditDoctor } from "../../../../schemas/validationSchemaEditDoctor";
+import { errorHandler } from "../../../../helpers/errorHandler";
 import { EBtnClass } from "../../../../enums/EBtnClass";
 
 

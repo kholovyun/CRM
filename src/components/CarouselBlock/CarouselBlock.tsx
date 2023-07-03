@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, FormEvent, ChangeEventHandler, FunctionComponent, ReactElement, MouseEvent } from "react";
+import { useState, useRef, FormEvent, ChangeEventHandler, FunctionComponent, ReactElement, MouseEvent } from "react";
 import styles from "./CarouselBlock.module.css";
 import AliceCarousel from "react-alice-carousel";
 import "./Carousel.css";
@@ -8,17 +8,15 @@ import defaultDiplomaImg from "../../assets/img/default-diploma-photo.svg";
 import { useCreateDiplomaMutation, useDeleteDiplomaMutation, useGetDiplomasByDoctorQuery } from "../../app/services/diplomas";
 import IDiplomaCreateDto from "../../interfaces/IDiploma/IDiplomaCreateDto";
 import ICarouselBlockProps from "./ICarouselBlockProps";
-import { toast } from "react-toastify";
-import { errorHandler } from "../../helpers/errorHandler";
+import errorHandler from "../../helpers/errorHandler";
 import { fileToDataString } from "../../helpers/fileToDataString";
 import { ERoles } from "../../enums/ERoles";
 import { useCreateDocumentMutation, useDeleteDocumentMutation, useGetDocumentsByChildIdQuery } from "../../app/services/documents";
 import IDocumentCreateDto from "../../interfaces/IDocument/IDocumentCreateDto";
 import AccessControl from "../../permissionRoutes/AccessControl";
+import successHandler from "../../helpers/successHandler";
 
 const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockTitle}): ReactElement => {
-    const {data: elements} = role === ERoles.DOCTOR ? useGetDiplomasByDoctorQuery(id) : useGetDocumentsByChildIdQuery(id);
-    
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
@@ -36,7 +34,17 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
         setClickedImageUrl("");
         setClickedImageId("");
     };
+    
+    const {data: elements} = role === ERoles.DOCTOR ? useGetDiplomasByDoctorQuery(id) : useGetDocumentsByChildIdQuery(id);
+    
+    const [createElement, {isError, isSuccess, error}] = (role === ERoles.DOCTOR ? useCreateDiplomaMutation() : useCreateDocumentMutation());
+    errorHandler(isError, error);
+    successHandler(isSuccess, (role === ERoles.DOCTOR ? "Сертификат добавлен" : "Документ добавлен"));
 
+    const [deleteElement, {isError: isErrorDelete, isSuccess: isSuccessDelete, error: errorDelete}] = role === ERoles.DOCTOR ? useDeleteDiplomaMutation() : useDeleteDocumentMutation();
+    errorHandler(isErrorDelete, errorDelete);
+    successHandler(isSuccessDelete,(role === ERoles.DOCTOR ? "Сертификат удален" : "Документ удален"), closeFullImageModal);
+    
     const initDiplomaState: IDiplomaCreateDto = {
         doctorId: id,
         url: undefined
@@ -50,17 +58,8 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
     const [previewImageSrc, setPreviewImageSrc] = useState<string>();
     const fileInputRef = useRef<HTMLInputElement>(null);
     
-    const [createElement, {isError, isSuccess, error}] = (role === ERoles.DOCTOR ? useCreateDiplomaMutation() : useCreateDocumentMutation());
-
     const [clickedImageUrl, setClickedImageUrl] = useState<string>("");
     const [clickedImageId, setClickedImageId] = useState<string>("");
-    useEffect(() => {
-        isError && errorHandler(error);
-    }, [isError]);
-
-    useEffect(() => {
-        isSuccess && toast.info(role === ERoles.DOCTOR ? "Сертификат добавлен" : "Документ добавлен");
-    }, [isSuccess]);
 
     const handleClick = (url: string, id: string) => {
         openFullImageModal();
@@ -125,19 +124,6 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
         setInputValues(role === ERoles.DOCTOR ? initDiplomaState : initDocumentState);
         closeModal();
     };
-
-    const [deleteElement, {isError: isErrorDelete, isSuccess: isSuccessDelete, error: errorDelete}] = role === ERoles.DOCTOR ? useDeleteDiplomaMutation() : useDeleteDocumentMutation();
-
-    useEffect(() => {
-        isErrorDelete && errorHandler(errorDelete);
-    }, [isErrorDelete]);
-
-    useEffect(() => {
-        if (isSuccessDelete) {
-            closeFullImageModal();
-            toast.info(role === ERoles.DOCTOR ? "Сертификат удален" : "Документ удален");
-        }
-    }, [isSuccessDelete]);
     
     const deleteButtonHandler = (e: MouseEvent<HTMLButtonElement>, id: string) => {
         e.stopPropagation();

@@ -4,13 +4,10 @@ import IImageProps from "./IImageProps";
 import styles from "./AvatarUploader.module.css";
 import { useEditDoctorMutation } from "../../../app/services/doctors";
 import IAvatarUploaderProps from "./IAvatarUploaderProps";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
 import { useEditChildMutation } from "../../../app/services/children";
 import { ERoles } from "../../../enums/ERoles";
+import errorHandler from "../../../helpers/errorHandler";
 
 const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarUploaderProps): ReactElement => { 
     const [uploadDoctorAvatar, 
@@ -29,22 +26,12 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarU
         }
     ]= useEditChildMutation();
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
-    };
+    errorHandler(isErrorDoctorAvatar, errorDoctorAvatar);
+    errorHandler(isErrorChildAvatar, errorChildAvatar);
 
     const [fileName, setFileName] = useState<string>("");
     const editorRef: RefObject<AvatarEditor> = createRef();
     const fileInputRef = useRef<HTMLInputElement>(null);
-
-    useEffect(()=> {
-        isErrorDoctorAvatar && errorHandler(errorDoctorAvatar);
-    }, [isErrorDoctorAvatar]);
-
-    useEffect(()=> {
-        isErrorChildAvatar && errorHandler(errorChildAvatar);
-    }, [isErrorChildAvatar]);
 
     useEffect(()=> {
         if(isSuccesDoctorAvatar || isSuccesChildAvatar) {
