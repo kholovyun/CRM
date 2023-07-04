@@ -14,6 +14,8 @@ import errorHandler  from "../../../helpers/errorHandler";
 import successHandler from "../../../helpers/successHandler";
 import IRecommendationCreateDto from "../../../interfaces/IRecommendation/IRecommendationCreateDto";
 import InputFileForMessage from "../../../components/ChatMessages/AddChatMessageFrom/InputFileForMessage/InputFileForMessage";
+import { fileToDataString } from "../../../helpers/fileToDataString";
+import IconBtn from "../../../components/UI/IconBtn/IconBtn";
 
 const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({ doctorId, role }): ReactElement => {
     const {
@@ -55,6 +57,15 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
     };
 
     const fileInput = useRef<HTMLInputElement>(null);
+    const [previewImageSrc, setPreviewImageSrc] = useState<string>();
+    const [fileName, setFileName] = useState<string>("");
+
+    const resetFileInput = () => {
+        if (fileInput.current) {
+            setFileName("");
+            fileInput.current.value = "";
+        }
+    };
 
     return (
         <div className={styles.recommendationBlock}>
@@ -69,26 +80,59 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                     onSubmit={async (values, {resetForm}) => {
                         await handleSubmit(values);
                         resetForm();
+                        resetFileInput();
                     }}
                     validateOnBlur
                     validationSchema={validationSchemaRecommendation} 
                 >
-                    {({ isValid, errors, touched, handleSubmit, setFieldValue }) => (
+                    {({ isValid, errors, touched, handleSubmit, setFieldValue, values }) => (
                         <Form className={styles.recommendationForm}>
                             {touched.text && errors.text ? <p className={styles.errorText}>{errors.text}</p> : <p></p>}
-                            <Field as={"textarea"} type="text" name="text" className={styles.textarea} placeholder={"Написать рекомендацию"} />
+                            <div className={styles.rerecommendationFormTop}>
+                                {fileName !== "" && <div className={styles.previewBox}>
+                                    <img src={previewImageSrc} alt="diploma" />
+                                    <div className={styles.removeImage}>
+                                        <IconBtn
+                                            btnClass={"x_btn"}
+                                            onclick={() => {
+                                                setFieldValue("url", undefined);
+                                                resetFileInput();
+                                            }}
+                                        />
+                                    </div>
+                                </div>}
+                                <Field 
+                                    as={"textarea"} 
+                                    type="text" name="text" 
+                                    className={styles.textarea} 
+                                    placeholder={"Написать рекомендацию"} 
+                                    maxLength={250}
+                                />
+                                <span className={styles.countOftext}>{values.text.length}/250</span>
+                            </div>
                             <div className={styles.recommendationFormBottom}>
                                 <InputFileForMessage 
                                     inputName={"url"}
-                                    onChangeHandler={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    onChangeHandler={async (event: React.ChangeEvent<HTMLInputElement>) => {
                                         const file = event.currentTarget.files && event.currentTarget.files[0];
-                                        if (file) {
-                                            setFieldValue("url", file);
+                                        if (!file) return;
+                                        if(file && /\.(jpg|jpeg|png)$/i.test(file.name) && file.size <= 5242880) {
+                                            try {
+                                                setPreviewImageSrc(await fileToDataString(file));
+                                                setFileName(event.target.files && event.target.files[0] ? event.target.files[0].name : "");
+                                                setFieldValue("url", file);
+                                            } catch (e) {
+                                                console.error(e);
+                                            }
+                                        } else if (file.size > 5242880) {
+                                            alert("Слишком большой размер файла");
+                                        } else {
+                                            alert("Пожалуйста выберите соответсвующий формат файла(jpg, jpeg, png)");
                                         }
                                     }}
                                     fileReference={fileInput}
-                                    iconClass={"file_icon"}
-                                    tooltipLabel={"Загрузить изображение"}
+                                    iconClass={values.url === undefined ? "file_icon" : "reload_image_icon"}
+                                    tooltipLabel={values.url === undefined ? "Загрузить изображение" : "Выбрать другой файл"}
                                 />
                                 <div className={styles.publicationBtn}>
                                     <Btn disabled={!isValid} size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
