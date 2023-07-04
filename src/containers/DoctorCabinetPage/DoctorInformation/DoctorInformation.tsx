@@ -62,7 +62,6 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({ doctor,
                         <p className={styles.fieldTitle}>Стаж</p>
                         <p className={styles.fieldText}>
                             {doctor?.experience} {doctor?.experience && ageTextFormat(doctor.experience)}
-                            {doctor?.experience} {doctor?.experience && ageTextFormat(doctor.experience)}
                         </p>
                     </div>
                 </div>
