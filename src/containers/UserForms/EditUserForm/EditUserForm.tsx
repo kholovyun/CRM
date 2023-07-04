@@ -64,10 +64,13 @@ const EditUserForm: FunctionComponent<IEditUserFormProps> = (props: IEditUserFor
     if (isSuccesEditUser) {
         resetEditUser();
         toast.info("Личные данные изменены");
+    }
+
+    const backToAdminPage = () => {
         if (user?.role === ERoles.ADMIN || user?.role === ERoles.SUPERADMIN) {
             navigate("/admin-page/profile");
         }
-    }
+    };
 
     return (
         <FormBox>
@@ -139,7 +142,11 @@ const EditUserForm: FunctionComponent<IEditUserFormProps> = (props: IEditUserFor
                                         types={EBtnTypes.reset}    
                                         onclick={props.closeModal} 
                                         size={EBtnSize.big} btnClass={EBtnClass.white_active} /> 
-                                    : null
+                                    : 
+                                    <Btn title="Закрыть" 
+                                        types={EBtnTypes.reset}    
+                                        onclick={backToAdminPage} 
+                                        size={EBtnSize.big} btnClass={EBtnClass.white_active} />
                                 }
                                 <Btn disabled={!isValid}
                                     title="Сохранить"
