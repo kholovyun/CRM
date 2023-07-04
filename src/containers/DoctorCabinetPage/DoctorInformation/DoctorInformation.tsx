@@ -10,6 +10,7 @@ import AvatarBox from "../../../components/AvatarBox/AvatarBox";
 import { ERoles } from "../../../enums/ERoles";
 import { SubInfoTable } from "../../../components/UI/SubInfoTable/SubInfoTable";
 import { EBtnClass } from "../../../enums/EBtnClass";
+import AccessControl from "../../../permissionRoutes/AccessControl";
 
 interface IDoctorInformationProps {
     doctor: IDoctorWithUser
@@ -89,14 +90,16 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({ doctor,
                         <p className={styles.fieldTitle}>Место работы</p>
                         <p className={styles.fieldText}>{doctor?.placeOfWork}</p>
                     </div>
-                    <div className={styles.personalInformationButton}>
-                        <Btn onclick={() => setShowEditUserModal(true)}
-                            btnClass={EBtnClass.dark_active}
-                            size={EBtnSize.tiny}
-                            types={EBtnTypes.submit}
-                            title="Редактировать" />
-                    </div>
-                </div>
+                    <AccessControl allowedRoles={[ERoles.DOCTOR, ERoles.ADMIN, ERoles.SUPERADMIN]}>
+                        <div className={styles.personalInformationButton}>
+                            <Btn onclick={() => setShowEditUserModal(true)}
+                                btnClass={EBtnClass.dark_active}
+                                size={EBtnSize.tiny}
+                                types={EBtnTypes.submit}
+                                title="Редактировать" />
+                        </div>
+                    </AccessControl>
+                </div>  
             </SubInfoTable>
         </div>
     );
