@@ -192,7 +192,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
                         <div className={styles.addBtn} onClick={openModal}>
                         +
                         </div>
-                        <p className={styles.addTitle}>Добавить сертификат</p>
+                        <p className={styles.addTitle}>{role === ERoles.DOCTOR ? "Добавить сертификат" : "Добавить новый результат"}</p>
                     </div>
                 </AccessControl>      
             </div> 
