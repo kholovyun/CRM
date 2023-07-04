@@ -16,6 +16,7 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
+import CreateVisitForm from "./CreateVisitForm/CreateVisitForm";
 
 const ChildVisits: FunctionComponent<IChildVisitsProps> = (props): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
@@ -41,13 +42,15 @@ const ChildVisits: FunctionComponent<IChildVisitsProps> = (props): ReactElement 
     }, [isErrorDeleteVisit]);
 
     useEffect(() => {
-        isSuccessDeleteVisit && toast.info("Аллергия удалена");
+        isSuccessDeleteVisit && toast.info("Запись о приеме у врача удалена");
     }, [isSuccessDeleteVisit]);
 
     return (
         <div>
             <Modal show={showAddModal} close={addNewVisitCloser}>
-                <div>djhdfdxfd</div>
+                <div>
+                    <CreateVisitForm childId={props.childId} modalCloser={addNewVisitCloser} />
+                </div>
             </Modal>
             <div className={styles.child_visits}>
                 <table className={stylesTable.Table}>
