@@ -5,23 +5,18 @@ import { useAppSelector } from "../../../../app/hooks";
 import { validationSchemaEditUser } from "../../../../schemas/validationSchemaEditUser";
 import styles from "./EditDoctorForm.module.css";
 import MaskedInput from "react-text-mask";
-import { FunctionComponent, ReactElement, useEffect, useRef, useState } from "react";
+import { FunctionComponent, ReactElement, useRef, useState } from "react";
 import { EBtnSize } from "../../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../../enums/EBtnTypes";
 import IEditDoctorFormProps from "./EditDoctorFormProps";
 import IDoctorUpdateDto from "../../../../interfaces/IDoctor/IDoctorUpdateDto";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../../interfaces/IUser/IMessage";
-import { toast } from "react-toastify";
 import { useEditDoctorMutation } from "../../../../app/services/doctors";
 import { KGMask, KZMask } from "../../../../helpers/countryRegexs";
 import KGFlag from "../../../../assets/img/kg.png";
 import INTFlag from "../../../../assets/img/icon_international_flag.svg";
 import { validationSchemaEditDoctor } from "../../../../schemas/validationSchemaEditDoctor";
-import { errorHandler } from "../../../../helpers/errorHandler";
-
+import errorHandler from "../../../../helpers/errorHandler";
+import successHandler from "../../../../helpers/successHandler";
 
 const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, doctorData}): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
@@ -57,21 +52,11 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
         error: errorEditDoctor
     }] = useEditDoctorMutation();
 
-    useEffect(() => {
-        isErrorEditUser && errorHandler(errorEditUser);
-    }, [isErrorEditUser]);
+    errorHandler(isErrorEditUser, errorEditUser);
+    errorHandler(isErrorEditDoctor, errorEditDoctor);
 
-    useEffect(() => {
-        isErrorEditDoctor && errorHandler(errorEditDoctor);
-    }, [isErrorEditDoctor]);
-
-    useEffect(() => {
-        isSuccesEditUser && toast.info("Личные данные изменены");
-    }, [isSuccesEditUser]);
- 
-    useEffect(() => {
-        isSuccesEditDoctor && toast.info("Специальные данные изменены");
-    }, [isSuccesEditDoctor]);
+    successHandler(isSuccesEditUser, "Личные данные изменены");
+    successHandler(isSuccesEditDoctor, "Специальные данные изменены");
 
     const updateDoctorData = async (values: IDoctorUpdateDto) => {
         const formData = new FormData();

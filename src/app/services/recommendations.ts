@@ -13,8 +13,8 @@ const recommendationsApi = api.injectEndpoints({
             }),
             providesTags: ["Recommendation"]
         }),
-        createRecommendation: build.mutation<IRecommendationGetDto, IRecommendationCreateDto>({
-            query: (recommendationDto: IRecommendationCreateDto) => ({
+        createRecommendation: build.mutation<IRecommendationGetDto, FormData>({
+            query: (recommendationDto: FormData) => ({
                 url: "/recommendations/",
                 method: "POST",
                 body: recommendationDto
