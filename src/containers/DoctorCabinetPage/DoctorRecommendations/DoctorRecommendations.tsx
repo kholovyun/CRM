@@ -46,7 +46,6 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
     };
 
     const handleSubmit = async (values: IRecommendationCreateDto) => {
-        console.log(values);
         const formData = new FormData();
         Object.entries(values).forEach(entry => {
             const [key, value] = entry;
@@ -78,21 +77,24 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                         <Form className={styles.recommendationForm}>
                             {touched.text && errors.text ? <p className={styles.errorText}>{errors.text}</p> : <p></p>}
                             <Field as={"textarea"} type="text" name="text" className={styles.textarea} placeholder={"Написать рекомендацию"} />
-                            <InputFileForMessage 
-                                inputName={"url"}
-                                onChangeHandler={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                    const file = event.currentTarget.files && event.currentTarget.files[0];
-                                    if (file) {
-                                        setFieldValue("url", file);
-                                    }
-                                }}
-                                fileReference={fileInput}
-                                iconClass={"file_icon"}
-                                tooltipLabel={"Загрузить изображение"}
-                            />
-                            <div className={styles.publicationBtn}>
-                                <Btn disabled={!isValid} size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
+                            <div className={styles.recommendationFormBottom}>
+                                <InputFileForMessage 
+                                    inputName={"url"}
+                                    onChangeHandler={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                        const file = event.currentTarget.files && event.currentTarget.files[0];
+                                        if (file) {
+                                            setFieldValue("url", file);
+                                        }
+                                    }}
+                                    fileReference={fileInput}
+                                    iconClass={"file_icon"}
+                                    tooltipLabel={"Загрузить изображение"}
+                                />
+                                <div className={styles.publicationBtn}>
+                                    <Btn disabled={!isValid} size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
+                                </div>
                             </div>
+                            
                         </Form>
                     )}
                 </Formik>
