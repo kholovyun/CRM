@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent, ReactElement, useState } from "react";
+import { ChangeEvent, FunctionComponent, ReactElement, useState, useEffect } from "react";
 import styles from "../UserForms.module.css";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import Btn from "../../../components/UI/Btn/Btn";
@@ -20,13 +20,15 @@ import { useAppSelector } from "../../../app/hooks";
 import { validationSchemaEditUser } from "../../../schemas/validationSchemaEditUser";
 import { useNavigate } from "react-router-dom";
 import { EBtnClass } from "../../../enums/EBtnClass";
+import { ERoles } from "../../../enums/ERoles";
+import IEditUserFormProps from "./IEditUserFormProps";
 
-const EditAdminForm: FunctionComponent = (): ReactElement => {
+const EditUserForm: FunctionComponent<IEditUserFormProps> = (props: IEditUserFormProps): ReactElement => {
     const navigate = useNavigate();
     const { user } = useAppSelector(state => state.auth);
-    const [editUser, { 
-        isError: isErrorEditUser, 
-        isSuccess: isSuccesEditUser, 
+    const [editUser, {
+        isError: isErrorEditUser,
+        isSuccess: isSuccesEditUser,
         error: errorEditUser,
         reset: resetEditUser
     }] = useEditUserMutation();
@@ -55,17 +57,21 @@ const EditAdminForm: FunctionComponent = (): ReactElement => {
         toast.error(`Ошибка ${err.data.message}`);
     };
 
-    isErrorEditUser && errorHandler(errorEditUser);
+    useEffect(() => {
+        isErrorEditUser && errorHandler(errorEditUser);
+    }, [isErrorEditUser]);
 
     if (isSuccesEditUser) {
         resetEditUser();
         toast.info("Личные данные изменены");
-        navigate("/admin-page/profile");
+        if (user?.role === ERoles.ADMIN || user?.role === ERoles.SUPERADMIN) {
+            navigate("/admin-page/profile");
+        }
     }
 
     return (
-        <FormBox>            
-            {user ? 
+        <FormBox>
+            {user ?
                 <Formik
                     initialValues={{
                         name: user.name,
@@ -84,19 +90,19 @@ const EditAdminForm: FunctionComponent = (): ReactElement => {
                             <Title text={"Редактировать профиль"} />
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
-                                    <ErrorMessage className={styles.error_text} name="name" component="div"/>
+                                    <ErrorMessage className={styles.error_text} name="name" component="div" />
                                     <Field className={styles.login_input} name="name" type="text" placeholder="Имя" />
                                 </div>
                                 <div className={styles.input_flex_column}>
-                                    <ErrorMessage className={styles.error_text} name="surname" component="div"/>
+                                    <ErrorMessage className={styles.error_text} name="surname" component="div" />
                                     <Field className={styles.login_input} name="surname" type="text" placeholder="Фамилия" />
                                 </div>
                             </div>
-                            <ErrorMessage className={styles.error_text} name="patronim" component="div"/>
+                            <ErrorMessage className={styles.error_text} name="patronim" component="div" />
                             <Field className={styles.login_input} name="patronim" type="text" placeholder="Отчество" />
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
-                                    <ErrorMessage className={styles.error_text} name="phone" component="div"/>
+                                    <ErrorMessage className={styles.error_text} name="phone" component="div" />
                                     <div className={styles.two_inputs_row}>
                                         <div className={styles.select_flag_wrapper}>
                                             <div className={styles.flag_wrapper}><img className={styles.flag_image} src={flag} alt="" /></div>
@@ -127,14 +133,21 @@ const EditAdminForm: FunctionComponent = (): ReactElement => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.added_margin_top}>
-                                <Btn disabled={!isValid} 
-                                    title="Сохранить" 
-                                    onclick={handleSubmit} 
-                                    size={EBtnSize.big} 
+                            <div className={`${styles.added_margin_top} ${styles.btn_group}`}>
+                                { props.closeModal !== undefined ? 
+                                    <Btn title="Закрыть" 
+                                        types={EBtnTypes.reset}    
+                                        onclick={props.closeModal} 
+                                        size={EBtnSize.big} btnClass={EBtnClass.white_active} /> 
+                                    : null
+                                }
+                                <Btn disabled={!isValid}
+                                    title="Сохранить"
+                                    onclick={handleSubmit}
+                                    size={EBtnSize.big}
                                     types={EBtnTypes.submit}
                                     btnClass={EBtnClass.dark_active} />
-                            </div>                            
+                            </div>
                         </Form>
                     )}
                 </Formik>
@@ -143,4 +156,4 @@ const EditAdminForm: FunctionComponent = (): ReactElement => {
     );
 };
 
-export default EditAdminForm;
+export default EditUserForm;

@@ -3,7 +3,6 @@
     box-sizing: border-box;
     justify-content: flex-start;
     flex-wrap: wrap;
-    padding: 40px 0;
     gap: 30px;
 }
 
@@ -11,11 +10,11 @@
     .childBoxInf {
         flex-direction: column;
         gap: 20px;
-    }  
+    }
 }
 
 @media screen and (max-width: 608px) {
     .childBoxInf {
         gap: 10px;
-    }  
+    }
 }

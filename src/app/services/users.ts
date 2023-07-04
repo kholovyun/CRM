@@ -37,7 +37,7 @@ const usersApi = api.injectEndpoints({
                 method: "PATCH",
                 body: userDto
             }),
-            invalidatesTags: ["User"]
+            invalidatesTags: ["User", "Parent"]
         }),
         login: build.mutation<IUserGetDtoWithToken, IUserLoginDto>({
             query: (body: IUserLoginDto) => ({

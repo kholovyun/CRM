@@ -20,6 +20,7 @@ import { KGMask, KZMask } from "../../../../helpers/countryRegexs";
 import KGFlag from "../../../../assets/img/kg.png";
 import INTFlag from "../../../../assets/img/icon_international_flag.svg";
 import { validationSchemaEditDoctor } from "../../../../schemas/validationSchemaEditDoctor";
+import { EBtnClass } from "../../../../enums/EBtnClass";
 
 
 const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, doctorData}): ReactElement => {
@@ -58,7 +59,7 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
 
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
         const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
+        toast.error(`Ошибка ${err.data.message}`);
     };
 
     useEffect(() => {
@@ -243,9 +244,8 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                         )}     
                     </Formik>
                 </div>
-                <Btn title="Закрыть" onclick={modalCloser} size={EBtnSize.tiny} types={EBtnTypes.submit} />
-            </div>
-            
+                <Btn title="Закрыть" onclick={modalCloser} size={EBtnSize.tiny} btnClass={EBtnClass.white_active} />
+            </div>            
         </div>
     );
 };
