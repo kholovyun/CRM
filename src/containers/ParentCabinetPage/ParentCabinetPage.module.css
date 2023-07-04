@@ -1,23 +1,34 @@
-.parentboxContainer {
+.parent_cabinet_column {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 40px 0;
-    gap: 20px;
+    flex-direction: column;
+    gap: 2.5rem;
 }
 
-.btnBox {
-    text-align: right;
+.parent_cards_section {
+    display: flex;
+    gap: 1rem;
 }
 
-@media screen and (max-width: 670px) {
-    .parentboxContainer {
+.margin_bottom_minus {
+    margin-bottom: -2rem;
+}
+
+@media screen and (min-width: 320px) {
+    .parent_cards_section {
         flex-direction: column;
+    }
+
+    .card_row {
+        justify-content: left;
     }
 }
 
-@media screen and (max-width: 400px) {
-    .btnBox {
-        padding: 20px 0;
+@media screen and (min-width: 800px) {
+    .parent_cards_section {
+        flex-direction: row;
+    }
+
+    .card_row {
+        justify-content: space-between;
     }
 }

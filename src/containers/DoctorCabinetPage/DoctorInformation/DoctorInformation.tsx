@@ -9,39 +9,40 @@ import { EBtnTypes } from "../../../enums/EBtnTypes";
 import AvatarBox from "../../../components/AvatarBox/AvatarBox";
 import { ERoles } from "../../../enums/ERoles";
 import { SubInfoTable } from "../../../components/UI/SubInfoTable/SubInfoTable";
+import { EBtnClass } from "../../../enums/EBtnClass";
 
 interface IDoctorInformationProps {
     doctor: IDoctorWithUser
     role: ERoles
 }
-const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor, role}): ReactElement => {
+const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({ doctor, role }): ReactElement => {
     const [showEditUserModal, setShowEditUserModal] = useState(false);
-    
+
     const editPersonalInformationModalCloser = () => {
         setShowEditUserModal(false);
     };
 
-    const ageTextFormat = (number: number) => {  
+    const ageTextFormat = (number: number) => {
         const titles = ["год", "года", "лет"];
-        const cases = [2, 0, 1, 1, 1, 2];  
-        return titles[(number % 100 > 4 && number % 100 < 20) 
-            ? 
-            2 : cases[(number % 10 < 5) ? number % 10 : 5]];  
+        const cases = [2, 0, 1, 1, 1, 2];
+        return titles[(number % 100 > 4 && number % 100 < 20)
+            ?
+            2 : cases[(number % 10 < 5) ? number % 10 : 5]];
     };
-    
+
     return (
         <div className={styles.doctorInformationBlock}>
             <Modal show={showEditUserModal} close={editPersonalInformationModalCloser}>
-                <EditDoctorForm 
-                    modalCloser={editPersonalInformationModalCloser} 
+                <EditDoctorForm
+                    modalCloser={editPersonalInformationModalCloser}
                     doctorData={doctor!}
                 />
             </Modal>
-            <AvatarBox 
+            <AvatarBox
                 role={ERoles.DOCTOR}
                 height={320}
                 width={300}
-                avatar={doctor?.photo} 
+                avatar={doctor?.photo}
                 id={doctor?.id}
             />
             <SubInfoTable>
@@ -70,9 +71,9 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor, 
                         <p className={styles.fieldText}>{doctor?.degree}</p>
                     </div>
                     {
-                        role === ERoles.DOCTOR || 
-                        role === ERoles.ADMIN || 
-                        role === ERoles.SUPERADMIN ?  
+                        role === ERoles.DOCTOR ||
+                            role === ERoles.ADMIN ||
+                            role === ERoles.SUPERADMIN ?
                             <div className={styles.personalInformationField}>
                                 {<p className={styles.fieldTitle}>Моб.телефон</p>}
                                 <p className={styles.fieldText}>{doctor?.users.phone}</p>
@@ -90,9 +91,13 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({doctor, 
                         <p className={styles.fieldText}>{doctor?.placeOfWork}</p>
                     </div>
                     <div className={styles.personalInformationButton}>
-                        <Btn onclick={() => setShowEditUserModal(true)} size={EBtnSize.tiny} types={EBtnTypes.submit} title="Редактировать" />
+                        <Btn onclick={() => setShowEditUserModal(true)}
+                            btnClass={EBtnClass.dark_active}
+                            size={EBtnSize.tiny}
+                            types={EBtnTypes.submit}
+                            title="Редактировать" />
                     </div>
-                </div>  
+                </div>
             </SubInfoTable>
         </div>
     );

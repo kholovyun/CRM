@@ -1,4 +1,4 @@
-export default interface ICardDoctorProps {
+export default interface IDoctorCardProps {
     doctor: {
         userId: string
         photo: string

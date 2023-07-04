@@ -201,6 +201,11 @@
     background-color: var(--violet);
 }
 
+.btn_group {
+    display: flex;
+    gap: 2rem;
+}
+
 @media screen and (min-width: 320px) {
     .error_text {
         font-size: 0.6rem;
@@ -223,6 +228,11 @@
     }
 
     .two_inputs_row {
+        flex-direction: column;
+    }
+
+    .btn_group {
+        display: flex;
         flex-direction: column;
     }
 }
@@ -250,5 +260,9 @@
     .two_inputs_row {
         flex-direction: row;
         align-items: flex-end;
+    }
+
+    .btn_group {
+        flex-direction: row;
     }
 }

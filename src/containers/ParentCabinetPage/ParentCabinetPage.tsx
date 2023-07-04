@@ -1,7 +1,7 @@
 import { ChildrenCardBox } from "../ChildrenCardBox/ChildrenCardBox";
 import { Container } from "../../components/UI/Container/Container";
-import { CardParent } from "../../components/CardParent/CardParent";
-import { CardDoctor } from "../../components/CardDoctor/CardDoctor";
+// import { CardParent } from "../../components/CardParent/CardParent";
+// import { CardDoctor } from "../../components/CardDoctor/CardDoctor";
 import styles from "./ParentCabinetPage.module.css";
 import { useAppSelector } from "../../app/hooks";
 import { FunctionComponent, ReactElement, useEffect, useState } from "react";
@@ -16,6 +16,8 @@ import ActivationForm from "../UserForms/ActivationForm/ActivationForm.tsx";
 import { useLazyGetChildrenByParentQuery } from "../../app/services/children.ts";
 import AskQuestionForm from "../../components/AskQuestionForm/AskQuestionForm";
 import AccessControl from "../../permissionRoutes/AccessControl.tsx";
+import ParentCard from "./Cards/ParentCard/ParentCard.tsx";
+import DoctorCard from "./Cards/DoctorCard/DoctorCard.tsx";
 
 export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     const [showActivationModal, setShowActivationModal] = useState<boolean>(false);
@@ -67,29 +69,33 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
             {showActivationModal && <Modal show={showActivationModal} close={() => setShowActivationModal(false)}>
                 <ActivationForm fn={activateParentHandler} />
             </Modal>}
-            <div className={styles.parentboxContainer}>
-                {parent && <CardParent userData={parent} />}
-                {parent && <CardDoctor doctor={parent.doctors} />}
-            </div>
+            <div className={styles.parent_cabinet_column}>
+                <div className={styles.parent_cards_section}>
+                    {parent && <ParentCard parent={parent} />}
+                    {parent && <DoctorCard doctor={parent.doctors} />}
 
-            <AccessControl allowedRoles={[ERoles.PARENT]}>
-                {parent && children !== undefined &&
-                    <Tabs>
-                        {children.map((ch) =>
-                            <Tab key={ch.id} title={ch.name}>
-                                <AskQuestionForm
-                                    transparent
-                                    childId={ch.id}
-                                    doctorId={parent.doctorId}
-                                    parentId={ch.parentId}
-                                />
-                            </Tab>
-                        )}
-                    </Tabs>
-                }
-            </AccessControl>
-            {parent && children && <ChildrenCardBox childrenArray={children} doctorId={parent.doctorId} />}
-            {user && <ReviewForm userId={user?.role === ERoles.PARENT ? user?.id : String(id)} />}
+                </div>
+                <AccessControl allowedRoles={[ERoles.PARENT]}>
+                    {parent && children !== undefined &&
+                        <div className={styles.margin_bottom_minus}>
+                            <Tabs>
+                                {children.map((ch) =>
+                                    <Tab key={ch.id} title={ch.name}>
+                                        <AskQuestionForm
+                                            transparent
+                                            childId={ch.id}
+                                            doctorId={parent.doctorId}
+                                            parentId={ch.parentId}
+                                        />
+                                    </Tab>
+                                )}
+                            </Tabs>
+                        </div>
+                    }
+                </AccessControl>
+                {parent && children && <ChildrenCardBox childrenArray={children} doctorId={parent.doctorId} />}
+                {user && <ReviewForm userId={user?.role === ERoles.PARENT ? user?.id : String(id)} />}
+            </div>
         </Container>
     );
 };
