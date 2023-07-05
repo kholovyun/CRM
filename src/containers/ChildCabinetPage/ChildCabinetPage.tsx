@@ -14,6 +14,7 @@ import { useLazyGetVisitsByChildIdQuery } from "../../app/services/visits.ts";
 import ChildVisits from "../../components/ChildVisits/ChildVisits.tsx";
 import ChildAllergies from "../../components/ChildAllergies/ChildAllergies.tsx";
 import { useLazyGetAllergiesByChildIdQuery } from "../../app/services/allergies.ts";
+import ChildVaccinations from "../../components/ChildVaccinations/ChildVaccinations.tsx";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
@@ -54,7 +55,9 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
                     {data && visitsData && <ChildVisits visits={visitsData} />}
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"} />
-                <LinkWithChildren fn={() => console.log("Сведения о профилактических прививках")} text={"Сведения о профилактических прививках"} />
+                <LinkWithChildren fn={() => console.log("Сведения о профилактических прививках")} text={"Сведения о профилактических прививках"}>
+                    {data && <ChildVaccinations childId={data.id} />}
+                </LinkWithChildren>
                 <LinkWithChildren fn={() => getAllergies(data.id)} text={"Сведения об аллергическом статусе"}>
                     {data && allergiesData && <ChildAllergies childId={data.id} allergies={allergiesData} />}
                 </LinkWithChildren>
