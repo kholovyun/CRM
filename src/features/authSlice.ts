@@ -26,6 +26,12 @@ const authSlice = createSlice({
                 state.user = action.payload;
             }
         );
+        builder.addMatcher(
+            usersApi.endpoints.editUser.matchFulfilled,
+            (state: IUserState, action: PayloadAction<IUserGetDtoWithToken>) => {
+                state.user = action.payload;
+            }
+        );
     },
 });
 

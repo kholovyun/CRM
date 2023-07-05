@@ -3,17 +3,13 @@ import IAllAdminsTableProps from "./IAllAdminsTableProps";
 import styles from "../../AllTables.module.css";
 import { ERoles } from "../../../../../enums/ERoles";
 import { useBlockUserMutation } from "../../../../../app/services/users";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../../../interfaces/IUser/IMessage";
-import { toast } from "react-toastify";
 import Modal from "../../../../../components/UI/Modal/Modal";
 import { EBtnSize } from "../../../../../enums/EBtnSize";
 import Btn from "../../../../../components/UI/Btn/Btn";
 import { EBtnClass } from "../../../../../enums/EBtnClass";
 import IUserGetDto from "../../../../../interfaces/IUser/IUserGetDto";
 import AdminRow from "./AdminRow/AdminRow";
+import errorHandler from "../../../../../helpers/errorHandler";
 
 const AllAdminsTable: FunctionComponent<IAllAdminsTableProps> = (props: IAllAdminsTableProps): ReactElement => {
     const [blockThisUser, { error: blockUserError, isError: isBlockError }] = useBlockUserMutation();
@@ -22,12 +18,7 @@ const AllAdminsTable: FunctionComponent<IAllAdminsTableProps> = (props: IAllAdmi
     const [modalTitle, setModalTitle] = useState("");
     const [showModal, setShowModal] = useState(false);
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
-
-    isBlockError && errorHandler(blockUserError);
+    errorHandler(isBlockError, blockUserError);
     
     const clearModalStates = () => {
         setUser(null);

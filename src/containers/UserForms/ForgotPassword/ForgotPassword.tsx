@@ -2,7 +2,6 @@ import { validationSchemaEmail } from "../../../schemas/validationSchemaEmail";
 import { useResetPasswordMutation } from "../../../app/services/password";
 import styles from "../UserForms.module.css";
 import { EBtnSize } from "../../../enums/EBtnSize";
-import { toast } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FunctionComponent, ReactElement } from "react";
 import Btn from "../../../components/UI/Btn/Btn";
@@ -10,23 +9,17 @@ import { EBtnTypes } from "../../../enums/EBtnTypes";
 import { Container } from "../../../components/UI/Container/Container";
 import { FormBox } from "../FormBox/FormBox";
 import { Title } from "../Title/Title";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import { useNavigate } from "react-router-dom";
+import errorHandler from "../../../helpers/errorHandler";
+import successHandler from "../../../helpers/successHandler";
 
 const ForgotPassword: FunctionComponent = (): ReactElement => {
     const [resetPassword, { data, isError, isSuccess, error: forgotError }] = useResetPasswordMutation();
     const navigate = useNavigate();
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка: ${err.error ? err.error : err.data.message}`);
-    };
 
-    isError && errorHandler(forgotError);
-    isSuccess && toast.info(`Ссылка отправлена на Ваш Email ${data?.email}`);
+    errorHandler(isError, forgotError);
+    successHandler(isSuccess, `Ссылка отправлена на Ваш Email ${data?.email}`);
 
     return (
         <Container>

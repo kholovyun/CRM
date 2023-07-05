@@ -10,12 +10,9 @@ import { EBtnTypes } from "../../../enums/EBtnTypes";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import { Container } from "../../../components/UI/Container/Container";
 import { useNavigate } from "react-router-dom";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { FormBox } from "../FormBox/FormBox";
 import { Title } from "../Title/Title";
+import errorHandler from "../../../helpers/errorHandler";
 
 const ResetPassword: FunctionComponent = (): ReactElement => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -29,12 +26,7 @@ const ResetPassword: FunctionComponent = (): ReactElement => {
         toast.success(data?.message);
     };
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка: ${err.error ? err.error : err.data.message}`);
-    };
-
-    isError && errorHandler(error);
+    errorHandler(isError, error);
 
     useEffect(() => {
         isSuccess && transferHandler();

@@ -1,7 +1,7 @@
 import { Middleware, combineReducers, configureStore, isRejectedWithValue } from "@reduxjs/toolkit";
 import { api } from "./services/api";
 import authReducer, { logout } from "../features/authSlice";
-import { PERSIST, persistReducer, persistStore, PURGE, REGISTER } from "redux-persist";
+import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
 import { toast } from "react-toastify";
@@ -42,7 +42,7 @@ const store = configureStore({
         getDefaultMiddleware({
             serializableCheck:
             {
-                ignoredActions: [REGISTER, PERSIST, PURGE],
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }).concat(api.middleware).concat(rtkQueryErrorLogger),
 });

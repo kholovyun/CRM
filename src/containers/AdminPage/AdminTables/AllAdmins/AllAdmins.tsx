@@ -1,17 +1,13 @@
 import { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import Pagination from "../../../../components/UI/Pagination/Pagination";
 import styles from "../AllTables.module.css";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
 import { EBtnSize } from "../../../../enums/EBtnSize";
 import TransparentLink from "../../../../components/UI/TransparentLink/TransparentLink";
-import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../../interfaces/IUser/IMessage";
-import { toast } from "react-toastify";
 import Loader from "../../../../components/UI/Loader/Loader";
 import { NavLink } from "react-router-dom";
 import AllAdminsTable from "./AllAdminsTable/AllAdminsTable";
 import { useGetUsersQuery } from "../../../../app/services/users";
+import errorHandler from "../../../../helpers/errorHandler";
 
 const AllAdmins: FunctionComponent = (): ReactElement => {
     const limit = 10;
@@ -32,12 +28,7 @@ const AllAdmins: FunctionComponent = (): ReactElement => {
         setOffset((currentPage - 1) * limit);
     }, [currentPage]);
     
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
-
-    isGetAdminsError && errorHandler(getAdminsError);  
+    errorHandler(isGetAdminsError, getAdminsError);
 
     return (
         <div className={styles.list_container}>

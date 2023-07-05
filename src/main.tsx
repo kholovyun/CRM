@@ -10,7 +10,7 @@ import "@fontsource/roboto/700.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <Provider store={store}>
-        <PersistGate persistor={persistor}>
+        <PersistGate loading={null} persistor={persistor}>
             <App />
         </PersistGate>
     </Provider>

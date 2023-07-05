@@ -4,33 +4,25 @@ import { useLoginMutation } from "../../../app/services/users";
 import { useAppSelector } from "../../../app/hooks";
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "../UserForms.module.css";
-import { toast } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import { Container } from "../../../components/UI/Container/Container";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { Title } from "../Title/Title";
 import { FormBox } from "../FormBox/FormBox";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
 import { ERoles } from "../../../enums/ERoles";
 import { EBtnClass } from "../../../enums/EBtnClass";
+import errorHandler from "../../../helpers/errorHandler";
+import successHandler from "../../../helpers/successHandler";
 
 const Login: FunctionComponent = (): ReactElement => {
-    const [loginUser, { data, isError, isSuccess, error: loginErrors }] = useLoginMutation();
+    const [loginUser, { data, isError, isSuccess, error: loginError }] = useLoginMutation();
     const { user } = useAppSelector(state => state.auth);
     const navigator = useNavigate();
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка: ${err.error ? err.error : err.data.message}`);
-    };
-
-    isError && errorHandler(loginErrors);
-    isSuccess && toast.success(`Добро пожаловать ${data?.name} вход выполнен`);
+    errorHandler(isError, loginError);
+    successHandler(isSuccess, `Добро пожаловать ${data?.name} вход выполнен`);
 
     useEffect(() => {
         if (user) {

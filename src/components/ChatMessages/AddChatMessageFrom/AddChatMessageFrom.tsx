@@ -2,10 +2,6 @@ import { FunctionComponent, ReactElement, ChangeEvent, FormEvent, useRef, useSta
 import IAddChatMessageFormProps from "./IAddChatMessageFormProps";
 import styles from "./AddChatMessageForm.module.css";
 import { useCreateMessageMutation } from "../../../app/services/messages";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
 import IChatMessageCreateDto from "../../../interfaces/IChatMessages/IChatMessageCreateDto";
 import IconBtn from "../../UI/IconBtn/IconBtn";
@@ -15,6 +11,7 @@ import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import InputFileForMessage from "./InputFileForMessage/InputFileForMessage";
+import errorHandler from "../../../helpers/errorHandler";
 
 export const AddChatMessageFrom: FunctionComponent<IAddChatMessageFormProps> = (props: IAddChatMessageFormProps): ReactElement => {
     const fileInput = useRef<HTMLInputElement>(null);
@@ -39,11 +36,6 @@ export const AddChatMessageFrom: FunctionComponent<IAddChatMessageFormProps> = (
     const [image, setImage] = useState<File | undefined>();
     const [preview, setPreview] = useState<string | undefined>();
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
-
     useEffect(() => {
         if (inputValues.url && image) {
             const reader = new FileReader();
@@ -57,12 +49,10 @@ export const AddChatMessageFrom: FunctionComponent<IAddChatMessageFormProps> = (
     }, [inputValues.url, image]);
 
     useEffect(() => {
-        isCreateMessageError && errorHandler(errorCreateMessage);
-    }, [isCreateMessageError]);
-
-    useEffect(() => {
         isSuccesCreateMessage && resetCreateMessage();
     }, [isSuccesCreateMessage]);
+
+    errorHandler(isCreateMessageError, errorCreateMessage);
 
     const inputHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         setCount(e.target.value.length);

@@ -7,10 +7,6 @@ import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import { toast } from "react-toastify";
 import { useCreateUserMutation } from "../../../app/services/users";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { FormBox } from "../FormBox/FormBox";
 import { Title } from "../Title/Title";
 import { useNavigate } from "react-router-dom";
@@ -18,15 +14,11 @@ import { ERoles } from "../../../enums/ERoles";
 import { EDoctorLevel } from "../../../enums/EDoctorLevel";
 import PhoneMask from "../../../components/PhoneMask/PhoneMask";
 import { EBtnClass } from "../../../enums/EBtnClass";
+import errorHandler from "../../../helpers/errorHandler";
 
 const RegisterUser: FunctionComponent<{role: string, title: string}> = (props: {role: string, title: string}): ReactElement => {
     const navigate = useNavigate();
     const [createUser, { isError, isSuccess, error: createUserError }] = useCreateUserMutation();
-
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
 
     const successHandler = () => {
         if (props.role === ERoles.ADMIN) {
@@ -38,7 +30,7 @@ const RegisterUser: FunctionComponent<{role: string, title: string}> = (props: {
         navigate(-1);
     };
 
-    isError && errorHandler(createUserError);
+    errorHandler(isError, createUserError);
     isSuccess && successHandler();
 
     return (

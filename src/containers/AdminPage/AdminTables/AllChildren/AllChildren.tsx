@@ -4,17 +4,13 @@ import { useAppSelector } from "../../../../app/hooks";
 import { useGetDoctorsQuery } from "../../../../app/services/doctors";
 import IDoctorWithUser from "../../../../interfaces/IDoctor/IDoctorWithUser";
 import { useLazyGetChildrenByDoctorQuery } from "../../../../app/services/children";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../../interfaces/IUser/IMessage";
-import { toast } from "react-toastify";
 import Loader from "../../../../components/UI/Loader/Loader";
 import AllChildrenTable from "./AllChildrenTable/AllChildrenTable";
 import Pagination from "../../../../components/UI/Pagination/Pagination";
 import AccessControl from "../../../../permissionRoutes/AccessControl";
 import { ERoles } from "../../../../enums/ERoles";
 import formStyles from "../../../UserForms/UserForms.module.css";
+import errorHandler from "../../../../helpers/errorHandler";
 
 const AllChildren: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
@@ -26,8 +22,8 @@ const AllChildren: FunctionComponent = (): ReactElement => {
     const [thisDoctor, setThisDoctor] = useState<IDoctorWithUser | null>(null);
     const [getChildren,
         { data: children,
-            error: getChildrenError,
             isError: isChildrenGetError,
+            error: getChildrenError,
             isLoading }
     ] = useLazyGetChildrenByDoctorQuery();
 
@@ -59,10 +55,7 @@ const AllChildren: FunctionComponent = (): ReactElement => {
         setOffset((currentPage - 1) * limit);
     }, [currentPage]);
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
+    errorHandler(isChildrenGetError, getChildrenError);
 
     const selectHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
         if (doctors) {
@@ -70,8 +63,6 @@ const AllChildren: FunctionComponent = (): ReactElement => {
             setThisDoctor(doctor[0]);
         }
     };
-
-    isChildrenGetError && errorHandler(getChildrenError);
 
     return (
         <div className={styles.list_container}>

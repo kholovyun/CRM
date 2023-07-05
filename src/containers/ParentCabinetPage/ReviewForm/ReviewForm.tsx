@@ -1,23 +1,19 @@
-import { FunctionComponent, ReactElement, useEffect } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import styles from "./ReviewForm.module.css";
 import { Field, Formik, Form } from "formik";
 import { ERoles } from "../../../enums/ERoles";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
-import { toast } from "react-toastify";
 import { validationSchemaCreateReview } from "../../../schemas/validationSchemaCreateReview";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import { useCreateReviewMutation } from "../../../app/services/reviews";
 import AccessControl from "../../../permissionRoutes/AccessControl";
 import IReviewFormProps from "./IReviewFormProps";
+import errorHandler from "../../../helpers/errorHandler";
+import successHandler from "../../../helpers/successHandler";
 
 export const ReviewForm: FunctionComponent<IReviewFormProps> = (props: IReviewFormProps): ReactElement => {
-
     const [createReview,
         { isError: isCreateReviewError,
             isSuccess: isSuccesCreateReview,
@@ -25,18 +21,8 @@ export const ReviewForm: FunctionComponent<IReviewFormProps> = (props: IReviewFo
             reset: resetCreateReview }
     ] = useCreateReviewMutation();
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
-
-    useEffect(() => {
-        isCreateReviewError && errorHandler(errorCreateReview);
-    }, [isCreateReviewError]);
-
-    useEffect(() => {
-        isSuccesCreateReview && toast.info("Ваш отзыв отправлен") && resetCreateReview();
-    }, [isSuccesCreateReview]);
+    errorHandler(isCreateReviewError, errorCreateReview);
+    successHandler(isSuccesCreateReview, "Ваш отзыв отправлен", resetCreateReview);
 
     return (
         <AccessControl allowedRoles={[ERoles.PARENT]}>

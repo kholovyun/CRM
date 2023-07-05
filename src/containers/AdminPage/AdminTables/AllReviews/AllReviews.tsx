@@ -1,14 +1,10 @@
 import { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import Pagination from "../../../../components/UI/Pagination/Pagination";
 import styles from "../AllTables.module.css";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../../interfaces/IUser/IMessage";
-import { toast } from "react-toastify";
 import Loader from "../../../../components/UI/Loader/Loader";
 import { useGetReviewsQuery } from "../../../../app/services/reviews";
 import AllReviewsTable from "./AllReviewsTable/IAllReviewsList";
+import errorHandler from "../../../../helpers/errorHandler";
 
 const AllReviews: FunctionComponent = (): ReactElement => {
     const limit = 5;
@@ -34,12 +30,7 @@ const AllReviews: FunctionComponent = (): ReactElement => {
         setOffset((currentPage - 1) * limit);
     }, [currentPage]);
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
-
-    isReviewsGetError && errorHandler(getReviewsError);
+    errorHandler(isReviewsGetError, getReviewsError);
 
     return (
         <div className={styles.list_container}>

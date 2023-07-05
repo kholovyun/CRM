@@ -1,6 +1,5 @@
 import styles from "../UserForms.module.css";
 import { Formik, Field, Form, FormikConfig, FormikValues, ErrorMessage, FieldProps } from "formik";
-import { toast } from "react-toastify";
 import MaskedInput from "react-text-mask";
 import { Container } from "../../../components/UI/Container/Container";
 import { Title } from "../Title/Title";
@@ -14,21 +13,20 @@ import { ESubscriptionType } from "../../../enums/ESubscriptionType";
 import { EPaymentType } from "../../../enums/EPaymentType";
 import { useCreateUserParentMutation } from "../../../app/services/users";
 import {KGMask, KZMask, RUMask} from "../../../helpers/countryRegexs";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 import IUserCreateParentWithChildDto from "../../../interfaces/IUser/IUserCreateParentWithChildDto";
 import { validationFirst, validationSec } from "../../../schemas/validationScremasRegisterParent";
 import { FormikStepProps } from "./IFormikInterface";
 import { FormBox } from "../FormBox/FormBox";
 import { EBtnClass } from "../../../enums/EBtnClass";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import KZFlag from "../../../assets/img/kz.png";
 import RUFlag from "../../../assets/img/ru.png";
 import KGFlag from "../../../assets/img/kg.png";
+import errorHandler from "../../../helpers/errorHandler";
+import successHandler from "../../../helpers/successHandler";
 
 const RegisterParent: FunctionComponent = (): ReactElement => {
+    const navigate = useNavigate();
     const [phoneMask, setPhoneMask] = useState(KZMask);
     const [placeholder, setPlaceholder] = useState("+7(___)___-__-__");
     const [flag, setFlag] = useState(KZFlag);
@@ -63,17 +61,13 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
         setDoctorId({ doctorId: String(params.id) });
     }, []);
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
+    errorHandler(isError, createUserParentError);
+
+    const successRegisterHandler = () => {
+        navigate(-1);
     };
 
-    const successHandler = () => {
-        toast.info("Пользователь успешно создан");
-    };
-
-    isError && errorHandler(createUserParentError);
-    isSuccess && successHandler();
+    successHandler(isSuccess, "Пользователь успешно создан", successRegisterHandler);
 
     return (
         <Container>
@@ -100,9 +94,7 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
                         }
                     }}
                     onSubmit={(values: FormikValues) => {
-                        console.log(values);
                         createUserParent(values as IUserCreateParentWithChildDto);
-                        // navigator('') куда то перевести
                     }}
                 >
                     <FormikStep label="1" validationSchema={validationFirst}>
