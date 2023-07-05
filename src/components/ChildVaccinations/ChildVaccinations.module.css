@@ -1,0 +1,15 @@
+.child_vaccinations {
+    background-color: white;
+    border-radius: 25px;
+    padding: 20px 25px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.allergyAdd_btn {
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}

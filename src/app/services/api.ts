@@ -26,6 +26,7 @@ export const api = createApi({
         "Message",
         "MessagesStatus",
         "Visit",
-        "Allergy"
+        "Allergy",
+        "Vaccination"
     ],
 });
