@@ -16,13 +16,6 @@ const usersApi = api.injectEndpoints({
             }),
             providesTags: ["User"]
         }),
-        getUserById: build.query<IUserGetDto, string>({
-            query: (id: string) => ({
-                url: `/users/${id}`,
-                method: "GET"
-            }),
-            providesTags: ["User"]
-        }),
         createUser: build.mutation<IUserCreateDto, IUserCreateDto>({
             query: (userDto: IUserCreateDto) => ({
                 url: "/users",
@@ -31,7 +24,7 @@ const usersApi = api.injectEndpoints({
             }),
             invalidatesTags: ["User", "Doctor"]
         }),
-        editUser: build.mutation<IUserCreateDto, {id: string, userDto:IUserUpdateDto}>({
+        editUser: build.mutation<IUserGetDtoWithToken, {id: string, userDto:IUserUpdateDto}>({
             query: ({id, userDto}) => ({
                 url: `/users/${id}`,
                 method: "PATCH",
@@ -67,7 +60,6 @@ const usersApi = api.injectEndpoints({
 
 export const { 
     useGetUsersQuery, 
-    useGetUserByIdQuery, 
     useCreateUserMutation, 
     useLoginMutation, 
     useBlockUserMutation,

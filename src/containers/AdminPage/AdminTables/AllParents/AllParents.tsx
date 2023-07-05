@@ -1,14 +1,9 @@
 import { ChangeEvent, FunctionComponent, ReactElement, useEffect, useState } from "react";
 import styles from "../AllTables.module.css";
-import { toast } from "react-toastify";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
 import { NavLink } from "react-router-dom";
 import AllParentsTable from "./AllParentsTable/AllParentsTable";
 import { ERoles } from "../../../../enums/ERoles";
 import { useLazyGetParentsByDoctorQuery } from "../../../../app/services/parents";
-import { IErrorResponse } from "../../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../../interfaces/IUser/IMessage";
 import TransparentLink from "../../../../components/UI/TransparentLink/TransparentLink";
 import { EBtnSize } from "../../../../enums/EBtnSize";
 import Loader from "../../../../components/UI/Loader/Loader";
@@ -18,6 +13,7 @@ import formStyles from "../../../UserForms/UserForms.module.css";
 import { useGetDoctorsQuery } from "../../../../app/services/doctors";
 import IDoctorWithUser from "../../../../interfaces/IDoctor/IDoctorWithUser";
 import { useAppSelector } from "../../../../app/hooks";
+import errorHandler from "../../../../helpers/errorHandler";
 
 const AllParents: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
@@ -61,11 +57,6 @@ const AllParents: FunctionComponent = (): ReactElement => {
         setOffset((currentPage - 1) * limit);
     }, [currentPage]);
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
-
     const selectHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
         if (doctors) {
             const doctor: IDoctorWithUser[] = doctors.rows.filter((doc) => doc.id === e.target.value);
@@ -73,7 +64,7 @@ const AllParents: FunctionComponent = (): ReactElement => {
         }
     };
 
-    isParentsGetError && errorHandler(getParentsError);
+    errorHandler(isParentsGetError, getParentsError);
 
     return (
         <div className={styles.list_container}>
