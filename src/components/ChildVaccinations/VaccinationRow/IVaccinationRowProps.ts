@@ -2,4 +2,5 @@ import IVaccinationGetDto from "../../../interfaces/IVaccination/IVaccinationGet
 
 export default interface IVaccinationRowProps {
     vaccination: IVaccinationGetDto
+    deleteVaccination: () => void
 }

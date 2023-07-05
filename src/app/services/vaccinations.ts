@@ -1,3 +1,4 @@
+import { IMessage } from "../../interfaces/IUser/IMessage";
 import IVaccinationGetDto from "../../interfaces/IVaccination/IVaccinationGetDto";
 import { api } from "./api";
 
@@ -9,11 +10,19 @@ const vaccinationsApi = api.injectEndpoints({
                 method: "GET",
             }),
             providesTags: ["Vaccination"]
+        }),
+        deleteVaccination: build.mutation<IMessage, string>({
+            query: (id: string) => ({
+                url: `/vaccinations/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Vaccination"]
         })
     })
 });
 
 export const {
     useGetVaccinationsByChildIdQuery,
-    useLazyGetVaccinationsByChildIdQuery
+    useLazyGetVaccinationsByChildIdQuery,
+    useDeleteVaccinationMutation
 } = vaccinationsApi;

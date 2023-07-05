@@ -1,10 +1,35 @@
-import {FunctionComponent, ReactElement} from "react";
+import {FunctionComponent, ReactElement, useEffect} from "react";
 import IChildVaccinationsProps from "./IChildVaccinationsProps";
 import styles from "./ChildVaccinations.module.css";
 import stylesTable from "../../containers/AdminPage/AdminTables/AllTables.module.css";
 import VaccinationRow from "./VaccinationRow/VaccinationRow";
+import { useDeleteVaccinationMutation } from "../../app/services/vaccinations";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
+import { IMessage } from "../../interfaces/IUser/IMessage";
+import { toast } from "react-toastify";
 
 const ChildVaccinations: FunctionComponent<IChildVaccinationsProps> = (props): ReactElement => {
+    const [deleteVaccination, {
+        isSuccess: isSuccessDeleteVaccination,
+        isError: isErrorDeleteVaccination,
+        error: errorDeleteVaccination
+    }] = useDeleteVaccinationMutation();
+
+    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
+        const err = data as IErrorResponse<IMessage>;
+        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
+    };
+
+    useEffect(() => {
+        isErrorDeleteVaccination && errorHandler(errorDeleteVaccination);
+    }, [isErrorDeleteVaccination]);
+
+    useEffect(() => {
+        isSuccessDeleteVaccination && toast.info("Запись о вакцине удалена");
+    }, [isSuccessDeleteVaccination]);
+    
     return (
         <div className={styles.child_vaccinations}>
             <table className={stylesTable.Table}>
@@ -26,7 +51,8 @@ const ChildVaccinations: FunctionComponent<IChildVaccinationsProps> = (props): R
                     {props.vaccinations && props.vaccinations.map((vac) => {
                         return <VaccinationRow
                             key={vac.id}
-                            vaccination={vac} />;
+                            vaccination={vac}
+                            deleteVaccination={() => deleteVaccination(vac.id)} />;
                     })}
                 </tbody>
             </table>
