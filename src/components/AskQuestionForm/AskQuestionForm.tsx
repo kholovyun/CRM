@@ -1,8 +1,7 @@
-import { FunctionComponent, ReactElement, useEffect } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import IAskQuestionFormProps from "./IAskQuestionFormProps";
 import { useCreateQuestionMutation } from "../../app/services/questions";
-import { errorHandler } from "../../helpers/errorHandler";
-import { toast } from "react-toastify";
+import errorHandler from "../../helpers/errorHandler";
 import AccessControl from "../../permissionRoutes/AccessControl";
 import { ERoles } from "../../enums/ERoles";
 import { Field, Formik, Form } from "formik";
@@ -12,18 +11,14 @@ import Btn from "../UI/Btn/Btn";
 import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { EBtnClass } from "../../enums/EBtnClass";
+import successHandler from "../../helpers/successHandler";
 
 const AskQuestionForm: FunctionComponent<IAskQuestionFormProps> = (props): ReactElement => {
     const { childId, doctorId, parentId, transparent } = props;
     const [createQuestion, { isSuccess, isError, error }] = useCreateQuestionMutation();
 
-    useEffect(() => {
-        isError && errorHandler(error);
-    }, [isError]);
-
-    useEffect(() => {
-        isSuccess && toast.info("Вопрос создан");
-    }, [isSuccess]);
+    errorHandler(isError, error);
+    successHandler(isSuccess, "Вопрос создан");
 
     return (
         <AccessControl allowedRoles={[ERoles.PARENT]}>

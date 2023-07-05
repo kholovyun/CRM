@@ -1,20 +1,21 @@
-import { FunctionComponent, ReactElement, useEffect, useState } from "react";
+import { FunctionComponent, ReactElement, useState, useRef } from "react";
 import styles from "./DoctorRecommendations.module.css";
 import IDoctorRecommendationsProps from "./IDoctorRecommendationsProps";
 import { Field, Formik, Form } from "formik";
-import { toast } from "react-toastify";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import { useCreateRecommendationMutation, useDeleteRecommendationMutation, useGetRecommendationsByDoctorQuery } from "../../../app/services/recommendations";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
 import Recommendation from "./Recommendation/Recommendation";
 import { validationSchemaRecommendation } from "../../../schemas/validationSchemaRecommendation";
 import AccessControl from "../../../permissionRoutes/AccessControl";
 import { ERoles } from "../../../enums/ERoles";
+import errorHandler  from "../../../helpers/errorHandler";
+import successHandler from "../../../helpers/successHandler";
+import IRecommendationCreateDto from "../../../interfaces/IRecommendation/IRecommendationCreateDto";
+import InputFileForMessage from "../../../components/ChatMessages/AddChatMessageFrom/InputFileForMessage/InputFileForMessage";
+import { fileToDataString } from "../../../helpers/fileToDataString";
+import IconBtn from "../../../components/UI/IconBtn/IconBtn";
 
 const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({ doctorId, role }): ReactElement => {
     const {
@@ -35,36 +36,36 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
         error: errorDeleteRecommendation
     }] = useDeleteRecommendationMutation();
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message} Статус: ${err.status}`);
-    };
-
-    useEffect(() => {
-        isSuccessCreateRecommendation && toast.info("Новая рекомендация создана");
-    }, [isSuccessCreateRecommendation]);
-
-    useEffect(() => {
-        isSuccessDeleteRecommendation && toast.info("Рекомендация удалена");
-    }, [isSuccessDeleteRecommendation]);
+    successHandler(isSuccessDeleteRecommendation, "Рекомендация удалена");
+    successHandler(isSuccessCreateRecommendation, "Новая рекомендация создана");
+    errorHandler(isErrorCreateRecommendation, errorCreateRecommendation);
+    errorHandler(isErrorGetRecommendations, errorGetRecommendations);
+    errorHandler(isErrorDeleteRecommendation, errorDeleteRecommendation);
 
     const [showList, setShowList] = useState(false);
-
     const handleShowList = () => {
         setShowList(!showList);
     };
 
-    useEffect(() => {
-        isErrorCreateRecommendation && errorHandler(errorCreateRecommendation);
-    }, [isErrorCreateRecommendation]);
+    const handleSubmit = async (values: IRecommendationCreateDto) => {
+        const formData = new FormData();
+        Object.entries(values).forEach(entry => {
+            const [key, value] = entry;
+            formData.append(key, value);
+        });
+        await createRecommendation(formData);
+    };
 
-    useEffect(() => {
-        isErrorGetRecommendations && errorHandler(errorGetRecommendations);
-    }, [isErrorGetRecommendations]);
+    const fileInput = useRef<HTMLInputElement>(null);
+    const [previewImageSrc, setPreviewImageSrc] = useState<string>();
+    const [fileName, setFileName] = useState<string>("");
 
-    useEffect(() => {
-        isErrorDeleteRecommendation && errorHandler(errorDeleteRecommendation);
-    }, [isErrorDeleteRecommendation]);
+    const resetFileInput = () => {
+        if (fileInput.current) {
+            setFileName("");
+            fileInput.current.value = "";
+        }
+    };
 
     return (
         <div className={styles.recommendationBlock}>
@@ -72,31 +73,72 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                 <Formik
                     initialValues={{
                         doctorId: doctorId || "",
-                        text: ""
+                        text: "",
+                        url: undefined
                     }}
+                    
                     onSubmit={async (values, {resetForm}) => {
-                        await createRecommendation(values);
+                        await handleSubmit(values);
                         resetForm();
+                        resetFileInput();
                     }}
                     validateOnBlur
-                    validationSchema={validationSchemaRecommendation}
+                    validationSchema={validationSchemaRecommendation} 
                 >
-                    {({ isValid, errors, touched, handleSubmit }) => (
+                    {({ isValid, errors, touched, handleSubmit, setFieldValue, values }) => (
                         <Form className={styles.recommendationForm}>
                             {touched.text && errors.text ? <p className={styles.errorText}>{errors.text}</p> : <p></p>}
-                            <Field as={"textarea"} type="text" name="text" className={styles.textarea} placeholder={"Написать рекомендацию"} />
-                            <label className={styles.inputFileLabel}>
-                                <input
-                                    className={styles.fileInput}
-                                    type="file"
-                                    name={"image"}
+                            <div className={styles.rerecommendationFormTop}>
+                                {fileName !== "" && <div className={styles.previewBox}>
+                                    <img src={previewImageSrc} alt="diploma" />
+                                    <div className={styles.removeImage}>
+                                        <IconBtn
+                                            btnClass={"x_btn"}
+                                            onclick={() => {
+                                                setFieldValue("url", undefined);
+                                                resetFileInput();
+                                            }}
+                                        />
+                                    </div>
+                                </div>}
+                                <Field 
+                                    as={"textarea"} 
+                                    type="text" name="text" 
+                                    className={styles.textarea} 
+                                    placeholder={"Написать рекомендацию"} 
+                                    maxLength={250}
                                 />
-                                <p className={styles.halo}>Прикрепить файл</p>
-                                <div className={styles.fileIcon} />
-                            </label>
-                            <div className={styles.publicationBtn}>
-                                <Btn disabled={!isValid} size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
+                                <span className={styles.countOftext}>{values.text.length}/250</span>
                             </div>
+                            <div className={styles.recommendationFormBottom}>
+                                <InputFileForMessage 
+                                    inputName={"url"}
+                                    onChangeHandler={async (event: React.ChangeEvent<HTMLInputElement>) => {
+                                        const file = event.currentTarget.files && event.currentTarget.files[0];
+                                        if (!file) return;
+                                        if(file && /\.(jpg|jpeg|png)$/i.test(file.name) && file.size <= 5242880) {
+                                            try {
+                                                setPreviewImageSrc(await fileToDataString(file));
+                                                setFileName(event.target.files && event.target.files[0] ? event.target.files[0].name : "");
+                                                setFieldValue("url", file);
+                                            } catch (e) {
+                                                console.error(e);
+                                            }
+                                        } else if (file.size > 5242880) {
+                                            alert("Слишком большой размер файла");
+                                        } else {
+                                            alert("Пожалуйста выберите соответсвующий формат файла(jpg, jpeg, png)");
+                                        }
+                                    }}
+                                    fileReference={fileInput}
+                                    iconClass={values.url === undefined ? "file_icon" : "reload_image_icon"}
+                                    tooltipLabel={values.url === undefined ? "Загрузить изображение" : "Выбрать другой файл"}
+                                />
+                                <div className={styles.publicationBtn}>
+                                    <Btn disabled={!isValid} size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
+                                </div>
+                            </div>
+                            
                         </Form>
                     )}
                 </Formik>

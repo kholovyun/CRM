@@ -5,16 +5,65 @@
     border-radius: 25px;
     display: flex;
     flex-direction: column;
+    margin-bottom: 30px;
 }
 
 .recommendationForm {
     display: flex;
     flex-flow: wrap;
+    margin-bottom: 20px;
+}
+
+.rerecommendationFormTop {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.countOftext {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+}
+
+.previewBox {
+    min-width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.previewBox img {
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.removeImage {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--bg_light_blue);
+    border-radius: 50%;
+}
+
+.recommendationFormBottom {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 20px;
+    align-items: center;
 }
 
 .textarea {
     width: 100%;
-    margin-top: 20px;
     background: none;
     border: none;
     resize: none;
@@ -26,40 +75,11 @@
     outline: none;
 }
 
-.inputFileLabel {
-    margin-top: 20px;
-    order: -1;
-    display: flex;
-    align-items: center;
-}
-
-.inputFileLabel p {
-    font-size: 12px;
-}
-
-.fileInput {
-    display: none;
-}
-
-.publicationBtn {
-   margin-left: auto;
-}
-
 .publicationBtn button:hover {
     background-color: var(--black_blue);
 }
 
-.fileIcon {
-    background: url("../../../assets/img/icon-file.svg");
-    width: 23px;
-    height: 29px;
-    display: inline-block;
-    margin-left: 8px;
-    scale: 0.7;
-}
-
 .recommendationsBottom {
-    margin-top: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -146,20 +166,16 @@
         padding: 20px 40px;
     }
 
+    .rerecommendationFormTop {
+        flex-direction: row;
+        align-items: flex-start;
+        
+    }
+
     .textarea {
         font-size: 12px;
     }
 
-    .inputFileLabel {
-        order: 0;
-        margin-left: auto;
-        margin-right: 20px;
-        margin-top: 0;
-    }
-    
-    .inputFileLabel p {
-        font-size: 14px;
-    }
     .publicationBtn {
         margin: 0;  
     }
