@@ -1,28 +1,28 @@
-.createAllergyForm {
+.createEntityForm {
     display: flex;
     flex-direction: column;
     gap: 7px;
 }
 
-.createAllergyLine {
+.createEntityLine {
     width: 100%;
     display: flex;
     justify-content: center;
     gap: 10px;
 }
 
-.createAllergyField {
+.createEntityField {
     width: 100%;
 }
 
-.createAllergyFieldTitle {
+.createEntityFieldTitle {
     font-size: 14px;
     color: var(--black_blue);
     opacity: 0.5;
     margin: 0 0 2px 26px;
 }
 
-.createAllergyInput {
+.createEntityInput {
     width: 100%;
     font-size: 16px;
     padding: 8px 26px;

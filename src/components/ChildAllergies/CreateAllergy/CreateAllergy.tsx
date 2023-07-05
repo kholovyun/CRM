@@ -27,7 +27,7 @@ const CreateAllergy: FunctionComponent<ICreateAllergyProps> = (props): ReactElem
     }, [isError]);
 
     useEffect(() => {
-        isSuccess && toast.info("Создана новая аллергия");
+        isSuccess && toast.info("Создана запись о новай аллергии");
     }, [isSuccess]);
 
     return (
@@ -47,25 +47,25 @@ const CreateAllergy: FunctionComponent<ICreateAllergyProps> = (props): ReactElem
                 validationSchema={validationSchemaCreateAllergy}
             >
                 {({ isValid, errors, touched, handleSubmit }) => (
-                    <Form className={styles.createAllergyForm}>
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                    <Form className={styles.createEntityForm}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.type && errors.type ? <p>{errors.type}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Вид аллергии</p>
-                                <Field className={styles.createAllergyInput} name="type" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Вид аллергии</p>
+                                <Field className={styles.createEntityInput} name="type" type="text" />
                             </div>
-                            <div className={styles.createAllergyField}>
+                            <div className={styles.createEntityField}>
                                 {touched.symptom && errors.symptom ? <p>{errors.symptom}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Симптомы</p>
-                                <Field className={styles.createAllergyInput} name="symptom" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Симптомы</p>
+                                <Field className={styles.createEntityInput} name="symptom" type="text" />
                             </div>
                         </div>
 
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.factors && errors.factors ? <p>{errors.factors}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Провоцирующие факторы</p>
-                                <Field className={styles.createAllergyInput} name="factors" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Провоцирующие факторы</p>
+                                <Field className={styles.createEntityInput} name="factors" type="text" />
                             </div>
                         </div>
                         <div className={styles.btnBlock}>
