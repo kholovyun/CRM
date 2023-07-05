@@ -12,23 +12,23 @@ const ChildQuestion: FunctionComponent<{childId: string, question: IQuestionGetD
     return (
         <div className={styles.ChildQuestion}>
             <div className={styles.childImg}>
-                {child?.result.photo !== undefined ? 
+                {child?.photo !== undefined ? 
                     <img 
                         onError={(e) => { e.currentTarget.src = defaultImg;}}
-                        src={child?.result.photo !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/childrenImgs/${child?.result.photo}` : defaultImg} alt={"avatar"}
+                        src={child?.photo !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/childrenImgs/${child?.photo}` : defaultImg} alt={"avatar"}
                     /> : <img src={defaultImg} alt={"avatar"}/>
                 }
             </div>
             <div className={styles.questionChat}>
                 {child && <Question
                     childData={{
-                        name: child.result.name,
-                        surname: child.result.surname,
-                        photo: child.result.photo,
-                        patronim: child.result.patronim
+                        name: child.name,
+                        surname: child.surname,
+                        photo: child.photo,
+                        patronim: child.patronim
                     }}
                     question={question}
-                    key={child?.result.id}
+                    key={child?.id}
                 />}
             </div>
             
