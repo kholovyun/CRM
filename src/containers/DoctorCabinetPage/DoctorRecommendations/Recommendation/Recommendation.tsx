@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import styles from "./Recommendation.module.css";
 import IRecommendationProps from "./IRecommendationProps";
 import { toast } from "react-toastify";
@@ -8,6 +8,7 @@ import { ERoles } from "../../../../enums/ERoles";
 import { EBtnSize } from "../../../../enums/EBtnSize";
 import { EBtnClass } from "../../../../enums/EBtnClass";
 import Btn from "../../../../components/UI/Btn/Btn";
+import defaultImg from "../../../../assets/img/default-any-image.svg";
 
 const Recommendation: FunctionComponent<IRecommendationProps> = ({ recommendation, deleteRecommendation }): ReactElement => {
     const [showModal, setShowModal] = useState(false);
@@ -19,8 +20,25 @@ const Recommendation: FunctionComponent<IRecommendationProps> = ({ recommendatio
         setShowModal(true);
     };
 
+    const [showFullImageModal, setShowFullImageModal] = useState(false);
+
+    const openFullImageModal = () => {
+        setShowFullImageModal(true);
+    };
+    const closeFullImageModal = () => {
+        setShowFullImageModal(false);
+        
+    };
+
     return (
         <div className={styles.recommendation}>
+            <Modal show={showFullImageModal} close={closeFullImageModal}>
+                <div className={styles.fullImage}>
+                    <img
+                        onError={(e) => { e.currentTarget.src = defaultImg;}}
+                        src={recommendation.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/docRecommends/${recommendation.url}` : defaultImg} alt={"recommendationImg"} />
+                </div>
+            </Modal>
             <Modal
                 show={showModal}
                 close={closeModal}>
@@ -55,7 +73,13 @@ const Recommendation: FunctionComponent<IRecommendationProps> = ({ recommendatio
                     </div>
                 </AccessControl>
             </div>
-            <div>
+            <div className={styles.recommendationBottom}>
+                {recommendation.url !== "" ? <div onClick={openFullImageModal} className={styles.recommendationImg}>
+                    <img 
+                        onError={(e) => { e.currentTarget.src = defaultImg;}}
+                        src={recommendation.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/docRecommends/${recommendation.url}` : defaultImg} alt={"recommendationImg"}
+                    />
+                </div> : null}
                 <p className={styles.text}>{recommendation.text}</p>
             </div>
         </div>
