@@ -5,19 +5,16 @@ export const validationSchemaCreateVisit = yup.object().shape({
         .max(30, "Максимум 30 символов")
         .required("Обязательно для заполнения"),
     clinicData: yup.string()
-        .max(80, "Максимум 80 символов")
         .trim()
         .required("Обязательно для заполнения"),
-    conclision: yup.string()
-        .max(40, "Максимум 40 символов")
+    conclusion: yup.string()
         .trim()
         .required("Обязательно для заполнения"),
-    appoinment: yup.string()
-        .max(80, "Максимум 80 символов")
+    appointment: yup.string()
         .trim()
         .required("Обязательно для заполнения"),
     place: yup.string()
-        .max(40, "Максимум 40 символов")
+        .max(250, "Максимум 250 символов")
         .trim()
         .required("Обязательно для заполнения"),
     date: yup.date()

@@ -59,7 +59,7 @@ const CreateVisitForm: FunctionComponent<ICreateVisitFormProps> = (props): React
                                 <Field className={styles.createEntityInput} name="place" type="text" />
                             </div>
                             <div className={styles.createEntityField}>
-                                {touched.date && errors.date ? <p>{}</p> : <p></p>}
+                                {touched.date && errors.date ? <p>{ }</p> : <p></p>}
                                 <p className={styles.createEntityFieldTitle}>Дата осмотра</p>
                                 <DatePickerField name="date" />
                             </div>
@@ -80,12 +80,14 @@ const CreateVisitForm: FunctionComponent<ICreateVisitFormProps> = (props): React
                             <div className={styles.createEntityField}>
                                 {touched.clinicData && errors.clinicData ? <p>{errors.clinicData}</p> : <p></p>}
                                 <p className={styles.createEntityFieldTitle}>Клинические данные	</p>
-                                <Field className={styles.createEntityInput} name="clinicData" type="text" />
+                                <Field as="textarea" className={styles.createEntityInput} name="clinicData" type="text" />
                             </div>
+                        </div>
+                        <div className={styles.createEntityLine}>
                             <div className={styles.createEntityField}>
                                 {touched.conclusion && errors.conclusion ? <p>{errors.conclusion}</p> : <p></p>}
                                 <p className={styles.createEntityFieldTitle}>Заключение</p>
-                                <Field className={styles.createEntityInput} name="conclusion" type="text" />
+                                <Field as="textarea" className={styles.createEntityInput} name="conclusion" type="text" />
                             </div>
                         </div>
 
@@ -93,13 +95,13 @@ const CreateVisitForm: FunctionComponent<ICreateVisitFormProps> = (props): React
                             <div className={styles.createEntityField}>
                                 {touched.appointment && errors.appointment ? <p>{errors.appointment}</p> : <p></p>}
                                 <p className={styles.createEntityFieldTitle}>Назначение</p>
-                                <Field className={styles.createEntityInput} name="appointment" type="text" />
+                                <Field as="textarea" className={styles.createEntityInput} name="appointment" type="text" />
                             </div>
                         </div>
                         <div className={styles.btnBlock}>
                             <div className={styles.saveButton}>
                                 <Btn
-                                    // disabled={!isValid}
+                                    disabled={!isValid}
                                     title="Создать"
                                     size={EBtnSize.tiny}
                                     types={EBtnTypes.submit}
@@ -110,7 +112,7 @@ const CreateVisitForm: FunctionComponent<ICreateVisitFormProps> = (props): React
                                     onclick={props.modalCloser}
                                     title="Закрыть"
                                     size={EBtnSize.tiny}
-                                    types={EBtnTypes.button} />
+                                    types={EBtnTypes.reset} />
                             </div>
                         </div>
                     </Form>
