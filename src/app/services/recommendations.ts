@@ -1,5 +1,4 @@
 
-import IRecommendationCreateDto from "../../interfaces/IRecommendation/IRecommendationCreateDto";
 import IRecommendationGetDto from "../../interfaces/IRecommendation/IRecommendationGetDto";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import {api} from "./api";
@@ -21,7 +20,7 @@ const recommendationsApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Recommendation"]
         }),
-        editRecommendation: build.mutation<IRecommendationGetDto, {id: string, recommendation: IRecommendationCreateDto}>({
+        editRecommendation: build.mutation<IRecommendationGetDto, {id: string, recommendation: FormData}>({
             query: ({id, recommendation}) => ({
                 url: `/recommendations/${id}`,
                 method: "PUT",
