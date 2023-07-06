@@ -17,7 +17,7 @@ const ActivationForm = (props: TActivationProps) => {
                 childInfoChecked: false
             }}
             validationSchema={validationSchemaActivateParent}
-            onSubmit={() => {
+            onSubmit={():void => {
                 props.fn();
             }}
         >
@@ -26,18 +26,22 @@ const ActivationForm = (props: TActivationProps) => {
                     <p className={styles.activationFormTitle}>
                         Активация вашего аккаунта произойдет после того, как вы ознакомитесь с договором оферты, политикой конфиденциальности и сведениями, внесенными в личный кабинет
                     </p>
+                    <div className={`${styles.activationFormCheckBoxes}`}>
+                        <p>С договором оферты ознакомлен и согласен</p>
+                        <label className={`${styles.activationFormControls} ${values.offerChecked ? styles.activationFormControlsChecked:""}`}>
+                            <Field type="checkbox" name="offerChecked" className={styles.checkBox} />
+                        </label>
+                    </div>
                     <div className={styles.activationFormCheckBoxes}>
-                        <label className={styles.activationFormControls}>
-                            С договором оферты ознакомлен и согласен
-                            <Field type="checkbox" name="offerChecked" />
+                        <p>С политикой конфиденциальности ознакомлен и согласен</p>
+                        <label className={`${styles.activationFormControls} ${values.privacyChecked ? styles.activationFormControlsChecked:""}`}>
+                            <Field type="checkbox" name="privacyChecked" className={styles.checkBox} />
                         </label>
-                        <label className={styles.activationFormControls}>
-                            С политикой конфиденциальности ознакомлен и согласен
-                            <Field type="checkbox" name="privacyChecked" />
-                        </label>
-                        <label className={styles.activationFormControls}>
-                            Сведения о ребенке внесены корректно
-                            <Field type="checkbox" name="childInfoChecked" />
+                    </div>
+                    <div className={styles.activationFormCheckBoxes}>
+                        <p>Сведения о ребенке внесены корректно</p>
+                        <label className={`${styles.activationFormControls} ${values.childInfoChecked ? styles.activationFormControlsChecked:""}`}>
+                            <Field type="checkbox" name="childInfoChecked" className={styles.checkBox} />
                         </label>
                     </div>
                     <Btn
