@@ -90,7 +90,7 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                             {touched.text && errors.text ? <p className={styles.errorText}>{errors.text}</p> : <p></p>}
                             <div className={styles.rerecommendationFormTop}>
                                 {fileName !== "" && <div className={styles.previewBox}>
-                                    <img src={previewImageSrc} alt="diploma" />
+                                    <img src={previewImageSrc} alt="recommendation" />
                                     <div className={styles.removeImage}>
                                         <IconBtn
                                             btnClass={"x_btn"}
