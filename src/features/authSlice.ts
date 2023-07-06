@@ -15,7 +15,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logout: () => {
-            localStorage.removeItem("persist:root");
+            localStorage.removeItem("persist");
             return initialState;
         },
     },
