@@ -26,7 +26,7 @@ const doctorsApi = api.injectEndpoints({
                 method: "PUT",
                 body: doctor,
             }),
-            invalidatesTags: ["Doctor"],
+            invalidatesTags: ["Doctor", "User"],
         }),
         activateDoctor: build.mutation<IDoctorWithUser, IDoctorWithUser>({
             query: (doctor) => ({

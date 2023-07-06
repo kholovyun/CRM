@@ -90,7 +90,7 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({ doctor,
                         <p className={styles.fieldTitle}>Место работы</p>
                         <p className={styles.fieldText}>{doctor?.placeOfWork}</p>
                     </div>
-                    <AccessControl allowedRoles={[ERoles.DOCTOR, ERoles.ADMIN, ERoles.SUPERADMIN]}>
+                    <AccessControl allowedRoles={[ERoles.DOCTOR]}>
                         <div className={styles.personalInformationButton}>
                             <Btn onclick={() => setShowEditUserModal(true)}
                                 btnClass={EBtnClass.dark_active}
