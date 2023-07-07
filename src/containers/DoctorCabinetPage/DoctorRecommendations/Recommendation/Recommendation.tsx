@@ -99,7 +99,6 @@ const Recommendation: FunctionComponent<IRecommendationProps> = ({ recommendatio
                     </div>
                 </div>
             </Modal>
-            
             <Formik
                 initialValues={{
                     doctorId: recommendation.doctorId || "",
