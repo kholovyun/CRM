@@ -1,7 +1,7 @@
 .childCard {
     padding: 20px;
     width: 100%;
-    border-radius: 50px;
+    border-radius: 2rem;
     background-color: var(--light_blue);
 }
 
@@ -12,7 +12,7 @@
 
 .childCard_image {
     width: 120px;
-    height: 120px;
+    height: 130px;
     border-radius: 15px;
     background: white;
     overflow: hidden;
