@@ -43,7 +43,7 @@ const AskQuestionForm: FunctionComponent<IAskQuestionFormProps> = (props): React
                                 placeholder={"Задать вопрос врачу..."} />
                             <div className={styles.btn_row}>
                                 <Btn
-                                    disabled={!isValid}
+                                    disabled={props.isParentActive !== undefined ? !isValid || isValid && !props.isParentActive : !isValid}
                                     title="Отправить"
                                     onclick={handleSubmit}
                                     size={EBtnSize.tiny}

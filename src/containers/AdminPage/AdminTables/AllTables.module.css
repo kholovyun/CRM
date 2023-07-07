@@ -34,6 +34,25 @@
     padding: 20px 0;
 }
 
+.Table_box::-webkit-scrollbar {
+    height: 5px;
+}
+
+.Table_box::-webkit-scrollbar-track {
+    border-radius: 3px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.Table_box::-webkit-scrollbar-thumb {
+    background: var(--gray_blue_half_opacity);
+    border-radius: 3px;
+}
+
+.Table_box::-webkit-scrollbar-thumb:hover {
+    background: var(--violet);
+}
+
 .Table {
     border-collapse: collapse;
     width: 100%;
@@ -163,6 +182,28 @@ tbody .Table_tr:hover {
 
 .add_admin_icon {
     background: url("../../../assets/img/icon_add_admin.svg") center/contain no-repeat;
+}
+
+.btn_edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    padding: 2px;
+}
+
+.pencil_icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.55;
+    background: url("../../../assets/img/icon_pencil.svg") center/contain no-repeat;
+}
+
+.pencil_icon:hover {
+    opacity: 1;
 }
 
 @media screen and (min-width: 320px) {

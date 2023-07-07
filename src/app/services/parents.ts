@@ -17,7 +17,7 @@ const parentsApi = api.injectEndpoints({
         getParentByUserId: build.query<IParentWithUserAndDoctorDto, {id: string}>({
             query: ({ id }) => ({
                 url: `/parents/${id}`,
-                method: "GET",                
+                method: "GET",
             }),
             providesTags: ["Parent"],
         }),

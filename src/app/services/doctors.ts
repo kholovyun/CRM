@@ -20,7 +20,7 @@ const doctorsApi = api.injectEndpoints({
             }),
             providesTags: ["Doctor", "User"],
         }),
-        editDoctor: build.mutation<IDoctor, { id: string; doctor: FormData }>({
+        editDoctor: build.mutation<IDoctor, { id: string, doctor: FormData }>({
             query: ({ id, doctor }) => ({
                 url: `/doctors/${id}`,
                 method: "PUT",
@@ -44,6 +44,14 @@ const doctorsApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Doctor"],
         }),
+        changeDoctorPrice: build.mutation<IDoctorWithUser, { id: string, obj: { price: string } }>({
+            query: ({ id, obj }) => ({
+                url: `/doctors/price/${id}`,
+                method: "PATCH",
+                body: obj,
+            }),
+            invalidatesTags: ["Doctor"],
+        }),
     }),
 });
 
@@ -53,4 +61,5 @@ export const {
     useEditDoctorMutation,
     useActivateDoctorMutation,
     useBlockDoctorMutation,
+    useChangeDoctorPriceMutation
 } = doctorsApi;

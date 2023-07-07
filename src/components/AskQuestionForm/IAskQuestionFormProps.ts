@@ -3,4 +3,5 @@ export default interface IAskQuestionFormProps {
     childId: string
     parentId: string
     transparent?: boolean
+    isParentActive?: boolean
 }
