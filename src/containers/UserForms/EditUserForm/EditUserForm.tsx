@@ -1,16 +1,11 @@
-import { ChangeEvent, FunctionComponent, ReactElement, useState, useEffect } from "react";
+import { ChangeEvent, FunctionComponent, ReactElement, useState } from "react";
 import styles from "../UserForms.module.css";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import { toast } from "react-toastify";
 import { useEditUserMutation } from "../../../app/services/users";
 import MaskedInput from "react-text-mask";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { FormBox } from "../FormBox/FormBox";
 import { Title } from "../Title/Title";
 import { KGMask, KZMask } from "../../../helpers/countryRegexs";
@@ -22,6 +17,8 @@ import { useNavigate } from "react-router-dom";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import { ERoles } from "../../../enums/ERoles";
 import IEditUserFormProps from "./IEditUserFormProps";
+import errorHandler from "../../../helpers/errorHandler";
+import successHandler from "../../../helpers/successHandler";
 
 const EditUserForm: FunctionComponent<IEditUserFormProps> = (props: IEditUserFormProps): ReactElement => {
     const navigate = useNavigate();
@@ -52,19 +49,8 @@ const EditUserForm: FunctionComponent<IEditUserFormProps> = (props: IEditUserFor
         }
     };
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
-
-    useEffect(() => {
-        isErrorEditUser && errorHandler(errorEditUser);
-    }, [isErrorEditUser]);
-
-    if (isSuccesEditUser) {
-        resetEditUser();
-        toast.info("Личные данные изменены");
-    }
+    errorHandler(isErrorEditUser, errorEditUser);
+    successHandler(isSuccesEditUser, "Личные данные изменены", resetEditUser);
 
     const backToAdminPage = () => {
         if (user?.role === ERoles.ADMIN || user?.role === ERoles.SUPERADMIN) {

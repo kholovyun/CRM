@@ -6,9 +6,12 @@ import { EBtnSize } from "../../../../enums/EBtnSize";
 import { EBtnClass } from "../../../../enums/EBtnClass";
 import Modal from "../../../../components/UI/Modal/Modal";
 import EditUserForm from "../../../UserForms/EditUserForm/EditUserForm";
+import { useAppSelector } from "../../../../app/hooks";
+import { ERoles } from "../../../../enums/ERoles";
 
 const ParentCard: FunctionComponent<IParentCardProps> = (props: IParentCardProps): ReactElement => {
     const [showEditUserModal, setShowEditUserModal] = useState(false);
+    const { user } = useAppSelector(state => state.auth);
 
     const closeEditModal = () => {
         setShowEditUserModal(false);
@@ -22,8 +25,7 @@ const ParentCard: FunctionComponent<IParentCardProps> = (props: IParentCardProps
     return (
         <div className={styles.card_box}>
             <Modal show={showEditUserModal} close={closeEditModal}>
-                <EditUserForm closeModal={closeEditModal}
-                />
+                <EditUserForm closeModal={closeEditModal} />
             </Modal>
             <div className={styles.data_column}>
                 <h1 className={styles.h1_title}>Личные данные</h1>
@@ -36,10 +38,12 @@ const ParentCard: FunctionComponent<IParentCardProps> = (props: IParentCardProps
                     <div className={styles.card_column}>
                         <p className={styles.body_text}>{props.parent.users.phone}</p>
                     </div>
+                    {user && user.role === ERoles.PARENT &&
                     <div className={styles.btn_edit}>
                         <div className={styles.pencil_icon} onClick={(e: MouseEvent<HTMLDivElement>) => openModal(e)}>
                         </div>
                     </div>
+                    }
                 </div>
                 <div className={styles.card_row}>
                     <p className={`${styles.body_text} ${styles.gray_text} ${styles.flex_grow}`}>Дата регистрации </p>

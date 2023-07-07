@@ -11,5 +11,3 @@ const successHandler = (isSuccess: boolean, successMessage: string, callback?: (
 };
 
 export default successHandler;
-
-

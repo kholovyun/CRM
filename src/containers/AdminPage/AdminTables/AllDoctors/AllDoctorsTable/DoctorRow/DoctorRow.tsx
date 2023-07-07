@@ -18,6 +18,13 @@ const DoctorRow: FunctionComponent<IDoctorRowProps> = (props: IDoctorRowProps): 
             <td className={styles.Table_td_right}>{props.doctor.users.phone}</td>
             <td className={styles.Table_td_right}>{props.doctor.speciality}</td>
             <td className={styles.Table_td_right}>
+                {props.doctor.price}
+                <div className={styles.btn_edit}>
+                    <div className={styles.pencil_icon} onClick={props.clickOpenPriceModal}>
+                    </div>
+                </div>
+            </td>
+            <td className={styles.Table_td_right}>
                 {props.doctor.users.isBlocked ?
                     <div className={styles.switch_td} key={`bl-${props.doctor.id}`} onClick={props.clickBlock as MouseEventHandler<HTMLDivElement>}>
                         <SwitchDiv isOn={true} />

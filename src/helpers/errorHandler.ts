@@ -13,6 +13,3 @@ const errorHandler = (isError: boolean, data: FetchBaseQueryError | SerializedEr
 };
 
 export default errorHandler;
-
-
-

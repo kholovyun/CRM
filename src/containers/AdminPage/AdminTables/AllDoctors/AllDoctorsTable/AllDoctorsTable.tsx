@@ -1,11 +1,6 @@
 import { FunctionComponent, MouseEvent, ReactElement, useState } from "react";
 import IAllDoctorsTableProps from "./IAllDoctorsTableProps";
 import styles from "../../AllTables.module.css";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
-import { IErrorResponse } from "../../../../../interfaces/IUser/IErrorResponse";
-import { IMessage } from "../../../../../interfaces/IUser/IMessage";
-import { toast } from "react-toastify";
 import IDoctorWithUser from "../../../../../interfaces/IDoctor/IDoctorWithUser";
 import { useActivateDoctorMutation, useBlockDoctorMutation } from "../../../../../app/services/doctors";
 import Modal from "../../../../../components/UI/Modal/Modal";
@@ -13,36 +8,44 @@ import Btn from "../../../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../../../enums/EBtnSize";
 import { EBtnClass } from "../../../../../enums/EBtnClass";
 import DoctorRow from "./DoctorRow/DoctorRow";
+import errorHandler from "../../../../../helpers/errorHandler";
+import EditPriceForm from "./EditPriceForm/EditPriceForm";
 
 const AllDoctorsTable: FunctionComponent<IAllDoctorsTableProps> = (props: IAllDoctorsTableProps): ReactElement => {
     const [blockThisUser, { error: blockUserError, isError: isBlockError }] = useBlockDoctorMutation();
     const [activateThisDoctor, { error: activateError, isError: isActivateError }] = useActivateDoctorMutation();
-
     const [stateDoctor, setDoctor] = useState<IDoctorWithUser | null>(null);
     const [modalTitle, setModalTitle] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [showPriceModal, setShowPriceModal] = useState(false);
 
-    const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
-        const err = data as IErrorResponse<IMessage>;
-        toast.error(`Ошибка ${err.data.message}`);
-    };
-
-    isBlockError && errorHandler(blockUserError);
-    isActivateError && errorHandler(activateError);
+    errorHandler(isBlockError, blockUserError);
+    errorHandler(isActivateError, activateError);
 
     const clearModalStates = () => {
         setDoctor(null);
         setModalTitle("");
     };
 
-    const cklickBlockHandler = (e: MouseEvent<HTMLDivElement>, thisDoctor: IDoctorWithUser, text: string) => {
+    const openPriceModal = (e: MouseEvent<HTMLDivElement>, thisDoctor: IDoctorWithUser) => {
+        e.stopPropagation();
+        setDoctor({...thisDoctor});
+        setShowPriceModal(true);
+    };
+
+    const closePriceModal = () => {
+        setShowPriceModal(false);
+        clearModalStates();
+    };
+
+    const clickBlockHandler = (e: MouseEvent<HTMLDivElement>, thisDoctor: IDoctorWithUser, text: string) => {
         e.stopPropagation();
         setDoctor({...thisDoctor});
         setShowModal(true);
         setModalTitle(text);
     };
 
-    const cklickActivateHandler = (e: MouseEvent<HTMLDivElement>, thisDoctor: IDoctorWithUser, text: string) => {
+    const clickActivateHandler = (e: MouseEvent<HTMLDivElement>, thisDoctor: IDoctorWithUser, text: string) => {
         e.stopPropagation();
         setDoctor({...thisDoctor});
         setShowModal(true);
@@ -68,6 +71,9 @@ const AllDoctorsTable: FunctionComponent<IAllDoctorsTableProps> = (props: IAllDo
 
     return (
         <div className={styles.Table_box}>
+            <Modal show={showPriceModal} close={closePriceModal}>
+                {stateDoctor && <EditPriceForm doctor={stateDoctor} closeModal={closePriceModal} />}
+            </Modal>
             <Modal
                 show={showModal}
                 close={modalCancelHandler}>
@@ -111,6 +117,7 @@ const AllDoctorsTable: FunctionComponent<IAllDoctorsTableProps> = (props: IAllDo
                         <th className={styles.Table_td_right}>Tел.</th>
                         <th className={styles.Table_td_right}>Специализация</th>
                         <th className={styles.Table_td_right}>Блок</th>
+                        <th className={styles.Table_td_right}>Базовая цена подписки</th>
                         <th className={styles.Table_td}>Активация</th>
                     </tr>
                 </thead>
@@ -119,8 +126,9 @@ const AllDoctorsTable: FunctionComponent<IAllDoctorsTableProps> = (props: IAllDo
                         return (
                             <DoctorRow key={doctor.id}
                                 doctor={doctor}
-                                clickBlock={(e: MouseEvent<HTMLDivElement>) => cklickBlockHandler(e, doctor, doctor.users.isBlocked ? "разблокировать" : "заблокировать")}
-                                clickActivate={(e: MouseEvent<HTMLDivElement>) => cklickActivateHandler(e, doctor, doctor.isActive ? "дезактивировать" : "активировать")}
+                                clickBlock={(e: MouseEvent<HTMLDivElement>) => clickBlockHandler(e, doctor, doctor.users.isBlocked ? "разблокировать" : "заблокировать")}
+                                clickActivate={(e: MouseEvent<HTMLDivElement>) => clickActivateHandler(e, doctor, doctor.isActive ? "дезактивировать" : "активировать")}
+                                clickOpenPriceModal={(e: MouseEvent<HTMLDivElement>) => openPriceModal(e, doctor)}
                             />
                         );
                     })}

@@ -63,7 +63,7 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
         }
     }, [isSuccess]);
 
-    useEffect(():void => {
+    useEffect(() => {
         getChildrenByParent();
         if (user?.role === ERoles.PARENT && parent && !parent.isActive) {
             setShowActivationModal(true);
@@ -86,7 +86,6 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
                 <div className={styles.parent_cards_section}>
                     {parent && <ParentCard parent={parent} />}
                     {parent && <DoctorCard doctor={parent.doctors} />}
-
                 </div>
                 <AccessControl allowedRoles={[ERoles.PARENT]}>
                     {parent && children !== undefined &&
@@ -99,6 +98,7 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
                                             childId={ch.id}
                                             doctorId={parent.doctorId}
                                             parentId={ch.parentId}
+                                            isParentActive={parent.isActive}
                                         />
                                     </Tab>
                                 )}
