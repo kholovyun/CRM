@@ -113,7 +113,6 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                                         <Field className={styles.editUserInput} name="surname" type="text" /> 
                                     </div>
                                 </div>
-
                                 <div className={styles.editUserLine}>
                                     <div className={styles.editUserField}>
                                         {touched.name && errors.name ? <p>{errors.name}</p> : <p></p>}
@@ -210,7 +209,6 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                                         <Field as={"textarea"} className={`${styles.editDoctorInput} ${styles.textarea}`} name="placeOfWork" type="text"/>
                                     </div>       
                                 </div>
-                    
                                 <div className={styles.editDoctorLine}>
                                     <div className={styles.editDoctorField}>
                                         {touched.achievements && errors.achievements ? <p>{errors.achievements}</p> : <p></p>}
