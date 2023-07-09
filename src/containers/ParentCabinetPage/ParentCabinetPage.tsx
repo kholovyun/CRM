@@ -108,7 +108,7 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
                     }
                 </AccessControl>
                 
-                {parent && children && <ChildrenCardsBlock parentChildren={children} doctorId={parent.doctorId}/>}
+                {parent && children && <ChildrenCardsBlock parentId={parent.id} parentChildren={children} doctorId={parent.doctorId}/>}
                 {user && <ReviewForm userId={user?.role === ERoles.PARENT ? user?.id : String(id)} />}
             </div>
         </Container>

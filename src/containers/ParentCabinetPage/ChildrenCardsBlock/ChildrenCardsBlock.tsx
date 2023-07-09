@@ -1,9 +1,22 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement, useState } from "react";
 import styles from "./ChildrenCardsBlock.module.css";
 import IChildrenCardsBlockProps from "./IChildrenCardsBlockProps";
 import ChildCard from "./ChildCard/ChildCard";
+import Modal from "../../../components/UI/Modal/Modal";
+import AddChildForm from "./AddChildForm/AddChildForm";
 
-const ChildrenCardsBlock: FunctionComponent<IChildrenCardsBlockProps> = ({parentChildren, doctorId}): ReactElement => {
+const ChildrenCardsBlock: FunctionComponent<IChildrenCardsBlockProps> = (props): ReactElement => {
+    const {parentChildren, doctorId, parentId} = props;
+    const [addChild, setAddChild] = useState(false);
+
+    const openModal = () => {
+        setAddChild(true);
+    };
+
+    const closeModal = () => {
+        setAddChild(false);
+    };
+    
     return (
         <div className={styles.childrenCardsBlock}>
             {parentChildren.map(child => {
@@ -13,9 +26,12 @@ const ChildrenCardsBlock: FunctionComponent<IChildrenCardsBlockProps> = ({parent
                     doctorId={doctorId}
                 />;
             })}
-            <div className={styles.addChildCard}>
+            <div className={styles.addChildCard} onClick={openModal}>
                 <p>Добавить ребенка</p>
             </div>
+            <Modal show={addChild} close={closeModal} >
+                <AddChildForm parentId={parentId}/>
+            </Modal>
         </div>
     );
 };
