@@ -1,14 +1,14 @@
 .childrenCardsBlock {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    row-gap: 30px;
+    gap: 2%;
+    row-gap: 20px;
 }
 
 .addChildCard {
     padding: 20px;
     width: 100%;
-    border-radius: 50px;
+    border-radius: 2rem;
     background-color: var(--light_blue_half_opacity);
     min-height: 200px;
     display: flex;
