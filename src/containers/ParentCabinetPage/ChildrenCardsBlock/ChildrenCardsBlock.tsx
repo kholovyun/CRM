@@ -30,7 +30,7 @@ const ChildrenCardsBlock: FunctionComponent<IChildrenCardsBlockProps> = (props):
                 <p>Добавить ребенка</p>
             </div>
             <Modal show={addChild} close={closeModal} >
-                <AddChildForm parentId={parentId}/>
+                <AddChildForm parentId={parentId} closeModal={closeModal}/>
             </Modal>
         </div>
     );

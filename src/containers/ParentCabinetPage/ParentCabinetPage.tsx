@@ -1,4 +1,3 @@
-import {ChildrenCardBox} from "../ChildrenCardBox/ChildrenCardBox.tsx";
 import {Container} from "../../components/UI/Container/Container";
 import styles from "./ParentCabinetPage.module.css";
 import {useAppSelector} from "../../app/hooks";

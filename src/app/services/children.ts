@@ -1,6 +1,7 @@
 import IChildWithParentIdDto from "../../interfaces/IChild/IChildWithParentIdDto";
 import { api } from "./api";
 import IChildGetDto from "../../interfaces/IChild/IChildGetDto.ts";
+import IChildCreateDto from "../../interfaces/IChild/IChildCreateDto.ts";
 
 const childrenApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -26,8 +27,8 @@ const childrenApi = api.injectEndpoints({
             }),
             providesTags: ["Child"]
         }),
-        createChild: build.mutation<IChildGetDto, FormData>({
-            query: (child: FormData) => ({
+        createChild: build.mutation<IChildGetDto, IChildCreateDto>({
+            query: (child: IChildCreateDto) => ({
                 url: "/children",
                 method: "POST",
                 body: child,

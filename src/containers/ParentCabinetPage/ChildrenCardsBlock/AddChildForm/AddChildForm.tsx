@@ -3,109 +3,147 @@ import styles from "./AddChildForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ESex } from "../../../../enums/ESex";
 import IAddChildFormProps from "./IAddChildFormProps";
-import { validationSec } from "../../../../schemas/validationScremasRegisterParent";
+import Btn from "../../../../components/UI/Btn/Btn";
+import { EBtnTypes } from "../../../../enums/EBtnTypes";
+import { EBtnSize } from "../../../../enums/EBtnSize";
+import { EBtnClass } from "../../../../enums/EBtnClass";
+import { FormBox } from "../../../UserForms/FormBox/FormBox";
+import errorHandler from "../../../../helpers/errorHandler";
+import successHandler from "../../../../helpers/successHandler";
+import { useCreateChildMutation } from "../../../../app/services/children";
+import { validationScremasCreateChild } from "../../../../schemas/validationScremasCreateChild";
 
-const AddChildForm: FunctionComponent<IAddChildFormProps> = ({parentId}): ReactElement => {
+const AddChildForm: FunctionComponent<IAddChildFormProps> = ({parentId, closeModal}): ReactElement => {
+    const [createChild, { isSuccess, isError, error }] = useCreateChildMutation();
+
+    errorHandler(isError, error);
+    successHandler(isSuccess, "Ребенок добавлен");
+    
     return (
-        <div className={styles.addChildForm}>
+        <FormBox>
             <Formik
                 initialValues={{
                     parentId: parentId,
+                    photo: "",
                     name: "",
                     surname: "",
                     patronim: "",
-                    dateOfBirth: "",
-                    sex: "",
-                    height: "",
-                    weight: ""
+                    dateOfBirth: new Date(""),
+                    sex: "" as ESex,
+                    height: 0,
+                    weight: 0,
                 }}
-                onSubmit={(values) => {
-                    alert();
+                onSubmit={ async (values) => {
+                    await createChild(values);
                 }}
                 validateOnBlur
-                validationSchema={validationSec}
+                validationSchema={validationScremasCreateChild}
             >
-                <Form>
-                    <div className={styles.form_column}>
-                        <div className={styles.two_inputs_row}>
-                            <div className={styles.input_flex_column}>
-                                <ErrorMessage className={styles.error_text} name="child.name" component="div" />
-                                <Field
-                                    className={styles.login_input}
-                                    name="child.name"
-                                    type="text"
-                                    placeholder="Имя" />
-                            </div>
-                            <div className={styles.input_flex_column}>
-                                <ErrorMessage className={styles.error_text} name="child.surname" component="div" />
-                                <Field
-                                    className={styles.login_input}
-                                    name="child.surname"
-                                    type="text"
-                                    placeholder="Фамилия" />
-                            </div>
-                        </div>
-                        <ErrorMessage className={styles.error_text} name="child.patronim" component="div" />
-                        <Field
-                            className={styles.login_input}
-                            name="child.patronim"
-                            type="text"
-                            placeholder="Отчество" />
-                        <div className={styles.two_inputs_row}>
-                            <div className={styles.input_flex_column}>
-                                <ErrorMessage className={styles.error_text} name="child.dateOfBirth" component="div" />
-                                <Field name="child.dateOfBirth" type="date" className={styles.login_input} />
-                            </div>
-                            <div className={styles.input_flex_column}>
-                                <ErrorMessage className={styles.error_text} name="child.sex" component="div" />
-                                <div className={styles.select_wrapper}>
+                {({ isValid, handleSubmit }) => (
+                    <Form>
+                        <div className={styles.form_column}>
+                            <div className={styles.two_inputs_row}>
+                                <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="name" component="div" />
                                     <Field
-                                        as="select"
-                                        className={styles.custom_select}
-                                        name="child.sex"
-                                        placeholder="Пол"
-                                        id="sex"
-                                        default=""
-                                    >
-                                        <option className={styles.custom_option} value="" disabled hidden>Пол</option>
-                                        <option className={styles.custom_option} value={ESex.FEMALE}>{ESex.FEMALE}</option>
-                                        <option className={styles.custom_option} value={ESex.MALE}>{ESex.MALE}</option>
-                                    </Field>
+                                        className={styles.login_input}
+                                        name="name"
+                                        type="text"
+                                        placeholder="Имя" />
+                                </div>
+                                <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="surname" component="div" />
+                                    <Field
+                                        className={styles.login_input}
+                                        name="surname"
+                                        type="text"
+                                        placeholder="Фамилия" />
                                 </div>
                             </div>
-                        </div>
-                        <div className={styles.two_inputs_row}>
-                            <div className={styles.input_flex_column}>
-                                <ErrorMessage className={styles.error_text} name="child.height" component="div" />
-                                <div className={styles.text_select_box}>
+                            <ErrorMessage className={styles.error_text} name="patronim" component="div" />
+                            <Field
+                                className={styles.login_input}
+                                name="patronim"
+                                type="text"
+                                placeholder="Отчество" />
+                            <div className={styles.two_inputs_row}>
+                                <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="dateOfBirth" component="div" />
+                                    <Field 
+                                        name="dateOfBirth" 
+                                        type="date" 
+                                        className={styles.login_input} />
+                                </div>
+                                <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="sex" component="div" />
                                     <div className={styles.select_wrapper}>
                                         <Field
-                                            className={styles.num_input}
-                                            name="child.height"
-                                            type="number"
-                                            placeholder="Рост" />
+                                            as="select"
+                                            className={styles.custom_select}
+                                            name="sex"
+                                            placeholder="Пол"
+                                            id="sex"
+                                            default=""
+                                        >
+                                            <option className={styles.custom_option} value="" disabled hidden>Пол</option>
+                                            <option className={styles.custom_option} value={ESex.FEMALE}>{ESex.FEMALE}</option>
+                                            <option className={styles.custom_option} value={ESex.MALE}>{ESex.MALE}</option>
+                                        </Field>
                                     </div>
-                                    <p className={styles.label_text}>см</p>
                                 </div>
                             </div>
-                            <div className={styles.input_flex_column}>
-                                <ErrorMessage className={styles.error_text} name="child.weight" component="div" />
-                                <div className={styles.text_select_box}>
-                                    <div className={styles.select_wrapper}>
-                                        <Field
-                                            className={styles.num_input}
-                                            name="child.weight"
-                                            type="number"
-                                            placeholder="Вес" />
+                            <div className={styles.two_inputs_row}>
+                                <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="height" component="div" />
+                                    <div className={styles.text_select_box}>
+                                        <div className={styles.select_wrapper}>
+                                            <Field
+                                                className={styles.num_input}
+                                                name="height"
+                                                type="number"
+                                                min="0"
+                                                placeholder="Рост" />
+                                        </div>
+                                        <p className={styles.label_text}>см</p>
                                     </div>
-                                    <p className={styles.label_text}>кг</p>
                                 </div>
+                                <div className={styles.input_flex_column}>
+                                    <ErrorMessage className={styles.error_text} name="weight" component="div" />
+                                    <div className={styles.text_select_box}>
+                                        <div className={styles.select_wrapper}>
+                                            <Field
+                                                className={styles.num_input}
+                                                name="weight"
+                                                type="number"
+                                                min="0"
+                                                placeholder="Вес" />
+                                        </div>
+                                        <p className={styles.label_text}>кг</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={`${styles.added_margin_top} ${styles.btn_group}`}> 
+                                <Btn
+                                    onclick={closeModal}
+                                    title="Отмена"
+                                    size={EBtnSize.big}
+                                    btnClass={EBtnClass.white_active}
+                                    types={EBtnTypes.reset}  
+                                />
+                                <Btn
+                                    disabled={!isValid}
+                                    types={EBtnTypes.submit}
+                                    title={"Создать"}
+                                    size={EBtnSize.big}
+                                    btnClass={EBtnClass.dark_active}
+                                    onclick={handleSubmit}
+                                />
                             </div>
                         </div>
-                    </div>
-                </Form>
+                    </Form>
+                )}
             </Formik>
-        </div>
+        </FormBox>
     );
 };
 
