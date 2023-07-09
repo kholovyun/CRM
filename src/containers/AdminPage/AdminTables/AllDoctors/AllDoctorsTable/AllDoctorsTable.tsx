@@ -116,8 +116,8 @@ const AllDoctorsTable: FunctionComponent<IAllDoctorsTableProps> = (props: IAllDo
                         <th className={styles.Table_td_right}>Email</th>
                         <th className={styles.Table_td_right}>Tел.</th>
                         <th className={styles.Table_td_right}>Специализация</th>
-                        <th className={styles.Table_td_right}>Блок</th>
                         <th className={styles.Table_td_right}>Базовая цена подписки</th>
+                        <th className={styles.Table_td_right}>Блок</th>                        
                         <th className={styles.Table_td}>Активация</th>
                     </tr>
                 </thead>

@@ -55,6 +55,13 @@ const usersApi = api.injectEndpoints({
             }),
             invalidatesTags: ["User", "Doctor"]
         }),
+        checkToken: build.query<IUserGetDtoWithToken, void>({
+            query: () => ({
+                url: "/users/token",
+                method: "GET"
+            }),
+            providesTags: ["User"]
+        })
     })
 });
 
@@ -65,5 +72,6 @@ export const {
     useBlockUserMutation,
     useEditUserMutation,
     useCreateUserParentMutation,
+    useLazyCheckTokenQuery
 } = usersApi;
 export default usersApi;

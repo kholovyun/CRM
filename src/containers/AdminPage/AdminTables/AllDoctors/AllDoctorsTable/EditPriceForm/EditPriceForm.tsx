@@ -11,16 +11,21 @@ import Btn from "../../../../../../components/UI/Btn/Btn";
 import { EBtnTypes } from "../../../../../../enums/EBtnTypes";
 import { EBtnSize } from "../../../../../../enums/EBtnSize";
 import { EBtnClass } from "../../../../../../enums/EBtnClass";
+import successHandler from "../../../../../../helpers/successHandler";
 
 const EditPriceForm: FunctionComponent<IEditPriceFormProps> = (props: IEditPriceFormProps): ReactElement => {
-    const [changeDoctorPrice, { error: changePriceError, isError: isChangePriceError }] = useChangeDoctorPriceMutation();
+    const [changeDoctorPrice, { error: changePriceError, isError: isChangePriceError, isSuccess }] = useChangeDoctorPriceMutation();
     errorHandler(isChangePriceError, changePriceError);
-
+    successHandler(isSuccess, "Изменения сохранились.");
+    
     return (
         <FormBox>
             <Formik
                 initialValues={{
-                    price: props.doctor.price
+                    price: Object.values(EDoctorLevel).includes(parseInt(String(props.doctor.price))) 
+                        ? Object.entries(EDoctorLevel).find(([key]) => key === EDoctorLevel[`${parseInt(String(props.doctor.price))}`])?.[1]
+                        :
+                        EDoctorLevel.JUNIOR
                 }}
                 validateOnBlur
                 onSubmit={(values) => {
@@ -31,13 +36,13 @@ const EditPriceForm: FunctionComponent<IEditPriceFormProps> = (props: IEditPrice
                     <Form className={styles.form_column}>
                         <div className={tableStyles.title_box}>
                             <p className={tableStyles.modal_title}>Отредактировать базовую цену подписки у врача</p>
-                            <p className={tableStyles.violet}>{props.doctor.users.surname} {props.doctor.users.name}?</p>
+                            <p className={`${tableStyles.modal_title} ${tableStyles.violet}`}>{props.doctor.users.surname} {props.doctor.users.name}?</p>
                         </div>
                         <div className={styles.input_column}>
                             <label htmlFor={"price"} className={styles.label_text}>Базовая цена подписки</label>
                             <div className={styles.input_flex_column}>
                                 <div className={styles.select_wrapper}>                                    
-                                    <Field className={styles.custom_select} id={"price"} name="price" as="select" placeholder="Уровень цены">
+                                    <Field className={styles.custom_select} id={"price"} name="price" as="select">
                                         <option className={styles.custom_option} value={EDoctorLevel.JUNIOR}>{EDoctorLevel.JUNIOR}</option>
                                         <option className={styles.custom_option} value={EDoctorLevel.MIDLLE}>{EDoctorLevel.MIDLLE}</option>
                                         <option className={styles.custom_option} value={EDoctorLevel.SENIOR}>{EDoctorLevel.SENIOR}</option>

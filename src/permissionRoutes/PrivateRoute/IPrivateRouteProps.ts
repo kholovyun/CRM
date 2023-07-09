@@ -1,5 +1,5 @@
 import { ERoles } from "../../enums/ERoles";
 
-export default interface IPrivateRoutProps {
+export default interface IPrivateRouteProps {
     allowedRoles: ERoles[]
 }

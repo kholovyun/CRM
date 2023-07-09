@@ -15,14 +15,14 @@ import { Avatar } from "../UI/Avatar/Avatar";
 export const MenuBurger: FunctionComponent = (): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     const [showMenu, setShowMenu] = useState(false);
-    const dispatcher = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const showMenuToogle = () => {
         setShowMenu(!showMenu);
     };
 
     const logoutHandler = () => {
-        dispatcher(logout());
+        dispatch(logout());
         toast.info("Выход выполнен");
     };
 
