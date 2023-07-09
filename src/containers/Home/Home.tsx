@@ -8,10 +8,18 @@ import { EBtnClass } from "../../enums/EBtnClass";
 import TransparentLink from "../../components/UI/TransparentLink/TransparentLink";
 import { FunctionComponent, ReactElement, useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
+import { useLazyCheckTokenQuery } from "../../app/services/users";
+import { getTokenFromStorage } from "../../helpers/getTokenFromStorage";
 
 export const Home: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
     const { user } = useAppSelector(state => state.auth);
+    const [getNewToken] = useLazyCheckTokenQuery();    
+    const localToken = getTokenFromStorage();
+
+    useEffect(() => {
+        if (localToken) getNewToken();
+    }, []);
 
     useEffect(() => {
         user && navigate("/login");
