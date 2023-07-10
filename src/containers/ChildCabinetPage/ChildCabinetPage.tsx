@@ -16,6 +16,8 @@ import ChildAllergies from "../../components/ChildAllergies/ChildAllergies.tsx";
 import { useLazyGetAllergiesByChildIdQuery } from "../../app/services/allergies.ts";
 import ChildVaccinations from "../../components/ChildVaccinations/ChildVaccinations.tsx";
 import { useLazyGetVaccinationsByChildIdQuery } from "../../app/services/vaccinations.ts";
+import { useLazyGetSpecExamsByChildIdQuery } from "../../app/services/specExams.ts";
+import ChildSpecExams from "../../components/ChildSpecExams/ChildSpecExams.tsx";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
@@ -25,7 +27,8 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const [getQuestions, { data: questionsData }] = useLazyGetQuestionsByChildIdQuery();
     const [getVisits, { data: visitsData }] = useLazyGetVisitsByChildIdQuery();
     const [getAllergies, { data: allergiesData }] = useLazyGetAllergiesByChildIdQuery();
-    const [getVaccinations, { data: vaccinationsData}] = useLazyGetVaccinationsByChildIdQuery();
+    const [getVaccinations, { data: vaccinationsData }] = useLazyGetVaccinationsByChildIdQuery();
+    const [getExaminations, { data: examsData }] = useLazyGetSpecExamsByChildIdQuery();
     return (
         <Container>
             {isSuccess && <CardChildPage data={data} />}
@@ -58,17 +61,26 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"} />
                 <LinkWithChildren fn={() => getVaccinations(data.id)} text={"Сведения о профилактических прививках"}>
-                    {data && vaccinationsData && 
-                        <ChildVaccinations 
+                    {data && vaccinationsData &&
+                        <ChildVaccinations
                             vaccinations={vaccinationsData}
-                            childId={data.id} 
+                            childId={data.id}
                         />
                     }
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => getAllergies(data.id)} text={"Сведения об аллергическом статусе"}>
-                    {data && allergiesData && <ChildAllergies childId={data.id} allergies={allergiesData} />}
+                    {data && allergiesData &&
+                        <ChildAllergies
+                            childId={data.id}
+                            allergies={allergiesData} />}
                 </LinkWithChildren>
-                <LinkWithChildren fn={() => console.log("Осмотры врачами других специальностей")} text={"Осмотры врачами других специальностей"} />
+                <LinkWithChildren fn={() => getExaminations(data.id)} text={"Осмотры врачами других специальностей"}>
+                    {data && examsData &&
+                        <ChildSpecExams
+                            specExams={examsData}
+                            childId={data.id} />
+                    }
+                </LinkWithChildren>
             </ContentLinkRow>
             }
         </Container>
