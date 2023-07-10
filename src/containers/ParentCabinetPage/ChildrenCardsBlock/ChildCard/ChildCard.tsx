@@ -33,7 +33,7 @@ const ChildCard: FunctionComponent<IChildCardProps> = ({child, doctorId}): React
                 <Btn
                     btnClass={EBtnClass.white_active}
                     title="Подробнее"
-                    size={EBtnSize.tiny}
+                    size={EBtnSize.small}
                     onclick={() => navigate(`/child-cabinet/${child.id}`, { state: { doctorId: doctorId } })} />
             </div>
         </div>
