@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactElement } from "react";
 import styles from "./AddChildForm.module.css";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikValues } from "formik";
 import { ESex } from "../../../../enums/ESex";
 import IAddChildFormProps from "./IAddChildFormProps";
 import Btn from "../../../../components/UI/Btn/Btn";
@@ -12,6 +12,7 @@ import errorHandler from "../../../../helpers/errorHandler";
 import successHandler from "../../../../helpers/successHandler";
 import { useCreateChildMutation } from "../../../../app/services/children";
 import { validationScremasCreateChild } from "../../../../schemas/validationScremasCreateChild";
+import IChildCreateDto from "../../../../interfaces/IChild/IChildCreateDto";
 
 const AddChildForm: FunctionComponent<IAddChildFormProps> = ({parentId, closeModal}): ReactElement => {
     const [createChild, { isSuccess, isError, error }] = useCreateChildMutation();
@@ -28,13 +29,13 @@ const AddChildForm: FunctionComponent<IAddChildFormProps> = ({parentId, closeMod
                     name: "",
                     surname: "",
                     patronim: "",
-                    dateOfBirth: new Date(""),
-                    sex: "" as ESex,
-                    height: 0,
-                    weight: 0,
+                    dateOfBirth: "",
+                    sex: "",
+                    height: "",
+                    weight: "",
                 }}
-                onSubmit={ async (values) => {
-                    await createChild(values);
+                onSubmit={ async (values: FormikValues) => {
+                    await createChild(values as IChildCreateDto);
                 }}
                 validateOnBlur
                 validationSchema={validationScremasCreateChild}
@@ -42,6 +43,7 @@ const AddChildForm: FunctionComponent<IAddChildFormProps> = ({parentId, closeMod
                 {({ isValid, handleSubmit }) => (
                     <Form>
                         <div className={styles.form_column}>
+                            <h1 className={styles.titleTxt}>Добавить ребенка</h1>
                             <div className={styles.two_inputs_row}>
                                 <div className={styles.input_flex_column}>
                                     <ErrorMessage className={styles.error_text} name="name" component="div" />

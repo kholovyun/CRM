@@ -27,7 +27,8 @@ const ChildrenCardsBlock: FunctionComponent<IChildrenCardsBlockProps> = (props):
                 />;
             })}
             <div className={styles.addChildCard} onClick={openModal}>
-                <p>Добавить ребенка</p>
+                <p className={styles.addChildCardTitle}>Добавить ребенка</p>
+                <div className={styles.plusIcon} />
             </div>
             <Modal show={addChild} close={closeModal} >
                 <AddChildForm parentId={parentId} closeModal={closeModal}/>
