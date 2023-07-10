@@ -137,10 +137,14 @@
     width: 100%;
     gap: 20px;
     align-items: center;
+    margin-left: auto;
+    margin-right: 0;
 }
 
 .publicationBtn {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
     gap: 10px;
 }
 

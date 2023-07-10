@@ -1,6 +1,7 @@
 import IChildWithParentIdDto from "../../interfaces/IChild/IChildWithParentIdDto";
 import { api } from "./api";
 import IChildGetDto from "../../interfaces/IChild/IChildGetDto.ts";
+import IChildCreateDto from "../../interfaces/IChild/IChildCreateDto.ts";
 
 const childrenApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -26,6 +27,14 @@ const childrenApi = api.injectEndpoints({
             }),
             providesTags: ["Child"]
         }),
+        createChild: build.mutation<IChildGetDto, IChildCreateDto>({
+            query: (child: IChildCreateDto) => ({
+                url: "/children",
+                method: "POST",
+                body: child,
+            }),
+            invalidatesTags: ["Child"],
+        }),
         editChild: build.mutation<IChildGetDto, { id: string, child: FormData }>({
             query: ({ id, child }) => ({
                 url: `/children/${id}`,
@@ -33,7 +42,7 @@ const childrenApi = api.injectEndpoints({
                 body: child,
             }),
             invalidatesTags: ["Child"],
-        }),
+        })
     })
 });
 
@@ -42,5 +51,6 @@ export const {
     useGetChildrenByDoctorQuery,
     useLazyGetChildrenByParentQuery, 
     useGetChildrenByIdQuery, 
-    useEditChildMutation
+    useEditChildMutation,
+    useCreateChildMutation
 } = childrenApi;

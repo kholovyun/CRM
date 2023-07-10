@@ -1,4 +1,3 @@
-import {ChildrenCardBox} from "../ChildrenCardBox/ChildrenCardBox";
 import {Container} from "../../components/UI/Container/Container";
 import styles from "./ParentCabinetPage.module.css";
 import {useAppSelector} from "../../app/hooks";
@@ -18,6 +17,7 @@ import ParentCard from "./Cards/ParentCard/ParentCard.tsx";
 import DoctorCard from "./Cards/DoctorCard/DoctorCard.tsx";
 import Btn from "../../components/UI/Btn/Btn.tsx";
 import {EBtnSize} from "../../enums/EBtnSize.ts";
+import ChildrenCardsBlock from "./ChildrenCardsBlock/ChildrenCardsBlock.tsx";
 
 export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     const [showActivationModal, setShowActivationModal] = useState<boolean>(false);
@@ -106,7 +106,8 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
                         </div>
                     }
                 </AccessControl>
-                {parent && children && <ChildrenCardBox childrenArray={children} doctorId={parent.doctorId} />}
+                
+                {parent && children && <ChildrenCardsBlock parentId={parent.id} parentChildren={children} doctorId={parent.doctorId}/>}
                 {user && <ReviewForm userId={user?.role === ERoles.PARENT ? user?.id : String(id)} />}
             </div>
         </Container>

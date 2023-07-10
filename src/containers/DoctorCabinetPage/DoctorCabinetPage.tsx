@@ -13,6 +13,7 @@ import ContentLink from "../../components/UI/ContentLink/ContentLink";
 import styles from "./DoctorCabinetPage.module.css";
 import { useLazyGetQuestionsByDoctorIdQuery } from "../../app/services/questions";
 import ChildQuestion from "./ChildQuestion/ChildQuestion";
+import AccessControl from "../../permissionRoutes/AccessControl";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
@@ -33,15 +34,17 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
 
             {doctor && <DoctorRecommendations role={user!.role} doctorId={doctor.id} />}
             
-            <ContentLinkBox>
-                <ContentLink
-                    fn={() => getQuestions(doctor!.id)}
-                    text="Вопросы" />
-                <ContentLink
-                    fn={() => navigate("/admin-page/children")}
-                    text="Перейти в админ панель" />
-            </ContentLinkBox>
-
+            <AccessControl allowedRoles={[ERoles.DOCTOR]}>
+                <ContentLinkBox>
+                    <ContentLink
+                        fn={() => getQuestions(doctor!.id)}
+                        text="Вопросы" />
+                    <ContentLink
+                        fn={() => navigate("/admin-page/children")}
+                        text="Перейти в админ панель" />
+                </ContentLinkBox>
+            </AccessControl>
+            
             {questions && doctor && <div className={styles.allQuestions}>
                 {
                     questions.map((el) => {
