@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, MouseEventHandler, ReactElement } from "react";
 import IVaccinationRowProps from "./IVaccinationRowProps";
 import styles from "../../../containers/AdminPage/AdminTables/AllTables.module.css";
 import { useAppSelector } from "../../../app/hooks";
@@ -18,8 +18,8 @@ const VaccinationRow: FunctionComponent<IVaccinationRowProps> = (props): ReactEl
             <td className={styles.Table_td_right}>{props.vaccination.manufacturer}</td>
             <td className={styles.Table_td_right}>{props.vaccination.reaction}</td>
             <td className={styles.Table_td_right}>{props.vaccination.conterindication}</td>
-            <td className={styles.Table_td}>{props.vaccination.notes}</td>
-            {user?.role === ERoles.DOCTOR ? <td className={styles.Table_td}><IconBtn onclick={props.deleteVaccination} btnClass={"delete_btn"} /></td> : null}
+            <td className={user?.role === ERoles.DOCTOR ? styles.Table_td_right: styles.Table_td}>{props.vaccination.notes}</td>
+            {user?.role === ERoles.DOCTOR ? <td className={styles.Table_td}><IconBtn onclick={props.showModaldeleteVaccination as MouseEventHandler<HTMLButtonElement>} btnClass={"delete_btn"} /></td> : null}
         </tr>
     );
 };
