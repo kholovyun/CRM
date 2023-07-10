@@ -7,14 +7,14 @@ const allergiesApi = api.injectEndpoints({
     endpoints: (build) => ({
         getAllergiesByChildId: build.query<IAllergyGetDto[], string>({
             query: (id: string) => ({
-                url: `allergies/${id}`,
+                url: `/allergies/${id}`,
                 method: "GET",
             }),
             providesTags: ["Allergy"]
         }),
         createAllergy: build.mutation<IAllergyGetDto, IAllergyCreateDto>({
             query: (allergyDto: IAllergyCreateDto) => ({
-                url: "allergies",
+                url: "/allergies",
                 method: "POST",
                 body: allergyDto
             }),
