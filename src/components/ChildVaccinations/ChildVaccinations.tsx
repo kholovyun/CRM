@@ -65,7 +65,7 @@ const ChildVaccinations: FunctionComponent<IChildVaccinationsProps> = (props): R
                             <th className={stylesTable.Table_td_right}>Производитель</th>
                             <th className={stylesTable.Table_td_right}>Реакция</th>
                             <th className={stylesTable.Table_td_right}>Медотвод</th>
-                            <th className={stylesTable.Table_td}>Примечание</th>
+                            <th className={user?.role === ERoles.DOCTOR ? stylesTable.Table_td_right : stylesTable.Table_td}>Примечание</th>
                         </tr>
                     </thead>
                     <tbody>

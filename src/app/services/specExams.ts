@@ -1,5 +1,7 @@
 import ISpecialistExamsGetDto from "../../interfaces/ISpecialistExams/ISpecialistExamsGetDto";
+import ISpecialistExamsCreateDto from "../../interfaces/ISpecialistExams/ISpecialistExamsCreateDto";
 import { api } from "./api";
+import { IMessage } from "../../interfaces/IUser/IMessage";
 
 const spexExamsApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -10,10 +12,27 @@ const spexExamsApi = api.injectEndpoints({
             }),
             providesTags: ["Examination"]
         }),
+        createExam: build.mutation<ISpecialistExamsGetDto, ISpecialistExamsCreateDto>({
+            query: (exam: ISpecialistExamsCreateDto) => ({
+                url: "/examinations",
+                method: "POST",
+                body: exam
+            }),
+            invalidatesTags: ["Examination"]
+        }),
+        deleteExam: build.mutation<IMessage, string>({
+            query: (id: string) => ({
+                url: `/examinations/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Examination"]
+        })
     })
 });
 
 export const {
     useGetSpecExamsByChildIdQuery,
-    useLazyGetSpecExamsByChildIdQuery
+    useLazyGetSpecExamsByChildIdQuery,
+    useCreateExamMutation,
+    useDeleteExamMutation
 } = spexExamsApi;

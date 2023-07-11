@@ -13,7 +13,7 @@ const SpecExamRow: FunctionComponent<ISpecExamsRowProps> = (props): ReactElement
             <td className={styles.Table_td_right}>{props.specExam.name}</td>
             <td className={styles.Table_td_right}>{props.specExam.date && new Date(props.specExam.date).toLocaleDateString()}</td>
             <td className={styles.Table_td_right}>{props.specExam.conclusion}</td>
-            <td className={styles.Table_td}>{props.specExam.recommend}</td>
+            <td className={user?.role === ERoles.DOCTOR ? styles.Table_td_right: styles.Table_td}>{props.specExam.recommend}</td>
             {user?.role === ERoles.DOCTOR ? <td className={styles.Table_td}><IconBtn btnClass={"delete_btn"} /></td> : null}
         </tr>
     );

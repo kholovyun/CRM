@@ -10,6 +10,7 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnTypes } from "../../enums/EBtnTypes";
 import { EBtnClass } from "../../enums/EBtnClass";
 import SpecExamRow from "./SpecExamsRow/SpecExamsRow";
+import CreateExam from "./CreateExam/CreateExam";
 
 
 const ChildSpecExams: FunctionComponent<IChildSpecExamsProps> = (props): ReactElement => {
@@ -24,7 +25,7 @@ const ChildSpecExams: FunctionComponent<IChildSpecExamsProps> = (props): ReactEl
         <div className={stylesTable.Table_box}>
             {user?.role === ERoles.DOCTOR ? <Modal show={showAddModal} close={modalAddCloser}>
                 <div>
-                    dfgfhg
+                    <CreateExam childId={props.childId} modalCloser={modalAddCloser} />
                 </div>
             </Modal> : null}
             <div className={styles.child_specExams}>
@@ -35,7 +36,7 @@ const ChildSpecExams: FunctionComponent<IChildSpecExamsProps> = (props): ReactEl
                             <th className={stylesTable.Table_td_right}>ФИО врача</th>
                             <th className={stylesTable.Table_td_right}>Дата</th>
                             <th className={stylesTable.Table_td_right}>Заключение</th>
-                            <th className={stylesTable.Table_td}>Рекомендации</th>
+                            <th className={user?.role === ERoles.DOCTOR ? stylesTable.Table_td_right : stylesTable.Table_td}>Рекомендации</th>
                         </tr>
                     </thead>
                     <tbody>
