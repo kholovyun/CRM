@@ -14,7 +14,7 @@ const visitsApi = api.injectEndpoints({
         }),
         createVisit: build.mutation<IVisitGetDto, IVisitCreateDto>({
             query: (visitDto: IVisitCreateDto) => ({
-                url: "visits",
+                url: "/visits",
                 method: "POST",
                 body: visitDto
             }),
