@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, MouseEventHandler, ReactElement } from "react";
 import styles from "../../../containers/AdminPage/AdminTables/AllTables.module.css";
 import { useAppSelector } from "../../../app/hooks";
 import { ERoles } from "../../../enums/ERoles";
@@ -14,7 +14,7 @@ const SpecExamRow: FunctionComponent<ISpecExamsRowProps> = (props): ReactElement
             <td className={styles.Table_td_right}>{props.specExam.date && new Date(props.specExam.date).toLocaleDateString()}</td>
             <td className={styles.Table_td_right}>{props.specExam.conclusion}</td>
             <td className={user?.role === ERoles.DOCTOR ? styles.Table_td_right: styles.Table_td}>{props.specExam.recommend}</td>
-            {user?.role === ERoles.DOCTOR ? <td className={styles.Table_td}><IconBtn btnClass={"delete_btn"} /></td> : null}
+            {user?.role === ERoles.DOCTOR ? <td className={styles.Table_td}><IconBtn onclick={props.showModalDeleteExam as MouseEventHandler<HTMLButtonElement>} btnClass={"delete_btn"} /></td> : null}
         </tr>
     );
 };
