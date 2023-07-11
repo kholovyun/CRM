@@ -1,6 +1,6 @@
-import IUserGetDtoWithToken from "../interfaces/IUser/IUserGetDtoWithToken";
+import IUserGetDto from "../interfaces/IUser/IUserGetDto";
 
 export default interface IAuthState {
-    user: IUserGetDtoWithToken | null
+    user: IUserGetDto | null
     token: string | null
 }

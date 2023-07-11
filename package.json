@@ -17,6 +17,8 @@
     "axios": "^1.3.6",
     "classnames": "^2.3.2",
     "formik": "^2.2.9",
+    "jsrsasign": "^10.8.6",
+    "jwt-decode": "^3.1.2",
     "nginx": "^1.0.8",
     "react": "^18.2.0",
     "react-alice-carousel": "^2.7.1",
@@ -31,6 +33,8 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
+    "@types/jsrsasign": "^10.5.8",
+    "@types/jwt-decode": "^3.1.0",
     "@types/react": "^18.0.28",
     "@types/react-alice-carousel": "^1.15.3",
     "@types/react-avatar-editor": "^13.0.0",
