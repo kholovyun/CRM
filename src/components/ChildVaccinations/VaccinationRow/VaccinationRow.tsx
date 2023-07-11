@@ -19,11 +19,7 @@ const VaccinationRow: FunctionComponent<IVaccinationRowProps> = (props): ReactEl
             <td className={styles.Table_td_right}>{props.vaccination.reaction}</td>
             <td className={styles.Table_td_right}>{props.vaccination.conterindication}</td>
             <td className={user?.role === ERoles.DOCTOR ? styles.Table_td_right: styles.Table_td}>{props.vaccination.notes}</td>
-<<<<<<< src/components/ChildVaccinations/VaccinationRow/VaccinationRow.tsx
-            {user?.role === ERoles.DOCTOR ? <td className={styles.Table_td}><IconBtn onclick={props.deleteVaccination} btnClass={"delete_btn"} /></td> : null}
-=======
             {user?.role === ERoles.DOCTOR ? <td className={styles.Table_td}><IconBtn onclick={props.showModaldeleteVaccination as MouseEventHandler<HTMLButtonElement>} btnClass={"delete_btn"} /></td> : null}
->>>>>>> src/components/ChildVaccinations/VaccinationRow/VaccinationRow.tsx
         </tr>
     );
 };
