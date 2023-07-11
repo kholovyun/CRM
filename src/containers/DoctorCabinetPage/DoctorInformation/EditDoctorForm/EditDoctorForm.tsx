@@ -65,7 +65,7 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
             const [key, value] = entry;
             formData.append(key, value);
         });
-        editDoctor({id: doctorData?.id || "", doctor: formData}); 
+        editDoctor({id: doctorData.id, doctor: formData}); 
     };
 
     const focusRef = useRef<HTMLInputElement>(null);

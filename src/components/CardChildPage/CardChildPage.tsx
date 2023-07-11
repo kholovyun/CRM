@@ -1,5 +1,5 @@
 import styles from "./CardChildPage.module.css";
-import {FC} from "react";
+import {FC, useState, MouseEvent} from "react";
 import IChildGetDto from "../../interfaces/IChild/IChildGetDto.ts";
 import {SubInfoTable} from "../UI/SubInfoTable/SubInfoTable.tsx";
 import {InfoTableContent} from "../UI/InfoTableContent/InfoTableContent.tsx";
@@ -8,6 +8,8 @@ import {InfoTextBoxDouble} from "../UI/infoTextBoxes/infoTextBoxDouble/infoTextB
 import {InfoTextBoxTriple} from "../UI/infoTextBoxes/infoTextBoxTriple/infoTextBoxTriple.tsx";
 import AvatarBox from "../AvatarBox/AvatarBox.tsx";
 import { ERoles } from "../../enums/ERoles.ts";
+import Modal from "../UI/Modal/Modal.tsx";
+import EditChildForm from "./EditChildForm/EditChildForm.tsx";
 
 
 type TChild = {
@@ -32,8 +34,22 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
     ];
     const age:number = dateNow.getFullYear() - date.getFullYear();
 
+    const [editChild, setEditChild] = useState(false);
+
+    const openModal = (e: MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setEditChild(true);
+    };
+
+    const closeModal = () => {
+        setEditChild(false);
+    };
     return (
         <div className={styles.childBoxFirstTop}>
+            <Modal show={editChild} close={closeModal}>
+                <EditChildForm childData={data} />
+            </Modal>
             <AvatarBox 
                 width={300}
                 height={300}
@@ -43,6 +59,9 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
 
             />
             <SubInfoTable>
+                <div className={styles.btn_edit}>
+                    <div className={styles.pencil_icon} onClick={(e: MouseEvent<HTMLDivElement>) => openModal(e)} />
+                </div>
                 <InfoTableContent>
                     <InfoTextBoxDouble
                         textOne={data?.name}
