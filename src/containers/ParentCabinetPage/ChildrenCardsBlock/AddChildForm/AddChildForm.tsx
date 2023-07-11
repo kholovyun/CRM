@@ -98,28 +98,26 @@ const AddChildForm: FunctionComponent<IAddChildFormProps> = ({parentId, closeMod
                                 <div className={styles.input_flex_column}>
                                     <ErrorMessage className={styles.error_text} name="height" component="div" />
                                     <div className={styles.text_select_box}>
-                                        <div className={styles.select_wrapper}>
-                                            <Field
-                                                className={styles.num_input}
-                                                name="height"
-                                                type="number"
-                                                min="0"
-                                                placeholder="Рост" />
-                                        </div>
+                                        
+                                        <Field
+                                            className={styles.num_input}
+                                            name="height"
+                                            type="number"
+                                            min="0"
+                                            placeholder="Рост" />
+                                        
                                         <p className={styles.label_text}>см</p>
                                     </div>
                                 </div>
                                 <div className={styles.input_flex_column}>
                                     <ErrorMessage className={styles.error_text} name="weight" component="div" />
                                     <div className={styles.text_select_box}>
-                                        <div className={styles.select_wrapper}>
-                                            <Field
-                                                className={styles.num_input}
-                                                name="weight"
-                                                type="number"
-                                                min="0"
-                                                placeholder="Вес" />
-                                        </div>
+                                        <Field
+                                            className={styles.num_input}
+                                            name="weight"
+                                            type="number"
+                                            min="0"
+                                            placeholder="Вес" />
                                         <p className={styles.label_text}>кг</p>
                                     </div>
                                 </div>

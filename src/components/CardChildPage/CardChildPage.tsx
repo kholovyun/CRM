@@ -48,7 +48,7 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
     return (
         <div className={styles.childBoxFirstTop}>
             <Modal show={editChild} close={closeModal}>
-                <EditChildForm childData={data} />
+                <EditChildForm childData={data} closeModal={closeModal}/>
             </Modal>
             <AvatarBox 
                 width={300}
