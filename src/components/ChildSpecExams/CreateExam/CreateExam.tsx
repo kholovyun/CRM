@@ -13,6 +13,7 @@ import styles from "../../ChildAllergies/CreateAllergy/CreateAllergy.module.css"
 import Btn from "../../UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
+import DatePickerField from "../../UI/DatePicker/DatePicker";
 
 const CreateExam: FunctionComponent<ICreateExamProps> = (props): ReactElement => {
     const [createExam, {
@@ -55,40 +56,40 @@ const CreateExam: FunctionComponent<ICreateExamProps> = (props): ReactElement =>
             >
                 {({ isValid, errors, touched, handleSubmit }) => (
                     <Form>
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.specialist && errors.specialist ? <p>{errors.specialist}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Специальность	</p>
-                                <Field className={styles.createAllergyInput} name="specialist" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Специальность	</p>
+                                <Field className={styles.createEntityInput} name="specialist" type="text" />
                             </div>
-                            <div className={styles.createAllergyField}>
+                            <div className={styles.createEntityField}>
                                 {touched.date && errors.date ? <p>{}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Дата</p>
-                                <Field className={styles.createAllergyInput} name="date" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Дата</p>
+                                <DatePickerField name="date" />
                             </div>
                         </div>
 
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.name && errors.name ? <p>{errors.name}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>ФИО врача</p>
-                                <Field className={styles.createAllergyInput} name="name" type="text" />
+                                <p className={styles.createEntityFieldTitle}>ФИО врача</p>
+                                <Field className={styles.createEntityInput} name="name" type="text" />
                             </div>
                         </div>
 
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.conclusion && errors.conclusion ? <p>{errors.conclusion}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Заключение</p>
-                                <Field className={styles.createAllergyInput} name="conclusion" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Заключение</p>
+                                <Field className={styles.createEntityInput} name="conclusion" type="text" />
                             </div>
                         </div>
 
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.recommend && errors.recommend ? <p>{errors.recommend}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Рекомендации</p>
-                                <Field className={styles.createAllergyInput} name="recommend" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Рекомендации</p>
+                                <Field className={styles.createEntityInput} name="recommend" type="text" />
                             </div>
                         </div>
 

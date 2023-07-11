@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useState, useEffect } from "react";
+import { FunctionComponent, ReactElement, useState, useEffect, MouseEvent } from "react";
 import stylesTable from "../../containers/AdminPage/AdminTables/AllTables.module.css";
 import styles from "./ChildVisits.module.css";
 import IChildVisitsProps from "./IChildVisitsProps";
@@ -17,13 +17,20 @@ import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
 import CreateVisitForm from "./CreateVisitForm/CreateVisitForm";
+import IVisitGetDto from "../../interfaces/IVisit/IVisitGetDto";
 
 const ChildVisits: FunctionComponent<IChildVisitsProps> = (props): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showModalDeleteVisit, setShowModalDeleteVisit] = useState(false);
+    const [thisVisit, setThisVisit] = useState<IVisitGetDto | null>(null);
 
-    const addNewVisitCloser = () => {
+    const addModalCloser = () => {
         setShowAddModal(false);
+    };
+
+    const deleteModalCloser = () => {
+        setShowModalDeleteVisit(false);
     };
 
     const [deleteVisit, {
@@ -31,6 +38,22 @@ const ChildVisits: FunctionComponent<IChildVisitsProps> = (props): ReactElement 
         isError: isErrorDeleteVisit,
         error: errorDeleteVisit
     }] = useDeleteVisitMutation();
+
+    const clickDeleteHandler = (e: MouseEvent<HTMLButtonElement>, thisVisit: IVisitGetDto) => {
+        e.stopPropagation();
+        setThisVisit({...thisVisit});
+        setShowModalDeleteVisit(true);
+    };
+
+    const clearModalState = () => {
+        setThisVisit(null);
+    };
+
+    const deleteThisVisit = async () => {
+        thisVisit && await deleteVisit(thisVisit.id);
+        setShowModalDeleteVisit(false);
+        clearModalState();
+    };
 
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
         const err = data as IErrorResponse<IMessage>;
@@ -46,12 +69,36 @@ const ChildVisits: FunctionComponent<IChildVisitsProps> = (props): ReactElement 
     }, [isSuccessDeleteVisit]);
 
     return (
-        <div>
-            <Modal show={showAddModal} close={addNewVisitCloser}>
+        <div className={stylesTable.Table_box}>
+            {user?.role === ERoles.DOCTOR ? <Modal show={showAddModal} close={addModalCloser}>
                 <div>
-                    <CreateVisitForm childId={props.childId} modalCloser={addNewVisitCloser} />
+                    <CreateVisitForm childId={props.childId} modalCloser={addModalCloser} />
+                </div>
+            </Modal> :null}
+            <Modal show={showModalDeleteVisit} close={deleteModalCloser}>
+                <div className={stylesTable.modal_flex_column}>
+                    <div className={stylesTable.title_box}>
+                        <p className={stylesTable.modal_title}>
+                            Вы уверены, что хотите удалить запись о приеме у врача?
+                        </p>
+                    </div>
+                    <div className={stylesTable.modal_btn_group}>
+                        <Btn
+                            size={EBtnSize.tiny}
+                            title={"Отмена"}
+                            btnClass={EBtnClass.white_active}
+                            onclick={deleteModalCloser}
+                        />
+                        <Btn
+                            size={EBtnSize.tiny}
+                            title={"Да"}
+                            btnClass={EBtnClass.dark_active}
+                            onclick={() => deleteThisVisit()}
+                        />
+                    </div>
                 </div>
             </Modal>
+            
             <div className={styles.child_visits}>
                 <table className={stylesTable.Table}>
                     <thead>
@@ -70,7 +117,7 @@ const ChildVisits: FunctionComponent<IChildVisitsProps> = (props): ReactElement 
                             return <VisitsRow 
                                 key={visit.id} 
                                 visit={visit}
-                                deleteVisit={() => deleteVisit(visit.id)} />;
+                                showModaldeleteVisit={(e) => clickDeleteHandler(e, visit)} />;
                         })}
                     </tbody>
                 </table>

@@ -1,6 +1,7 @@
+import { MouseEvent } from "react";
 import IVisitGetDto from "../../../interfaces/IVisit/IVisitGetDto";
 
 export default interface IVisitRowProps {
     visit: IVisitGetDto
-    deleteVisit: () => void
+    showModaldeleteVisit: (e: MouseEvent<HTMLButtonElement>, thisVisit: IVisitGetDto) => void
 }

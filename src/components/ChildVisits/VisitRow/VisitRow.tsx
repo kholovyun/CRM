@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, MouseEventHandler, ReactElement } from "react";
 import styles from "../../../containers/AdminPage/AdminTables/AllTables.module.css";
 import IVisitRowProps from "./IVisitRowProps";
 import { useAppSelector } from "../../../app/hooks";
@@ -15,7 +15,7 @@ const VisitsRow: FunctionComponent<IVisitRowProps> = (props): ReactElement => {
             <td className={styles.Table_td_right}>{props.visit.clinicData}</td>
             <td className={styles.Table_td_right}>{props.visit.conclusion}</td>
             <td className={user?.role === ERoles.DOCTOR ? styles.Table_td_right: styles.Table_td}>{props.visit.appointment}</td>
-            {user?.role === ERoles.DOCTOR ? <td className={styles.Table_td}><IconBtn onclick={props.deleteVisit} btnClass={"delete_btn"} /></td> : null}
+            {user?.role === ERoles.DOCTOR ? <td className={styles.Table_td}><IconBtn onclick={props.showModaldeleteVisit as MouseEventHandler<HTMLButtonElement>} btnClass={"delete_btn"} /></td> : null}
         </tr>
     );
 };

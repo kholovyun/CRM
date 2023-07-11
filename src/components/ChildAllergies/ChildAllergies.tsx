@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useState, useEffect } from "react";
+import { FunctionComponent, ReactElement, useState, useEffect, MouseEvent } from "react";
 import IChildAllergiesProps from "./IChildAllergiesProps";
 import styles from "./ChildAllergies.module.css";
 import stylesTable from "../../containers/AdminPage/AdminTables/AllTables.module.css";
@@ -17,13 +17,20 @@ import { IErrorResponse } from "../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../interfaces/IUser/IMessage";
 import { useAppSelector } from "../../app/hooks";
 import { ERoles } from "../../enums/ERoles";
+import IAllergyGetDto from "../../interfaces/IAllergy/IAllergyGetDto";
 
 const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showModalDeleteAllergy, setShowModalDeleteAllergy] = useState(false);
+    const [thisAllergy, setThisAllergy] = useState<IAllergyGetDto | null>(null);
 
-    const addNewAllergyCloser = () => {
+    const addModalCloser = () => {
         setShowAddModal(false);
+    };
+
+    const deleteModalCloser = () => {
+        setShowModalDeleteAllergy(false);
     };
 
     const [deleteAllergy, {
@@ -31,6 +38,22 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
         isError: isErrorDeleteAllergy,
         error: errorDeleteAllergy
     }] = useDeleteAllergyMutation();
+
+    const clickDeleteHandler = (e: MouseEvent<HTMLButtonElement>, thisAllergy: IAllergyGetDto) => {
+        e.stopPropagation();
+        setThisAllergy({...thisAllergy});
+        setShowModalDeleteAllergy(true);
+    };
+
+    const clearModalState = () => {
+        setThisAllergy(null);
+    };
+
+    const deleteThisAllergy = async () => {
+        thisAllergy && await deleteAllergy(thisAllergy.id);
+        setShowModalDeleteAllergy(false);
+        clearModalState();
+    };
 
     const errorHandler = (data: FetchBaseQueryError | SerializedError | undefined) => {
         const err = data as IErrorResponse<IMessage>;
@@ -42,16 +65,39 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
     }, [isErrorDeleteAllergy]);
 
     useEffect(() => {
-        isSuccessDeleteAllergy && toast.info("Аллергия удалена");
+        isSuccessDeleteAllergy && toast.info("Запись об аллергии удалена");
     }, [isSuccessDeleteAllergy]);
 
     return (
-        <div>
-            {user?.role === ERoles.DOCTOR ? <Modal show={showAddModal} close={addNewAllergyCloser}>
+        <div className={stylesTable.Table_box}>
+            {user?.role === ERoles.DOCTOR ? <Modal show={showAddModal} close={addModalCloser}>
                 <div>
-                    <CreateAllergy childId={props.childId} modalCloser={addNewAllergyCloser} />
+                    <CreateAllergy childId={props.childId} modalCloser={addModalCloser} />
                 </div>
             </Modal> : null}
+            <Modal show={showModalDeleteAllergy} close={deleteModalCloser}>
+                <div className={stylesTable.modal_flex_column}>
+                    <div className={stylesTable.title_box}>
+                        <p className={stylesTable.modal_title}>
+                            Вы уверены, что хотите удалить запись об аллергии?
+                        </p>
+                    </div>
+                    <div className={stylesTable.modal_btn_group}>
+                        <Btn
+                            size={EBtnSize.tiny}
+                            title={"Отмена"}
+                            btnClass={EBtnClass.white_active}
+                            onclick={deleteModalCloser}
+                        />
+                        <Btn
+                            size={EBtnSize.tiny}
+                            title={"Да"}
+                            btnClass={EBtnClass.dark_active}
+                            onclick={() => deleteThisAllergy()}
+                        />
+                    </div>
+                </div>
+            </Modal>
 
             <div className={styles.child_allergies}>
                 <table className={stylesTable.Table}>
@@ -69,7 +115,7 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
                             return <AllergyRow
                                 key={allergy.id}
                                 allergy={allergy}
-                                deleteAllergy={() => deleteAllergy(allergy.id)} />;
+                                showModalDeleteAllergy={(e) => clickDeleteHandler(e, allergy)} />;
                         })}
                     </tbody>
                 </table>
