@@ -69,7 +69,7 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
     }, [isSuccessDeleteAllergy]);
 
     return (
-        <div>
+        <div className={stylesTable.Table_box}>
             {user?.role === ERoles.DOCTOR ? <Modal show={showAddModal} close={addModalCloser}>
                 <div>
                     <CreateAllergy childId={props.childId} modalCloser={addModalCloser} />
