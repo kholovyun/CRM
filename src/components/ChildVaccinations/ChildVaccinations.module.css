@@ -3,7 +3,16 @@
     border-radius: 25px;
     padding: 20px 25px;
     width: 100%;
-    overflow: hidden;
+    overflow: auto;
+	position: relative;
+}
+
+.child_vaccinations table {
+    display: inline-block;
+	vertical-align: top;
+	max-width: 100%;
+	overflow-x: auto;
+	white-space: nowrap;
 }
 
 .vacAdd_btn {
