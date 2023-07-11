@@ -8,5 +8,6 @@ export default interface IUserGetDtoWithToken {
     name: string
     surname: string
     patronim: string
+    isBlocked: boolean
     token: string
 }
