@@ -1,6 +1,7 @@
 import IVaccinationGetDto from "../../../interfaces/IVaccination/IVaccinationGetDto";
+import { MouseEvent } from "react";
 
 export default interface IVaccinationRowProps {
     vaccination: IVaccinationGetDto
-    deleteVaccination: () => void
+    showModaldeleteVaccination: (e: MouseEvent<HTMLButtonElement>, thisVac: IVaccinationGetDto) => void
 }

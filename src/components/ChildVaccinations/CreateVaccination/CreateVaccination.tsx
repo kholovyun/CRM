@@ -8,11 +8,12 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { IErrorResponse } from "../../../interfaces/IUser/IErrorResponse";
 import { IMessage } from "../../../interfaces/IUser/IMessage";
 import { toast } from "react-toastify";
-import styles from "./CreateVaccination.module.css";
+import styles from "../../ChildAllergies/CreateAllergy/CreateAllergy.module.css";
 import { validationSchemaCreateVaccination } from "../../../schemas/validationSchemaCreateVaccination";
 import Btn from "../../UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
+import DatePickerField from "../../UI/DatePicker/DatePicker";
 
 
 const CreateVaccination: FunctionComponent<ICreateVaccinationProps> = (props): ReactElement => {
@@ -60,53 +61,75 @@ const CreateVaccination: FunctionComponent<ICreateVaccinationProps> = (props): R
             >
                 {({ isValid, errors, touched, handleSubmit }) => (
                     <Form>
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.infection && errors.infection ? <p>{errors.infection}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Вид инфекции</p>
-                                <Field className={styles.createAllergyInput} name="infection" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Вид инфекции</p>
+                                <Field className={styles.createEntityInput} name="infection" type="text" />
                             </div>
-                            <div className={styles.createAllergyField}>
+                            <div className={styles.createEntityField}>
                                 {touched.vaccine && errors.vaccine ? <p>{errors.vaccine}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Вид вакцины</p>
-                                <Field className={styles.createAllergyInput} name="vaccine" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Вид вакцины</p>
+                                <Field className={styles.createEntityInput} name="vaccine" type="text" />
                             </div>
                         </div>
 
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.age && errors.age ? <p>{errors.age}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Возраст ребенка</p>
-                                <Field className={styles.createAllergyInput} name="age" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Возраст ребенка</p>
+                                <Field className={styles.createEntityInput} name="age" type="text" />
                             </div>
-                            <div className={styles.createAllergyField}>
+                            <div className={styles.createEntityField}>
                                 {touched.date && errors.date ? <p>{}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Дата</p>
-                                <Field className={styles.createAllergyInput} name="date" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Дата</p>
+                                <DatePickerField name="date" />
                             </div>
                         </div>
 
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.manufacturer && errors.manufacturer ? <p>{errors.manufacturer}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Производитель</p>
-                                <Field className={styles.createAllergyInput} name="manufacturer" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Производитель</p>
+                                <Field className={styles.createEntityInput} name="manufacturer" type="text" />
                             </div>
                         </div>
 
-                        <div className={styles.createAllergyLine}>
-                            <div className={styles.createAllergyField}>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
                                 {touched.dose && errors.dose ? <p>{errors.dose}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Доза</p>
-                                <Field className={styles.createAllergyInput} name="dose" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Доза</p>
+                                <Field className={styles.createEntityInput} name="dose" type="text" />
                             </div>
-                            <div className={styles.createAllergyField}>
+                            <div className={styles.createEntityField}>
                                 {touched.serial && errors.serial ? <p>{errors.serial}</p> : <p></p>}
-                                <p className={styles.createAllergyFieldTitle}>Серия</p>
-                                <Field className={styles.createAllergyInput} name="serial" type="text" />
+                                <p className={styles.createEntityFieldTitle}>Серия</p>
+                                <Field className={styles.createEntityInput} name="serial" type="text" />
+                            </div>
+                        </div>
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
+                                {touched.reaction && errors.reaction ? <p>{errors.reaction}</p> : <p></p>}
+                                <p className={styles.createEntityFieldTitle}>Реакция</p>
+                                <Field as="textarea" className={styles.createEntityInput} name="reaction" type="text" />
                             </div>
                         </div>
 
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
+                                {touched.conterindication && errors.conterindication ? <p>{errors.conterindication}</p> : <p></p>}
+                                <p className={styles.createEntityFieldTitle}>Медотвод</p>
+                                <Field as="textarea" className={styles.createEntityInput} name="conterindication" type="text" />
+                            </div>
+                        </div>
+
+                        <div className={styles.createEntityLine}>
+                            <div className={styles.createEntityField}>
+                                {touched.notes && errors.notes ? <p>{errors.notes}</p> : <p></p>}
+                                <p className={styles.createEntityFieldTitle}>Примечание</p>
+                                <Field as="textarea" className={styles.createEntityInput} name="notes" type="text" />
+                            </div>
+                        </div>
                         
                         <div className={styles.btnBlock}>
                             <div className={styles.saveButton}>
