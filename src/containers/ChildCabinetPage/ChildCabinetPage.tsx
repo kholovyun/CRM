@@ -18,6 +18,7 @@ import ChildVaccinations from "../../components/ChildVaccinations/ChildVaccinati
 import { useLazyGetVaccinationsByChildIdQuery } from "../../app/services/vaccinations.ts";
 import { useLazyGetSpecExamsByChildIdQuery } from "../../app/services/specExams.ts";
 import ChildSpecExams from "../../components/ChildSpecExams/ChildSpecExams.tsx";
+import NewbornData from "./NewbornData/NewbornData.tsx";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
@@ -59,7 +60,9 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
                 <LinkWithChildren fn={() => getVisits(data.id)} text={"Приемы у врача"}>
                     {data && visitsData && <ChildVisits childId={data.id} visits={visitsData} />}
                 </LinkWithChildren>
-                <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"} />
+                <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"}>
+                    {data && <NewbornData childId={data.id} />}
+                </LinkWithChildren>
                 <LinkWithChildren fn={() => getVaccinations(data.id)} text={"Сведения о профилактических прививках"}>
                     {data && vaccinationsData &&
                         <ChildVaccinations
