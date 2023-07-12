@@ -9,18 +9,6 @@
     margin-bottom: 30px;
 }
 
-.doctorInformation {
-    min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding:  15px;
-    background: var(--light_blue);
-    border-radius: 25px;
-    flex-grow: 1;
-    gap: 5px;
-}
-
 .personalInformationLine {
     display: flex;
     gap: 10px;
