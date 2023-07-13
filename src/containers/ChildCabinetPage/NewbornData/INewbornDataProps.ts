@@ -1,3 +1,5 @@
+import IChildGetDto from "../../../interfaces/IChild/IChildGetDto";
+
 export default interface INewbornDataProps {
-    childId: string
+    child: IChildGetDto
 }

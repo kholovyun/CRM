@@ -61,7 +61,7 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
                     {data && visitsData && <ChildVisits childId={data.id} visits={visitsData} />}
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"}>
-                    {data && <NewbornData childId={data.id} />}
+                    {data && <NewbornData child={data} />}
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => getVaccinations(data.id)} text={"Сведения о профилактических прививках"}>
                     {data && vaccinationsData &&
