@@ -1,6 +1,5 @@
 import { FunctionComponent, ReactElement } from "react";
 import INewbornDataProps from "./INewbornDataProps";
-import { FormBox } from "../../UserForms/FormBox/FormBox";
 import { Field, Form, Formik } from "formik";
 import { useGetNewbornDatasByChildIdQuery, useUpdateNewbornDataMutation } from "../../../app/services/newbornDatas";
 import errorHandler from "../../../helpers/errorHandler";
@@ -31,9 +30,9 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
     errorHandler(isErrorUpdateNewbornData, errorUpdateNewbornData);
     const pregnancyNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     return (
-        <div>
+        <div className={styles.newbornData_block}>
             {newbornData &&
-                <FormBox>
+                <div>
                     <Formik
                         initialValues={{
                             childId: props.child.id,
@@ -81,7 +80,7 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         <p className={styles.createEntityFieldTitle}>Родился</p>
-                                        <span>{new Date(props.child.dateOfBirth).toLocaleDateString()}</span>
+                                        <p className={styles.dateOfBirth}>{new Date(props.child.dateOfBirth).toLocaleDateString()}</p>
                                     </div>
                                     <div className={styles.createEntityField}>
                                         {touched.dischargedDate && errors.dischargedDate ? <p>{ }</p> : <p></p>}
@@ -93,13 +92,13 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         {touched.pregnancyN && errors.pregnancyN ? <p>{errors.pregnancyN}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Ребенок от</span>
-                                        <Field id="pregnancyN" as="select" className={styles.createEntityInput} name="pregnancyN">
+                                        <p className={styles.createEntityFieldTitle}>Ребенок от</p>
+                                        <Field id="pregnancyN" as="select" className={styles.createEntitySelect} name="pregnancyN">
                                             {pregnancyNumber.map(num => {
-                                                return <option key={num} value={num}>{num}</option>;
+                                                return <option className={styles.createEntityOption} key={num} value={num}>{num}</option>;
                                             })}
                                         </Field>
-                                        <span>беременности</span>
+                                        <p className={styles.createEntityFieldTitleRight}>беременности</p>
                                     </div>
                                 </div>
 
@@ -114,21 +113,21 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         {touched.birthN && errors.birthN ? <p>{errors.birthN}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Роды</span>
-                                        <Field id="birthN" as="select" className={styles.createEntityInput} name="birthN">
+                                        <p className={styles.createEntityFieldTitle}>Роды</p>
+                                        <Field id="birthN" as="select" className={styles.createEntitySelect} name="birthN">
                                             {pregnancyNumber.map(num => {
                                                 return <option key={num} value={num}>{num}</option>;
                                             })}
                                         </Field>
                                     </div>
                                 </div>
-                                
+
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         {touched.gestAge && errors.gestAge ? <p>{errors.gestAge}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>в сроки</span>
-                                        <Field className={styles.createEntityInput} name="gestAge" type="number" />
-                                        <span className={styles.createEntityFieldTitle}>неделя</span>
+                                        <p className={styles.createEntityFieldTitle}>в сроки</p>
+                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="gestAge" type="number" />
+                                        <p className={styles.createEntityFieldTitleRight}>неделя</p>
                                     </div>
                                 </div>
 
@@ -136,12 +135,12 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                     <div className={styles.createEntityField}>
                                         {touched.period1 && errors.period1 ? <p>{errors.period1}</p> : <p></p>}
                                         <span className={styles.createEntityFieldTitle}>1 период</span>
-                                        <Field className={styles.createEntityInput} name="period1" type="number" />
+                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="period1" type="number" />
                                     </div>
                                     <div className={styles.createEntityField}>
                                         {touched.period2 && errors.period2 ? <p>{errors.period2}</p> : <p></p>}
                                         <span className={styles.createEntityFieldTitle}>2 период</span>
-                                        <Field className={styles.createEntityInput} name="period2" type="numbre" />
+                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="period2" type="numbre" />
                                     </div>
                                 </div>
 
@@ -149,7 +148,7 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                     <div className={styles.createEntityField}>
                                         {touched.amnAbsPeriod && errors.amnAbsPeriod ? <p>{errors.amnAbsPeriod}</p> : <p></p>}
                                         <span className={styles.createEntityFieldTitle}>Безводный период</span>
-                                        <Field className={styles.createEntityInput} name="amnAbsPeriod" type="number" />
+                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="amnAbsPeriod" type="number" />
                                     </div>
                                 </div>
 
@@ -187,12 +186,12 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
 
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
-                                        <span className={styles.createEntityFieldTitle}>Пол ребенка</span>
+                                        <p className={styles.createEntityFieldTitle}>Пол ребенка</p>
                                         <label>
-                                            <Field checked={props.child.sex === ESex.FEMALE} type="radio" name="sex" value={ESex.FEMALE} className={styles.createEntityInput} /> женский
+                                            <Field checked={props.child.sex === ESex.FEMALE} type="radio" name="sex" value={ESex.FEMALE} className={styles.radio_input} /> женский
                                         </label>
                                         <label>
-                                            <Field checked={props.child.sex === ESex.MALE} type="radio" name="sex" value={ESex.MALE} className={styles.createEntityInput} /> мужской
+                                            <Field checked={props.child.sex === ESex.MALE} type="radio" name="sex" value={ESex.MALE} className={styles.radio_input} /> мужской
                                         </label>
                                     </div>
                                 </div>
@@ -200,25 +199,25 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         {touched.birthWeight && errors.birthWeight ? <p>{errors.birthWeight}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Масса при рождении</span>
-                                        <Field className={styles.createEntityInput} name="birthWeight" type="number" />
-                                        <span className={styles.createEntityFieldTitle}>кг</span>
+                                        <p className={styles.createEntityFieldTitle}>Масса при рождении</p>
+                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="birthWeight" type="number" />
+                                        <p className={styles.createEntityFieldTitleRight}>кг</p>
                                     </div>
                                 </div>
 
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         {touched.birthHeight && errors.birthHeight ? <p>{errors.birthHeight}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Рост при рождении</span>
-                                        <Field className={styles.createEntityInput} name="birthHeight" type="number" />
-                                        <span className={styles.createEntityFieldTitle}>см</span>
+                                        <p className={styles.createEntityFieldTitle}>Рост при рождении</p>
+                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="birthHeight" type="number" />
+                                        <p className={styles.createEntityFieldTitleRight}>см</p>
                                     </div>
                                 </div>
 
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         {touched.newbornState && errors.newbornState ? <p>{errors.newbornState}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Состояние ребенка при рождении</span>
+                                        <p className={styles.createEntityFieldTitle}>Состояние ребенка при рождении</p>
                                         <Field className={styles.createEntityInput} name="newbornState" type="text" />
                                     </div>
                                 </div>
@@ -226,7 +225,7 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         {touched.apgarScore && errors.apgarScore ? <p>{errors.apgarScore}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Оценка по шкале Апгар</span>
+                                        <p className={styles.createEntityFieldTitle}>Оценка по шкале Апгар</p>
                                         <Field className={styles.createEntityInput} name="apgarScore" type="text" />
                                     </div>
                                 </div>
@@ -234,7 +233,7 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         {touched.reanimation && errors.reanimation ? <p>{errors.reanimation}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Проводились ли меры по оживлению</span>
+                                        <p className={styles.createEntityFieldTitle}>Проводились ли меры по оживлению</p>
                                         <Field className={styles.createEntityInput} name="reanimation" type="text" />
                                     </div>
                                 </div>
@@ -243,12 +242,12 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                     <div className={styles.createEntityField}>
                                         {touched.breastTry && errors.breastTry ? <p>{errors.breastTry}</p> : <p></p>}
                                         <label>К груди приложен
-                                            <Field type="checkbox" name="breastTry" className={styles.createEntityInput} />
+                                            <Field type="checkbox" checked={false} name="breastTry" className={styles.createEntityInput} />
                                         </label>
                                         <label> К груди не приложен
-                                            <Field type="checkbox" name="breastTry" className={styles.createEntityInput} />
+                                            <Field type="checkbox" checked={true} name="breastTry" className={styles.createEntityInput} />
                                         </label>
-                                        
+
                                     </div>
                                 </div>
 
@@ -256,16 +255,16 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                                     <div className={styles.createEntityField}>
                                         {touched.feeding && errors.feeding ? <p>{errors.feeding}</p> : <p></p>}
                                         {touched.feedingReason && errors.feedingReason ? <p>{errors.feedingReason}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Причина вскармиливания</span>
-                                        <Field className={styles.createEntityInput} name="feedingReason" type="text" />
+                                        <p className={styles.createEntityFieldTitle}>Причина вскармиливания</p>
+                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="feedingReason" type="text" />
                                         <label>
-                                            <Field type="radio" name="feeding" value={"исключительно грудное"} className={styles.createEntityInput} /> исключительно грудное
+                                            <Field type="radio" name="feeding" value={"исключительно грудное"} className={styles.radio_input} /> исключительно грудное
                                         </label>
                                         <label>
-                                            <Field type="radio" name="feeding" value={"смешанное"} className={styles.createEntityInput} /> смешанное
+                                            <Field type="radio" name="feeding" value={"смешанное"} className={styles.radio_input} /> смешанное
                                         </label>
                                         <label>
-                                            <Field type="radio" name="feeding" value={"искусственное"} className={styles.createEntityInput} /> искусственное
+                                            <Field type="radio" name="feeding" value={"искусственное"} className={styles.radio_input} /> искусственное
                                         </label>
                                     </div>
                                 </div>
@@ -296,43 +295,46 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
 
                                 <div>
                                     <p>При выписке состояние: </p>
-                                    <div className={styles.createEntityField}>
-                                        {touched.eyes && errors.eyes ? <p>{errors.eyes}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>глаза</span>
-                                        <Field className={styles.createEntityInput} name="eyes" type="text" />
+                                    <div className={styles.stateField}>
+                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
+                                            {touched.eyes && errors.eyes ? <p>{errors.eyes}</p> : <p></p>}
+                                            <p className={styles.createEntityFieldTitle}>глаза</p>
+                                            <Field className={`${styles.createEntityInput}`} name="eyes" type="text" />
+                                        </div>
+                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
+                                            {touched.reflexes && errors.reflexes ? <p>{errors.reflexes}</p> : <p></p>}
+                                            <p className={styles.createEntityFieldTitleRight}>физиологические рефлексы</p>
+                                            <Field className={`${styles.createEntityInput}`} name="reflexes" type="text" />
+                                        </div>
+                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
+                                            {touched.skin && errors.skin ? <p>{errors.skin}</p> : <p></p>}
+                                            <p className={styles.createEntityFieldTitleRight}>цвет кожи</p>
+                                            <Field className={`${styles.createEntityInput}`} name="skin" type="text" />
+                                        </div>
+                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
+                                            {touched.organs && errors.organs ? <p>{errors.organs}</p> : <p></p>}
+                                            <p className={styles.createEntityFieldTitle}>по органам</p>
+                                            <Field className={`${styles.createEntityInput}`} name="organs" type="text" />
+                                        </div>
+                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
+                                            {touched.stool && errors.stool ? <p>{errors.stool}</p> : <p></p>}
+                                            <p className={styles.createEntityFieldTitleRight}>стул</p>
+                                            <Field className={`${styles.createEntityInput}`} name="stool" type="text" />
+                                        </div>
+                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
+                                            {touched.diuresis && errors.diuresis ? <p>{errors.diuresis}</p> : <p></p>}
+                                            <p className={styles.createEntityFieldTitleRight}>диурез</p>
+                                            <Field className={`${styles.createEntityInput}`} name="diuresis" type="text" />
+                                        </div>
+                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
+                                            {touched.umbilicalCord && errors.umbilicalCord ? <p>{errors.umbilicalCord}</p> : <p></p>}
+                                            <p className={styles.createEntityFieldTitle}>пуповинный остаток</p>
+                                            <Field className={`${styles.createEntityInput}`} name="umbilicalCord" type="text" />
+                                        </div>
                                     </div>
-                                    <div className={styles.createEntityField}>
-                                        {touched.reflexes && errors.reflexes ? <p>{errors.reflexes}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>физиологические рефлексы</span>
-                                        <Field className={styles.createEntityInput} name="reflexes" type="text" />
-                                    </div>
-                                    <div className={styles.createEntityField}>
-                                        {touched.skin && errors.skin ? <p>{errors.skin}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>цвет кожи</span>
-                                        <Field className={styles.createEntityInput} name="skin" type="text" />
-                                    </div>
-                                    <div className={styles.createEntityField}>
-                                        {touched.organs && errors.organs ? <p>{errors.organs}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>по органам</span>
-                                        <Field className={styles.createEntityInput} name="organs" type="text" />
-                                    </div>
-                                    <div className={styles.createEntityField}>
-                                        {touched.stool && errors.stool ? <p>{errors.stool}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>стул</span>
-                                        <Field className={styles.createEntityInput} name="stool" type="text" />
-                                    </div>
-                                    <div className={styles.createEntityField}>
-                                        {touched.diuresis && errors.diuresis ? <p>{errors.diuresis}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>диурез</span>
-                                        <Field className={styles.createEntityInput} name="diuresis" type="text" />
-                                    </div>
-                                    <div className={styles.createEntityField}>
-                                        {touched.umbilicalCord && errors.umbilicalCord ? <p>{errors.umbilicalCord}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>пуповинный остаток</span>
-                                        <Field className={styles.createEntityInput} name="umbilicalCord" type="text" />
-                                    </div>
+                                    
                                 </div>
-                                
+
                                 <div className={styles.createEntityLine}>
                                     <div className={styles.createEntityField}>
                                         {touched.notes && errors.notes ? <p>{errors.notes}</p> : <p></p>}
@@ -356,7 +358,7 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                         )}
 
                     </Formik>
-                </FormBox>}
+                </div>}
 
         </div>
     );

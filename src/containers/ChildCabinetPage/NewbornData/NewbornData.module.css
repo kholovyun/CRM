@@ -1,0 +1,123 @@
+.newbornData_block {
+  width: 100%;
+}
+
+.createEntityLine {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.createEntityField {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.createEntityFieldSmall {
+  width: 33.3%;
+  margin-bottom: 0.5rem;
+}
+
+.createEntityFieldTitle {
+  font-size: 16px;
+  color: black;
+  margin-right: 10px;
+}
+
+.createEntityFieldTitleRight {
+  font-size: 16px;
+  color: black;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.dateOfBirth {
+  font-size: 16px;
+  padding: 8px 26px;
+  background-color: var(--bg_light_blue);
+  border-radius: 25px;
+  border: 2px solid var(--violet);
+}
+
+.createEntityInput {
+  width: 100%;
+  font-size: 16px;
+  padding: 8px 26px;
+  background-color: var(--bg_light_blue);
+  border-radius: 25px;
+  border: 2px solid var(--violet);
+}
+
+.createEntityInputSmall {
+  width: 20%;
+}
+
+.createEntitySelect {
+  font-size: 1rem;
+  color: var(--black_blue);
+  padding: 0.5rem 1rem;
+  background-color: var(--bg_light_blue);
+  cursor: pointer;
+  border-radius: 25px;
+  border: 2px solid var(--violet);
+}
+
+.createEntityOption {
+  color: var(--black_blue);
+  padding: 1rem 0.5rem;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.radio_input {
+  position: relative;
+  height: 22px;
+  width: 22px;
+  appearance: none;
+  outline: none;
+}
+
+.radio_input::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid rgba(135, 113, 167, 1);
+}
+
+.radio_input:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(135, 113, 167, 1);
+  transform: translate(-50%, -50%);
+  visibility: visible;
+}
+
+.stateField {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.saveButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
