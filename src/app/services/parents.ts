@@ -36,5 +36,3 @@ export const {
     useGetParentByUserIdQuery,
     useActivateParentMutation,
 } = parentsApi;
-
-export default parentsApi;

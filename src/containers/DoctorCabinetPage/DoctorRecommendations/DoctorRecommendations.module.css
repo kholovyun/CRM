@@ -2,7 +2,7 @@
     margin-top: 30px;
     background-color: var(--light_blue);
     padding: 20px 16px;
-    border-radius: 25px;
+    border-radius: 2rem;
     display: flex;
     flex-direction: column;
     margin-bottom: 30px;
@@ -71,7 +71,7 @@
     font-size: 12px;
 }
 
-.textarea:focus { 
+.textarea:focus {
     outline: none;
 }
 
@@ -132,16 +132,16 @@
 }
 
 .arrowDown {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 8px solid white;
 }
 
 .arrowUp {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-bottom: 8px solid white;
@@ -152,7 +152,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--violet);
-    padding: 0.5rem 0rem;
+    padding: 0.5rem 0;
 }
 
 .noRecommendations {
@@ -162,14 +162,13 @@
 
 @media screen and (min-width: 600px) {
     .recommendationBlock {
-        border-radius: 35px;
         padding: 20px 40px;
     }
 
     .rerecommendationFormTop {
         flex-direction: row;
         align-items: flex-start;
-        
+
     }
 
     .textarea {
@@ -177,7 +176,7 @@
     }
 
     .publicationBtn {
-        margin: 0;  
+        margin: 0;
     }
 
     .recommendationsList {
@@ -190,21 +189,19 @@
 }
 
 @media screen and (min-width: 1052px) {
-	.recommendationBlock {
-        border-radius: 50px;
+    .recommendationBlock {
         padding: 36px 60px;
     }
 
     .textarea {
         font-size: 16px;
     }
-    
+
     .fileIcon {
         scale: 1;
     }
+
     .inputFileLabel p {
         font-size: 16px;
     }
 }
-
-

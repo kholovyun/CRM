@@ -6,7 +6,6 @@
     color: var(--black_blue);
     line-height: 100%;
     text-decoration: none;
-    line-height: 100%;
     font-weight: 500;
     cursor: pointer;
     border-radius: 1.25rem;
@@ -37,7 +36,7 @@
 .tiny:hover,
 .tiny:active {
     font-weight: 500;
-    color: var(--dark_blue);
+    color: var(--black_blue);
     background-color: var(--light_blue);
 }
 

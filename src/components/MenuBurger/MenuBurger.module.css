@@ -39,10 +39,10 @@
 
 .burgerLink {
     max-width: 120px;
-    overflow: "hidden";
-    text-overflow: "ellipsis";
-    white-space: "nowrap";
-    text-align: "center";
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
     font-size: 1rem;
     line-height: 100%;
     text-decoration: none;
@@ -51,15 +51,15 @@
 
 .burgerLinkRight {
     max-width: 120px;
-    overflow: "hidden";
-    text-overflow: "ellipsis";
-    white-space: "nowrap";
-    text-align: "center";
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
     line-height: 100%;
     text-decoration: none;
     color: var(--gray_blue);
-    margin-right: "5px";
-    margin-bottom: "40px";
+    margin-right: 5px;
+    margin-bottom: 40px;
     font-size: 1rem;
 }
 

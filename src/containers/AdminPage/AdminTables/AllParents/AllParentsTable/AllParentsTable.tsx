@@ -13,37 +13,37 @@ const AllParentsTable: FunctionComponent<IAllParentsTableProps> = (props: IAllPa
     };
 
     return (
-        <div className={styles.Table_box}>
-            <table className={styles.Table}>
+        <div className={styles.table_box}>
+            <table className={styles.table}>
                 <thead>
-                    <tr className={styles.Table_tr}>
-                        <th className={styles.Table_td_right}>ФИО</th>
-                        <th className={styles.Table_td_right}>Email</th>
-                        <th className={styles.Table_td_right}>Tел.</th>
-                        <th className={styles.Table_td_right}>Дата окон. подписки</th>
-                        <th className={styles.Table_td}>Активация</th>
+                    <tr className={styles.table_tr}>
+                        <th className={styles.table_td_right}>ФИО</th>
+                        <th className={styles.table_td_right}>Email</th>
+                        <th className={styles.table_td_right}>Tел.</th>
+                        <th className={styles.table_td_right}>Дата окон. подписки</th>
+                        <th className={styles.table_td}>Активация</th>
                     </tr>
                 </thead>
                 <tbody>
                     {props.parents.map(({ ...parent }) => {
                         return (
-                            <tr className={styles.Table_tr}
+                            <tr className={styles.table_tr}
                                 key={parent.id}
                                 onClick={(e) => navigateCabinetHandler(e, parent.userId)}>
-                                <td className={styles.Table_td_right}>
+                                <td className={styles.table_td_right}>
                                     {parent.users.surname} {parent.users.name}{" "}
                                     {parent.users.patronim ? parent.users.patronim : ""}
                                 </td>
-                                <td className={styles.Table_td_right}>
+                                <td className={styles.table_td_right}>
                                     {parent.users.email}
                                 </td>
-                                <td className={styles.Table_td_right}>
+                                <td className={styles.table_td_right}>
                                     {parent.users.phone}
                                 </td>
-                                <td className={styles.Table_td_right}>
+                                <td className={styles.table_td_right}>
                                     {new Date(parent.subscriptionEndDate).toLocaleDateString()}
                                 </td>
-                                <td className={styles.Table_td}>
+                                <td className={styles.table_td}>
                                     <div className={styles.switch_td}>
                                         <SwitchDiv isOn={parent.isActive} disabled={true} />
                                     </div>

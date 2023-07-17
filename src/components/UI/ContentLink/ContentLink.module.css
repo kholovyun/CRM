@@ -2,7 +2,7 @@
     flex-basis: 48%;
     padding: 30px 40px;
     background-color: var(--light_blue);
-    border-radius: 50px;
+    border-radius: 2rem;
     cursor: pointer;
     display: flex;
     justify-content: space-between;

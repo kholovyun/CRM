@@ -6,11 +6,11 @@ import SwitchDiv from "../../../../../../components/UI/SwitchDiv/SwitchDiv";
 
 const AdminRow: FunctionComponent<IAdminRowProps> = (props: IAdminRowProps): ReactElement => {
     return (  
-        <tr className={styles.Table_tr}>
-            <td className={styles.Table_td_right}>{props.admin.surname} {props.admin.name} {props.admin.patronim ? props.admin.patronim : ""}</td>
-            <td className={styles.Table_td_right}>{props.admin.email}</td>
-            <td className={styles.Table_td_right}>{props.admin.phone}</td>
-            <td className={styles.Table_td_right}>
+        <tr className={styles.table_tr}>
+            <td className={styles.table_td_right}>{props.admin.surname} {props.admin.name} {props.admin.patronim ? props.admin.patronim : ""}</td>
+            <td className={styles.table_td_right}>{props.admin.email}</td>
+            <td className={styles.table_td_right}>{props.admin.phone}</td>
+            <td className={styles.table_td_right}>
                 {props.admin.role === ERoles.SUPERADMIN ? 
                     <p></p>
                     :
@@ -24,7 +24,7 @@ const AdminRow: FunctionComponent<IAdminRowProps> = (props: IAdminRowProps): Rea
                         </div>
                 }                                                
             </td>
-            <td className={styles.Table_td}>{props.admin.role}</td>
+            <td className={styles.table_td}>{props.admin.role}</td>
         </tr>           
     );
 };

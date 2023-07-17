@@ -46,15 +46,15 @@ const AllAdminsTable: FunctionComponent<IAllAdminsTableProps> = (props: IAllAdmi
     };
 
     return (
-        <div className={styles.Table_box}>
+        <div className={styles.table_box}>
             <Modal
                 show={showModal}
                 close={modalCancelHandler}>
                 <div className={styles.modal_flex_column}>
                     <div className={styles.title_box}>
                         <p className={styles.modal_title}>
-                            Вы уверены, что хотите <span className={styles.violet}>{modalTitle}</span> пользователя по имени 
-                            <span className={styles.violet}>{stateUser && ` ${stateUser.surname} ${stateUser.name}`}</span>?
+                            Вы уверены, что хотите <span className={styles.violet}>{modalTitle}</span></p>
+                        <p className={styles.modal_title}>пользователя по имени<span className={styles.violet}>{stateUser && ` ${stateUser.surname} ${stateUser.name}`}</span>?
                         </p>
                     </div>                    
                     <div className={styles.modal_btn_group}>
@@ -73,14 +73,14 @@ const AllAdminsTable: FunctionComponent<IAllAdminsTableProps> = (props: IAllAdmi
                     </div>
                 </div>
             </Modal>            
-            <table className={styles.Table}>
+            <table className={styles.table}>
                 <thead>
-                    <tr className={styles.Table_tr}>
-                        <th className={styles.Table_td_right}>ФИО</th>
-                        <th className={styles.Table_td_right}>Email</th>
-                        <th className={styles.Table_td_right}>Tел.</th>                                        
-                        <th className={styles.Table_td_right}>Блок</th>
-                        <th className={styles.Table_td}>Роль</th>
+                    <tr className={styles.table_tr}>
+                        <th className={styles.table_td_right}>ФИО</th>
+                        <th className={styles.table_td_right}>Email</th>
+                        <th className={styles.table_td_right}>Tел.</th>                                        
+                        <th className={styles.table_td_right}>Блок</th>
+                        <th className={styles.table_td}>Роль</th>
                     </tr>
                 </thead>
                 <tbody>
