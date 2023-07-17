@@ -31,7 +31,6 @@ const spexExamsApi = api.injectEndpoints({
 });
 
 export const {
-    useGetSpecExamsByChildIdQuery,
     useLazyGetSpecExamsByChildIdQuery,
     useCreateExamMutation,
     useDeleteExamMutation

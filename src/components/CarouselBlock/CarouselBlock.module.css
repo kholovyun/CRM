@@ -1,7 +1,7 @@
 .carouselBlock {
     background-color: var(--light_blue);
     padding: 20px 40px;
-    border-radius: 50px;
+    border-radius: 2rem;
     margin-bottom: 30px;
     margin-top: 30px;
     position: relative;
@@ -28,7 +28,7 @@
 
 .carouselItem:hover {
     scale: 1.05;
-    transition: 0.2s
+    transition: 0.2s;
 }
 
 .diplomaImg {
@@ -106,7 +106,7 @@
     width: 100%;
 }
 
-.inputLabel p{
+.inputLabel p {
     width: 100%;
     text-align: center;
 }
@@ -142,7 +142,7 @@
     cursor: pointer;
 }
 
-.diplomaBtn:disabled  {
+.diplomaBtn:disabled {
     background-color: var(--bg_light_blue);
     color: var(--gray_blue);
     cursor: default;
@@ -160,7 +160,7 @@
     align-items: center;
 }
 
-.fullImage img{
+.fullImage img {
     width: 100%;
     max-height: 400px;
 }
@@ -182,12 +182,15 @@
     .carouselBlock {
         padding: 20px 40px;
     }
+
     .carouselTitle {
         font-size: 30px;
     }
+
     .addTitle {
         display: block;
     }
+
     .plus {
         margin-left: 10px;
         margin-right: auto;
@@ -195,9 +198,10 @@
 }
 
 @media screen and (min-width: 1052px) {
-	.carouselBlock { 
+    .carouselBlock {
         padding: 36px 60px;
     }
+
     .carouselTitle {
         font-size: 38px;
     }

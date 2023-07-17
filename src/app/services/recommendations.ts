@@ -42,6 +42,5 @@ export const {
     useCreateRecommendationMutation,
     useGetRecommendationsByDoctorQuery,
     useDeleteRecommendationMutation,
-    useLazyGetRecommendationsByDoctorQuery,
     useEditRecommendationMutation
 } = recommendationsApi;

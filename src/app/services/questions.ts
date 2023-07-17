@@ -30,9 +30,7 @@ const questionsApi = api.injectEndpoints({
 });
 
 export const {
-    useGetQuestionsByChildIdQuery,
     useLazyGetQuestionsByChildIdQuery,
     useCreateQuestionMutation,
-    useLazyGetQuestionsByDoctorIdQuery,
-    useGetQuestionsByDoctorIdQuery
+    useLazyGetQuestionsByDoctorIdQuery
 } = questionsApi;

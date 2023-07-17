@@ -5,12 +5,25 @@ import { useAppSelector } from "../../../app/hooks";
 import { ERoles } from "../../../enums/ERoles";
 import ChatMessageImage from "../ChatMessageImage/ChatMessageImage";
 import { useCreateMessageStatusMutation, useGetMessagesStatusByMessageQuery } from "../../../app/services/messagesStatus";
+import { useNavigate } from "react-router-dom";
 
 const ChatMessage: FunctionComponent<IChatMessageProps> = (props: IChatMessageProps): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     const { data: statusArray } = useGetMessagesStatusByMessageQuery({ id: props.message.id }, { pollingInterval: 30000 });
     const [createStatus, { reset }] = useCreateMessageStatusMutation();
     const [isMessageRead, setIsMessageRead] = useState<boolean | null>(null);
+
+    const navigate = useNavigate();
+
+    const navigateCabinetHandler = (e: MouseEvent<HTMLSpanElement>, id: string, role: ERoles) => {
+        e.stopPropagation();
+        if (role === ERoles.PARENT) {
+            navigate(`/parent-cabinet/${id}`);
+        }
+        if (role === ERoles.DOCTOR) {
+            navigate(`/doctor-cabinet/${id}`);
+        }
+    };
 
     const addStatus = async () => {
         if (user && [ERoles.DOCTOR, ERoles.PARENT].includes(user.role)) {
@@ -48,7 +61,9 @@ const ChatMessage: FunctionComponent<IChatMessageProps> = (props: IChatMessagePr
                 <div className={styles.message_top}>
                     <p className={styles.author_row}>
                         {user && user.id !== props.message.authorId || user && [ERoles.SUPERADMIN, ERoles.ADMIN].includes(user.role) ?
-                            <span className={styles.author}>{props.message.users.surname} {props.message.users.name}{" "}
+                            <span className={styles.author} 
+                                onClick={(e: MouseEvent<HTMLSpanElement>) => navigateCabinetHandler(e, props.message.authorId, props.message.users.role)}>
+                                {props.message.users.surname} {props.message.users.name}{" "}
                                 {props.message.users.patronim ? props.message.users.patronim : ""}
                             </span>
                             :

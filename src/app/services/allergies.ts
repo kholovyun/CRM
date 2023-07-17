@@ -31,7 +31,6 @@ const allergiesApi = api.injectEndpoints({
 });
 
 export const {
-    useGetAllergiesByChildIdQuery,
     useLazyGetAllergiesByChildIdQuery,
     useCreateAllergyMutation,
     useDeleteAllergyMutation

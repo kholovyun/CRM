@@ -29,38 +29,37 @@
     justify-content: space-between;
 }
 
-.Table_box {
+.table_box {
     overflow-x: auto;
     padding: 20px 0;
 }
 
-.Table_box::-webkit-scrollbar {
+.table_box::-webkit-scrollbar {
     height: 5px;
 }
 
-.Table_box::-webkit-scrollbar-track {
+.table_box::-webkit-scrollbar-track {
     border-radius: 3px;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
-.Table_box::-webkit-scrollbar-thumb {
+.table_box::-webkit-scrollbar-thumb {
     background: var(--gray_blue_half_opacity);
     border-radius: 3px;
 }
 
-.Table_box::-webkit-scrollbar-thumb:hover {
+.table_box::-webkit-scrollbar-thumb:hover {
     background: var(--violet);
 }
 
-.Table {
+.table {
     border-collapse: collapse;
     width: 100%;
     border-spacing: 0;
     border: none;
+    min-width: 100%;
 }
 
-.Table_tr {
+.table_tr {
     padding: 8px;
     border: none;
     border-bottom: 1px solid var(--gray_blue);
@@ -72,23 +71,23 @@
     align-items: center;
 }
 
-tbody .Table_tr:hover {
+tbody .table_tr:hover {
     background-color: var(--light_blue);
     cursor: pointer;
 }
 
-.Table_td_right {
+.table_td_right {
     border-right: 1px solid var(--gray_blue);
     text-align: center;
     padding: 15px 5px;
 }
 
-.Table_td {
+.table_td {
     text-align: center;
     padding: 15px 5px;
 }
 
-.Error_message {
+.error_message {
     font-size: 20px;
     font-weight: 500;
     line-height: 100%;
@@ -126,7 +125,6 @@ tbody .Table_tr:hover {
 .title_box {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     padding-bottom: 1rem;
     align-items: center;
 }
@@ -211,8 +209,8 @@ tbody .Table_tr:hover {
         font-size: 1.1rem;
     }
 
-    .Table_tr {
-        font-size: 0.8rem;
+    .table_tr {
+        font-size: 0.7rem;
     }
 
     .collapsing_link {
@@ -253,7 +251,7 @@ tbody .Table_tr:hover {
         font-size: 2rem;
     }
 
-    .Table_tr {
-        font-size: 1rem;
+    .table_tr {
+        font-size: 0.9rem;
     }
 }

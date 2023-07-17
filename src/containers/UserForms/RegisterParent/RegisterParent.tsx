@@ -7,7 +7,7 @@ import { ERoles } from "../../../enums/ERoles";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import {useEffect, Children, FunctionComponent, ReactElement, ReactNode, useState, ChangeEvent} from "react";
+import { useEffect, Children, FunctionComponent, ReactElement, ReactNode, useState, ChangeEvent } from "react";
 import { ESex } from "../../../enums/ESex";
 import { ESubscriptionType } from "../../../enums/ESubscriptionType";
 import { EPaymentType } from "../../../enums/EPaymentType";
@@ -24,6 +24,7 @@ import RUFlag from "../../../assets/img/ru.png";
 import KGFlag from "../../../assets/img/kg.png";
 import errorHandler from "../../../helpers/errorHandler";
 import successHandler from "../../../helpers/successHandler";
+import { useGetDoctorByDoctorIdQuery } from "../../../app/services/doctors";
 
 const RegisterParent: FunctionComponent = (): ReactElement => {
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
     const [placeholder, setPlaceholder] = useState("+7(___)___-__-__");
     const [flag, setFlag] = useState(KZFlag);
     const params = useParams();
+    const {data: doctor} = useGetDoctorByDoctorIdQuery({ id: String(params.id) });
     const [doctorId, setDoctorId] = useState<{ doctorId: string }>({ doctorId: String(params.id) });
     const [createUserParent, { isError, isSuccess, error: createUserParentError }] = useCreateUserParentMutation();
 
@@ -98,6 +100,8 @@ const RegisterParent: FunctionComponent = (): ReactElement => {
                     }}
                 >
                     <FormikStep label="1" validationSchema={validationFirst}>
+                        <p className={styles.subtitle}>Лечащий врач: <span className={styles.bold}>{doctor?.users.surname} {doctor?.users.name.charAt(0)}.
+                            {doctor?.users.patronim ? `${doctor.users.patronim.charAt(0)}.` : null}</span></p>
                         <div className={styles.two_inputs_row}>
                             <div className={styles.input_flex_column}>
                                 <ErrorMessage className={styles.error_text} name="name" component="div" />
@@ -301,11 +305,9 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
     const currentChild = childrenArray[step];
     const frorward = () => {
         setStep((s) => s +1);
-        console.log(step);
     };
     const back = () => {
         setStep((s) => s -1);
-        console.log(step);
     };
 
     function isLastStep() {

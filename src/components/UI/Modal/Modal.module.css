@@ -27,16 +27,6 @@
     background-color: var(--light_blue);
     padding: 1.56rem;
     border-radius: 25px;
-}
-
-@media (min-width: 320px) {
-    .modal_content {
-        max-width: 320px;
-    }
-}
-
-@media (min-width: 600px) {
-    .modal_content {
-        max-width: fit-content;
-    }
+    max-height: 90vh;
+    overflow-y: auto;
 }

@@ -48,8 +48,7 @@ const childrenApi = api.injectEndpoints({
 
 export const {
     useLazyGetChildrenByDoctorQuery,
-    useGetChildrenByDoctorQuery,
-    useLazyGetChildrenByParentQuery, 
+    useLazyGetChildrenByParentQuery,
     useGetChildrenByIdQuery, 
     useEditChildMutation,
     useCreateChildMutation

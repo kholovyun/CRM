@@ -5,7 +5,7 @@ import ru from "date-fns/locale/ru";
 registerLocale("ru", ru);
 import IDatePickerProps from "./IDatePickerProps";
 import "react-datepicker/dist/react-datepicker.css";
-import styles from "../../ChildAllergies/CreateAllergy/CreateAllergy.module.css";
+import styles from "../../../components/ChildTables/ChildAllergies/CreateAllergy/CreateAllergy.module.css";
 
 export const DatePickerField: FunctionComponent<IDatePickerProps> = (props): ReactElement => {
     const { setFieldValue } = useFormikContext();

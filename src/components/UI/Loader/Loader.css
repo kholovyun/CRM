@@ -13,7 +13,7 @@
 .loader {
     color: var(--gray_blue);
     font-size: 8px;
-    margin: 0px auto 30px;
+    margin: 0 auto 30px;
     position: relative;
     text-indent: -9999em;
     -webkit-transform: translateZ(0);

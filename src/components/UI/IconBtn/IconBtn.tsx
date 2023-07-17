@@ -2,7 +2,6 @@ import { FunctionComponent, ReactElement } from "react";
 import styles from "./IconBtn.module.css";
 import IIconBtnProps from "./IIconBtnProps";
 
-
 const IconBtn: FunctionComponent<IIconBtnProps> = (props: IIconBtnProps): ReactElement => {
     return (
         <button

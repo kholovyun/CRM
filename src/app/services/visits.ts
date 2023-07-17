@@ -31,7 +31,6 @@ const visitsApi = api.injectEndpoints({
 });
 
 export const {
-    useGetVisitsByChildIdQuery,
     useLazyGetVisitsByChildIdQuery,
     useCreateVisitMutation,
     useDeleteVisitMutation

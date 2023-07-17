@@ -13,23 +13,23 @@ const AllChildrenTable: FunctionComponent<IAllChildrenTableProps> = (props: IAll
     };
 
     return (
-        <div className={styles.Table_box}>
-            <table className={styles.Table}>
+        <div className={styles.table_box}>
+            <table className={styles.table}>
                 <thead>
-                    <tr className={styles.Table_tr}>
-                        <th className={styles.Table_td_right}>Фото</th>
-                        <th className={styles.Table_td_right}>ФИО</th>
-                        <th className={styles.Table_td_right}>Дата рождения</th>
-                        <th className={styles.Table_td_right}>Пол</th>
-                        <th className={styles.Table_td}>Вес/Рост</th>
+                    <tr className={styles.table_tr}>
+                        <th className={styles.table_td_right}>Фото</th>
+                        <th className={styles.table_td_right}>ФИО</th>
+                        <th className={styles.table_td_right}>Дата рождения</th>
+                        <th className={styles.table_td_right}>Пол</th>
+                        <th className={styles.table_td}>Вес/Рост</th>
                     </tr>
                 </thead>
                 <tbody>
                     {props.allChildren.map(({ ...child }) => {
                         return (
-                            <tr className={styles.Table_tr} key={child.id}
+                            <tr className={styles.table_tr} key={child.id}
                                 onClick={(e) => navigateCabinetHandler(e, child.id)}>
-                                <td className={`${styles.Table_td_right} ${styles.td_for_image}`}>
+                                <td className={`${styles.table_td_right} ${styles.td_for_image}`}>
                                     {child.photo !== "" ? (
                                         <img
                                             className={styles.childPhoto}
@@ -47,15 +47,15 @@ const AllChildrenTable: FunctionComponent<IAllChildrenTableProps> = (props: IAll
                                         />
                                     )}
                                 </td>
-                                <td className={styles.Table_td_right}>
+                                <td className={styles.table_td_right}>
                                     {child.surname} {child.name}{" "}
                                     {child.patronim ? child.patronim : ""}
                                 </td>
-                                <td className={styles.Table_td_right}>
+                                <td className={styles.table_td_right}>
                                     {new Date(child.dateOfBirth).toLocaleDateString()}
                                 </td>
-                                <td className={styles.Table_td_right}>{child.sex}</td>
-                                <td className={styles.Table_td}>
+                                <td className={styles.table_td_right}>{child.sex}</td>
+                                <td className={styles.table_td}>
                                     {child.weight}кг/{child.height}см
                                 </td>
                             </tr>
