@@ -19,7 +19,7 @@ import { EBtnClass } from "../../../../enums/EBtnClass";
 import errorHandler from "../../../../helpers/errorHandler";
 import successHandler from "../../../../helpers/successHandler";
 
-const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, doctorData}): ReactElement => {
+const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({ modalCloser, doctorData }): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
     const [phoneMask, setPhoneMask] = useState(user && user.phone.startsWith("+996(") ? KGMask : KZMask);
     const [flag, setFlag] = useState(user && user.phone.startsWith("+996(") ? KGFlag : INTFlag);
@@ -41,15 +41,15 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
         }
     };
 
-    const [editUser, { 
-        isError: isErrorEditUser, 
-        isSuccess: isSuccesEditUser, 
+    const [editUser, {
+        isError: isErrorEditUser,
+        isSuccess: isSuccesEditUser,
         error: errorEditUser
     }] = useEditUserMutation();
 
-    const [editDoctor, { 
-        isError: isErrorEditDoctor, 
-        isSuccess: isSuccesEditDoctor, 
+    const [editDoctor, {
+        isError: isErrorEditDoctor,
+        isSuccess: isSuccesEditDoctor,
         error: errorEditDoctor
     }] = useEditDoctorMutation();
 
@@ -65,7 +65,7 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
             const [key, value] = entry;
             formData.append(key, value);
         });
-        editDoctor({id: doctorData.id, doctor: formData}); 
+        editDoctor({id: doctorData.id, doctor: formData});
     };
 
     const focusRef = useRef<HTMLInputElement>(null);
@@ -80,11 +80,11 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
     return (
         <div className={styles.editFormBox}>
             <div className={styles.editFormBoxTabs}>
-                <div 
+                <div
                     className={toggleState === 1 ? `${styles.tab} ${styles.leftTab} ${styles.activeTab}` : `${styles.tab} ${styles.leftTab}`}
                     onClick={() => toggleTab(1)}
                 >Специальная информация</div>
-                <div 
+                <div
                     className={toggleState === 2 ? `${styles.tab} ${styles.rightTab} ${styles.activeTab}` : `${styles.tab} ${styles.rightTab}`}
                     onClick={() => toggleTab(2)}
                 >Личные данные</div>
@@ -104,28 +104,28 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                         }}
                         validationSchema={validationSchemaEditUser}
                     >
-                        {({isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
+                        {({ isValid, errors, touched, handleSubmit, handleChange, handleBlur }) => (
                             <Form className={styles.editUserForm}>
                                 <div className={styles.editUserLine}>
                                     <div className={styles.editUserField}>
                                         {touched.surname && errors.surname ? <p>{errors.surname}</p> : <p></p>}
                                         <p className={styles.editUserFieldTitle}>Фамилия</p>
-                                        <Field className={styles.editUserInput} name="surname" type="text" /> 
+                                        <Field className={styles.editUserInput} name="surname" type="text" />
                                     </div>
                                 </div>
                                 <div className={styles.editUserLine}>
                                     <div className={styles.editUserField}>
                                         {touched.name && errors.name ? <p>{errors.name}</p> : <p></p>}
                                         <p className={styles.editUserFieldTitle}>Имя</p>
-                                        <Field className={styles.editUserInput} name="name" type="text" /> 
+                                        <Field className={styles.editUserInput} name="name" type="text" />
                                     </div>
                                     <div className={styles.editUserField}>
                                         {touched.patronim && errors.patronim ? <p>{errors.patronim}</p> : <p></p>}
                                         <p className={styles.editUserFieldTitle}>Отчество</p>
-                                        <Field className={styles.editUserInput} name="patronim" type="text" /> 
-                                    </div>   
+                                        <Field className={styles.editUserInput} name="patronim" type="text" />
+                                    </div>
                                 </div>
-                            
+
                                 <div className={styles.editUserLine}>
                                     <div className={styles.editUserField}>
                                         {touched.phone && errors.phone ? <p>{errors.phone}</p> : <p></p>}
@@ -158,16 +158,16 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                                                 )}
                                             </Field>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div className={styles.saveButton}>
                                         <Btn disabled={!isValid} title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
                                     </div>
-                                </div>      
+                                </div>
                             </Form>
                         )}
                     </Formik>
                 </div>
-                
+
                 <div className={toggleState === 1 ? `${styles.content} ${styles.activeContent}` : styles.content}>
                     <Formik
                         initialValues={{
@@ -183,48 +183,48 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({modalCloser, d
                         }}
                         validationSchema={validationSchemaEditDoctor}
                     >
-                        {({isValid, errors, touched, handleSubmit}) => (
+                        {({ isValid, errors, touched, handleSubmit }) => (
                             <Form className={styles.editDoctorForm}>
                                 <div className={styles.editDoctorLine}>
                                     <div className={styles.editDoctorField}>
                                         {touched.speciality && errors.speciality ? <p>{errors.speciality}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Специальность</p>
-                                        <Field innerRef={focusRef} className={styles.editDoctorInput} name="speciality" type="text"/>
+                                        <Field innerRef={focusRef} className={styles.editDoctorInput} name="speciality" type="text" />
                                     </div>
                                     <div className={styles.editDoctorField}>
                                         {touched.degree && errors.degree ? <p>{errors.degree}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Степень</p>
-                                        <Field className={styles.editDoctorInput} name="degree" type="text"/>
-                                    </div>   
+                                        <Field className={styles.editDoctorInput} name="degree" type="text" />
+                                    </div>
                                 </div>
                                 <div className={styles.editDoctorLine}>
                                     <div className={styles.editDoctorFieldExpreience}>
                                         {touched.experience && errors.experience ? <p>{errors.experience}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Стаж</p>
-                                        <Field className={styles.editDoctorInput} name="experience" min="1" max="100" type="number"/>
-                                    </div> 
+                                        <Field className={styles.editDoctorInput} name="experience" min="1" max="100" type="number" />
+                                    </div>
                                     <div className={styles.editDoctorField}>
                                         {touched.placeOfWork && errors.placeOfWork ? <p>{errors.placeOfWork}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Место работы</p>
-                                        <Field as={"textarea"} className={`${styles.editDoctorInput} ${styles.textarea}`} name="placeOfWork" type="text"/>
-                                    </div>       
+                                        <Field as={"textarea"} className={`${styles.editDoctorInput} ${styles.textarea}`} name="placeOfWork" type="text" />
+                                    </div>
                                 </div>
                                 <div className={styles.editDoctorLine}>
                                     <div className={styles.editDoctorField}>
                                         {touched.achievements && errors.achievements ? <p>{errors.achievements}</p> : <p></p>}
                                         <p className={styles.editDoctorFieldTitle}>Достижения</p>
-                                        <Field as={"textarea"} className={`${styles.editDoctorInput} ${styles.textarea}`} name="achievements" type="text"/>
+                                        <Field as={"textarea"} className={`${styles.editDoctorInput} ${styles.textarea}`} name="achievements" type="text" />
                                     </div>
                                     <div className={styles.saveButton}>
                                         <Btn disabled={!isValid} title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
-                                    </div>    
+                                    </div>
                                 </div>
-                            </Form>                           
-                        )}     
+                            </Form>
+                        )}
                     </Formik>
                 </div>
                 <Btn title="Закрыть" onclick={modalCloser} size={EBtnSize.tiny} btnClass={EBtnClass.white_active} />
-            </div>            
+            </div>
         </div>
     );
 };

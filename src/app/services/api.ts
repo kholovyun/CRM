@@ -28,6 +28,7 @@ export const api = createApi({
         "Visit",
         "Allergy",
         "Vaccination",
-        "Examination"
+        "Examination",
+        "NewbornData"
     ],
 });

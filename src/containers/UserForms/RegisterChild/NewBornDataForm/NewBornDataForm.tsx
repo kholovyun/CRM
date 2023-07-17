@@ -164,11 +164,11 @@ export const NewBornDataForm: FunctionComponent = (): ReactElement => {
                             <div className={styles.radio_btns_feed}>
                                 <p className={styles.near_input_text}>Пол ребенка</p>
                                 <label className={styles.radio_label_flex}>
-                                    <Field type="radio" className={styles.black_radio} name="picked" value={ESex.MALE} />
+                                    <Field type="radio" className={styles.radio_input} name="picked" value={ESex.MALE} />
                                     Мужской
                                 </label>
                                 <label className={styles.radio_label_flex}>
-                                    <Field type="radio" className={styles.black_radio} name="picked" value={ESex.FEMALE} />
+                                    <Field type="radio" className={styles.radio_input} name="picked" value={ESex.FEMALE} />
                                     Женский
                                 </label>
                             </div>
@@ -206,11 +206,11 @@ export const NewBornDataForm: FunctionComponent = (): ReactElement => {
                         <div className={styles.date_block_short}>
                             <div className={styles.radio_btns_feed}>
                                 <label className={styles.radio_label_flex} id="yes">
-                                    <Field className={styles.black_radio} type="radio" name="breastTry" value="true" />
+                                    <Field className={styles.radio_input} type="radio" name="breastTry" value="true" />
                                     К груди приложен
                                 </label>
                                 <label className={styles.radio_label_flex} id="no">
-                                    <Field className={styles.black_radio} type="radio" name="breastTry" value="false" />
+                                    <Field className={styles.radio_input} type="radio" name="breastTry" value="false" />
                                     К груди не приложен
                                 </label>
                             </div>
@@ -219,15 +219,15 @@ export const NewBornDataForm: FunctionComponent = (): ReactElement => {
                             <div className={styles.radio_btns_feed}>
                                 <p className={styles.near_input_text}>Вскармливание</p>
                                 <label className={styles.radio_label_flex}>
-                                    <Field className={styles.black_radio} type="radio" name="feeding" value="грудное" />
+                                    <Field className={styles.radio_input} type="radio" name="feeding" value="грудное" />
                                     исключительно грудное
                                 </label>
                                 <label className={styles.radio_label_flex}>
-                                    <Field className={styles.black_radio} type="radio" name="feeding" value="смешанное" />
+                                    <Field className={styles.radio_input} type="radio" name="feeding" value="смешанное" />
                                     смешанное
                                 </label>
                                 <label className={styles.radio_label_flex}>
-                                    <Field className={styles.black_radio} type="radio" name="feeding" value="искусственное" />
+                                    <Field className={styles.radio_input} type="radio" name="feeding" value="искусственное" />
                                     искусственное
                                 </label>
                             </div>
