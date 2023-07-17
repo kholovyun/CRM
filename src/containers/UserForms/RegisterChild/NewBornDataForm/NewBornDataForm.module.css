@@ -99,22 +99,22 @@
     margin: 0;
 }
 
-.black_radio {
+.radio_input {
     accent-color: white;
     flex-shrink: 0;
     appearance: none;
-    background-color: var(--black_blue);
+    background-color: var(--violet);
     margin: 0;
     font: inherit;
     color: white;
-    border: 0.35em solid var(--black_blue);
+    border: 0.35em solid var(--violet);
     border-radius: 50%;
     display: grid;
     place-content: center;
     justify-content: center;
 }
 
-.black_radio::before {
+.radio_input::before {
     content: "";
     width: 0.5rem;
     height: 0.5rem;
@@ -124,8 +124,8 @@
     align-self: center;
 }
 
-.black_radio:checked::before,
-.black_radio:focus::before {
+.radio_input:checked::before,
+.radio_input:focus::before {
     transform: scale(1);
 }
 

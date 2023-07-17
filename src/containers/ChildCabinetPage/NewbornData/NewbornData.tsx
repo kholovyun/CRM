@@ -5,12 +5,12 @@ import { useGetNewbornDatasByChildIdQuery, useUpdateNewbornDataMutation } from "
 import errorHandler from "../../../helpers/errorHandler";
 import { validationSchemaEditNewbornData } from "../../../schemas/validationSchemaEditNewbornData";
 import successHandler from "../../../helpers/successHandler";
-import styles from "./NewbornData.module.css";
+import styles from "../../UserForms/RegisterChild/NewBornDataForm/NewBornDataForm.module.css";
 import Btn from "../../../components/UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
-import DatePickerField from "../../../components/UI/DatePicker/DatePicker";
 import { ESex } from "../../../enums/ESex";
+import { Container } from "../../../components/UI/Container/Container";
 
 const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement => {
     const {
@@ -32,7 +32,7 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
     return (
         <div className={styles.newbornData_block}>
             {newbornData &&
-                <div>
+                <Container>
                     <Formik
                         initialValues={{
                             childId: props.child.id,
@@ -76,289 +76,263 @@ const NewbornData: FunctionComponent<INewbornDataProps> = (props): ReactElement 
                         validationSchema={validationSchemaEditNewbornData}
                     >
                         {({ isValid, errors, touched, handleSubmit }) => (
-                            <Form>
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        <p className={styles.createEntityFieldTitle}>Родился</p>
-                                        <p className={styles.dateOfBirth}>{new Date(props.child.dateOfBirth).toLocaleDateString()}</p>
-                                    </div>
-                                    <div className={styles.createEntityField}>
-                                        {touched.dischargedDate && errors.dischargedDate ? <p>{ }</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Выписан</p>
-                                        <DatePickerField name="dischargedDate" />
-                                    </div>
+                            <Form className={styles.form_container}>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Родился</p>
+                                        <p className={styles.born_data_input}>{new Date(props.child.dateOfBirth).toLocaleDateString()}</p>
+                                    </label>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Выписан</p>
+                                        <Field className={styles.born_data_input} name="dischargedDate" type="date" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.pregnancyN && errors.pregnancyN ? <p>{errors.pregnancyN}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Ребенок от</p>
-                                        <Field id="pregnancyN" as="select" className={styles.createEntitySelect} name="pregnancyN">
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Ребенок от</p>
+                                        <Field id="pregnancyN" as="select" className={styles.number_select} name="pregnancyN">
                                             {pregnancyNumber.map(num => {
                                                 return <option className={styles.createEntityOption} key={num} value={num}>{num}</option>;
                                             })}
                                         </Field>
-                                        <p className={styles.createEntityFieldTitleRight}>беременности</p>
-                                    </div>
+                                        <p className={styles.near_input_text}>беременности</p>
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.pregnancyDescript && errors.pregnancyDescript ? <p>{errors.pregnancyDescript}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Протекающей</p>
-                                        <Field as="textarea" className={styles.createEntityInput} name="pregnancyDescript" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex_long}>
+                                        <p className={styles.near_input_text}>Протекающей</p>
+                                        <Field className={styles.born_data_input} name="pregnancyDescript" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.birthN && errors.birthN ? <p>{errors.birthN}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Роды</p>
-                                        <Field id="birthN" as="select" className={styles.createEntitySelect} name="birthN">
+                                <div className={styles.date_block_short}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Роды</p>
+                                        <Field id="birthN" as="select" className={styles.number_select} name="birthN">
                                             {pregnancyNumber.map(num => {
                                                 return <option key={num} value={num}>{num}</option>;
                                             })}
                                         </Field>
-                                    </div>
+                                    </label>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>в сроки</p>
+                                        <Field className={styles.born_data_input} name="gestAge" type="number" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.gestAge && errors.gestAge ? <p>{errors.gestAge}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>в сроки</p>
-                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="gestAge" type="number" />
-                                        <p className={styles.createEntityFieldTitleRight}>неделя</p>
-                                    </div>
+                                <div className={styles.date_block_short}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>1 период</p>
+                                        <Field className={styles.born_data_input} name="period1" type="number" />
+                                        <p className={styles.near_input_text}>2 период</p>
+                                        <Field className={styles.born_data_input} name="period2" type="number" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.period1 && errors.period1 ? <p>{errors.period1}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>1 период</span>
-                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="period1" type="number" />
-                                    </div>
-                                    <div className={styles.createEntityField}>
-                                        {touched.period2 && errors.period2 ? <p>{errors.period2}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>2 период</span>
-                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="period2" type="numbre" />
-                                    </div>
+                                <div className={styles.date_block_short}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Безводный период</p>
+                                        <Field className={styles.born_data_input} name="amnAbsPeriod" type="number" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.amnAbsPeriod && errors.amnAbsPeriod ? <p>{errors.amnAbsPeriod}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Безводный период</span>
-                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="amnAbsPeriod" type="number" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex_long}>
+                                        <p className={styles.near_input_text}>Характер околоплодных вод</p>
+                                        <Field className={styles.born_data_input} name="amnDescript" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.amnDescript && errors.amnDescript ? <p>{errors.amnDescript}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Характер околоплодных вод</span>
-                                        <Field className={styles.createEntityInput} name="amnDescript" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex_long}>
+                                        <p className={styles.near_input_text}>Обезболивание применялось, нет, какое</p>
+                                        <Field className={styles.born_data_input} name="anesthesia" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.anesthesia && errors.anesthesia ? <p>{errors.anesthesia}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Обезболивание применялось, нет, какое</span>
-                                        <Field className={styles.createEntityInput} name="anesthesia" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex_long}>
+                                        <p className={styles.near_input_text}>Течение послеродового периода</p>
+                                        <Field className={styles.born_data_input} name="postBirthPeriod" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.postBirthPeriod && errors.postBirthPeriod ? <p>{errors.postBirthPeriod}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Течение послеродового периода</span>
-                                        <Field className={styles.createEntityInput} name="postBirthPeriod" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex_long}>
+                                        <p className={styles.near_input_text}>Состояние матери при выписке</p>
+                                        <Field className={styles.born_data_input} name="motherState" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.motherState && errors.motherState ? <p>{errors.motherState}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Состояние матери при выписке</span>
-                                        <Field as="textarea" className={styles.createEntityInput} name="motherState" type="text" />
-                                    </div>
-                                </div>
-
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        <p className={styles.createEntityFieldTitle}>Пол ребенка</p>
-                                        <label>
+                                <div className={styles.date_block_tiny}>
+                                    <div className={styles.radio_btns_feed}>
+                                        <p className={styles.near_input_text}>Пол ребенка</p>
+                                        <label className={styles.radio_label_flex}>
                                             <Field checked={props.child.sex === ESex.FEMALE} type="radio" name="sex" value={ESex.FEMALE} className={styles.radio_input} /> женский
                                         </label>
-                                        <label>
+                                        <label className={styles.radio_label_flex}>
                                             <Field checked={props.child.sex === ESex.MALE} type="radio" name="sex" value={ESex.MALE} className={styles.radio_input} /> мужской
                                         </label>
                                     </div>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.birthWeight && errors.birthWeight ? <p>{errors.birthWeight}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Масса при рождении</p>
-                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="birthWeight" type="number" />
-                                        <p className={styles.createEntityFieldTitleRight}>кг</p>
-                                    </div>
+                                <div className={styles.date_block_tiny}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Масса при рождении</p>
+                                        <Field className={styles.born_data_input} name="birthWeight" type="number" />
+                                        <p className={styles.near_input_text}>кг</p>
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.birthHeight && errors.birthHeight ? <p>{errors.birthHeight}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Рост при рождении</p>
-                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="birthHeight" type="number" />
-                                        <p className={styles.createEntityFieldTitleRight}>см</p>
-                                    </div>
+                                <div className={styles.date_block_tiny}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Рост при рождении</p>
+                                        <Field className={styles.born_data_input} name="birthHeight" type="number" />
+                                        <p className={styles.near_input_text}>см</p>
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.newbornState && errors.newbornState ? <p>{errors.newbornState}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Состояние ребенка при рождении</p>
-                                        <Field className={styles.createEntityInput} name="newbornState" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Состояние ребенка при рождении</p>
+                                        <Field className={styles.born_data_input} name="newbornState" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.apgarScore && errors.apgarScore ? <p>{errors.apgarScore}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Оценка по шкале Апгар</p>
-                                        <Field className={styles.createEntityInput} name="apgarScore" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Оценка по шкале Апгар</p>
+                                        <Field className={styles.born_data_input} name="apgarScore" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.reanimation && errors.reanimation ? <p>{errors.reanimation}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Проводились ли меры по оживлению</p>
-                                        <Field className={styles.createEntityInput} name="reanimation" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Проводились ли меры по оживлению</p>
+                                        <Field className={styles.born_data_input} name="reanimation" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.breastTry && errors.breastTry ? <p>{errors.breastTry}</p> : <p></p>}
-                                        <label>К груди приложен
-                                            <Field type="checkbox" checked={false} name="breastTry" className={styles.createEntityInput} />
+                                <div className={styles.date_block_short}>
+                                    <div className={styles.radio_btns_feed}>
+                                        <label className={styles.radio_label_flex} id="yes">К груди приложен
+                                            <Field type="radio" value={true} name="breastTry" className={styles.radio_input} />
                                         </label>
-                                        <label> К груди не приложен
-                                            <Field type="checkbox" checked={true} name="breastTry" className={styles.createEntityInput} />
+                                        <label className={styles.radio_label_flex} id="no"> К груди не приложен
+                                            <Field type="radio" value={false} name="breastTry" className={styles.radio_input} />
                                         </label>
-
                                     </div>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.feeding && errors.feeding ? <p>{errors.feeding}</p> : <p></p>}
-                                        {touched.feedingReason && errors.feedingReason ? <p>{errors.feedingReason}</p> : <p></p>}
-                                        <p className={styles.createEntityFieldTitle}>Причина вскармиливания</p>
-                                        <Field className={`${styles.createEntityInput} ${styles.createEntityInputSmall}`} name="feedingReason" type="text" />
-                                        <label>
+                                <div className={styles.date_block}>
+                                    <div className={styles.radio_btns_feed}>
+                                        <p className={styles.near_input_text}>Вскармливание</p>
+                                        <label className={styles.radio_label_flex}>
                                             <Field type="radio" name="feeding" value={"исключительно грудное"} className={styles.radio_input} /> исключительно грудное
                                         </label>
-                                        <label>
+                                        <label className={styles.radio_label_flex}>
                                             <Field type="radio" name="feeding" value={"смешанное"} className={styles.radio_input} /> смешанное
                                         </label>
-                                        <label>
+                                        <label className={styles.radio_label_flex}>
                                             <Field type="radio" name="feeding" value={"искусственное"} className={styles.radio_input} /> искусственное
                                         </label>
                                     </div>
                                 </div>
-
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.diagnosis && errors.diagnosis ? <p>{errors.diagnosis}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Диагноз</span>
-                                        <Field as="textarea" className={styles.createEntityInput} name="diagnosis" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Причина вскармливания</p>
+                                        <Field className={styles.born_data_input} name="feedingReason" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.examination && errors.examination ? <p>{errors.examination}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Обследован</span>
-                                        <Field as="textarea" className={styles.createEntityInput} name="examination" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Диагноз</p>
+                                        <Field className={styles.born_data_input} name="diagnosis" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.treatment && errors.treatment ? <p>{errors.treatment}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Лечение</span>
-                                        <Field as="textarea" className={styles.createEntityInput} name="treatment" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Обследован</p>
+                                        <Field className={styles.born_data_input} name="examination" type="text" />
+                                    </label>
                                 </div>
 
-                                <div>
-                                    <p>При выписке состояние: </p>
-                                    <div className={styles.stateField}>
-                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
-                                            {touched.eyes && errors.eyes ? <p>{errors.eyes}</p> : <p></p>}
-                                            <p className={styles.createEntityFieldTitle}>глаза</p>
-                                            <Field className={`${styles.createEntityInput}`} name="eyes" type="text" />
-                                        </div>
-                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
-                                            {touched.reflexes && errors.reflexes ? <p>{errors.reflexes}</p> : <p></p>}
-                                            <p className={styles.createEntityFieldTitleRight}>физиологические рефлексы</p>
-                                            <Field className={`${styles.createEntityInput}`} name="reflexes" type="text" />
-                                        </div>
-                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
-                                            {touched.skin && errors.skin ? <p>{errors.skin}</p> : <p></p>}
-                                            <p className={styles.createEntityFieldTitleRight}>цвет кожи</p>
-                                            <Field className={`${styles.createEntityInput}`} name="skin" type="text" />
-                                        </div>
-                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
-                                            {touched.organs && errors.organs ? <p>{errors.organs}</p> : <p></p>}
-                                            <p className={styles.createEntityFieldTitle}>по органам</p>
-                                            <Field className={`${styles.createEntityInput}`} name="organs" type="text" />
-                                        </div>
-                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex}>
+                                        <p className={styles.near_input_text}>Лечение</p>
+                                        <Field className={styles.born_data_input} name="treatment" type="text" />
+                                    </label>
+                                </div>
+
+                                <p className={styles.near_input_text}>При выписке состояние: </p>
+                                <div className={styles.right_block}>
+                                    <div className={`${styles.date_block_short} ${styles.no_margin}`}>
+                                        <label className={styles.label_flex}>
+                                            <p className={styles.near_input_text}>глаза</p>
+                                            <Field className={`${styles.born_data_input}`} name="eyes" type="text" />
+                                        </label>
+                                    </div>
+                                    <div className={`${styles.date_block_short} ${styles.no_margin}`}>
+                                        <label className={styles.label_flex}>
+                                            <p className={styles.near_input_text}>физиологические рефлексы</p>
+                                            <Field className={`${styles.born_data_input}`} name="reflexes" type="text" />
+                                        </label>
+                                    </div>
+                                    <div className={`${styles.date_block_short} ${styles.no_margin}`}>
+                                        <label className={styles.label_flex}>
+                                            <p className={styles.near_input_text}>цвет кожи</p>
+                                            <Field className={styles.born_data_input} name="skin" type="text" />
+                                        </label>
+                                        <label>
+                                            <p className={styles.near_input_text}>по органам</p>
+                                            <Field className={`${styles.born_data_input}`} name="organs" type="text" />
+                                        </label>
+                                    </div>
+                                    <div className={`${styles.date_block_short} ${styles.no_margin}`}>
+                                        <label className={styles.label_flex}>
                                             {touched.stool && errors.stool ? <p>{errors.stool}</p> : <p></p>}
-                                            <p className={styles.createEntityFieldTitleRight}>стул</p>
-                                            <Field className={`${styles.createEntityInput}`} name="stool" type="text" />
-                                        </div>
-                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
-                                            {touched.diuresis && errors.diuresis ? <p>{errors.diuresis}</p> : <p></p>}
-                                            <p className={styles.createEntityFieldTitleRight}>диурез</p>
-                                            <Field className={`${styles.createEntityInput}`} name="diuresis" type="text" />
-                                        </div>
-                                        <div className={`${styles.createEntityField} ${styles.createEntityFieldSmall}`}>
-                                            {touched.umbilicalCord && errors.umbilicalCord ? <p>{errors.umbilicalCord}</p> : <p></p>}
-                                            <p className={styles.createEntityFieldTitle}>пуповинный остаток</p>
-                                            <Field className={`${styles.createEntityInput}`} name="umbilicalCord" type="text" />
-                                        </div>
+                                            <p className={styles.near_input_text}>стул</p>
+                                            <Field className={`${styles.born_data_input}`} name="stool" type="text" />
+                                        </label>
+                                        <label className={styles.label_flex}>
+                                            <p className={styles.near_input_text}>диурез</p>
+                                            <Field className={`${styles.born_data_input}`} name="diuresis" type="text" />
+                                        </label>
                                     </div>
-                                    
-                                </div>
-
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.notes && errors.notes ? <p>{errors.notes}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Особые замечания</span>
-                                        <Field as="textarea" className={styles.createEntityInput} name="notes" type="text" />
+                                    <div className={`${styles.date_block_short} ${styles.no_margin}`}>
+                                        <div className={styles.label_flex}>
+                                            <p className={styles.near_input_text}>пуповинный остаток</p>
+                                            <Field className={`${styles.born_data_input}`} name="umbilicalCord" type="text" />
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className={styles.createEntityLine}>
-                                    <div className={styles.createEntityField}>
-                                        {touched.examedBy && errors.examedBy ? <p>{errors.examedBy}</p> : <p></p>}
-                                        <span className={styles.createEntityFieldTitle}>Заключение составил</span>
-                                        <Field className={styles.createEntityInput} name="examedBy" type="text" />
-                                    </div>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex_long}>
+                                        <p className={styles.near_input_text}>Особые замечания</p>
+                                        <Field className={styles.born_data_input} name="notes" type="text" />
+                                    </label>
                                 </div>
 
-                                <div className={styles.saveButton}>
+                                <div className={styles.date_block}>
+                                    <label className={styles.label_flex_long}>
+                                        <p className={styles.near_input_text}>Заключение составил</p>
+                                        <Field className={styles.born_data_input} name="examedBy" type="text" />
+                                    </label>
+                                </div>
+
+                                <div className={styles.flex_end}>
                                     <Btn disabled={!isValid} title="Сохранить" onclick={handleSubmit} size={EBtnSize.tiny} types={EBtnTypes.submit} />
                                 </div>
                             </Form>
                         )}
 
                     </Formik>
-                </div>}
+                </Container>}
 
         </div>
     );
