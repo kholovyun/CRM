@@ -31,7 +31,6 @@ const vaccinationsApi = api.injectEndpoints({
 });
 
 export const {
-    useGetVaccinationsByChildIdQuery,
     useLazyGetVaccinationsByChildIdQuery,
     useDeleteVaccinationMutation,
     useCreateVaccinationMutation

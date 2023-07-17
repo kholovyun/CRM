@@ -110,7 +110,7 @@
 }
 
 .phoneInput:focus {
-    outline: none
+    outline: none;
 }
 
 .country_select {
@@ -123,7 +123,7 @@
 }
 
 .country_select:active, select:focus {
-    outline: none
+    outline: none;
 }
 
 .select_wrapper {
@@ -140,7 +140,6 @@
     appearance: none;
     border: none;
     cursor: pointer;
-    border: none;
 }
 
 .select_wrapper::after {

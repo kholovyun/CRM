@@ -1,7 +1,7 @@
 .ChildQuestion {
     margin-bottom: 20px;
     background-color: var(--bg_light_blue);
-    border-radius: 50px;
+    border-radius: 2rem;
     padding: 10px;
     display: flex;
     align-items: center;

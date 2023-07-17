@@ -11,14 +11,14 @@ import { ERoles } from "../../enums/ERoles.ts";
 import CarouselBlock from "../../components/CarouselBlock/CarouselBlock.tsx";
 import AskQuestionForm from "../../components/AskQuestionForm/AskQuestionForm.tsx";
 import { useLazyGetVisitsByChildIdQuery } from "../../app/services/visits.ts";
-import ChildVisits from "../../components/ChildVisits/ChildVisits.tsx";
-import ChildAllergies from "../../components/ChildAllergies/ChildAllergies.tsx";
+import ChildVisits from "../../components/ChildTables/ChildVisits/ChildVisits.tsx";
+import ChildAllergies from "../../components/ChildTables/ChildAllergies/ChildAllergies.tsx";
 import { useLazyGetAllergiesByChildIdQuery } from "../../app/services/allergies.ts";
-import ChildVaccinations from "../../components/ChildVaccinations/ChildVaccinations.tsx";
+import ChildVaccinations from "../../components/ChildTables/ChildVaccinations/ChildVaccinations.tsx";
 import { useLazyGetVaccinationsByChildIdQuery } from "../../app/services/vaccinations.ts";
 import { useLazyGetSpecExamsByChildIdQuery } from "../../app/services/specExams.ts";
-import ChildSpecExams from "../../components/ChildSpecExams/ChildSpecExams.tsx";
 import NewbornData from "./NewbornData/NewbornData.tsx";
+import ChildSpecExams from "../../components/ChildTables/ChildSpecExams/ChildSpecExams.tsx";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();

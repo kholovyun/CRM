@@ -1,24 +1,12 @@
 .doctorInformationBlock {
     padding: 20px 16px;
-    border-radius: 25px;
+    border-radius: 2rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     background-color: var(--light_blue_half_opacity);
     margin-bottom: 30px;
-}
-
-.doctorInformation {
-    min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding:  15px;
-    background: var(--light_blue);
-    border-radius: 25px;
-    flex-grow: 1;
-    gap: 5px;
 }
 
 .personalInformationLine {
@@ -29,7 +17,7 @@
 }
 
 .personalInformationField {
-    flex-grow: 1; 
+    flex-grow: 1;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -59,22 +47,18 @@
     margin-top: 20px;
 }
 
-
 @media screen and (min-width: 600px) {
-    .doctorInformationBlock {
-        border-radius: 35px;
-    }
-	.personalInformationLine {
+    .personalInformationLine {
         flex-wrap: nowrap;
     }
+
     .personalInformationButton {
         margin-top: 0;
     }
 }
 
 @media screen and (min-width: 1052px) {
-	.doctorInformationBlock {
-        border-radius: 50px;
+    .doctorInformationBlock {
         padding: 36px 60px;
         flex-wrap: nowrap;
         gap: 20px;

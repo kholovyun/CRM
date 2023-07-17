@@ -70,7 +70,7 @@ const AllDoctorsTable: FunctionComponent<IAllDoctorsTableProps> = (props: IAllDo
     };
 
     return (
-        <div className={styles.Table_box}>
+        <div className={styles.table_box}>
             <Modal show={showPriceModal} close={closePriceModal}>
                 {stateDoctor && <EditPriceForm doctor={stateDoctor} closeModal={closePriceModal} />}
             </Modal>
@@ -80,8 +80,8 @@ const AllDoctorsTable: FunctionComponent<IAllDoctorsTableProps> = (props: IAllDo
                 <div className={styles.modal_flex_column}>
                     <div className={styles.title_box}>
                         <p className={styles.modal_title}>
-                            Вы уверены, что хотите <span className={styles.violet}>{modalTitle}</span> пользователя по имени 
-                            <span className={styles.violet}>{stateDoctor && ` ${stateDoctor.users.surname} ${stateDoctor.users.name}`}</span>?
+                            Вы уверены, что хотите <span className={styles.violet}>{modalTitle}</span></p>
+                        <p className={styles.modal_title}>пользователя по имени <span className={styles.violet}>{stateDoctor && ` ${stateDoctor.users.surname} ${stateDoctor.users.name}`}</span>?
                         </p>
                     </div>                    
                     <div className={styles.modal_btn_group}>
@@ -109,16 +109,16 @@ const AllDoctorsTable: FunctionComponent<IAllDoctorsTableProps> = (props: IAllDo
                     </div>
                 </div>
             </Modal>
-            <table className={styles.Table}>
+            <table className={styles.table}>
                 <thead>
-                    <tr className={styles.Table_tr}>
-                        <th className={styles.Table_td_right}>ФИО</th>
-                        <th className={styles.Table_td_right}>Email</th>
-                        <th className={styles.Table_td_right}>Tел.</th>
-                        <th className={styles.Table_td_right}>Специализация</th>
-                        <th className={styles.Table_td_right}>Базовая цена подписки</th>
-                        <th className={styles.Table_td_right}>Блок</th>                        
-                        <th className={styles.Table_td}>Активация</th>
+                    <tr className={styles.table_tr}>
+                        <th className={styles.table_td_right}>ФИО</th>
+                        <th className={styles.table_td_right}>Email</th>
+                        <th className={styles.table_td_right}>Tел.</th>
+                        <th className={styles.table_td_right}>Специализация</th>
+                        <th className={styles.table_td_right}>Базовая цена подписки</th>
+                        <th className={styles.table_td_right}>Блок</th>                        
+                        <th className={styles.table_td}>Активация</th>
                     </tr>
                 </thead>
                 <tbody>
