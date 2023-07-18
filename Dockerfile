@@ -1,22 +1,24 @@
-FROM node:18.16.0-alpine AS builder
+FROM node:18.13.0-alpine AS builder
 
 WORKDIR /app
 
+COPY package*.json .
+
+RUN npm install
+
 COPY . .
 
-RUN npm i -g
+ARG VITE_BASE_URL
 
-RUN npm i
+RUN echo "VITE_BASE_URL:${VITE_BASE_URL}"
+
+RUN echo "VITE_BASE_URL${VITE_BASE_URL}" > .env
 
 RUN npm run build
 
-FROM nginx:1.21.0
+FROM nginx:1.21.0-alpine
 
-WORKDIR /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-RUN rm -rf ./*
-
-COPY --from=builder /app/dist .
-COPY --from=builder /app/nginx.conf /etc/nginx/conf.d/default.conf
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]

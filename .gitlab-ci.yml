@@ -2,43 +2,44 @@ stages:
   - build
   - deploy
 
-variables: 
-  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
-  TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
-  DOCKER_HOST: tcp://docker:2376
-
-build_job:
-  tags:
-    - front
-  stage: build
-  only: ["dev"]
+build:
   image: docker:20.10.16
+  stage: build
+  tags:
+    - deploy-runner
+  only: [ "DP-202" ]
   services:
-    - docker:20.10.16-dind
-
-  before_script:
-    - docker info
-    - echo 'building job is running'
-
-  script: 
+    - docker:dind
+  variables:
+    TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+    TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_DRIVER: overlay2
+    PROJECT_NAME: front-app
+  script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - cp -f $ENV_FILE .env
-    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
+    - docker build --build-arg VITE_BASE_URL=$VITE_BASE_URL -t $TAG_COMMIT -t $TAG_LATEST .
     - docker push $TAG_COMMIT
     - docker push $TAG_LATEST
     - docker rmi $TAG_COMMIT
     - docker rmi $TAG_LATEST
 
-deploy_job:
-  tags: [front]
+deploy:
   stage: deploy
   image: alpine:latest
+  tags:
+    - deploy-runner
+  only: [ "DP-202" ]
+  variables:
+    TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+    TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
+    PROJECT_NAME: front-app
   script:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
+    - ssh -i StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "echo Connected"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker pull $TAG_COMMIT"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker container rm -f frontend || true"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker run -p 80:80 -d --name frontend $TAG_COMMIT"
-  only: 
-    - dev  
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker container rm -f $PROJECT_NAME || true"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker run -p 80:80 -d --name $PROJECT_NAME $TAG_COMMIT"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$IP_SERVER "docker run -d --restart always --name $PROJECT_NAME $TAG_COMMIT -p 80:80 $TAG_COMMIT"
