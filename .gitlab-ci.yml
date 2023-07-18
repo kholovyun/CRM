@@ -4,6 +4,8 @@ stages:
 deploy-code-job:
   stage: deploy
   image: docker:20.10.16
+  only:
+    - 'dev'
   services:
     - docker:dind
   variables:
