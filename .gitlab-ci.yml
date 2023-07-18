@@ -4,16 +4,16 @@ stages:
 deploy-code-job:
   stage: deploy
   image: docker:20.10.16
-  only: ["dev"]
+  only:
+    - "dev"
   services:
-    - docker:dind
+    - name: docker:dind
   variables:
     DOCKER_DRIVER: overlay2
     IMAGE_NAME: "my-front"
   before_script:
     - apk update && apk add openssh-client
   script:
-    -
     - echo "$SSH_PRIVATE_KEY" > ssh_key
     - chmod 600 ssh_key
     - ssh -o StrictHostKeyChecking=no -i ssh_key "$USER_SERVER@$IP_SERVER" "echo Connected"
