@@ -1,17 +1,16 @@
 import styles from "./CardChildPage.module.css";
-import {FC, useState, MouseEvent} from "react";
+import {FC, useState} from "react";
 import IChildGetDto from "../../interfaces/IChild/IChildGetDto.ts";
 import AvatarBox from "../AvatarBox/AvatarBox.tsx";
-import { ERoles } from "../../enums/ERoles.ts";
+import {ERoles} from "../../enums/ERoles.ts";
 import Modal from "../UI/Modal/Modal.tsx";
 import EditChildForm from "./EditChildForm/EditChildForm.tsx";
-import { SubInfoTable } from "../UI/SubInfoTable/SubInfoTable.tsx";
-import { InfoTextBoxTriple } from "../UI/infoTextBoxes/infoTextBoxTriple/infoTextBoxTriple.tsx";
+import {SubInfoTable} from "../UI/SubInfoTable/SubInfoTable.tsx";
 import AccessControl from "../../permissionRoutes/AccessControl.tsx";
 import Btn from "../UI/Btn/Btn.tsx";
-import { EBtnSize } from "../../enums/EBtnSize.ts";
-import { EBtnTypes } from "../../enums/EBtnTypes.ts";
-import { EBtnClass } from "../../enums/EBtnClass.ts";
+import {EBtnSize} from "../../enums/EBtnSize.ts";
+import {EBtnTypes} from "../../enums/EBtnTypes.ts";
+import {EBtnClass} from "../../enums/EBtnClass.ts";
 
 
 type TChild = {
@@ -114,28 +113,3 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
         </div>
     );
 };
-
-{/* <SubInfoTable>
-                <div className={styles.btn_edit}>
-                    <div className={styles.pencil_icon} onClick={(e: MouseEvent<HTMLDivElement>) => openModal(e)} />
-                </div>
-                <InfoTableContent>
-                    <InfoTextBoxDouble
-                        textOne={data?.name}
-                        textTwo={data?.surname}
-                    />
-                    <InfoTextBoxDouble
-                        textOne={`${data?.height}`}
-                        textTwo={`${data?.weight}`}
-                    />
-                    <InfoTextBoxTriple
-                        day={`${date?.getDate()}`}
-                        month={`${months[date?.getMonth()]}`}
-                        year={`${date?.getFullYear()}`}
-                    />
-                    <InfoTextBoxAlone
-                        textOne={`Возраст: ${age} ${age > 4 || age === 0 ? "лет": age === 1 ? "год" : "года" }`}
-                        textTwo={`Последнее посещение: ${date && data.dateOfBirth.toLocaleString()}`}
-                    />
-                </InfoTableContent>
-            </SubInfoTable> */}

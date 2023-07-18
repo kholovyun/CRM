@@ -1,9 +1,9 @@
-import { FunctionComponent, MouseEventHandler, ReactElement } from "react";
+import {FunctionComponent, MouseEventHandler, ReactElement} from "react";
 import IAllergyRowProps from "./IAllergyRowProps";
 import styles from "../../../../containers/AdminPage/AdminTables/AllTables.module.css";
 import IconBtn from "../../../UI/IconBtn/IconBtn";
-import { useAppSelector } from "../../../../app/hooks";
-import { ERoles } from "../../../../enums/ERoles";
+import {useAppSelector} from "../../../../app/hooks";
+import {ERoles} from "../../../../enums/ERoles";
 
 const AllergyRow: FunctionComponent<IAllergyRowProps> = (props): ReactElement => {
     const { user } = useAppSelector(state => state.auth);
