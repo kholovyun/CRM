@@ -111,14 +111,15 @@ const ChildVisits: FunctionComponent<IChildVisitsProps> = (props): ReactElement 
                     </table>
                 </div>
             </div>
-            <div className={styles.add_btn_row}>
+            {user?.role === ERoles.DOCTOR ? <div className={styles.add_btn_row}>
                 <Btn
                     onclick={() => setShowAddModal(true)}
                     title="Добавить"
                     size={EBtnSize.small}
                     types={EBtnTypes.button}
                     btnClass={EBtnClass.dark_active} />
-            </div>
+            </div> : null}
+            
         </>
     );
 };

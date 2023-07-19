@@ -2,8 +2,6 @@ import { FunctionComponent, MouseEvent, ReactElement, useState } from "react";
 import IChildSpecExamsProps from "./IChildSpecExamsProps";
 import stylesTable from "../../../containers/AdminPage/AdminTables/AllTables.module.css";
 import styles from "../ChildTables.module.css";
-import { useAppSelector } from "../../../app/hooks";
-import { ERoles } from "../../../enums/ERoles";
 import Modal from "../../UI/Modal/Modal";
 import Btn from "../../UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
@@ -17,7 +15,6 @@ import successHandler from "../../../helpers/successHandler";
 import errorHandler from "../../../helpers/errorHandler";
 
 const ChildSpecExams: FunctionComponent<IChildSpecExamsProps> = (props): ReactElement => {
-    const { user } = useAppSelector(state => state.auth);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showModalDeleteExam, setShowModalDeleteExam] = useState(false);
     const [thisExam, setThisExam] = useState<ISpecialistExamsGetDto | null>(null);
@@ -57,11 +54,11 @@ const ChildSpecExams: FunctionComponent<IChildSpecExamsProps> = (props): ReactEl
     
     return (
         <>
-            {user?.role === ERoles.DOCTOR ? <Modal show={showAddModal} close={addModalCloser}>
+            <Modal show={showAddModal} close={addModalCloser}>
                 <div>
                     <CreateExam childId={props.childId} modalCloser={addModalCloser} />
                 </div>
-            </Modal> : null}
+            </Modal>
             <Modal show={showModalDeleteExam} close={deleteModalCloser}>
                 <div className={stylesTable.modal_flex_column}>
                     <div className={stylesTable.title_box}>
@@ -94,7 +91,7 @@ const ChildSpecExams: FunctionComponent<IChildSpecExamsProps> = (props): ReactEl
                                 <th className={stylesTable.table_td_right}>ФИО врача</th>
                                 <th className={stylesTable.table_td_right}>Дата</th>
                                 <th className={stylesTable.table_td_right}>Заключение</th>
-                                <th className={user?.role === ERoles.DOCTOR ? stylesTable.table_td_right : stylesTable.table_td}>Рекомендации</th>
+                                <th className={stylesTable.table_td_right}>Рекомендации</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,14 +105,14 @@ const ChildSpecExams: FunctionComponent<IChildSpecExamsProps> = (props): ReactEl
                     </table>
                 </div>
             </div>
-            {user?.role === ERoles.DOCTOR ? <div className={styles.add_btn_row}>
+            <div className={styles.add_btn_row}>
                 <Btn
                     onclick={() => setShowAddModal(true)}
                     title="Добавить"
                     size={EBtnSize.small}
                     types={EBtnTypes.button}
                     btnClass={EBtnClass.dark_active} />
-            </div> : null}
+            </div>
         </>
     );
 };
