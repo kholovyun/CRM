@@ -4,8 +4,6 @@ import styles from "../ChildTables.module.css";
 import stylesTable from "../../../containers/AdminPage/AdminTables/AllTables.module.css";
 import VaccinationRow from "./VaccinationRow/VaccinationRow";
 import { useDeleteVaccinationMutation } from "../../../app/services/vaccinations";
-import { useAppSelector } from "../../../app/hooks";
-import { ERoles } from "../../../enums/ERoles";
 import Modal from "../../UI/Modal/Modal";
 import Btn from "../../UI/Btn/Btn";
 import { EBtnSize } from "../../../enums/EBtnSize";
@@ -17,7 +15,6 @@ import errorHandler from "../../../helpers/errorHandler";
 import successHandler from "../../../helpers/successHandler";
 
 const ChildVaccinations: FunctionComponent<IChildVaccinationsProps> = (props): ReactElement => {
-    const { user } = useAppSelector(state => state.auth);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showModalDeleteVaccination, setShowModalDeleteVaccination] = useState(false);
     const [thisVaccination, setThisVaccination] = useState<IVaccinationGetDto | null>(null);
@@ -57,11 +54,11 @@ const ChildVaccinations: FunctionComponent<IChildVaccinationsProps> = (props): R
 
     return (
         <>
-            {user?.role === ERoles.DOCTOR ? <Modal show={showAddModal} close={createModalCloser}>
+            <Modal show={showAddModal} close={createModalCloser}>
                 <div>
                     <CreateVaccination modalCloser={createModalCloser} childId={props.childId} />
                 </div>
-            </Modal> : null}
+            </Modal> 
             <Modal show={showModalDeleteVaccination} close={deleteModalCloser}>
                 <div className={stylesTable.modal_flex_column}>
                     <div className={stylesTable.title_box}>
@@ -101,8 +98,7 @@ const ChildVaccinations: FunctionComponent<IChildVaccinationsProps> = (props): R
                                 <th className={stylesTable.table_td_right}>Производитель</th>
                                 <th className={stylesTable.table_td_right}>Реакция</th>
                                 <th className={stylesTable.table_td_right}>Медотвод</th>
-                                <th className={user?.role === ERoles.DOCTOR ? stylesTable.table_td_right : stylesTable.table_td}>Примечание</th>
-                                {user?.role === ERoles.DOCTOR ? <th className={stylesTable.table_td}></th> : null}
+                                <th className={stylesTable.table_td_right}>Примечание</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,14 +112,14 @@ const ChildVaccinations: FunctionComponent<IChildVaccinationsProps> = (props): R
                     </table>
                 </div>
             </div>
-            {user?.role === ERoles.DOCTOR ? <div className={styles.add_btn_row}>
+            <div className={styles.add_btn_row}>
                 <Btn
                     onclick={() => setShowAddModal(true)}
                     title="Добавить"
                     size={EBtnSize.small}
                     types={EBtnTypes.button}
                     btnClass={EBtnClass.dark_active} />
-            </div> : null}
+            </div>
         </>
     );
 };

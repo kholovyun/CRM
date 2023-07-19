@@ -10,14 +10,11 @@ import { EBtnClass } from "../../../enums/EBtnClass";
 import Modal from "../../UI/Modal/Modal";
 import CreateAllergy from "./CreateAllergy/CreateAllergy";
 import { useDeleteAllergyMutation } from "../../../app/services/allergies";
-import { useAppSelector } from "../../../app/hooks";
-import { ERoles } from "../../../enums/ERoles";
 import IAllergyGetDto from "../../../interfaces/IAllergy/IAllergyGetDto";
 import errorHandler from "../../../helpers/errorHandler";
 import successHandler from "../../../helpers/successHandler";
 
 const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactElement => {
-    const { user } = useAppSelector(state => state.auth);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showModalDeleteAllergy, setShowModalDeleteAllergy] = useState(false);
     const [thisAllergy, setThisAllergy] = useState<IAllergyGetDto | null>(null);
@@ -57,11 +54,11 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
 
     return (
         <>
-            {user?.role === ERoles.DOCTOR ? <Modal show={showAddModal} close={addModalCloser}>
+            <Modal show={showAddModal} close={addModalCloser}>
                 <div>
                     <CreateAllergy childId={props.childId} modalCloser={addModalCloser} />
                 </div>
-            </Modal> : null}
+            </Modal>
             <Modal show={showModalDeleteAllergy} close={deleteModalCloser}>
                 <div className={stylesTable.modal_flex_column}>
                     <div className={stylesTable.title_box}>
@@ -93,9 +90,7 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
                             <tr className={stylesTable.table_tr}>
                                 <th className={stylesTable.table_td_right}>Вид аллергии</th>
                                 <th className={stylesTable.table_td_right}>Симптомы</th>
-                                <th className={user?.role === ERoles.DOCTOR ? stylesTable.table_td_right: stylesTable.table_td}>Провоцирующие факторы</th>
-                                {user?.role === ERoles.DOCTOR ? <th className={stylesTable.table_td}></th> : null}
-
+                                <th className={stylesTable.table_td_right}>Провоцирующие факторы</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,14 +104,14 @@ const ChildAllergies: FunctionComponent<IChildAllergiesProps> = (props): ReactEl
                     </table>
                 </div>
             </div>
-            {user?.role === ERoles.DOCTOR ? <div className={styles.add_btn_row}>
+            <div className={styles.add_btn_row}>
                 <Btn
                     onclick={() => setShowAddModal(true)}
                     title="Добавить"
                     size={EBtnSize.small}
                     types={EBtnTypes.button}
                     btnClass={EBtnClass.dark_active} />
-            </div> : null}
+            </div>
         </>
     );
 };
