@@ -16,8 +16,7 @@ deploy-code-job:
     - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo Connected"
     - docker build --build-arg VITE_BASE_URL="$VITE_BASE_URL" -t "$IMAGE_NAME:$CI_COMMIT_SHA" .
     - docker save "$IMAGE_NAME:$CI_COMMIT_SHA" | sshpass -p "$SERVER_PASS" ssh $SERVER_USER@$SERVER_IP "docker load"
-    - sshpass -p "$SERVER_PASS" ssh "$USER_SERVER@$IP_SERVER" "docker container rm -f $IMAGE_NAME || true"
-    - sshpass -p "$SERVER_PASS" ssh "$USER_SERVER@$IP_SERVER" "docker run -d --restart always --name $IMAGE_NAME -p 80:80 $IMAGE_NAME:$CI_COMMIT_SHA"
+    - sshpass -p "$SERVER_PASS" ssh "$SERVER_USER@$SERVER_IP" "docker container rm -f $IMAGE_NAME || true"
+    - sshpass -p "$SERVER_PASS" ssh "$SERVER_USER@$SERVER_IP" "docker run -d --restart always --name $IMAGE_NAME -p 80:80 $IMAGE_NAME:$CI_COMMIT_SHA"
   after_script:
-    - sshpass -p "$SERVER_PASS" ssh "$USER_SERVER@$IP_SERVER" "docker image prune -a -f"
-
+    - sshpass -p "$SERVER_PASS" ssh "$SERVER_USER@$SERVER_IP" "docker image prune -a -f"
