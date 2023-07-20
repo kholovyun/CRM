@@ -1,4 +1,4 @@
-import { useState, useRef, FormEvent, ChangeEventHandler, FunctionComponent, ReactElement, MouseEvent } from "react";
+import { useState, useRef, FormEvent, ChangeEventHandler, FunctionComponent, ReactElement } from "react";
 import styles from "./CarouselBlock.module.css";
 import AliceCarousel from "react-alice-carousel";
 import "./Carousel.css";
@@ -16,6 +16,9 @@ import IDocumentCreateDto from "../../interfaces/IDocument/IDocumentCreateDto";
 import AccessControl from "../../permissionRoutes/AccessControl";
 import successHandler from "../../helpers/successHandler";
 import IconBtn from "../UI/IconBtn/IconBtn";
+import Btn from "../UI/Btn/Btn";
+import { EBtnSize } from "../../enums/EBtnSize";
+import { EBtnClass } from "../../enums/EBtnClass";
 
 const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockTitle}): ReactElement => {
     const [showModal, setShowModal] = useState(false);
@@ -31,6 +34,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
         setShowFullImageModal(true);
     };
     const closeFullImageModal = () => {
+        deletionBlockCancel();
         setShowFullImageModal(false);
         setClickedImageUrl("");
         setClickedImageId("");
@@ -126,25 +130,53 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
         closeModal();
     };
     
-    const deleteButtonHandler = (e: MouseEvent<HTMLDivElement>, id: string) => {
-        e.stopPropagation();
+    const deleteButtonHandler = (id: string) => {
         deleteElement(id);
         setClickedImageId("");
         setClickedImageUrl("");
     };
 
+    const [deletionBlock, setDeletionBlock] = useState(false);
+
+    const deletionBlockCancel = () => {
+        setDeletionBlock(false);
+    };
+
     return (
         <>
+            
+                
+                    
+                
+            
             <Modal show={showFullImageModal} close={closeFullImageModal}>
                 <div className={styles.fullImage}>
                     <div className={styles.fullImageTop}>
-                        <div onClick={(e) => deleteButtonHandler(e, clickedImageId)} className={styles.deleteBtn}/>
+                        <div onClick={() => setDeletionBlock(true)} className={styles.deleteBtn}/>
                         <IconBtn
                             btnClass={"x_btn"}
                             onclick={closeFullImageModal}
                         />
                     </div>
+                    
                     <div className={styles.fullImageBottom}>
+                        <div className={styles.deletionBlock} style={{display: deletionBlock ? "flex" : "none"}}>
+                            <p>Удалить документ?</p>
+                            <div className={styles.deletionBtns}>
+                                <Btn
+                                    size={EBtnSize.tiny}
+                                    title={"Отмена"}
+                                    btnClass={EBtnClass.white_active}
+                                    onclick={deletionBlockCancel}
+                                />
+                                <Btn
+                                    size={EBtnSize.tiny}
+                                    title={"Да"}
+                                    btnClass={EBtnClass.dark_active}
+                                    onclick={() => deleteButtonHandler(clickedImageId)}
+                                />
+                            </div>
+                        </div>
                         <img
                             onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
                             src={clickedImageUrl !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${role === ERoles.DOCTOR ? "doctorsDiplomas" : "childrenDocuments"}/${clickedImageUrl}` : defaultDiplomaImg} alt={"diploma"} />
