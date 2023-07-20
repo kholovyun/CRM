@@ -180,7 +180,7 @@
     display: none;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     margin-bottom: 10px;
     background-color: var(--bg_light_blue);
     border-radius: 2rem;

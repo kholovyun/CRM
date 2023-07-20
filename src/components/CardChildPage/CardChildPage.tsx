@@ -11,6 +11,7 @@ import Btn from "../UI/Btn/Btn.tsx";
 import {EBtnSize} from "../../enums/EBtnSize.ts";
 import {EBtnTypes} from "../../enums/EBtnTypes.ts";
 import {EBtnClass} from "../../enums/EBtnClass.ts";
+import ageTextFormatter from "../../helpers/ageTextFormatter.ts";
 
 
 type TChild = {
@@ -64,7 +65,7 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                     </div>
                     <div className={styles.field}>
                         <p className={styles.fieldTitle}>Возраст</p>
-                        <p className={styles.fieldText}>{age} {age > 4 || age === 0 ? "лет": age === 1 ? "год" : "года" }</p>
+                        <p className={styles.fieldText}>{age} {ageTextFormatter(age)}</p>
                     </div>
                 </div>
                 <div className={styles.line}>
