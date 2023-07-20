@@ -15,6 +15,7 @@ import { useCreateDocumentMutation, useDeleteDocumentMutation, useGetDocumentsBy
 import IDocumentCreateDto from "../../interfaces/IDocument/IDocumentCreateDto";
 import AccessControl from "../../permissionRoutes/AccessControl";
 import successHandler from "../../helpers/successHandler";
+import IconBtn from "../UI/IconBtn/IconBtn";
 
 const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockTitle}): ReactElement => {
     const [showModal, setShowModal] = useState(false);
@@ -125,7 +126,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
         closeModal();
     };
     
-    const deleteButtonHandler = (e: MouseEvent<HTMLButtonElement>, id: string) => {
+    const deleteButtonHandler = (e: MouseEvent<HTMLDivElement>, id: string) => {
         e.stopPropagation();
         deleteElement(id);
         setClickedImageId("");
@@ -136,10 +137,18 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
         <>
             <Modal show={showFullImageModal} close={closeFullImageModal}>
                 <div className={styles.fullImage}>
-                    <img
-                        onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
-                        src={clickedImageUrl !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${role === ERoles.DOCTOR ? "doctorsDiplomas" : "childrenDocuments"}/${clickedImageUrl}` : defaultDiplomaImg} alt={"diploma"} />
-                    <button className={styles.deleteDiplomaBtn} onClick={(e) => deleteButtonHandler(e, clickedImageId)}>Delete</button>
+                    <div className={styles.fullImageTop}>
+                        <div onClick={(e) => deleteButtonHandler(e, clickedImageId)} className={styles.deleteBtn}/>
+                        <IconBtn
+                            btnClass={"x_btn"}
+                            onclick={closeFullImageModal}
+                        />
+                    </div>
+                    <div className={styles.fullImageBottom}>
+                        <img
+                            onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
+                            src={clickedImageUrl !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${role === ERoles.DOCTOR ? "doctorsDiplomas" : "childrenDocuments"}/${clickedImageUrl}` : defaultDiplomaImg} alt={"diploma"} />
+                    </div>
                 </div>
             </Modal>
             <Modal show={showModal} close={closeModal}>
