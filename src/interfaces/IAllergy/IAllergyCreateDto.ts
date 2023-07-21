@@ -1,5 +1,5 @@
 export default interface IAllergyCreateDto {
-    childId: string
+    childId:  string
     type: string
     symptom: string
     factors: string
