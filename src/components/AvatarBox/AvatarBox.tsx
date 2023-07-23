@@ -3,9 +3,10 @@ import styles from "./AvatarBox.module.css";
 import AvatarUploader from "./AvatarUploader/AvatarUploader";
 import Modal from "../UI/Modal/Modal";
 import IAvatarBoxProps from "./IAvatarBoxProps";
+import AccessControl from "../../permissionRoutes/AccessControl";
 
 const AvatarBox: FC<IAvatarBoxProps> = (props): ReactElement => {
-    const {avatar, directoryName, height, id, width, defaultImg, useMutation} = props;
+    const {role, avatar, directoryName, height, id, width, defaultImg, useMutation} = props;
     
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const editAvatarModalCloser = () => {
@@ -27,7 +28,10 @@ const AvatarBox: FC<IAvatarBoxProps> = (props): ReactElement => {
                 className={styles.avatar}
                 style={{width: `${props.width}px`}}
             >
-                <div className={styles.backdrop} onClick={() => {setShowAvatarModal(true);}}></div>
+                <AccessControl allowedRoles={[role]}>
+                    <div className={styles.backdrop} onClick={() => {setShowAvatarModal(true);}} />
+                </AccessControl>
+                
                 {props.avatar !== undefined ? 
                     <img 
                         className={styles.avatarImg}

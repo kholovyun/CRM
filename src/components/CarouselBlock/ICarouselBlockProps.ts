@@ -9,7 +9,7 @@ export default interface ICarouselBlockProps {
     id: string
     role: ERoles
     directoryName: EDocumentsDirectories
-    blockTitle: string
+    carouselTitle: string
     initialState: IDocumentCreateDto | IDiplomaCreateDto
     noElementsText: string
     addElementText: string

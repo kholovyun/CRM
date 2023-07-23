@@ -8,6 +8,17 @@
     background-color: var(--light_blue_half_opacity);
 }
 
+.informationBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+    background: var(--light_blue);
+    border-radius: 25px;
+    flex-grow: 1;
+    gap: 5px;
+}
+
 .line {
     display: flex;
     gap: 10px;

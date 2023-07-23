@@ -32,7 +32,7 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
             {doctor && <CarouselBlock 
                 id={doctor.id}
                 directoryName={EDocumentsDirectories.doctor}
-                blockTitle={"Сертификаты о дополнительном образовании"} 
+                carouselTitle={"Сертификаты о дополнительном образовании"} 
                 noElementsText={"Сертификаты еще не добавлены"}
                 addElementText={"Добавить новый сертификат"}
                 initialState={{ doctorId: doctor.id, url: undefined }}
@@ -50,9 +50,12 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
                         fn={() => getQuestions(doctor!.id)}
                         text="Вопросы" />
                     <ContentLink
+                        contentArrowRight
                         fn={() => navigate("/admin-page/children")}
                         text="Перейти в админ панель" />
+                    
                 </ContentLinkBox>
+                
             </AccessControl>
             
             {questions && doctor && <div className={styles.allQuestions}>

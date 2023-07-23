@@ -5,7 +5,6 @@ import AvatarBox from "../AvatarBox/AvatarBox.tsx";
 import {ERoles} from "../../enums/ERoles.ts";
 import Modal from "../UI/Modal/Modal.tsx";
 import EditChildForm from "./EditChildForm/EditChildForm.tsx";
-import {SubInfoTable} from "../UI/SubInfoTable/SubInfoTable.tsx";
 import AccessControl from "../../permissionRoutes/AccessControl.tsx";
 import Btn from "../UI/Btn/Btn.tsx";
 import {EBtnSize} from "../../enums/EBtnSize.ts";
@@ -39,6 +38,7 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                 <EditChildForm childData={data} closeModal={closeModal}/>
             </Modal>
             <AvatarBox 
+                role={ERoles.PARENT}
                 width={300}
                 height={300}
                 avatar={data.photo}
@@ -47,7 +47,7 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                 defaultImg={defaultImg}
                 useMutation={useEditChildMutation}
             />
-            <SubInfoTable>
+            <div className={styles.informationBox}>
                 <div className={styles.line}>
                     <div className={styles.field}>
                         <p className={styles.fieldTitle}>Фамилия</p>
@@ -99,7 +99,7 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                         </div>
                     </AccessControl>
                 </div>
-            </SubInfoTable>
+            </div>
         </div>
     );
 };

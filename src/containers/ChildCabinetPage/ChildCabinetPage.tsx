@@ -19,9 +19,7 @@ import { useLazyGetVaccinationsByChildIdQuery } from "../../app/services/vaccina
 import { useLazyGetSpecExamsByChildIdQuery } from "../../app/services/specExams.ts";
 import NewbornData from "./NewbornData/NewbornData.tsx";
 import ChildSpecExams from "../../components/ChildTables/ChildSpecExams/ChildSpecExams.tsx";
-import { EImageDirectories } from "../../enums/EImageDirectories.ts";
-import { useCreateDocumentMutation, useGetDocumentsByChildIdQuery } from "../../app/services/documents.ts";
-import { useDeleteDiplomaMutation } from "../../app/services/diplomas.ts";
+import { useCreateDocumentMutation, useDeleteDocumentMutation, useGetDocumentsByChildIdQuery } from "../../app/services/documents.ts";
 import { EDocumentsDirectories } from "../../enums/EDocumentsDirectories.ts";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
@@ -39,14 +37,14 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
             {isSuccess && <CardChildPage data={child} />}
             {child && <CarouselBlock
                 id={child.id}
+                carouselTitle="Результаты последних обследований"
                 addElementText="Добавить новый результат"
                 noElementsText="Результаты еще не добавлены"
                 directoryName={EDocumentsDirectories.child}
-                blockTitle="Результаты последних обследований"
                 initialState={{childId: child.id, url: undefined}}
                 role={ERoles.PARENT}
                 useCreateMutation={useCreateDocumentMutation}
-                useDeleteMuatation={useDeleteDiplomaMutation}
+                useDeleteMuatation={useDeleteDocumentMutation}
                 useGetElementsQuery={useGetDocumentsByChildIdQuery}
             />}
             {child && <AskQuestionForm

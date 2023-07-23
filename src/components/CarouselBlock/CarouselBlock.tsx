@@ -18,7 +18,7 @@ import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnClass } from "../../enums/EBtnClass";
 
 const CarouselBlock: FunctionComponent<ICarouselBlockProps> = (props): ReactElement => {
-    const {id, useGetElementsQuery, role, initialState, blockTitle, useCreateMutation, useDeleteMuatation, directoryName, noElementsText, addElementText} = props;
+    const {id, useGetElementsQuery, role, initialState, carouselTitle, useCreateMutation, useDeleteMuatation, directoryName, noElementsText, addElementText} = props;
     const [showModal, setShowModal] = useState(false);
     const { data: elements } = useGetElementsQuery(id);
     const openModal = () => {
@@ -41,11 +41,10 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = (props): ReactElem
     };
     
     const [createElement, {isError, isSuccess, error}] = useCreateMutation();
-    errorHandler(isError, error);
-    successHandler(isSuccess, ("Документ добавлен"));
-
     const [deleteElement, {isError: isErrorDelete, isSuccess: isSuccessDelete, error: errorDelete}] = useDeleteMuatation();
     errorHandler(isErrorDelete, errorDelete);
+    errorHandler(isError, error);
+    successHandler(isSuccess, ("Документ добавлен"));
     successHandler(isSuccessDelete,("Документ удален"), closeFullImageModal);
     
     const [inputValues, setInputValues] = useState<IDiplomaCreateDto | IDocumentCreateDto>(initialState);
@@ -188,8 +187,8 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = (props): ReactElem
             </Modal>
 
             <div className={styles.carouselBlock}>
-                <p className={styles.carouselTitle}>{blockTitle}</p>
-                {elements && elements.length === 0 ? <p className={styles.noElements}>{noElementsText}</p>
+                <p className={styles.carouselTitle}>{carouselTitle}</p>
+                {elements && elements.length === 0 ? <p className={styles.noElementsText}>{noElementsText}</p>
                     :
                     <AliceCarousel 
                         responsive={{0: {
@@ -212,7 +211,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = (props): ReactElem
                     />
                 }
                 <AccessControl allowedRoles={[role]}>
-                    <div className={styles.plus}>
+                    <div className={styles.addElement}>
                         <div className={styles.addBtn} onClick={openModal}>
                         +
                         </div>

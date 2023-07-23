@@ -25,7 +25,11 @@
     background: url("../../../assets/img/arrow-short.svg") center/contain no-repeat;
     width: 40px;
     height: 25px;
-    transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+.contentArrowRight {
+    transform: rotate(0deg)
 }
 
 @media screen and (max-width: 550px) {

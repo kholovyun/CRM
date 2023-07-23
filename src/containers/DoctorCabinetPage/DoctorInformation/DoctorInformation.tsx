@@ -8,7 +8,6 @@ import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import AvatarBox from "../../../components/AvatarBox/AvatarBox";
 import { ERoles } from "../../../enums/ERoles";
-import { SubInfoTable } from "../../../components/UI/SubInfoTable/SubInfoTable";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import AccessControl from "../../../permissionRoutes/AccessControl";
 import ageTextFormatter from "../../../helpers/ageTextFormatter";
@@ -37,6 +36,7 @@ const DoctorInformation: FC<IDoctorInformationProps> = ({ doctor, role }): React
                 />
             </Modal>
             <AvatarBox
+                role={ERoles.DOCTOR}
                 height={320}
                 width={300}
                 avatar={doctor?.photo}
@@ -45,7 +45,7 @@ const DoctorInformation: FC<IDoctorInformationProps> = ({ doctor, role }): React
                 defaultImg={defaultImg}
                 useMutation={useEditDoctorMutation}
             />
-            <SubInfoTable>
+            <div className={styles.personalInformationBox}>
                 <div className={styles.personalInformationLine}>
                     <div className={styles.personalInformationField}>
                         <p className={styles.fieldTitle}>ФИО</p>
@@ -99,7 +99,7 @@ const DoctorInformation: FC<IDoctorInformationProps> = ({ doctor, role }): React
                         </div>
                     </AccessControl>
                 </div>  
-            </SubInfoTable>
+            </div>
         </div>
     );
 };
