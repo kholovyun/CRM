@@ -8,9 +8,11 @@ import Modal from "../../../../components/UI/Modal/Modal";
 import EditUserForm from "../../../UserForms/EditUserForm/EditUserForm";
 import { useAppSelector } from "../../../../app/hooks";
 import { ERoles } from "../../../../enums/ERoles";
+import RenewSubForm from "../../../UserForms/RenewSubForm/RenewSubForm";
 
 const ParentCard: FunctionComponent<IParentCardProps> = (props: IParentCardProps): ReactElement => {
     const [showEditUserModal, setShowEditUserModal] = useState(false);
+    const [showSubModal, setShowSubModal] = useState<boolean>(false);
     const { user } = useAppSelector(state => state.auth);
 
     const closeEditModal = () => {
@@ -21,12 +23,18 @@ const ParentCard: FunctionComponent<IParentCardProps> = (props: IParentCardProps
         e.stopPropagation();
         setShowEditUserModal(true);
     };
+    const showSubModalToogle = () => {
+        setShowSubModal(!showSubModal);
+    };
 
     return (
         <div className={styles.card_box}>
             <Modal show={showEditUserModal} close={closeEditModal}>
                 <EditUserForm closeModal={closeEditModal} />
             </Modal>
+            {showSubModal && <Modal show={showSubModal} close={() => setShowSubModal(false)}>
+                <RenewSubForm parent={props.parent}/>
+            </Modal>}
             <div className={styles.data_column}>
                 <h1 className={styles.h1_title}>Личные данные</h1>
                 <div className={styles.card_row}>
@@ -56,7 +64,7 @@ const ParentCard: FunctionComponent<IParentCardProps> = (props: IParentCardProps
             </div>
             <div className={styles.btn_row}>
                 <Btn title={"Продлить подписку"}
-                    size={EBtnSize.small} btnClass={EBtnClass.white_active}
+                    size={EBtnSize.small} btnClass={EBtnClass.white_active} onclick={() => showSubModalToogle()}
                 />
             </div>
         </div>

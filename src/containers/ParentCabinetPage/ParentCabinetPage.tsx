@@ -37,7 +37,6 @@ export const ParentCabinetPage: FunctionComponent = (): ReactElement => {
     const showModalToogle = () => {
         setShowActivationModal(!showActivationModal);
     };
-
     const activateParentHandler = async (): Promise<void> => {
         if (parent) {
             await activateParent(parent.id);
