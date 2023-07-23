@@ -2,44 +2,26 @@ import {useState, ChangeEvent, createRef, useRef, FunctionComponent, ReactElemen
 import AvatarEditor from "react-avatar-editor";
 import IImageProps from "./IImageProps";
 import styles from "./AvatarUploader.module.css";
-import { useEditDoctorMutation } from "../../../app/services/doctors";
 import IAvatarUploaderProps from "./IAvatarUploaderProps";
 import { toast } from "react-toastify";
-import { useEditChildMutation } from "../../../app/services/children";
-import { ERoles } from "../../../enums/ERoles";
 import errorHandler from "../../../helpers/errorHandler";
 
 const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarUploaderProps): ReactElement => { 
-    const [uploadDoctorAvatar, 
-        {
-            isSuccess: isSuccesDoctorAvatar,
-            isError: isErrorDoctorAvatar,
-            error: errorDoctorAvatar, 
-        }
-    ]= useEditDoctorMutation();
+    const [uploadAvatar, {isSuccess, isError, error}]= props.useMutation();
 
-    const [uploadChildAvatar, 
-        {
-            isSuccess: isSuccesChildAvatar,
-            isError: isErrorChildAvatar,
-            error: errorChildAvatar, 
-        }
-    ]= useEditChildMutation();
-
-    errorHandler(isErrorDoctorAvatar, errorDoctorAvatar);
-    errorHandler(isErrorChildAvatar, errorChildAvatar);
-
+    errorHandler(isError, error);
+    
     const [fileName, setFileName] = useState<string>("");
     const editorRef: RefObject<AvatarEditor> = createRef();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(()=> {
-        if(isSuccesDoctorAvatar || isSuccesChildAvatar) {
+        if(isSuccess) {
             toast.info("Аватар изменен");
             props.modalCloser();
             cancelFileHandler();
         }
-    }, [isSuccesDoctorAvatar, isSuccesChildAvatar]);
+    }, [isSuccess]);
 
     const [imageProps, setImageProps] = useState<IImageProps>({
         image: "",
@@ -104,9 +86,7 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarU
                     const file = new File([blob], "sample.png", {type: blob.type});
                     const formData = new FormData();
                     formData.append("photo", file);
-                    props.role === ERoles.DOCTOR ? 
-                        uploadDoctorAvatar({id: props.id || "", doctor:formData}) :
-                        uploadChildAvatar({id: props.id || "", child:formData});
+                    uploadAvatar({id: props.id || "", data:formData});
                 }
                 ).catch((e: Error) => {
                     toast.error(`Ошибка ${e.message}`);

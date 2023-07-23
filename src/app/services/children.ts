@@ -35,11 +35,11 @@ const childrenApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Child"],
         }),
-        editChild: build.mutation<IChildGetDto, { id: string, child: FormData }>({
-            query: ({ id, child }) => ({
+        editChild: build.mutation<IChildGetDto, { id: string, data: FormData }>({
+            query: ({ id, data }) => ({
                 url: `/children/${id}`,
                 method: "PATCH",
-                body: child,
+                body: data,
             }),
             invalidatesTags: ["Child"],
         })

@@ -27,11 +27,11 @@ const doctorsApi = api.injectEndpoints({
             }),
             providesTags: ["Doctor"],
         }),
-        editDoctor: build.mutation<IDoctor, { id: string, doctor: FormData }>({
-            query: ({ id, doctor }) => ({
+        editDoctor: build.mutation<IDoctor, { id: string, data: FormData }>({
+            query: ({ id, data }) => ({
                 url: `/doctors/${id}`,
                 method: "PUT",
-                body: doctor,
+                body: data,
             }),
             invalidatesTags: ["Doctor", "User"],
         }),

@@ -12,6 +12,9 @@ import { SubInfoTable } from "../../../components/UI/SubInfoTable/SubInfoTable";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import AccessControl from "../../../permissionRoutes/AccessControl";
 import ageTextFormatter from "../../../helpers/ageTextFormatter";
+import defaultImg from "../../../assets/img/default-doctor.svg";
+import { useEditDoctorMutation } from "../../../app/services/doctors";
+import { EImageDirectories } from "../../../enums/EImageDirectories";
 
 interface IDoctorInformationProps {
     doctor: IDoctorWithUser
@@ -25,8 +28,6 @@ const DoctorInformation: FC<IDoctorInformationProps> = ({ doctor, role }): React
         setShowEditUserModal(false);
     };
 
-    
-
     return (
         <div className={styles.doctorInformationBlock}>
             <Modal show={showEditUserModal} close={editPersonalInformationModalCloser}>
@@ -36,11 +37,13 @@ const DoctorInformation: FC<IDoctorInformationProps> = ({ doctor, role }): React
                 />
             </Modal>
             <AvatarBox
-                role={ERoles.DOCTOR}
                 height={320}
                 width={300}
                 avatar={doctor?.photo}
                 id={doctor?.id}
+                directoryName={EImageDirectories.doctor}
+                defaultImg={defaultImg}
+                useMutation={useEditDoctorMutation}
             />
             <SubInfoTable>
                 <div className={styles.personalInformationLine}>

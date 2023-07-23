@@ -36,7 +36,7 @@ const EditChildForm: FunctionComponent<IEditFormProps> = ({childData, closeModal
             const [key, value] = entry;
             formData.append(key, value);
         });
-        updateChild({id: childData.id, child: formData}); 
+        updateChild({id: childData.id, data: formData}); 
     };
 
     return (
