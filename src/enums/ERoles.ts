@@ -3,5 +3,4 @@ export enum ERoles {
     DOCTOR = "DOCTOR",
     PARENT = "PARENT",
     SUPERADMIN = "SUPERADMIN",
-    CHILD = "CHILD"
 }
