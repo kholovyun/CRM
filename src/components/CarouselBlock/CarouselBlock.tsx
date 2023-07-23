@@ -5,13 +5,10 @@ import "./Carousel.css";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Modal from "../UI/Modal/Modal";
 import defaultDiplomaImg from "../../assets/img/default-diploma-photo.svg";
-import { useCreateDiplomaMutation, useDeleteDiplomaMutation, useGetDiplomasByDoctorQuery } from "../../app/services/diplomas";
 import IDiplomaCreateDto from "../../interfaces/IDiploma/IDiplomaCreateDto";
 import ICarouselBlockProps from "./ICarouselBlockProps";
 import errorHandler from "../../helpers/errorHandler";
 import { fileToDataString } from "../../helpers/fileToDataString";
-import { ERoles } from "../../enums/ERoles";
-import { useCreateDocumentMutation, useDeleteDocumentMutation, useGetDocumentsByChildIdQuery } from "../../app/services/documents";
 import IDocumentCreateDto from "../../interfaces/IDocument/IDocumentCreateDto";
 import AccessControl from "../../permissionRoutes/AccessControl";
 import successHandler from "../../helpers/successHandler";
@@ -20,8 +17,10 @@ import Btn from "../UI/Btn/Btn";
 import { EBtnSize } from "../../enums/EBtnSize";
 import { EBtnClass } from "../../enums/EBtnClass";
 
-const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockTitle}): ReactElement => {
+const CarouselBlock: FunctionComponent<ICarouselBlockProps> = (props): ReactElement => {
+    const {id, useGetElementsQuery, role, initialState, blockTitle, useCreateMutation, useDeleteMuatation, directoryName, noElementsText, addElementText} = props;
     const [showModal, setShowModal] = useState(false);
+    const { data: elements } = useGetElementsQuery(id);
     const openModal = () => {
         setShowModal(true);
     };
@@ -33,6 +32,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
     const openFullImageModal = () => {
         setShowFullImageModal(true);
     };
+
     const closeFullImageModal = () => {
         deletionBlockCancel();
         setShowFullImageModal(false);
@@ -40,26 +40,15 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
         setClickedImageId("");
     };
     
-    const {data: elements} = role === ERoles.DOCTOR ? useGetDiplomasByDoctorQuery(id) : useGetDocumentsByChildIdQuery(id);
-    
-    const [createElement, {isError, isSuccess, error}] = (role === ERoles.DOCTOR ? useCreateDiplomaMutation() : useCreateDocumentMutation());
+    const [createElement, {isError, isSuccess, error}] = useCreateMutation();
     errorHandler(isError, error);
-    successHandler(isSuccess, (role === ERoles.DOCTOR ? "Сертификат добавлен" : "Документ добавлен"));
+    successHandler(isSuccess, ("Документ добавлен"));
 
-    const [deleteElement, {isError: isErrorDelete, isSuccess: isSuccessDelete, error: errorDelete}] = role === ERoles.DOCTOR ? useDeleteDiplomaMutation() : useDeleteDocumentMutation();
+    const [deleteElement, {isError: isErrorDelete, isSuccess: isSuccessDelete, error: errorDelete}] = useDeleteMuatation();
     errorHandler(isErrorDelete, errorDelete);
-    successHandler(isSuccessDelete,(role === ERoles.DOCTOR ? "Сертификат удален" : "Документ удален"), closeFullImageModal);
+    successHandler(isSuccessDelete,("Документ удален"), closeFullImageModal);
     
-    const initDiplomaState: IDiplomaCreateDto = {
-        doctorId: id,
-        url: undefined
-    };
-
-    const initDocumentState: IDocumentCreateDto = {
-        childId: id,
-        url: undefined,
-    };
-    const [inputValues, setInputValues] = useState<IDiplomaCreateDto | IDocumentCreateDto>(role === ERoles.DOCTOR ? initDiplomaState : initDocumentState);
+    const [inputValues, setInputValues] = useState<IDiplomaCreateDto | IDocumentCreateDto>(initialState);
     const [previewImageSrc, setPreviewImageSrc] = useState<string>();
     const fileInputRef = useRef<HTMLInputElement>(null);
     
@@ -77,7 +66,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
             <img 
                 className={styles.diplomaImg}
                 onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
-                src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${role === ERoles.DOCTOR ? "doctorsDiplomas" : "childrenDocuments"}/${el?.url}` : defaultDiplomaImg} alt={role} />
+                src={el?.url !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${directoryName}/${el?.url}` : defaultDiplomaImg} alt={"document"} />
         </div>; 
     }));
 
@@ -126,7 +115,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
             fileInputRef.current.value = "";
         }
         setFileName("");
-        setInputValues(role === ERoles.DOCTOR ? initDiplomaState : initDocumentState);
+        setInputValues(initialState);
         closeModal();
     };
     
@@ -143,12 +132,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
     };
 
     return (
-        <>
-            
-                
-                    
-                
-            
+        <>         
             <Modal show={showFullImageModal} close={closeFullImageModal}>
                 <div className={styles.fullImage}>
                     <div className={styles.fullImageTop}>
@@ -158,7 +142,6 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
                             onclick={closeFullImageModal}
                         />
                     </div>
-                    
                     <div className={styles.fullImageBottom}>
                         <div className={styles.deletionBlock} style={{display: deletionBlock ? "flex" : "none"}}>
                             <p>Удалить документ?</p>
@@ -179,7 +162,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
                         </div>
                         <img
                             onError={(e) => { e.currentTarget.src = defaultDiplomaImg;}}
-                            src={clickedImageUrl !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${role === ERoles.DOCTOR ? "doctorsDiplomas" : "childrenDocuments"}/${clickedImageUrl}` : defaultDiplomaImg} alt={"diploma"} />
+                            src={clickedImageUrl !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${directoryName}/${clickedImageUrl}` : defaultDiplomaImg} alt={"diploma"} />
                     </div>
                 </div>
             </Modal>
@@ -206,7 +189,7 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
 
             <div className={styles.carouselBlock}>
                 <p className={styles.carouselTitle}>{blockTitle}</p>
-                {elements && elements.length === 0 ? <p className={styles.noElements}>{role === ERoles.DOCTOR ? "Сертификаты еще не добавлены" : "Результаты еще не добавлены"}</p>
+                {elements && elements.length === 0 ? <p className={styles.noElements}>{noElementsText}</p>
                     :
                     <AliceCarousel 
                         responsive={{0: {
@@ -228,12 +211,12 @@ const CarouselBlock: FunctionComponent<ICarouselBlockProps> = ({id, role, blockT
                         items={items}
                     />
                 }
-                <AccessControl allowedRoles={role === ERoles.DOCTOR ? [ERoles.DOCTOR] : [ERoles.PARENT]}>
+                <AccessControl allowedRoles={[role]}>
                     <div className={styles.plus}>
                         <div className={styles.addBtn} onClick={openModal}>
                         +
                         </div>
-                        <p className={styles.addTitle}>{role === ERoles.DOCTOR ? "Добавить сертификат" : "Добавить новый результат"}</p>
+                        <p className={styles.addTitle}>{addElementText}</p>
                     </div>
                 </AccessControl>      
             </div> 

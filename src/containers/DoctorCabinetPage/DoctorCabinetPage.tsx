@@ -14,13 +14,15 @@ import styles from "./DoctorCabinetPage.module.css";
 import { useLazyGetQuestionsByDoctorIdQuery } from "../../app/services/questions";
 import ChildQuestion from "./ChildQuestion/ChildQuestion";
 import AccessControl from "../../permissionRoutes/AccessControl";
+import { useCreateDiplomaMutation, useDeleteDiplomaMutation, useGetDiplomasByDoctorQuery } from "../../app/services/diplomas";
+import { EDocumentsDirectories } from "../../enums/EDocumentsDirectories";
 
 const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const { user } = useAppSelector(state => state.auth);
     const { data: doctor } = useGetDoctorByUserIdQuery({ id: user?.role === ERoles.DOCTOR ? user?.id : String(params.id) });
     const navigate = useNavigate();    
-
+    
     const [getQuestions, {data: questions}] = useLazyGetQuestionsByDoctorIdQuery();
 
     return (
@@ -28,9 +30,17 @@ const DoctorCabinetPage: FunctionComponent = (): ReactElement => {
             {doctor && <DoctorInformation doctor={doctor} role={user!.role} />}
 
             {doctor && <CarouselBlock 
+                id={doctor.id}
+                directoryName={EDocumentsDirectories.doctor}
                 blockTitle={"Сертификаты о дополнительном образовании"} 
-                id={doctor.id} 
-                role={ERoles.DOCTOR} />}
+                noElementsText={"Сертификаты еще не добавлены"}
+                addElementText={"Добавить новый сертификат"}
+                initialState={{ doctorId: doctor.id, url: undefined }}
+                useGetElementsQuery={useGetDiplomasByDoctorQuery}
+                useCreateMutation={useCreateDiplomaMutation}
+                useDeleteMuatation={useDeleteDiplomaMutation}
+                role={ERoles.DOCTOR}
+            />}
 
             {doctor && <DoctorRecommendations role={user!.role} doctorId={doctor.id} />}
             
