@@ -88,7 +88,7 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                         </div>
                         <p className={styles.fieldTextBirthdayTablet}>{new Date(data.dateOfBirth).toLocaleDateString()}{" "}</p>
                     </div>
-                    <AccessControl allowedRoles={[ERoles.PARENT]}>
+                    <AccessControl allowedRoles={[ERoles.PARENT, ERoles.DOCTOR]}>
                         <div className={styles.fieldButton}>
                             <Btn 
                                 onclick={openModal}

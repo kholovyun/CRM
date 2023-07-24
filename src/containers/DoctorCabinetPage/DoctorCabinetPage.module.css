@@ -38,16 +38,6 @@
     color: var(--black_blue);
 }
 
-.arrowDown, .arrowRight {
-    background: url("../../assets/img/arrow-short.svg") center/contain no-repeat;
-    width: 47px;
-    height: 30px;
-}
-
-.arrowDown {
-    transform: rotate(90deg);
-}
-
 .allQuestions {
     background-color: var(--light_blue);
     padding: 20px;
@@ -60,3 +50,7 @@
     margin-bottom: 20px;
     background-color: var(--bg_light_blue);
 }
+
+
+
+
