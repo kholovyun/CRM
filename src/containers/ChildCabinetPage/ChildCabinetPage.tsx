@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement, useEffect } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { CardChildPage } from "../../components/CardChildPage/CardChildPage.tsx";
 import { useGetChildrenByIdQuery } from "../../app/services/children.ts";
@@ -25,6 +25,9 @@ import { EDocumentsDirectories } from "../../enums/EDocumentsDirectories.ts";
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
     const doctorId: string = location.state.doctorId;
     const { data: child, isSuccess } = useGetChildrenByIdQuery(`${params.id}`);
     const [getQuestions, { data: questionsData }] = useLazyGetQuestionsByChildIdQuery();

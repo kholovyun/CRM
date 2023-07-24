@@ -18,16 +18,15 @@ const Question: FunctionComponent<IQuestionProps> = (props: IQuestionProps): Rea
 
     const navigateCabinetHandler = (e: MouseEvent<HTMLParagraphElement>, id: string) => {
         e.stopPropagation();
-        navigate(`/child-cabinet/${id}`);
+        navigate(`/child-cabinet/${id}`, { state: { doctorId: props.doctorId } });
     };
 
     return (
         <div className={styles.question_box}>
             {showFullQuestion && !location.pathname.startsWith("/child-cabinet/") ?
-                <p className={styles.child_data_text}
-                    onClick={(e: MouseEvent<HTMLParagraphElement>) => navigateCabinetHandler(e, props.question.childId)}>
+                <p className={styles.child_data_text}>
                     {new Date(props.question.createdAt).toLocaleDateString()}{" "}
-                    <span className={styles.author}>{props.childData.surname} {props.childData.name}{" "}
+                    <span className={styles.author} onClick={(e: MouseEvent<HTMLParagraphElement>) => navigateCabinetHandler(e, props.question.childId)}>{props.childData.surname} {props.childData.name}{" "}
                         {props.childData.patronim ? props.childData.patronim : null}</span>
                     :
                 </p> : null}

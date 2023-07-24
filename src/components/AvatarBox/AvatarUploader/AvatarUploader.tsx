@@ -86,7 +86,7 @@ const AvatarUploader: FunctionComponent<IAvatarUploaderProps> = (props: IAvatarU
                     const file = new File([blob], "sample.png", {type: blob.type});
                     const formData = new FormData();
                     formData.append("photo", file);
-                    uploadAvatar({id: props.id || "", data:formData});
+                    uploadAvatar({ id: props.id || "", data: formData });
                 }
                 ).catch((e: Error) => {
                     toast.error(`Ошибка ${e.message}`);

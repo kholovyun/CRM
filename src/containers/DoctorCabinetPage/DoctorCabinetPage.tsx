@@ -12,6 +12,7 @@ import AccessControl from "../../permissionRoutes/AccessControl";
 import { useCreateDiplomaMutation, useDeleteDiplomaMutation, useGetDiplomasByDoctorQuery } from "../../app/services/diplomas";
 import { EDocumentsDirectories } from "../../enums/EDocumentsDirectories";
 import DoctorQuestions from "./DoctorQuestions/DoctorQuestions";
+import styles from "./DoctorCabinetPage.module.css";
 
 const DoctorCabinetPage:FC = ():ReactElement => {
     const params = useParams();
@@ -39,6 +40,10 @@ const DoctorCabinetPage:FC = ():ReactElement => {
             {doctor && <DoctorRecommendations role={user!.role} doctorId={doctor.id} />}
             
             <AccessControl allowedRoles={[ERoles.DOCTOR]}>
+                <div className={styles.adminPanelBtn} onClick={() => navigate("/admin-page/children")}>
+                    <p>Перейти в админ панель</p>
+                    <div className={styles.arrow}/>
+                </div>
                 {doctor && <DoctorQuestions id={doctor.id}/>}
             </AccessControl>
             
