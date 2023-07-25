@@ -27,6 +27,7 @@ import AllChildren from "./containers/AdminPage/AdminTables/AllChildren/AllChild
 import AllReviews from "./containers/AdminPage/AdminTables/AllReviews/AllReviews.tsx";
 import EditUserForm from "./containers/UserForms/EditUserForm/EditUserForm.tsx";
 import Treaty from "./components/Treaty/Treaty.tsx";
+import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy.tsx";
 
 const App: FunctionComponent = (): ReactElement => {
     return (
@@ -39,6 +40,7 @@ const App: FunctionComponent = (): ReactElement => {
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/treaty" element={<Treaty />} />
+                    <Route path="/policy" element={<PrivacyPolicy />} />
                     <Route element={<PrivateRoute allowedRoles={[ERoles.SUPERADMIN, ERoles.ADMIN, ERoles.DOCTOR]} />}>
                         <Route path="/admin-page" element={<AdminPage />}>
                             <Route path="/admin-page/parents" element={<AllParents />} />
