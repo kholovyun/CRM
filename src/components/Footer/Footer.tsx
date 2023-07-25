@@ -15,7 +15,7 @@ const Footer: FunctionComponent = (): ReactElement => {
         <div className={styles.Footer_bg}>
             <div className={styles.Footer_content_container}>
                 <div className={styles.Footer_flex_column}>
-                    <NavLink to={"/"} className={styles.FooterNavlink}>Договор оферты</NavLink>
+                    <NavLink to={"/treaty"} className={styles.FooterNavlink}>Договор оферты</NavLink>
                     <NavLink to={"/"} className={`${styles.FooterNavlink}`}>Политика конфеденциальности</NavLink>
                 </div>
                 <div className={styles.Footer_flex_column}>
