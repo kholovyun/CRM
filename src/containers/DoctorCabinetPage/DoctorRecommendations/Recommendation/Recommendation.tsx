@@ -148,6 +148,7 @@ const Recommendation: FunctionComponent<IRecommendationProps> = ({ recommendatio
                                     className={styles.textarea} 
                                     placeholder={"Написать рекомендацию"} 
                                     maxLength={250}
+                                    disabled={!editRecommendation}
                                 />
                                
                                 {editRecommendation && <span className={styles.countOftext}>{values.text.length}/250</span>}

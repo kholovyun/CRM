@@ -49,10 +49,6 @@ const DoctorQuestions: FC<IDoctorQuestionsProps> = ({id}): ReactElement => {
         }
     };
 
-    useEffect(() => {
-        console.log("VOOOTe", filtredQuestion);
-    }, [filtredQuestion]);
-
     return (
         <div className={styles.questionsBlock}>
             <div className={styles.button} onClick={showQuestionList}>
@@ -62,7 +58,7 @@ const DoctorQuestions: FC<IDoctorQuestionsProps> = ({id}): ReactElement => {
             {questionsList && 
             
             <div className={styles.group_row}>
-                <label htmlFor={"doctor"} className={styles.label_text}>Пациент</label>
+                <label htmlFor={"doctor"} className={styles.label_text}>Пациенты</label>
                 <div className={styles.input_flex_column}>
                     <div className={styles.tiny_select_wraper}>
                         <select className={styles.tiny_select} id={"doctor"} name="doctor" 

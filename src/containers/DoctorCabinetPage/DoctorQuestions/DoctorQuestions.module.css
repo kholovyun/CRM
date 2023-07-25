@@ -1,5 +1,5 @@
 .questionsBlock {
-    padding: 30px 60px;
+    padding: 13px 23px;
     background-color: var(--light_blue);
     border-radius: 2rem;
     display: flex;
@@ -22,8 +22,9 @@
 }
 
 .button p {
-    font-size: 20px;
+    font-size: 16px;
     color: var(--black_blue);
+    font-weight: normal;
 }
 
 .arrow {
@@ -39,19 +40,17 @@
 
 .questionsList {
     width: 100%;
-    min-height: 600px;
     display: flex;
     flex-direction: column;
-    /* overflow-y: scroll; */
     gap: 15px;
 }
 
 .group_row {
     display: flex;
     gap: 1rem;
-    padding-bottom: 20px;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .input_flex_column {
@@ -111,16 +110,39 @@
     .group_row {
         align-items: center;
     }
+
 }
 
 @media screen and (min-width: 600px) {
     .custom_option {
         font-size: 1rem;
     }
+
+    .questionsBlock {
+        padding: 20px 40px;
+    }
+
+    .button p {
+        font-size: 20px;
+    }
+
+    .group_row {
+        flex-wrap: nowrap;
+    }
 }
 
 @media screen and (min-width: 900px) {
-    .group_row {
-        align-items: baseline;
+    .questionsBlock {
+        padding: 30px 60px;
+    }
+
+    .button p {
+        font-size: 20px;
+    }
+    
+    .questionsBlock {
+        flex-basis: 100%;
     }
 }
+
+

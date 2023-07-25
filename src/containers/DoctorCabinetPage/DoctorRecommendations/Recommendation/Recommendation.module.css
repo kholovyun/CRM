@@ -120,6 +120,10 @@
     min-height: 100px;
 }
 
+.textarea:disabled {
+    color: var(--black_blue);
+}
+
 .countOftext {
     position: absolute;
     bottom: 10px;
