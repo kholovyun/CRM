@@ -1,47 +1,42 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import { FC, ReactElement, useState } from "react";
 import styles from "./AvatarBox.module.css";
 import AvatarUploader from "./AvatarUploader/AvatarUploader";
 import Modal from "../UI/Modal/Modal";
-import defaultDoctorImg from "../../assets/img/default-doctor.svg";
-import defaultChildImg from "../../assets/img/default-child-photo.svg";
-import { ERoles } from "../../enums/ERoles";
+import IAvatarBoxProps from "./IAvatarBoxProps";
+import AccessControl from "../../permissionRoutes/AccessControl";
 
-interface IAvatarBoxProps {
-    avatar: string
-    id: string
-    role: ERoles
-    width: number
-    height: number
-}
-
-const AvatarBox: FunctionComponent<IAvatarBoxProps> = (props: IAvatarBoxProps): ReactElement => {
-    const defaultImg = props.role === ERoles.DOCTOR ? defaultDoctorImg : defaultChildImg;
-    const imgSrc = props.role === ERoles.DOCTOR ? "doctorsImgs" : "childrenImgs";
+const AvatarBox: FC<IAvatarBoxProps> = (props): ReactElement => {
+    const {role, avatar, directoryName, height, id, width, defaultImg, useMutation} = props;
+    
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const editAvatarModalCloser = () => {
         setShowAvatarModal(false);
     };
+    
     return (
         <>
             <Modal show={showAvatarModal} close={editAvatarModalCloser}>
                 <AvatarUploader 
-                    role = {props.role}
-                    id = {props.id}
-                    width={props.width}
-                    height={props.height}
+                    id = {id}
+                    width={width}
+                    height={height}
                     modalCloser={editAvatarModalCloser}
+                    useMutation={useMutation}
                 />
             </Modal>
             <div 
                 className={styles.avatar}
                 style={{width: `${props.width}px`}}
             >
-                <div className={styles.backdrop} onClick={() => {setShowAvatarModal(true);}}></div>
+                <AccessControl allowedRoles={[role]}>
+                    <div className={styles.backdrop} onClick={() => {setShowAvatarModal(true);}} />
+                </AccessControl>
+                
                 {props.avatar !== undefined ? 
                     <img 
                         className={styles.avatarImg}
                         onError={(e) => { e.currentTarget.src = defaultImg;}}
-                        src={props.avatar !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${imgSrc}/${props.avatar}` : defaultImg} alt={"avatar"}
+                        src={avatar !== "" ? `${import.meta.env.VITE_BASE_URL}/uploads/${directoryName}/${avatar}` : defaultImg} alt={"avatar"}
                     /> : <img className={styles.doctorImage} src={defaultImg} alt={"avatar"}/>
                 }
             </div>

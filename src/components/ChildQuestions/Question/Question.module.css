@@ -28,11 +28,11 @@
 .author {
     color: var(--gray_blue);
     font-weight: 600;
+    cursor: pointer;
 }
 
 .child_data_text:hover,
 .child_data_text:hover .author {
-    cursor: pointer;
     color: var(--black_blue);
 }
 

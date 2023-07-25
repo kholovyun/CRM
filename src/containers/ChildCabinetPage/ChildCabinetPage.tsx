@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement, useEffect } from "react";
 import { Container } from "../../components/UI/Container/Container";
 import { CardChildPage } from "../../components/CardChildPage/CardChildPage.tsx";
 import { useGetChildrenByIdQuery } from "../../app/services/children.ts";
@@ -19,12 +19,17 @@ import { useLazyGetVaccinationsByChildIdQuery } from "../../app/services/vaccina
 import { useLazyGetSpecExamsByChildIdQuery } from "../../app/services/specExams.ts";
 import NewbornData from "./NewbornData/NewbornData.tsx";
 import ChildSpecExams from "../../components/ChildTables/ChildSpecExams/ChildSpecExams.tsx";
+import { useCreateDocumentMutation, useDeleteDocumentMutation, useGetDocumentsByChildIdQuery } from "../../app/services/documents.ts";
+import { EDocumentsDirectories } from "../../enums/EDocumentsDirectories.ts";
 
 export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const params = useParams();
     const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
     const doctorId: string = location.state.doctorId;
-    const { data, isSuccess } = useGetChildrenByIdQuery(`${params.id}`);
+    const { data: child, isSuccess } = useGetChildrenByIdQuery(`${params.id}`);
     const [getQuestions, { data: questionsData }] = useLazyGetQuestionsByChildIdQuery();
     const [getVisits, { data: visitsData }] = useLazyGetVisitsByChildIdQuery();
     const [getAllergies, { data: allergiesData }] = useLazyGetAllergiesByChildIdQuery();
@@ -32,56 +37,63 @@ export const ChildCabinetPage: FunctionComponent = (): ReactElement => {
     const [getExaminations, { data: examsData }] = useLazyGetSpecExamsByChildIdQuery();
     return (
         <Container>
-            {isSuccess && <CardChildPage data={data} />}
-            {data && <CarouselBlock
-                id={data?.id}
-                blockTitle="Результаты последних обследований"
-                role={ERoles.CHILD}
+            {isSuccess && <CardChildPage data={child} />}
+            {child && <CarouselBlock
+                id={child.id}
+                carouselTitle="Результаты последних обследований"
+                addElementText="Добавить новый результат"
+                noElementsText="Результаты еще не добавлены"
+                directoryName={EDocumentsDirectories.child}
+                initialState={{childId: child.id, url: undefined}}
+                role={ERoles.PARENT}
+                useCreateMutation={useCreateDocumentMutation}
+                useDeleteMuatation={useDeleteDocumentMutation}
+                useGetElementsQuery={useGetDocumentsByChildIdQuery}
             />}
-            {data && <AskQuestionForm
+            {child && <AskQuestionForm
                 childId={String(params.id)}
                 doctorId={doctorId}
-                parentId={data.parentId}
+                parentId={child.parentId}
             />}
-            {data && <ContentLinkRow>
-                <LinkWithChildren fn={() => getQuestions(data.id)} text={"Ранее заданные вопросы"}>
-                    {data && questionsData &&
+            {child && <ContentLinkRow>
+                <LinkWithChildren fn={() => getQuestions(child.id)} text={"Ранее заданные вопросы"}>
+                    {child && questionsData &&
                         <ChildQuestions questions={questionsData}
                             childData={
                                 {
-                                    name: data.name,
-                                    surname: data.surname,
-                                    patronim: data.patronim ? data.patronim : "",
-                                    photo: data.photo
+                                    name: child.name,
+                                    surname: child.surname,
+                                    patronim: child.patronim ? child.patronim : "",
+                                    photo: child.photo
                                 }
                             } />
                     }
                 </LinkWithChildren>
-                <LinkWithChildren fn={() => getVisits(data.id)} text={"Приемы у врача"}>
-                    {data && visitsData && <ChildVisits childId={data.id} visits={visitsData} />}
+                <LinkWithChildren fn={() => getVisits(child.id)} text={"Приемы у врача"}>
+                    {child && visitsData && <ChildVisits childId={child.id} visits={visitsData} />}
                 </LinkWithChildren>
                 <LinkWithChildren fn={() => console.log("Сведения о новорожденном")} text={"Сведения о новорожденном"}>
-                    {data && <NewbornData child={data} />}
+                    {child && <NewbornData child={child} />}
                 </LinkWithChildren>
-                <LinkWithChildren fn={() => getVaccinations(data.id)} text={"Сведения о профилактических прививках"}>
-                    {data && vaccinationsData &&
+                <LinkWithChildren fn={() => getVaccinations(child.id)} text={"Сведения о профилактических прививках"}>
+                    {child && vaccinationsData &&
                         <ChildVaccinations
                             vaccinations={vaccinationsData}
-                            childId={data.id}
+                            childId={child.id}
                         />
                     }
                 </LinkWithChildren>
-                <LinkWithChildren fn={() => getAllergies(data.id)} text={"Сведения об аллергическом статусе"}>
-                    {data && allergiesData &&
+                <LinkWithChildren fn={() => getAllergies(child.id)} text={"Сведения об аллергическом статусе"}>
+                    {child && allergiesData &&
                         <ChildAllergies
-                            childId={data.id}
+                            childId={child.id}
                             allergies={allergiesData} />}
                 </LinkWithChildren>
-                <LinkWithChildren fn={() => getExaminations(data.id)} text={"Осмотры врачами других специальностей"}>
-                    {data && examsData &&
+                <LinkWithChildren fn={() => getExaminations(child.id)} text={"Осмотры врачами других специальностей"}>
+                    {child && examsData &&
                         <ChildSpecExams
                             specExams={examsData}
-                            childId={data.id} />
+                            childId={child.id} />
                     }
                 </LinkWithChildren>
             </ContentLinkRow>

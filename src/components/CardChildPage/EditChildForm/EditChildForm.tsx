@@ -13,6 +13,8 @@ import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import { FormBox } from "../../../containers/UserForms/FormBox/FormBox";
+import AccessControl from "../../../permissionRoutes/AccessControl";
+import { ERoles } from "../../../enums/ERoles";
 
 const EditChildForm: FunctionComponent<IEditFormProps> = ({childData, closeModal}): ReactElement => {
     
@@ -36,7 +38,7 @@ const EditChildForm: FunctionComponent<IEditFormProps> = ({childData, closeModal
             const [key, value] = entry;
             formData.append(key, value);
         });
-        updateChild({id: childData.id, child: formData}); 
+        updateChild({id: childData.id, data: formData}); 
     };
 
     return (
@@ -52,42 +54,44 @@ const EditChildForm: FunctionComponent<IEditFormProps> = ({childData, closeModal
                 {({isValid, handleSubmit}) => (
                     <Form className={styles.form}>
                         <p className={styles.formTitle}>Изменение данных</p>
-                        <div className={styles.formLine}>
-                            <div className={styles.formFieldBox}>
-                                <ErrorMessage name="surname" className={styles.errorText} component="div" />
-                                <p className={styles.fieldTitle}>Фамилия</p>
-                                <Field name="surname" className={styles.field} type="text" placeholder="Фамилия" />
-                            </div>
-                        </div>
-                        <div className={styles.formLine}>
-                            <div className={styles.formFieldBox}>
-                                <ErrorMessage name="name" className={styles.errorText} component="div" />
-                                <p className={styles.fieldTitle}>Имя</p>
-                                <Field name="name" className={styles.field} type="text" placeholder="Имя" />
-                            </div>
-                            <div className={styles.formFieldBox}>
-                                <ErrorMessage name="patronim" className={styles.errorText} component="div" />
-                                <p className={styles.fieldTitle}>Отчество</p>
-                                <Field name="patronim" className={styles.field} type="text" placeholder="Отчество" />
-                            </div>
-                        </div>
-                        <div className={styles.formLine}>
-                            <div className={styles.formFieldBox}>
-                                <ErrorMessage name="dateOfBirth" className={styles.errorText} component="div" />
-                                <p className={styles.fieldTitle}>Дата рождения</p>
-                                <Field name="dateOfBirth" className={styles.field} type="date" />
-                            </div>
-                            <div className={styles.formFieldBox}>
-                                <ErrorMessage  name="sex" className={styles.errorText} component="div" />
-                                <p className={styles.fieldTitle}>Пол</p>
-                                <div className={styles.selectSex}>
-                                    <Field name="sex" as="select" className={styles.field} placeholder="Пол" id="sex" >
-                                        <option value={ESex.FEMALE}>{ESex.FEMALE}</option>
-                                        <option value={ESex.MALE}>{ESex.MALE}</option>
-                                    </Field>
+                        <AccessControl allowedRoles={[ERoles.PARENT]}>
+                            <div className={styles.formLine}>
+                                <div className={styles.formFieldBox}>
+                                    <ErrorMessage name="surname" className={styles.errorText} component="div" />
+                                    <p className={styles.fieldTitle}>Фамилия</p>
+                                    <Field name="surname" className={styles.field} type="text" placeholder="Фамилия" />
                                 </div>
                             </div>
-                        </div>
+                            <div className={styles.formLine}>
+                                <div className={styles.formFieldBox}>
+                                    <ErrorMessage name="name" className={styles.errorText} component="div" />
+                                    <p className={styles.fieldTitle}>Имя</p>
+                                    <Field name="name" className={styles.field} type="text" placeholder="Имя" />
+                                </div>
+                                <div className={styles.formFieldBox}>
+                                    <ErrorMessage name="patronim" className={styles.errorText} component="div" />
+                                    <p className={styles.fieldTitle}>Отчество</p>
+                                    <Field name="patronim" className={styles.field} type="text" placeholder="Отчество" />
+                                </div>
+                            </div>
+                            <div className={styles.formLine}>
+                                <div className={styles.formFieldBox}>
+                                    <ErrorMessage name="dateOfBirth" className={styles.errorText} component="div" />
+                                    <p className={styles.fieldTitle}>Дата рождения</p>
+                                    <Field name="dateOfBirth" className={styles.field} type="date" />
+                                </div>
+                                <div className={styles.formFieldBox}>
+                                    <ErrorMessage  name="sex" className={styles.errorText} component="div" />
+                                    <p className={styles.fieldTitle}>Пол</p>
+                                    <div className={styles.selectSex}>
+                                        <Field name="sex" as="select" className={styles.field} placeholder="Пол" id="sex" >
+                                            <option value={ESex.FEMALE}>{ESex.FEMALE}</option>
+                                            <option value={ESex.MALE}>{ESex.MALE}</option>
+                                        </Field>
+                                    </div>
+                                </div>
+                            </div>
+                        </AccessControl>
                         <div className={styles.formLine}>
                             <div className={styles.formFieldBox}>
                                 <ErrorMessage name="height" className={styles.errorText} component="div" />

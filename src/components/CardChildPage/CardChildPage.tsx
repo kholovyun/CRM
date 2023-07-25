@@ -5,13 +5,16 @@ import AvatarBox from "../AvatarBox/AvatarBox.tsx";
 import {ERoles} from "../../enums/ERoles.ts";
 import Modal from "../UI/Modal/Modal.tsx";
 import EditChildForm from "./EditChildForm/EditChildForm.tsx";
-import {SubInfoTable} from "../UI/SubInfoTable/SubInfoTable.tsx";
 import AccessControl from "../../permissionRoutes/AccessControl.tsx";
 import Btn from "../UI/Btn/Btn.tsx";
 import {EBtnSize} from "../../enums/EBtnSize.ts";
 import {EBtnTypes} from "../../enums/EBtnTypes.ts";
 import {EBtnClass} from "../../enums/EBtnClass.ts";
-
+import ageTextFormatter from "../../helpers/ageTextFormatter.ts";
+import defaultImg from "../../assets/img/default-child-photo.svg";
+import { useEditChildMutation } from "../../app/services/children.ts";
+import { EImageDirectories } from "../../enums/EImageDirectories.ts";
+import { EMonths } from "../../enums/EMonths.ts";
 
 type TChild = {
     data: IChildGetDto
@@ -19,22 +22,7 @@ type TChild = {
 export  const  CardChildPage: FC<TChild> = ( {data} ) => {
     const date:Date = new Date(data ? data.dateOfBirth : "");
     const dateNow:Date = new Date();
-    const months:string[]=[
-        "Январь",
-        "Февраль",
-        "Март",
-        "Апрель",
-        "Май",
-        "Июнь",
-        "Июль",
-        "Август",
-        "Сентябрь",
-        "октябрь",
-        "Ноябрь",
-        "Декабрь",
-    ];
     const age:number = dateNow.getFullYear() - date.getFullYear();
-
     const [editChild, setEditChild] = useState(false);
 
     const openModal = () => {
@@ -50,13 +38,16 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                 <EditChildForm childData={data} closeModal={closeModal}/>
             </Modal>
             <AvatarBox 
+                role={ERoles.PARENT}
                 width={300}
                 height={300}
                 avatar={data.photo}
                 id={data.id}
-                role={ERoles.CHILD}
+                directoryName={EImageDirectories.child}
+                defaultImg={defaultImg}
+                useMutation={useEditChildMutation}
             />
-            <SubInfoTable>
+            <div className={styles.informationBox}>
                 <div className={styles.line}>
                     <div className={styles.field}>
                         <p className={styles.fieldTitle}>Фамилия</p>
@@ -64,7 +55,7 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                     </div>
                     <div className={styles.field}>
                         <p className={styles.fieldTitle}>Возраст</p>
-                        <p className={styles.fieldText}>{age} {age > 4 || age === 0 ? "лет": age === 1 ? "год" : "года" }</p>
+                        <p className={styles.fieldText}>{age} {ageTextFormatter(age)}</p>
                     </div>
                 </div>
                 <div className={styles.line}>
@@ -92,12 +83,12 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                         <p className={styles.fieldTitle}>Дата рождения</p>
                         <div className={styles.fieldTextBirthday}>
                             <p>{date?.getDate()}</p>
-                            <p>{months[date?.getMonth()]}</p>
+                            <p>{EMonths[date?.getMonth()]}</p>
                             <p>{date?.getFullYear()}</p>
                         </div>
                         <p className={styles.fieldTextBirthdayTablet}>{new Date(data.dateOfBirth).toLocaleDateString()}{" "}</p>
                     </div>
-                    <AccessControl allowedRoles={[ERoles.PARENT]}>
+                    <AccessControl allowedRoles={[ERoles.PARENT, ERoles.DOCTOR]}>
                         <div className={styles.fieldButton}>
                             <Btn 
                                 onclick={openModal}
@@ -108,8 +99,7 @@ export  const  CardChildPage: FC<TChild> = ( {data} ) => {
                         </div>
                     </AccessControl>
                 </div>
-            </SubInfoTable>
-            
+            </div>
         </div>
     );
 };

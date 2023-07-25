@@ -13,6 +13,13 @@ const childrenApi = api.injectEndpoints({
             }),
             providesTags: ["Child"]
         }),
+        getChildrenForDoctor: build.query<IChildGetDto[],string>({
+            query: (id: string) => ({
+                url: `/children/for-doctor/${id}`,
+                method: "GET",
+            }),
+            providesTags: ["Child"]
+        }),
         getChildrenByParent: build.query<IChildGetDto[], string>({
             query: (id: string) => ({
                 url: `/children/parent/${id}`,
@@ -35,11 +42,11 @@ const childrenApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Child"],
         }),
-        editChild: build.mutation<IChildGetDto, { id: string, child: FormData }>({
-            query: ({ id, child }) => ({
+        editChild: build.mutation<IChildGetDto, { id: string, data: FormData }>({
+            query: ({ id, data }) => ({
                 url: `/children/${id}`,
                 method: "PATCH",
-                body: child,
+                body: data,
             }),
             invalidatesTags: ["Child"],
         })
@@ -51,5 +58,6 @@ export const {
     useLazyGetChildrenByParentQuery,
     useGetChildrenByIdQuery, 
     useEditChildMutation,
-    useCreateChildMutation
+    useCreateChildMutation,
+    useGetChildrenForDoctorQuery
 } = childrenApi;

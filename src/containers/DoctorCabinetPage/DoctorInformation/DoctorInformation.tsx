@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import { FC, ReactElement, useState } from "react";
 import styles from "./DoctorInformation.module.css";
 import Modal from "../../../components/UI/Modal/Modal";
 import EditDoctorForm from "./EditDoctorForm/EditDoctorForm";
@@ -8,27 +8,23 @@ import { EBtnSize } from "../../../enums/EBtnSize";
 import { EBtnTypes } from "../../../enums/EBtnTypes";
 import AvatarBox from "../../../components/AvatarBox/AvatarBox";
 import { ERoles } from "../../../enums/ERoles";
-import { SubInfoTable } from "../../../components/UI/SubInfoTable/SubInfoTable";
 import { EBtnClass } from "../../../enums/EBtnClass";
 import AccessControl from "../../../permissionRoutes/AccessControl";
+import ageTextFormatter from "../../../helpers/ageTextFormatter";
+import defaultImg from "../../../assets/img/default-doctor.svg";
+import { useEditDoctorMutation } from "../../../app/services/doctors";
+import { EImageDirectories } from "../../../enums/EImageDirectories";
 
 interface IDoctorInformationProps {
     doctor: IDoctorWithUser
     role: ERoles
 }
-const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({ doctor, role }): ReactElement => {
+
+const DoctorInformation: FC<IDoctorInformationProps> = ({ doctor, role }): ReactElement => {
     const [showEditUserModal, setShowEditUserModal] = useState(false);
 
     const editPersonalInformationModalCloser = () => {
         setShowEditUserModal(false);
-    };
-
-    const ageTextFormat = (number: number) => {
-        const titles = ["год", "года", "лет"];
-        const cases = [2, 0, 1, 1, 1, 2];
-        return titles[(number % 100 > 4 && number % 100 < 20)
-            ?
-            2 : cases[(number % 10 < 5) ? number % 10 : 5]];
     };
 
     return (
@@ -45,8 +41,11 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({ doctor,
                 width={300}
                 avatar={doctor?.photo}
                 id={doctor?.id}
+                directoryName={EImageDirectories.doctor}
+                defaultImg={defaultImg}
+                useMutation={useEditDoctorMutation}
             />
-            <SubInfoTable>
+            <div className={styles.personalInformationBox}>
                 <div className={styles.personalInformationLine}>
                     <div className={styles.personalInformationField}>
                         <p className={styles.fieldTitle}>ФИО</p>
@@ -61,7 +60,7 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({ doctor,
                     <div className={styles.personalInformationField}>
                         <p className={styles.fieldTitle}>Стаж</p>
                         <p className={styles.fieldText}>
-                            {doctor?.experience} {doctor?.experience && ageTextFormat(doctor.experience)}
+                            {doctor.experience} {ageTextFormatter(doctor.experience)}
                         </p>
                     </div>
                 </div>
@@ -100,7 +99,7 @@ const DoctorInformation: FunctionComponent<IDoctorInformationProps> = ({ doctor,
                         </div>
                     </AccessControl>
                 </div>  
-            </SubInfoTable>
+            </div>
         </div>
     );
 };

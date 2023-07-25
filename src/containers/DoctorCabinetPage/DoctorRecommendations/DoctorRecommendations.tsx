@@ -18,11 +18,7 @@ import { fileToDataString } from "../../../helpers/fileToDataString";
 import IconBtn from "../../../components/UI/IconBtn/IconBtn";
 
 const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({ doctorId, role }): ReactElement => {
-    const {
-        data: recommendations,
-        isError: isErrorGetRecommendations,
-        error: errorGetRecommendations,
-    } = useGetRecommendationsByDoctorQuery(doctorId);
+    const {data: recommendations} = useGetRecommendationsByDoctorQuery(doctorId);
 
     const [createRecommendation, {
         isSuccess: isSuccessCreateRecommendation,
@@ -39,7 +35,6 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
     successHandler(isSuccessDeleteRecommendation, "Рекомендация удалена");
     successHandler(isSuccessCreateRecommendation, "Новая рекомендация создана");
     errorHandler(isErrorCreateRecommendation, errorCreateRecommendation);
-    errorHandler(isErrorGetRecommendations, errorGetRecommendations);
     errorHandler(isErrorDeleteRecommendation, errorDeleteRecommendation);
 
     const [showList, setShowList] = useState(false);
@@ -138,7 +133,6 @@ const DoctorRecommendations: FunctionComponent<IDoctorRecommendationsProps> = ({
                                     <Btn disabled={!isValid} size={EBtnSize.small} onclick={handleSubmit} types={EBtnTypes.submit} title="Опубликовать" />
                                 </div>
                             </div>
-                            
                         </Form>
                     )}
                 </Formik>
