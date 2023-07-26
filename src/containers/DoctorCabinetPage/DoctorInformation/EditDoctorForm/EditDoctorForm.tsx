@@ -1,4 +1,4 @@
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, FormikProps } from "formik";
 import Btn from "../../../../components/UI/Btn/Btn";
 import { useEditUserMutation } from "../../../../app/services/users";
 import { useAppSelector } from "../../../../app/hooks";
@@ -77,6 +77,22 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({ modalCloser, 
 
     const [toggleState, setToggleState] = useState(1);
 
+    
+    const userDataFormikRef = useRef<FormikProps<{
+        name: string,
+        surname: string,
+        patronim: string,
+        phone: string
+    }>>(null);
+
+    const doctorDataFormikRef = useRef<FormikProps<{
+        degree: string,
+        experience: number,
+        placeOfWork: string,
+        achievements: string,
+        speciality: string
+    }>>(null);
+
     return (
         <div className={styles.editFormBox}>
             <div className={styles.editFormBoxTabs}>
@@ -98,9 +114,11 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({ modalCloser, 
                             patronim: user!.patronim || "",
                             phone: user!.phone || ""
                         }}
+                        innerRef={userDataFormikRef}
                         validateOnBlur
                         onSubmit={(values) => {
                             editUser({ id: user!.id, userDto: values });
+                            modalCloser();
                         }}
                         validationSchema={validationSchemaEditUser}
                     >
@@ -177,9 +195,11 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({ modalCloser, 
                             achievements: doctorData?.achievements || "",
                             speciality: doctorData?.speciality || ""
                         }}
+                        innerRef={doctorDataFormikRef}
                         validateOnBlur
                         onSubmit={(values) => {
                             updateDoctorData(values);
+                            modalCloser();
                         }}
                         validationSchema={validationSchemaEditDoctor}
                     >
@@ -223,7 +243,12 @@ const EditDoctorForm: FunctionComponent<IEditDoctorFormProps> = ({ modalCloser, 
                         )}
                     </Formik>
                 </div>
-                <Btn title="Закрыть" onclick={modalCloser} size={EBtnSize.tiny} btnClass={EBtnClass.white_active} />
+                <Btn title="Закрыть" onclick={() => {
+                    modalCloser();
+                    userDataFormikRef.current?.resetForm();
+                    doctorDataFormikRef.current?.resetForm();
+                }
+                } size={EBtnSize.tiny} btnClass={EBtnClass.white_active} />
             </div>
         </div>
     );
