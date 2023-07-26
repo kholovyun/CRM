@@ -1,0 +1,20 @@
+.treaty {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0;
+    text-align: center;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.treaty_title {
+    max-width: 70%;
+    text-align: center;
+    margin: 30px auto;
+}
+
+.treaty_paragraph {
+    margin-bottom: 30px;
+    text-align: justify;
+    font-size: 20px;
+}
