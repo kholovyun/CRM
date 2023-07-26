@@ -29,7 +29,6 @@ import EditUserForm from "./containers/UserForms/EditUserForm/EditUserForm.tsx";
 import Treaty from "./components/Treaty/Treaty.tsx";
 import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy.tsx";
 
-
 const App: FunctionComponent = (): ReactElement => {
     return (
         <BrowserRouter>
