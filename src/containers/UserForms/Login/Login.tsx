@@ -40,7 +40,7 @@ const Login: FunctionComponent = (): ReactElement => {
                 <Formik
                     initialValues={{
                         email: "",
-                        password: "Aa1234",
+                        password: "",
                     }}
                     validateOnBlur
                     onSubmit={async (values) => {
